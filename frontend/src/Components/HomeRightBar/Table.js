@@ -1,7 +1,7 @@
 import React from "react";
 
 const Table = () => {
-  return <div>hkmljl</div>;
+  return <div>;mlujlm,;oimuyuhdfiljhyubtdhunhfv</div>;
 };
 
 export default Table;
