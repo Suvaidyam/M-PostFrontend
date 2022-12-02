@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineSave, AiOutlineShareAlt } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
+import { Outlet } from "react-router-dom";
 
 const Form = () => {
   return (
@@ -8,13 +9,11 @@ const Form = () => {
       <div className="flex pt-6 items-center  px-5 ">
         {/* dropdown */}
         <div className="   w-28 h-10 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
-          <select className="bg-white font-medium rounded-l-md text-gray-700  px-5 h-9 focus:outline-none">
-            <option className=" border-none py-1  " value="get">
-              Get
-            </option>
-            <option value="post">Post</option>
-            <option value="put">Put</option>
-            <option value="delete">Delete</option>
+          <select className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-9 focus:outline-none border-none ">
+            <option value="get">GET</option>
+            <option value="post">POST</option>
+            <option value="put">PUT</option>
+            <option value="delete">DELETE</option>
           </select>
         </div>
 
@@ -28,8 +27,8 @@ const Form = () => {
         </div>
         {/* button */}
         <div className="">
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-md ">
-            Send
+          <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-r-md ">
+            SEND
           </button>
         </div>
         <div>
