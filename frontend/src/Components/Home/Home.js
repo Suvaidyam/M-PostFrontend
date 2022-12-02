@@ -8,11 +8,11 @@ const Home = () => {
      <div className="w-full h-screen">
        <div className="w-full h-full flex">
         {/* Left */}
-          <div className="w-1/4 border-r-2">
+          <div className="w-[30%] border-r-2">
             <HomeLeftBar/>
           </div>
           {/* Right */}
-          <div className="w-3/4">
+          <div className="w-[70%]">
             <HomeRightBar/>
           </div>
        </div>
