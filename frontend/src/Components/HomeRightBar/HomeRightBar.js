@@ -1,13 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const HomeRightBar = () => {
   return (
     <>
-    <div className="w-full">
-    HomeRightBar
-    </div>
-   </>
-  )
-}
+      <div className="w-full">HomeRightBar kjmkii</div>
+    </>
+  );
+};
 
-export default HomeRightBar
+export default HomeRightBar;
