@@ -4,6 +4,8 @@ import Home from "../Home/Home";
 import Tabs from "../HomeRightBar/Tabs";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Table from "../HomeRightBar/Table";
+import Formheaders from "../HomeRightBar/Formheaders";
+import Body from "../HomeRightBar/Body";
 
 const Router = () => {
   return (
@@ -12,9 +14,10 @@ const Router = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />}>
-            <Route path="/" element={<Tabs />} />
+            <Route path="/tab/" element={<Tabs />} />
             <Route path="table" element={<Table />} />
-            <Route path="t" element={<div>kuyhiuko</div>} />
+            <Route path="tables" element={<Formheaders />} />
+            <Route path="body" element={<Body />} />
           </Route>
         </Routes>
       </BrowserRouter>

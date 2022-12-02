@@ -5,8 +5,11 @@ import Tabs from "./Tabs";
 const HomeRightBar = () => {
   return (
     <>
-      <div className="w-full bg-gray-100 min-h-screen">
-        <Form />
+      <div className="w-full   min-h-screen">
+        <div className="bg-white mt-3 mx-2  h-14">
+          <Form />
+        </div>
+
         <Tabs />
       </div>
     </>

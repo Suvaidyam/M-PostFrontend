@@ -1,12 +1,11 @@
 import React from "react";
 import { AiOutlineSave, AiOutlineShareAlt } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import { Outlet } from "react-router-dom";
 
 const Form = () => {
   return (
     <>
-      <div className="flex pt-6 items-center  px-5 ">
+      <div className="flex pt-2  items-center  px-3 ">
         {/* dropdown */}
         <div className="   w-28 h-10 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
           <select className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-9 focus:outline-none border-none ">
