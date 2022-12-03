@@ -1,6 +1,6 @@
 import React from "react";
 
-const Formheaders = () => {
+const HeadersForm = () => {
   return (
     <div>
       <div className="px-3 bg-white min-h-screen mx-2 my-2">
@@ -10,13 +10,13 @@ const Formheaders = () => {
           <table className="w-full text-sm text-left text-gray-600 ">
             <thead className="text-xs  text-gray-600 uppercase bg-white ">
               <tr>
-                <th scope="col" className="p-3 w-6 border">
+                <th scope="col" className="p-2 w-6 border">
                   <div className="flex items-center"></div>
                 </th>
-                <th scope="col" className=" w-1/2 py-3 px-6 border">
+                <th scope="col" className=" w-1/2 py-2 px-6 border">
                   KEY
                 </th>
-                <th scope="col" className="w-1/2 py-3 px-6 border">
+                <th scope="col" className="w-1/2 py-2 px-6 border">
                   VALUE
                 </th>
               </tr>
@@ -38,7 +38,7 @@ const Formheaders = () => {
                 >
                   <input
                     type="text"
-                    className="w-full px-6 py-2 focus:outline-none "
+                    className="w-full px-6 py-1.5 focus:outline-none "
                     placeholder="Key "
                   />
                 </th>
@@ -48,7 +48,7 @@ const Formheaders = () => {
                 >
                   <input
                     type="text"
-                    className="w-full px-6 py-2 focus:outline-none "
+                    className="w-full px-6 py-1.5 focus:outline-none "
                     placeholder="Value "
                   />
                 </th>
@@ -61,4 +61,4 @@ const Formheaders = () => {
   );
 };
 
-export default Formheaders;
+export default HeadersForm;

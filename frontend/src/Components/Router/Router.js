@@ -4,8 +4,8 @@ import Home from "../Home/Home";
 import Tabs from "../HomeRightBar/Tabs";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Table from "../HomeRightBar/Table";
-import Formheaders from "../HomeRightBar/Formheaders";
-import Body from "../HomeRightBar/Body";
+import HeadersForm from "../HomeRightBar/HeadersForm";
+import BodyForm from "../HomeRightBar/BodyForm";
 
 const Router = () => {
   return (
@@ -16,8 +16,8 @@ const Router = () => {
           <Route path="/" element={<Home />}>
             <Route path="/tab/" element={<Tabs />} />
             <Route path="table" element={<Table />} />
-            <Route path="tables" element={<Formheaders />} />
-            <Route path="body" element={<Body />} />
+            <Route path="tables" element={<HeadersForm />} />
+            <Route path="body" element={<BodyForm />} />
           </Route>
         </Routes>
       </BrowserRouter>

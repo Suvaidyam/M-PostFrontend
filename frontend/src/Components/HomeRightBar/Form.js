@@ -5,10 +5,10 @@ import { BsThreeDots } from "react-icons/bs";
 const Form = () => {
   return (
     <>
-      <div className="flex pt-2  items-center  px-3 ">
+      <div className="flex pt-2.5  items-center  px-3 ">
         {/* dropdown */}
-        <div className="   w-28 h-10 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
-          <select className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-9 focus:outline-none border-none ">
+        <div className="   w-28 h-9 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
+          <select className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none ">
             <option value="get">GET</option>
             <option value="post">POST</option>
             <option value="put">PUT</option>
@@ -21,12 +21,12 @@ const Form = () => {
           <input
             placeholder="Entet Request URL"
             type="text"
-            className=" text-xs font-semibold px-2 h-10 w-full border-gray-300 border   bg-white  b  focus:outline-none"
+            className=" text-xs font-semibold px-2 h-9 w-full border-gray-300 border   bg-white    focus:outline-none"
           />
         </div>
         {/* button */}
-        <div className="">
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-r-md ">
+        <div className="h-9">
+          <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-4 rounded-r-md ">
             SEND
           </button>
         </div>
