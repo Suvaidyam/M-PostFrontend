@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "./Form";
+import Response from "./Response";
 import Tabs from "./Tabs";
 
 const HomeRightBar = () => {
@@ -11,6 +12,9 @@ const HomeRightBar = () => {
         </div>
 
         <Tabs />
+        <div className="bg-white  mx-2  min-h-screen">
+          <Response />
+        </div>
       </div>
     </>
   );
