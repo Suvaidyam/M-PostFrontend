@@ -1,14 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Form from "./Form";
 import Response from "./Response";
 import Tabs from "./Tabs";
 import { DataContext } from "../Context/DataProvider";
+import { checkParams } from "../Utils/CommonUtils";
+import GetData from "../Service/GetData";
+import ErrorScreen from "./ErrorScreen";
 
 const HomeRightBar = () => {
   const { formData, paramsData, headersData, jsonText } =
     useContext(DataContext);
+  const [error, seterror] = useState(false);
+  const [errorMsg, setErrorMsg] = useState();
+  const [errorResponse, setErrorResponse] = useState(false);
+  const [apiResponse, setApiResponse] = useState();
 
-  const onSendClick = (e) => {};
+  const onSendClick = async (e) => {
+    if (
+      !checkParams(formData, paramsData, headersData, jsonText, setErrorMsg)
+    ) {
+      return false;
+    }
+    let response = await GetData(formData, paramsData, headersData, jsonText);
+    if (response === "error") {
+      setErrorResponse(true);
+    }
+    setErrorResponse(false);
+    setApiResponse(response.data);
+  };
 
   return (
     <>
@@ -18,8 +37,8 @@ const HomeRightBar = () => {
         </div>
 
         <Tabs />
-        <div className="bg-white  mx-2  min-h-screen">
-          <Response />
+        <div className="bg-white   min-h-screen">
+          {errorResponse ? <ErrorScreen /> : <Response data={apiResponse} />}
         </div>
       </div>
     </>
