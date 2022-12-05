@@ -5,7 +5,7 @@ import {BiCodeBlock,BiCollapse} from 'react-icons/bi'
 
 const MyWorkSpaceLeftBar = () => {
   return (
-    <>
+    <> 
      <div className="w-full flex flex-col justify-center items-center">
        <Link to='#' className='text-xs flex flex-col items-center justify-center py-3 gap-1'>
         <MdOutlineCollectionsBookmark className='text-xl'/>
