@@ -3,7 +3,7 @@ import ErrorScreen from "./ErrorScreen";
 
 const Response = () => {
   return (
-    <div>
+    <div className="">
       <p className=" font-medium text-sm px-3 py-2 text-gray-600">Response</p>
 
       <div>

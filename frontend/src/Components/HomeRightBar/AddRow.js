@@ -2,9 +2,9 @@ import React from "react";
 
 const AddRow = () => {
   return (
-    <div>
+    <>
       <tr className="bg-white border  w-full">
-        <td className=" w-4  bg-gray-100 px-4">
+        <td className=" w-4   px-4">
           <div className="flex items-center ">
             <input
               id="checkbox-table-search-1"
@@ -15,7 +15,7 @@ const AddRow = () => {
         </td>
         <th
           scope="row"
-          className=" p-0.5  bg-gray-100  border font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className=" p-0.5    border font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           <input
             type="text"
@@ -23,7 +23,7 @@ const AddRow = () => {
             placeholder="Key "
           />
         </th>
-        <th className="  bg-gray-100 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <th className="   font-medium text-gray-900 whitespace-nowrap dark:text-white">
           <input
             type="text"
             className="w-full px-6 border py-1 focus:outline-none "
@@ -32,7 +32,7 @@ const AddRow = () => {
         </th>
         <th
           scope="row"
-          className=" bg-gray-100 border font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className="  border font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           <input
             type="text"
@@ -41,7 +41,7 @@ const AddRow = () => {
           />
         </th>
       </tr>
-    </div>
+    </>
   );
 };
 
