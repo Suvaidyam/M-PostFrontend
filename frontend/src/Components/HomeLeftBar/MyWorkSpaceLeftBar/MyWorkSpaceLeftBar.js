@@ -7,7 +7,8 @@ const MyWorkSpaceLeftBar = () => {
   return (
     <> 
      <div className="w-full flex flex-col justify-center items-center">
-       <Link to='#' className='text-xs flex flex-col items-center justify-center py-3 gap-1'>
+       <Link to='#' className='w-full bg-blue-100 text-blue-600 flex flex-col items-center justify-center
+        py-3 text-xs gap-1'>
         <MdOutlineCollectionsBookmark className='text-xl'/>
         Collection
         </Link>
