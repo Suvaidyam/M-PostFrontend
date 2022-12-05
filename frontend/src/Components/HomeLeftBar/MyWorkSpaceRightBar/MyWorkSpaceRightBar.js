@@ -16,7 +16,7 @@ const MyWorkSpaceRightBar = () => {
         _id:2,
         type:"folder",
         parent:null,
-        name:"lmfi_customer_app",
+        name:"M-Space_app",
         details:{}
     },
     {
@@ -75,8 +75,10 @@ let newArr = contents.filter(e=> e.parent == null)
             <div key={e._id} className="w-full h-8  flex items-center relative px-2 cursor-pointer
           hover:bg-gray-200 group">
            <div className='flex items-center gap-2'>
-           {open===false?<p onClick={()=>seteid(e._id)}>< BiCaretRight className='cursor-pointer' onClick={toggle}/></p>:
-           <p onClick={()=>seteid(e._id)}>< BiCaretDown className='cursor-pointer' onClick={toggle}/></p>} 
+           {open===false?<p onClick={()=>seteid(e._id)}>
+            < BiCaretRight className='cursor-pointer' onClick={toggle}/></p>:
+           <p onClick={()=>seteid(e._id)}>
+            < BiCaretDown className='cursor-pointer' onClick={toggle}/></p>} 
             <GoFileDirectory/>
             <p className='text-xs'>{e.name}</p>
            </div>
@@ -87,7 +89,8 @@ let newArr = contents.filter(e=> e.parent == null)
           {eid===e._id?open===true?<div className=" w-full">
           {contents.map(e=>(
             <div>
-              {eid===e.parent?<div key={e._id} className="w-full relative group flex  cursor-pointer hover:bg-gray-200 py-1 px-2">
+              {eid===e.parent?<div key={e._id} className="w-full relative group flex 
+               cursor-pointer hover:bg-gray-200 py-1 px-2">
             <div className="flex items-center gap-2 w-full ">
               <p className='text-xs text-green-400 w-1/4 flex justify-end'>GET</p>
               <p className='text-sm'>{e.name}</p>

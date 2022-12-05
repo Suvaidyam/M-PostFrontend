@@ -8,8 +8,8 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 const Header = () => {
   return (
     <>
-     <div className="w-full h-16 ">
-        <div className="w-full h-full shadow-md flex justify-between items-center px-4">
+     <div className="w-full h-16 shadow-md">
+        <div className="w-full h-full  flex justify-between items-center px-4 max-w-[1720px] mx-auto">
           <div className="flex items-center gap-8">
             {/* Logo */}
             <div ><img src={Vector} alt=""  className='w-12'/></div>

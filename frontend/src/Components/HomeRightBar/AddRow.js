@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 const AddRow = () => {
+  const [key, setKey] = useState('')
+  const [value, setValue] = useState('')
+
   return (
     <>
       <tr className="bg-white border  w-full">
@@ -21,6 +24,7 @@ const AddRow = () => {
             type="text"
             className="w-full px-6 border py-1 focus:outline-none "
             placeholder="Key "
+            onChange={(e)=>setKey(e.target.value)}
           />
         </th>
         <th className="   font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -28,6 +32,7 @@ const AddRow = () => {
             type="text"
             className="w-full px-6 border py-1 focus:outline-none "
             placeholder="Value "
+            onChange={(e)=>setValue(e.target.value)}
           />
         </th>
         <th
