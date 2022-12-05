@@ -6,7 +6,7 @@ import Tabs from "./Tabs";
 const HomeRightBar = () => {
   return (
     <>
-      <div className="w-full   overflow-y-scroll">
+      <div className="w-full  ">
         <div className="bg-white mt-3 mx-2   h-14">
           <Form />
         </div>

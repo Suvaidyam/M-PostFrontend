@@ -5,8 +5,8 @@ import HomeRightBar from "../HomeRightBar/HomeRightBar";
 const Home = () => {
   return (
     <>
-      <div className="w-full h-screen">
-        <div className="w-full h-full flex">
+      <div className="w-full h-screen ">
+        <div className="w-full h-full overflow-hidden flex">
           {/* Left */}
           <div className="w-[30%] border-r-2">
             <HomeLeftBar />
