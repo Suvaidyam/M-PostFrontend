@@ -1,9 +1,9 @@
 import React from "react";
-// import AddRow from "./AddRow";
+import AddRow from "./AddRow";
 
 const Table = () => {
   return (
-    <div className="px-3  bg-white  h-auto pb-4 mx-2 my-2">
+    <div className="px-3  bg-white overflow-y-scroll  h-32 pb-4 mx-2 my-2">
       <p className=" font-medium text-sm py-2 text-gray-600">Query Params</p>
 
       <div className="overflow-x-auto relative  ">
@@ -25,44 +25,7 @@ const Table = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border  w-full">
-              <td className=" w-4  px-4">
-                <div className="flex items-center ">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-5 h-5 text-blue-600  rounded  "
-                  />
-                </div>
-              </td>
-              <th
-                scope="row"
-                className=" p-0.5   border font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                <input
-                  type="text"
-                  className="w-full px-6 border py-1 focus:outline-none "
-                  placeholder="Key "
-                />
-              </th>
-              <th className=" p-0.5   font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                <input
-                  type="text"
-                  className="w-full px-6 border py-1 focus:outline-none "
-                  placeholder="Value "
-                />
-              </th>
-              <th
-                scope="row"
-                className="p-0.5  border font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                <input
-                  type="text"
-                  className="w-full px-4 border py-1 focus:outline-none "
-                  placeholder="  Description "
-                />
-              </th>
-            </tr>
+            <AddRow />
           </tbody>
         </table>
       </div>
