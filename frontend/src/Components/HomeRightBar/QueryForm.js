@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import AddRow from "./AddRow";
+import { DataContext } from "../Context/DataProvider";
 
-const Table = () => {
+const QueryForm = () => {
+  const { setheadersData, headersData } = useContext(DataContext);
+  const [rows, addrows] = useState([0]);
   return (
-    <div className="px-3  bg-white overflow-y-scroll  h-32 pb-4 mx-2 my-2">
-      <p className=" font-medium text-sm py-2 text-gray-600">Query Params</p>
+    <div className="px-3  bg-white overflow-y-scroll  h-40 pb-4 mx-2 my-2">
+      <p className=" font-medium text-sm py-2 text-gray-600">Headers</p>
 
       <div className="overflow-x-auto relative  ">
         <table className="w-full text-sm text-left text-gray-600 ">
@@ -25,7 +28,15 @@ const Table = () => {
             </tr>
           </thead>
           <tbody>
-            <AddRow />
+            {rows.map((row, index) => (
+              <AddRow
+                addrows={addrows}
+                rowId={index}
+                key={index}
+                data={headersData}
+                setdata={setheadersData}
+              />
+            ))}
           </tbody>
         </table>
       </div>
@@ -33,4 +44,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default QueryForm;

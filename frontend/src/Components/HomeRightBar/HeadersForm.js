@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useState } from "react";
 import AddRow from "./AddRow";
+import { DataContext } from "../Context/DataProvider";
 
 const HeadersForm = () => {
+  const { paramsData, setparamsData } = useContext(DataContext);
+  const [rows, addrows] = useState([0]);
   return (
-    <div className="px-3  bg-white overflow-y-scroll  h-32 pb-4 mx-2 my-2">
+    <div className="px-3  bg-white overflow-y-scroll  h-40 pb-4 mx-2 my-2">
       <p className=" font-medium text-sm py-2 text-gray-600">Headers</p>
 
       <div className="overflow-x-auto relative  ">
@@ -25,7 +29,15 @@ const HeadersForm = () => {
             </tr>
           </thead>
           <tbody>
-            <AddRow />
+            {rows.map((row, index) => (
+              <AddRow
+                addrows={addrows}
+                rowId={index}
+                key={index}
+                data={paramsData}
+                setdata={setparamsData}
+              />
+            ))}
           </tbody>
         </table>
       </div>

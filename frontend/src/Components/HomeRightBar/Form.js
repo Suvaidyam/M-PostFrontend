@@ -1,14 +1,24 @@
 import React from "react";
 import { AiOutlineSave, AiOutlineShareAlt } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
+import { useContext } from "react";
+import { DataContext } from "../Context/DataProvider";
 
-const Form = () => {
+const Form = ({ onSendClick }) => {
+  const { formData, setformData } = useContext(DataContext);
+  // console.log(formData);
+
   return (
     <>
       <div className="flex pt-2.5  items-center  px-3 ">
         {/* dropdown */}
         <div className="   w-28 h-9 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
-          <select className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none ">
+          <select
+            className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none "
+            onClick={(e) => {
+              setformData({ ...formData, type: e.target.value });
+            }}
+          >
             <option value="get">GET</option>
             <option value="post">POST</option>
             <option value="put">PUT</option>
@@ -22,11 +32,17 @@ const Form = () => {
             placeholder="Entet Request URL"
             type="text"
             className=" text-xs font-semibold px-2 h-9 w-full border-gray-300 border   bg-white    focus:outline-none"
+            onChange={(e) => {
+              setformData({ ...formData, url: e.target.value });
+            }}
           />
         </div>
         {/* button */}
         <div className="h-9">
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-4 rounded-r-md ">
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-4 rounded-r-md "
+            onClick={(e) => onSendClick(e)}
+          >
             SEND
           </button>
         </div>
