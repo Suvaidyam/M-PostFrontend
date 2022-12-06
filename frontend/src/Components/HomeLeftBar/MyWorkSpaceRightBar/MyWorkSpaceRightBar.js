@@ -24,7 +24,9 @@ const MyWorkSpaceRightBar = () => {
       type: "folder",
       parent: 1,
       name: "Auth",
-      details: {}
+      details: {
+        method: "PUT"
+      }
     },
     {
       _id: 4,
@@ -73,8 +75,8 @@ const MyWorkSpaceRightBar = () => {
   let newArr = contents.filter(e => e.parent == null)
 
 
-  const [open, setopen] = useState(false)
-  const [eid, seteid] = useState('');
+  // const [open, setopen] = useState(false)
+  // const [eid, seteid] = useState('');
   const [arr, setArr] = useState(newArr);
 
   const toggle = (e) => {
@@ -104,7 +106,7 @@ const MyWorkSpaceRightBar = () => {
           {arr.map(e => (
             <div key={e._id}>
               <div className="w-full h-8  flex items-center relative px-2 cursor-pointer
-          hover:bg-gray-200 group">
+              hover:bg-gray-200 group">
                 <div className='flex items-center gap-2' onClick={() => toggle(e)} >
                   {e.toggle ? < BiCaretDown className='cursor-pointer' /> : < BiCaretRight className='cursor-pointer' />}
                   <GoFileDirectory />
@@ -118,9 +120,9 @@ const MyWorkSpaceRightBar = () => {
                 {contents.map(ce => (
                   <div key={ce._id}>
                     {e._id == ce.parent ? <div className="w-full relative group flex
-               cursor-pointer hover:bg-gray-200 py-1 px-2">
+                       cursor-pointer hover:bg-gray-200 py-1 px-2">
                       <div className="flex items-center gap-2 w-full ">
-                        <p className={'text-xs text-' + getDetails(ce?.details).color + '-400 w-1/4 flex justify-end'}>{getDetails(ce?.details).method}</p>
+                        <p className={`text-xs text-${getDetails(ce?.details).color}-500 w-1/4 flex justify-end`}>{getDetails(ce?.details).method}</p>
                         <p className='text-sm'>{ce.name}</p>
                       </div>
                       <p className='hidden group-hover:block absolute right-2'>
