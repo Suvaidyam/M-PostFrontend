@@ -75,12 +75,9 @@ const MyWorkSpaceRightBar = () => {
   let newArr = contents.filter(e => e.parent == null)
 
 
-  // const [open, setopen] = useState(false)
-  // const [eid, seteid] = useState('');
   const [arr, setArr] = useState(newArr);
 
   const toggle = (e) => {
-    // setopen(!open)
     e.toggle = !e.toggle;
     setArr([...arr]);
     // console.log(e, arr);
