@@ -17,13 +17,13 @@ const HeadersForm = () => {
               <th scope="col" className="p-2 w-6 border">
                 <div className="flex items-center"></div>
               </th>
-              <th scope="col" className="  py-2 px-6 border">
+              <th scope="col" className="  py-1.5 px-6 border">
                 KEY
               </th>
-              <th scope="col" className="py-2 px-6 border">
+              <th scope="col" className="py-1.5 px-6 border">
                 VALUE
               </th>
-              <th scope="col" className=" py-2 px-6 border">
+              <th scope="col" className=" py-1.5 px-6 border">
                 DESCRIPTION
               </th>
             </tr>

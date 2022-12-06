@@ -53,7 +53,7 @@ const AddRow = ({ addrows, rowId, data, setdata }) => {
               checked={checkCheckBox}
               id="checkbox-table-search-1"
               type="checkbox"
-              className="w-5 h-5 text-blue-600 bg-gray-100 rounded border-gray-300  "
+              className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
               onChange={checkBox}
               name={rowId}
             />
@@ -65,29 +65,29 @@ const AddRow = ({ addrows, rowId, data, setdata }) => {
         >
           <input
             type="text"
-            className="w-full px-6 border py-1 focus:outline-none "
+            className="w-full px-6 border py-0.5 focus:outline-none "
             placeholder="Key "
             name="key"
             onChange={onTextChenge}
           />
         </th>
-        <th className="   font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <th className=" p-0.5   font-medium text-gray-900 whitespace-nowrap dark:text-white">
           <input
             name="value"
             type="text"
-            className="w-full px-6 border py-1 focus:outline-none "
+            className="w-full px-6 border py-0.5 focus:outline-none "
             placeholder="Value "
             onChange={onTextChenge}
           />
         </th>
         <th
           scope="row"
-          className="  border font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className=" p-0.5  border font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           <input
             type="text"
             name="description"
-            className="w-full px-4 border py-1 focus:outline-none "
+            className="w-full px-4 border py-0.5  focus:outline-none "
             placeholder="  Description "
             onChange={onTextChenge}
           />
