@@ -17,13 +17,13 @@ const Response = ({ data }) => {
   readableobj += "\n}";
 
   return (
-    <div className=" h-screen overflow-x-scroll">
+    <div className=" h-screen  ">
       <p className=" font-medium text-sm px-3 py-2 text-gray-600">Response</p>
       <div className=" mb-0.5 mx-2  ">
         <textarea
           disabled
           value={readableobj}
-          className="resize w-full  text-gray-700 font-mono  h-48 overflow-y-scroll  py-2.5 pl-7 text-xs outline-none    bg-no-repeat bg-[url('http://i.imgur.com/2cOaJ.png')]"
+          className="resize w-full  text-gray-700 font-mono  h-48 scrollbar-hide overflow-y-scroll  py-2.5 pl-7 text-xs outline-none    bg-no-repeat bg-[url('http://i.imgur.com/2cOaJ.png')]"
         ></textarea>
       </div>
     </div>
