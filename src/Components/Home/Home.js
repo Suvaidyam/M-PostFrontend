@@ -7,11 +7,12 @@ import { BsCode, BsCaretRight } from "react-icons/bs";
 import { FiTrash2 } from "react-icons/fi";
 import { BiHelpCircle } from "react-icons/bi";
 import SetEnviroment from "../SetEnviroment/SetEnviroment";
-
+import Header from '../Header/Header'
 const Home = () => {
   const [enviroment, setEnviroment] = useState(false);
   return (
     <>
+    <Header/>
       <DataProvider>
         <div className="w-full h-[88.5vh] ">
           <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex">
