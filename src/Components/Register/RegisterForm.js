@@ -7,6 +7,9 @@ const RegisterForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
+  const [companyCode, setCompanyCode] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [companyLogo, setCompanyLogo] = useState(null);
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
   const [check, setCheck] = useState(true);
@@ -14,13 +17,28 @@ const RegisterForm = () => {
   const navigate = useNavigate();
 
   const save = () => {
+
+    let formData = { name, email, password };
+    
+    const postData = () => {
+      if (company === "newCompany") {
+        Object.assign(formData, {
+          companyName: companyName.toUpperCase(),
+          companyCode: companyCode,
+          logo:companyLogo
+        });
+      } else {
+        Object.assign(formData, {
+          company
+        });
+      }
+      console.log(formData)
+    };
+    postData();
+
     axios
-      .post(`http://localhost:4000/auth/register`, {
-        name: name,
-        company: company,
-        email: email,
-        password: password,
-      })
+      .post(`http://localhost:4000/auth/register`, formData
+      )
       .then((res) => {
         sessionStorage.setItem("token", res.data.token);
         if (res.data.token) {
@@ -66,7 +84,12 @@ const RegisterForm = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <Company setCompany={setCompany}/>
+        <Company
+         setCompany={setCompany}
+         setCompanyCode={setCompanyCode}
+         setCompanyName={setCompanyName}
+         setCompanyLogo={setCompanyLogo}
+         />
         <div className="flex flex-col gap-1">
           <label htmlFor="password" className="font-medium">
             Password

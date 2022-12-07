@@ -15,7 +15,6 @@ const Header = () => {
 let url =''
   const signout = async () => {
     let token = sessionStorage.getItem('token')
-    console.log(token)
     if (token) {
       axios.post(`http://localhost:4000/auth/logout`, {},
         {
