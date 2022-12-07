@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { GoFileDirectory } from 'react-icons/go'
 import { BiCaretRight, BiCaretDown, BiDotsHorizontalRounded } from 'react-icons/bi'
+import MoreAction from '../MoreAction/MoreAction'
 
 const MyWorkSpaceRightBar = () => {
 
@@ -84,6 +85,11 @@ const MyWorkSpaceRightBar = () => {
     // console.log(e.toggle);
 
   }
+  const open = (e) => {
+    e.open = !e.open;
+    setArr([...arr]);
+  }
+  
   const getDetails = (details) => {
     let method = (details?.method) ? details?.method.toUpperCase() : "NA";
     let colors = {
@@ -98,7 +104,7 @@ const MyWorkSpaceRightBar = () => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full h-[82%] scrollbar-hide overflow-y-scroll">
         <div className="border-b">
           {arr.map(e => (
             <div key={e._id}>
@@ -110,8 +116,12 @@ const MyWorkSpaceRightBar = () => {
                   <p className='text-xs'>{e.name}</p>
                 </div>
                 <p className='hidden group-hover:block absolute right-2'>
-                  <BiDotsHorizontalRounded />
+                  <BiDotsHorizontalRounded className='cursor-pointer' onClick={() => open(e)}/>
                 </p>
+                {/* moreaction */}
+                {e.open?<div className="absolute z-50 right-1 top-8">
+                  <MoreAction/>
+                </div>:null}
               </div>
               {e.toggle ? <div className=" w-full">
                 {contents.map(ce => (
