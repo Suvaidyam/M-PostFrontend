@@ -108,8 +108,8 @@ const MyWorkSpaceRightBar = () => {
         <div className="border-b">
           {arr.map(e => (
             <div key={e._id}>
-              <div className="w-full h-8  flex items-center relative px-2 cursor-pointer
-              hover:bg-gray-200 group">
+              <div className={`w-full h-8 ${e.open?'bg-gray-200':null}  flex items-center relative px-2 cursor-pointer
+              hover:bg-gray-200 group`}>
                 <div className='flex items-center gap-2' onClick={() => toggle(e)} >
                   {e.toggle ? < BiCaretDown className='cursor-pointer' /> : < BiCaretRight className='cursor-pointer' />}
                   <GoFileDirectory />
@@ -126,7 +126,7 @@ const MyWorkSpaceRightBar = () => {
               {e.toggle ? <div className=" w-full">
                 {contents.map(ce => (
                   <div key={ce._id}>
-                    {e._id == ce.parent ? <div className="w-full relative group flex
+                    {e._id === ce.parent ? <div className="w-full relative group flex
                        cursor-pointer hover:bg-gray-200 py-1 px-2">
                       <div className="flex items-center gap-2 w-full ">
                         <p className={`text-xs text-${getDetails(ce?.details).color}-500 w-1/4 flex justify-end`}>{getDetails(ce?.details).method}</p>
