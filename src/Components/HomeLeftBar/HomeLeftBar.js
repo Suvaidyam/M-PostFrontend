@@ -28,7 +28,7 @@ const HomeLeftBar = () => {
               <IoAddSharp className='text-2xl cursor-pointer'/>
             </div>
             {/* Container */}
-            <div className="">
+            <div className="h-full">
               <MyWorkSpaceRightBar/>
             </div>
           </div>
