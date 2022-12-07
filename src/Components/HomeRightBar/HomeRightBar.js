@@ -10,9 +10,8 @@ import ErrorScreen from "./ErrorScreen";
 const HomeRightBar = () => {
   const { formData, paramsData, headersData, jsonText } =
     useContext(DataContext);
-  const [error, seterror] = useState(false);
+  // const [error, seterror] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
-  const [errorResponse, setErrorResponse] = useState(false);
   const [apiResponse, setApiResponse] = useState();
 
   const onSendClick = async (e) => {
@@ -21,12 +20,11 @@ const HomeRightBar = () => {
     ) {
       return false;
     }
+
     let response = await GetData(formData, paramsData, headersData, jsonText);
-    if (response === "error") {
-      setErrorResponse(true);
-    }
-    setErrorResponse(false);
+
     setApiResponse(response.data);
+    console.log(errorMsg);
   };
 
   return (
@@ -38,7 +36,11 @@ const HomeRightBar = () => {
 
         <Tabs />
         <div className="bg-white   min-h-screen">
-          {errorResponse ? <ErrorScreen /> : <Response data={apiResponse} />}
+          {apiResponse === undefined ? (
+            <ErrorScreen />
+          ) : (
+            <Response data={apiResponse} />
+          )}
         </div>
       </div>
     </>
