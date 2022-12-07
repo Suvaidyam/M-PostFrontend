@@ -4,6 +4,7 @@ import { useState } from "react";
 const AddRow = ({ addrows, rowId, data, setdata }) => {
   const [checkCheckBox, setCheckCheckBox] = useState(false);
 
+  // checkBok
   const checkBox = (e) => {
     let result = data.filter((e) => e.id === rowId)[0];
     if (!checkCheckBox) {
@@ -26,6 +27,7 @@ const AddRow = ({ addrows, rowId, data, setdata }) => {
     }
   };
 
+  // input text
   const onTextChenge = (e) => {
     let result = data.filter((e) => e.id === rowId)[0];
     result = {

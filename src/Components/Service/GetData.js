@@ -16,6 +16,7 @@ const GetData = async (formData, paramsData, headersData, jsonText) => {
     });
   } catch (error) {
     console.log("Error while Calling  getData API", error);
+
     return error;
   }
 };

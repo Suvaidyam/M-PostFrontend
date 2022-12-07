@@ -1,9 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import AddRow from "./AddRow";
-import { DataContext } from "../Context/DataProvider";
 
-const QueryForm = ({ name }) => {
-  const { setheadersData, headersData } = useContext(DataContext);
+const QueryForm = ({ name, data, setdata }) => {
   const [rows, addrows] = useState([0]);
   return (
     <div className="px-3  bg-white overflow-y-scroll scrollbar-hide  h-40 pb-4 mx-2 my-2">
@@ -33,8 +31,8 @@ const QueryForm = ({ name }) => {
                 addrows={addrows}
                 rowId={index}
                 key={index}
-                data={headersData}
-                setdata={setheadersData}
+                data={data}
+                setdata={setdata}
               />
             ))}
           </tbody>

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { DataContext } from "../Context/DataProvider";
 
 const BodyForm = () => {
-  const { jsonText, setjsonText } = useContext(DataContext);
+  const { setjsonText } = useContext(DataContext);
 
   return (
     <div className="mt-2 mb-0.5 mx-2  ">

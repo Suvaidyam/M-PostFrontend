@@ -6,11 +6,12 @@ import { DataContext } from "../Context/DataProvider";
 import { checkParams } from "../Utils/CommonUtils";
 import GetData from "../Service/GetData";
 import ErrorScreen from "./ErrorScreen";
+import SnackBar from "./SnackBar";
 
 const HomeRightBar = () => {
   const { formData, paramsData, headersData, jsonText } =
     useContext(DataContext);
-  // const [error, seterror] = useState(false);
+  const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
   const [apiResponse, setApiResponse] = useState();
 
@@ -18,13 +19,13 @@ const HomeRightBar = () => {
     if (
       !checkParams(formData, paramsData, headersData, jsonText, setErrorMsg)
     ) {
+      setError(true);
       return false;
     }
 
     let response = await GetData(formData, paramsData, headersData, jsonText);
 
     setApiResponse(response.data);
-    console.log(errorMsg);
   };
 
   return (
@@ -33,13 +34,12 @@ const HomeRightBar = () => {
         <div className="bg-white mt-3 mx-2   h-14">
           <Form onSendClick={onSendClick} />
         </div>
-
         <Tabs />
         <div className="bg-white   min-h-screen">
-          {apiResponse === undefined ? (
-            <ErrorScreen />
-          ) : (
-            <Response data={apiResponse} />
+          <Response data={apiResponse} />
+          <ErrorScreen />
+          {error && (
+            <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
           )}
         </div>
       </div>
