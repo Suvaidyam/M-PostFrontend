@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import QueryForm from "./QueryForm";
 import BodyForm from "./BodyForm";
+import { DataContext } from "../Context/DataProvider";
+import { padding } from "@mui/system";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,6 +44,8 @@ function a11yProps(index) {
 
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
+  const { paramsData, setparamsData, headersData, setheadersData } =
+    useContext(DataContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -61,10 +65,18 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <QueryForm name={"Queary Params"} />
+        <QueryForm
+          name={"Queary Params"}
+          data={paramsData}
+          setdata={setparamsData}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <QueryForm name={"Headers"} />
+        <QueryForm
+          name={"Headers"}
+          data={headersData}
+          setdata={setheadersData}
+        />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <BodyForm />
