@@ -1,32 +1,74 @@
-import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
-import "./Tab.css";
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import QueryForm from "./QueryForm";
+import BodyForm from "./BodyForm";
 
-const Tabs = () => {
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
   return (
-    <div>
-      <div className="text-sm font-sans text-center px-2 text-gray-500  border-gray-200 ">
-        <ul className="flex flex-wrap -mb-px">
-          <li className="mr-2">
-            <NavLink to="/table" className="inline-block p-3  rounded-t-lg  ">
-              Params
-            </NavLink>
-          </li>
-          <li className="mr-2">
-            <NavLink to="/tables" className="inline-block p-3  rounded-t-lg   ">
-              Header
-            </NavLink>
-          </li>
-          <li className="mr-2">
-            <NavLink to="/body" className="inline-block p-3  rounded-t-lg  ">
-              Body
-            </NavLink>
-          </li>
-        </ul>
-      </div>
-      <Outlet />
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
     </div>
   );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
-export default Tabs;
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+export default function BasicTabs() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Box sx={{ width: "100%" }}>
+      <Box>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="  Params" {...a11yProps(0)} />
+          <Tab label="Headers" {...a11yProps(1)} />
+          <Tab label="Body" {...a11yProps(2)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        <QueryForm name={"Queary Params"} />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <QueryForm name={"Headers"} />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <BodyForm />
+      </TabPanel>
+    </Box>
+  );
+}

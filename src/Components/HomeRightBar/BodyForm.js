@@ -3,7 +3,7 @@ import { DataContext } from "../Context/DataProvider";
 
 const BodyForm = () => {
   const { jsonText, setjsonText } = useContext(DataContext);
-  console.log(jsonText);
+
   return (
     <div className="mt-2 mb-0.5 mx-2  ">
       <textarea
