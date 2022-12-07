@@ -1,15 +1,15 @@
 import React from "react";
-import Header from "../Header/Header";
 import Home from "../Home/Home";
+import Login from "../Login/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const Router = () => {
   return (
     <>
       <BrowserRouter>
-        <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/workSpace" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </>
