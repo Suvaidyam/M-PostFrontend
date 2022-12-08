@@ -23,8 +23,13 @@ const HomeRightBar = () => {
       setError(true);
       return false;
     }
+    let response;
+    try {
+      response = await GetData(formData, paramsData, headersData, jsonText);
+    } catch (res) {
+      response = res.response;
+    }
 
-    let response = await GetData(formData, paramsData, headersData, jsonText);
 
     setApiResponse(response.data);
   };
@@ -36,12 +41,16 @@ const HomeRightBar = () => {
           <Form onSendClick={onSendClick} />
         </div>
         <Tabs />
-        <div className="bg-white   min-h-screen">
-          <Response data={apiResponse} />
-          <ErrorScreen />
-          {error && (
-            <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
-          )}
+        <hr></hr>
+        <div className="bg-white   min-h-screen" style={{ 'wordWrap': 'break-word' }}>
+          <pre>
+            <h2>Resposne</h2>
+            <Response data={apiResponse} />
+            <ErrorScreen />
+            {error && (
+              <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
+            )}
+          </pre>
         </div>
       </div>
     </>
