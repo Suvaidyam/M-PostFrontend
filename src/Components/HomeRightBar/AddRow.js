@@ -6,17 +6,18 @@ const AddRow = ({ addrows, rowId, data, setdata }) => {
 
   // checkBok
   const checkBox = (e) => {
-    let result = data.filter((e) => e.id === rowId)[0];
+    let result = data.filter((entry) => entry.id === Number(rowId))[0];
+
     if (!checkCheckBox) {
       setCheckCheckBox(true);
-      addrows((olderr) => [...olderr, rowId]);
+      addrows((oldArr) => [...oldArr, rowId]);
       result = { ...result, id: rowId, check: true };
     } else {
       setCheckCheckBox(false);
       result = { ...result, id: rowId, check: false };
     }
 
-    let index = data.findIndex((value) => value.id === rowId);
+    let index = data.findIndex((value) => value.id === Number(rowId));
     if (index === -1) {
       setdata((oldArr) => [...oldArr, result]);
     } else {
@@ -29,13 +30,12 @@ const AddRow = ({ addrows, rowId, data, setdata }) => {
 
   // input text
   const onTextChenge = (e) => {
-    let result = data.filter((e) => e.id === rowId)[0];
-    result = {
-      ...result,
-      id: rowId,
-      [e.target.name]: e.target.value,
-    };
+    let result = data.filter((entry) => entry.id === rowId)[0];
+    result = { ...result, id: rowId, [e.target.name]: e.target.value };
+    // console.log("row", result);
+
     let index = data.findIndex((value) => value.id === rowId);
+
     if (index === -1) {
       setdata((oldArr) => [...oldArr, result]);
     } else {
