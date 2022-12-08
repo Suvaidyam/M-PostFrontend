@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import QueryForm from "./QueryForm";
 import BodyForm from "./BodyForm";
 import { DataContext } from "../Context/DataProvider";
-import { padding } from "@mui/system";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,18 +64,10 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <QueryForm
-          name={"Queary Params"}
-          data={paramsData}
-          setdata={setparamsData}
-        />
+        <QueryForm data={paramsData} setdata={setparamsData} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <QueryForm
-          name={"Headers"}
-          data={headersData}
-          setdata={setheadersData}
-        />
+        <QueryForm data={headersData} setdata={setheadersData} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <BodyForm />

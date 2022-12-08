@@ -11,6 +11,7 @@ import SnackBar from "./SnackBar";
 const HomeRightBar = () => {
   const { formData, paramsData, headersData, jsonText } =
     useContext(DataContext);
+  // console.log(jsonText);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
   const [apiResponse, setApiResponse] = useState();
