@@ -90,7 +90,7 @@ return () => {
            {/* Profile */}
            <div className="w-12 h-12 border-2 border-blue-500 rounded-full cursor-pointer 
            relative flex flex-col items-center group">
-            <img src={url ? 'http://localhost:4000/' + url : Avatar} alt="" />
+            <img className='w-12 h-12 border-2 rounded-full object-cover' src={url ? 'http://localhost:4000/' + url : Avatar} alt="" />
            <div className="w-32 shadow-xl absolute  top-11
            hidden group-hover:block rounded-sm" >
             <p className='p-1.5'></p>
