@@ -22,6 +22,7 @@ const GetData = async (formData, paramsData, headersData, jsonText) => {
     params: apiParams,
     headers: apiHeaders,
   };
+
   return await axios(option);
 };
 
