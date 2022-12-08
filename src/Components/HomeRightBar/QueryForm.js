@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AddRow from "./AddRow";
 
-const QueryForm = ({ name, data, setdata }) => {
+const QueryForm = ({ data, setdata }) => {
   const [rows, addrows] = useState([0]);
   return (
     <div className="px-3  bg-white overflow-y-scroll scrollbar-hide  h-28 pb-4 mx-2 my-2">
