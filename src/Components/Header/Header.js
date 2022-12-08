@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Vector from '../../Assets/Vector.png'
 import Avatar from '../../Assets/avatar.png'
 import SearchMenu from '../SearchMenu/SearchMenu'
@@ -9,10 +9,41 @@ import { CgProfile } from "react-icons/cg";
 import { BiLogOutCircle } from "react-icons/bi";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
+import Profile from '../Profile/Profile'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
+
+const [openProfile, setOpenProfile] = useState(false)
+const [url, setUrl] = useState(null)
+console.log(url)
+const items = useSelector((state) => state.ProfileReducer.url)
+
+let token = sessionStorage.getItem('token')
+    let headers = {
+      token
+    }
+const paylode=sessionStorage.getItem('paylode')
+    const{_id} =JSON.parse(paylode) 
+
+const getImg =()=>{
+  axios.get(`http://localhost:4000/employee/${_id}`,
+  {
+    headers
+  }).then((res) => {
+    setUrl(res.data.user.url)
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+useEffect(() => {
+return () => {
+  getImg()
+  setUrl(items)
+}
+}, [])
+
   const navigate = useNavigate();
-let url =''
   const signout = async () => {
     let token = sessionStorage.getItem('token')
     if (token) {
@@ -65,7 +96,7 @@ let url =''
             <p className='p-1.5'></p>
             <ul className='bg-gray-200'>
             <li className='hover:bg-gray-400 px-2 py-1.5 rounded-t-sm flex justify-between
-            items-center hover:text-white font-medium text-sm'>Profile <CgProfile/></li>
+            items-center hover:text-white font-medium text-sm' onClick={()=>setOpenProfile(!openProfile)}>Profile <CgProfile/></li>
             <li className='bg-red-200 hover:bg-red-500 px-2 py-1.5 rounded-b-sm flex 
             justify-between  items-center hover:text-white font-medium text-sm' onClick={signout}>Logout 
             <BiLogOutCircle/></li>
@@ -76,6 +107,9 @@ let url =''
            <button className='bg-blue-600 text-white py-1 w-20 rounded-sm'>SHARE</button>
           </div>
         </div>
+        {/* Profile */}
+        {openProfile===true? <Profile setOpenProfile={setOpenProfile}/>:null}
+       
      </div>
     </>
   )
