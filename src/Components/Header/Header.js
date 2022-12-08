@@ -1,6 +1,6 @@
 import React from 'react'
-import Vector from '../Assets/Vector.png'
-import Avatar from '../Assets/avatar.png'
+import Vector from '../../Assets/Vector.png'
+import Avatar from '../../Assets/avatar.png'
 import SearchMenu from '../SearchMenu/SearchMenu'
 import Navbar from './Navbar/Navbar'
 import { MdOutlineDarkMode } from "react-icons/md";
