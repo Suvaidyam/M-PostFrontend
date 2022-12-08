@@ -6,7 +6,8 @@ const GetData = async (formData, paramsData, headersData, jsonText) => {
   const apiURL = formData.url;
   const apiHeaders = getHeadersAndParams(headersData);
   const apiParams = getHeadersAndParams(paramsData);
-  // console.log("ukol", apiHeaders);
+  console.log("ukol", apiHeaders);
+  console.log("ukol", apiParams);
   try {
     return await axios({
       method: apiType,

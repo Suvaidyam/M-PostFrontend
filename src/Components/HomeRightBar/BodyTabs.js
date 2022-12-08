@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import QueryForm from "./QueryForm";
 import BodyForm from "./BodyForm";
-import BodyTabs from "./BodyTabs";
 import { DataContext } from "../Context/DataProvider";
 
 function TabPanel(props) {
@@ -59,9 +58,9 @@ export default function BasicTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="  Params" {...a11yProps(0)} />
-          <Tab label="Headers" {...a11yProps(1)} />
-          <Tab label="Body" {...a11yProps(2)} />
+          <Tab label=" Form-Data" {...a11yProps(0)} />
+          <Tab label="x-www-Form-urnlencoded" {...a11yProps(1)} />
+          <Tab label="JSON" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -71,7 +70,7 @@ export default function BasicTabs() {
         <QueryForm data={headersData} setdata={setheadersData} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <BodyTabs />
+        <BodyForm />
       </TabPanel>
     </Box>
   );
