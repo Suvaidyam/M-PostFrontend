@@ -60,7 +60,7 @@ const Profile = ({setOpenProfile}) => {
                 <h1 className='text-xl flex font-medium'>Change your profile picture</h1>
                 <div className='flex justify-between w-full'>
                   <div className="w-32 h-32 border rounded-full cursor-pointer">
-                    <img  src={url?`http://localhost:4000/`+url:Avatar} alt="" />
+                    <img className='w-32 h-32 border rounded-full object-cover' src={url?`http://localhost:4000/`+url:Avatar} alt="" />
                   </div>
                   <div className='py-5 flex flex-col gap-4'>
                   <label htmlFor="file" className='cursor-pointer flex items-center gap-2'><TbUpload/> Upload picture

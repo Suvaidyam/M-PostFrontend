@@ -4,8 +4,22 @@ import MyWorkSpace from './MyWorkSpace/MyWorkSpace'
 import SearchMenu from '../SearchMenu/SearchMenu'
 import {IoAddSharp} from 'react-icons/io5'
 import MyWorkSpaceRightBar from './MyWorkSpaceRightBar/MyWorkSpaceRightBar'
+import axios from 'axios'
 
 const HomeLeftBar = () => {
+  let token = sessionStorage.getItem('token')
+  let headers = {
+    token
+  }
+  const postData=()=>{
+    axios.post(`http://localhost:4000/collection`,{type:"folder"},{headers})
+  .then((res)=>{
+    // setcollection(res.data.collection)
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+  }
   return (
     <>
      <div className="w-full h-full">
@@ -25,7 +39,7 @@ const HomeLeftBar = () => {
             {/* search bar */}
             <div className="w-full h-14 border-b-2 gap-2  flex items-center justify-center">
               <SearchMenu/>
-              <IoAddSharp className='text-2xl cursor-pointer'/>
+              <IoAddSharp className='text-2xl cursor-pointer' onClick={postData}/>
             </div>
             {/* Container */}
             <div className="h-full">
