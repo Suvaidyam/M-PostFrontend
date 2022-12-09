@@ -6,21 +6,24 @@ const GetData = async (formData, paramsData, headersData, jsonText) => {
   const apiURL = formData.url;
   const apiHeaders = getHeadersAndParams(headersData);
   const apiParams = getHeadersAndParams(paramsData);
-  console.log("ukol", apiHeaders);
-  console.log("ukol", apiParams);
-  try {
-    return await axios({
-      method: apiType,
-      url: apiURL,
-      body: jsonText,
-      params: apiParams,
-      headers: apiHeaders,
-    });
-  } catch (error) {
-    console.log("Error while Calling  getData API", error);
-
-    return error;
+  if (typeof jsonText == 'string') {
+    try {
+      console.log(jsonText);
+      jsonText = JSON.parse(jsonText)
+    } catch (error) {
+      console.log('JsonParse', error);
+    }
   }
+
+  let option = {
+    method: apiType,
+    url: apiURL,
+    data: jsonText,
+    params: apiParams,
+    headers: apiHeaders,
+  };
+
+  return await axios(option);
 };
 
 export default GetData;

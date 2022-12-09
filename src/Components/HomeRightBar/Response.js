@@ -1,15 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
+import ReactJson from 'react-json-view'
+
+
+import Editor from 'react-simple-code-editor';
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/themes/prism.css'; //Example style, you can use another
+import './Style.css'
+
+import JSONEditorReact from '../JSONEditor';
 
 const Response = ({ data }) => {
+  data = !data ? `` : JSON.stringify(data, 0, 3)
+
+  const modes = ['tree', 'form', 'view', 'code', 'text'];
+  const [mode, setMode] = useState('code');
+
+  const handleModeChange = (mode) => {
+    setMode(mode)
+  }
+
+
+  // const hightlightWithLineNumbers = (input, language) =>
+  //   highlight(input, language)
+  //     .split("\n")
+  //     .map((line, i) => `<span class='editorLineNumber'>${i + 1}</span>${line}`)
+  //     .join("\n");
+
   return (
     <div className=" h-screen bg-gray-100 px-2  ">
-      <p className=" font-medium text-sm px-3 py-1 text-gray-600">JSON</p>
+      {/* <Editor
+        value={data}
+        highlight={code => hightlightWithLineNumbers(code, languages.js)}
+        padding={0}
+        textareaId="codeArea"
+        className="editor"
+        style={{
+          fontFamily: '"Fira code", "Fira Mono", monospace',
+          fontSize: 18,
+          outline: 0
+        }}
+      /> */}
+      <JSONEditorReact
+        text={data}
+        mode={mode}
+        modes={modes}
+        indentation={4}
 
-      <textarea
-        disabled
-        value={JSON.stringify(data, 0, 3)}
-        className="resize w-full bg-white  border text-gray-700 font-mono  mr-2 h-44 scrollbar-hide   py-2.5 pl-7 text-xs outline-none  bg-local  bg-no-repeat bg-[url('http://i.imgur.com/2cOaJ.png')]"
-      ></textarea>
+        // onChangeText={handleChange}
+        onModeChange={handleModeChange}
+      />
+      {/* <ReactJson src={data} name={false} /> */}
     </div>
   );
 };

@@ -1,4 +1,6 @@
 const checkValidJson = (text) => {
+  if (typeof text == 'object')
+    return true;
   if (
     /^[\],:{}\s]*$/.test(
       text
