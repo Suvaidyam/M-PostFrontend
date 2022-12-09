@@ -10,34 +10,30 @@ import { DataContext } from "../Context/DataProvider";
 // import 'prismjs/themes/prism.css'; //Example style, you can use another
 // import './Style.css'
 
-
-
 // import { JsonEditor as Editor } from 'jsoneditor-react';
 // import 'jsoneditor-react/es/editor.min.css';
 
-import JSONEditorReact from '../JSONEditor';
+import JSONEditorReact from "../JSONEditor";
 
 const BodyForm = () => {
   const { setjsonText } = useContext(DataContext);
   // const [data, setData] = useState({ email: "rahul" });
 
-  const [data, setData] = React.useState({ email: 'rahul@gmail.com', password: 'Rahul@321' });
-  const modes = ['tree', 'form', 'view', 'code', 'text'];
-  const [mode, setMode] = useState('code');
+  const [data, setData] = React.useState({ email: "", password: "" });
+  const modes = ["tree", "form", "view", "code", "text"];
+  const [mode, setMode] = useState("code");
 
-  setjsonText(data)
+  setjsonText(data);
   const handleChange = (newCode) => {
     try {
       newCode = JSON.parse(newCode);
-      setjsonText(newCode)
-      setData(newCode)
-    } catch (error) {
-
-    }
-  }
+      setjsonText(newCode);
+      setData(newCode);
+    } catch (error) {}
+  };
   const handleModeChange = (mode) => {
-    setMode(mode)
-  }
+    setMode(mode);
+  };
   /*
   const [code, setCode] = React.useState(`\n\n\n\n`);
 
@@ -57,14 +53,13 @@ const BodyForm = () => {
   }, [code])
   */
   return (
-    <div className="mt-2 mb-0.5 mx-2  ">
-
+    <div className="mt-2 mb-0.5 mx-2 h-32 scrollbar-hide overflow-scroll  ">
       <JSONEditorReact
+        className="scrollbar-hide"
         text={JSON.stringify(data, null, 3)}
         mode={mode}
         modes={modes}
         indentation={4}
-
         onChangeText={handleChange}
         onModeChange={handleModeChange}
       />
@@ -81,8 +76,6 @@ const BodyForm = () => {
         onAdd={(e) => { setData(e.new_value) }}
         onEdit={(e) => { setData(e.updated_src) }}
         onDelete={(e) => { setData(e.updated_src) }} /> */
-
-
       /* <Editor
         value={code}
         onValueChange={code => setCode(code)}
@@ -100,7 +93,6 @@ const BodyForm = () => {
           className="resize w-full   h-28  py-2.5 pl-7 text-xs outline-none bg-local scrollbar-hide    bg-no-repeat bg-[url('http://i.imgur.com/2cOaJ.png')]"
           onChange={(e) => setjsonText(e.target.value)}
         ></textarea> */}
-
     </div>
   );
 };
