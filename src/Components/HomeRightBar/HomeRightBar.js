@@ -30,7 +30,6 @@ const HomeRightBar = () => {
       response = res.response;
     }
 
-
     setApiResponse(response.data);
   };
 
@@ -42,9 +41,11 @@ const HomeRightBar = () => {
         </div>
         <Tabs />
         <hr></hr>
-        <div className="bg-white   min-h-screen" style={{ 'wordWrap': 'break-word' }}>
+        <div
+          className="bg-white   min-h-screen"
+          style={{ wordWrap: "break-word" }}
+        >
           <pre>
-            <h2>Resposne</h2>
             <Response data={apiResponse} />
             <ErrorScreen />
             {error && (

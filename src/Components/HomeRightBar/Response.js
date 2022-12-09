@@ -1,26 +1,24 @@
 import React, { useState } from "react";
-import ReactJson from 'react-json-view'
+// import ReactJson from "react-json-view";
 
+// import Editor from "react-simple-code-editor";
+// import { highlight, languages } from "prismjs/components/prism-core";
+import "prismjs/components/prism-clike";
+import "prismjs/components/prism-javascript";
+import "prismjs/themes/prism.css"; //Example style, you can use another
+import "./Style.css";
 
-import Editor from 'react-simple-code-editor';
-import { highlight, languages } from 'prismjs/components/prism-core';
-import 'prismjs/components/prism-clike';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/themes/prism.css'; //Example style, you can use another
-import './Style.css'
-
-import JSONEditorReact from '../JSONEditor';
+import JSONEditorReact from "../JSONEditor";
 
 const Response = ({ data }) => {
-  data = !data ? `` : JSON.stringify(data, 0, 3)
+  data = !data ? `` : JSON.stringify(data, 0, 3);
 
-  const modes = ['tree', 'form', 'view', 'code', 'text'];
-  const [mode, setMode] = useState('code');
+  const modes = ["tree", "form", "view", "code", "text"];
+  const [mode, setMode] = useState("code");
 
   const handleModeChange = (mode) => {
-    setMode(mode)
-  }
-
+    setMode(mode);
+  };
 
   // const hightlightWithLineNumbers = (input, language) =>
   //   highlight(input, language)
@@ -29,7 +27,7 @@ const Response = ({ data }) => {
   //     .join("\n");
 
   return (
-    <div className=" h-screen bg-gray-100 px-2  ">
+    <div className=" h-screen bg-gray-100 px-2 scrollbar-hide ">
       {/* <Editor
         value={data}
         highlight={code => hightlightWithLineNumbers(code, languages.js)}
@@ -42,12 +40,13 @@ const Response = ({ data }) => {
           outline: 0
         }}
       /> */}
+      <p className="text-gray-700 font-medium">Response</p>
       <JSONEditorReact
+        className="scrollbar-hide "
         text={data}
         mode={mode}
         modes={modes}
         indentation={4}
-
         // onChangeText={handleChange}
         onModeChange={handleModeChange}
       />
