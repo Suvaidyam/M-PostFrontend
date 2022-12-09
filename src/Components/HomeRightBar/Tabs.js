@@ -52,16 +52,16 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box>
-        <Tabs
+    <Box sx={{ width: "100%"}}>
+      <Box  sx={{height: '32px',minHeight:'32px'}}>
+        <Tabs sx={{height: '32px',minHeight:'32px'}}
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="  Params" {...a11yProps(0)} />
-          <Tab label="Headers" {...a11yProps(1)} />
-          <Tab label="Body" {...a11yProps(2)} />
+          <Tab sx={{height: '32px',minHeight:'32px',textTransform: "capitalize"}} label="Params" {...a11yProps(0)} />
+          <Tab sx={{height: '32px',minHeight:'32px',textTransform: "capitalize"}} label="Headers" {...a11yProps(1)} />
+          <Tab sx={{height: '32px',minHeight:'32px',textTransform: "capitalize"}} label="Body" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
