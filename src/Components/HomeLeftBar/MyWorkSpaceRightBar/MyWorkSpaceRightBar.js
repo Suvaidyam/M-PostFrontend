@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { GoFileDirectory } from "react-icons/go";
 import {
   BiCaretRight,
@@ -19,8 +19,6 @@ const MyWorkSpaceRightBar = () => {
   const [parentId, setparentId] = useState("");
   let newarr = collection.filter((e) => e.parent == null);
   const [arr, setArr] = useState(newarr);
-  const [open, setopen] = useState(false);
-  const [requestOpen, setrequestOpen] = useState(false);
 
   let token = sessionStorage.getItem("token");
   let headers = {
@@ -37,30 +35,6 @@ const MyWorkSpaceRightBar = () => {
       });
   };
 
-  const menuRef = useRef();
-  const menuReff = useRef();
-  useEffect(() => {
-    const close = (e) => {
-      if (!menuReff.current.contains(e.target)) {
-        setrequestOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", close);
-    return () => {
-      document.removeEventListener("mousedown", close);
-    };
-  });
-  useEffect(() => {
-    const closeForm = (e) => {
-      if (!menuRef.current.contains(e.target)) {
-        setopen(false);
-      }
-    };
-    document.addEventListener("mousedown", closeForm);
-    return () => {
-      document.removeEventListener("mousedown", closeForm);
-    };
-  });
   useEffect(() => {
     return () => {
       getData();
@@ -71,10 +45,10 @@ const MyWorkSpaceRightBar = () => {
     e.toggle = !e.toggle;
     setArr([...arr]);
   };
-  // const open = (e) => {
-  //   e.open = !e.open;
-  //   setArr([...arr]);
-  // };
+  const open = (e) => {
+    e.open = !e.open;
+    setArr([...arr]);
+  };
 
   const getDetails = (details) => {
     let method = details?.method ? details?.method.toUpperCase() : "NA";
@@ -93,7 +67,7 @@ const MyWorkSpaceRightBar = () => {
       <div className="w-full h-[82%] scrollbar-hide overflow-y-scroll">
         <div className="border-b">
           {newarr.map((e) => (
-            <div key={e._id} ref={menuRef}>
+            <div key={e._id}>
               <div
                 className={`w-full h-8 ${e.open ? "bg-gray-200" : null} ${
                   edit === e._id ? "bg-gray-200" : null
@@ -129,22 +103,14 @@ const MyWorkSpaceRightBar = () => {
                 >
                   <BiDotsHorizontalRounded
                     className="cursor-pointer"
-                    onClick={
-                      edit
-                        ? () => setopen(!open)
-                        : () => dispatch(CollectionEdit(e._id))
-                    }
+                    onClick={() => open(e)}
                   />
                 </p>
                 {/* moreaction */}
-                {open === true ? (
-                  <>
-                    {edit === e._id ? (
-                      <div className="absolute z-50 right-3 top-8">
-                        <MoreAction parentId={parentId} />
-                      </div>
-                    ) : null}
-                  </>
+                {e.open ? (
+                  <div className="absolute z-50 right-3 top-8">
+                    <MoreAction parentId={parentId} />
+                  </div>
                 ) : null}
               </div>
               {e.toggle ? (
@@ -153,7 +119,6 @@ const MyWorkSpaceRightBar = () => {
                     <div key={ce._id}>
                       {e._id === ce.parent ? (
                         <div
-                          ref={menuReff}
                           className="w-full relative group flex
                        cursor-pointer hover:bg-gray-200 py-1 px-2"
                         >
@@ -170,21 +135,13 @@ const MyWorkSpaceRightBar = () => {
                           <p className="hidden group-hover:block absolute right-2">
                             <BiDotsHorizontalRounded
                               className="cursor-pointer"
-                              onClick={
-                                edit
-                                  ? () => setrequestOpen(!requestOpen)
-                                  : () => dispatch(CollectionEdit(ce._id))
-                              }
+                              onClick={() => dispatch(CollectionEdit(ce._id))}
                             />
                           </p>
-                          {requestOpen === true ? (
-                            <>
-                              {edit === ce._id ? (
-                                <div className="absolute z-50 right-3 top-8">
-                                  <RequestAction />
-                                </div>
-                              ) : null}
-                            </>
+                          {edit === ce._id ? (
+                            <div className="absolute z-50 right-3 top-8">
+                              <RequestAction />
+                            </div>
                           ) : null}
                         </div>
                       ) : null}
