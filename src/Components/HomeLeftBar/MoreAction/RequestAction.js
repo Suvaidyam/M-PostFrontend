@@ -1,11 +1,7 @@
 import axios from 'axios'
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { CollectionEdit } from '../../../Redux/Action/CollectionEditAction'
 
-const MoreAction = ({ parentId }) => {
-
-  const dispatch = useDispatch()
+const RequestAction = ({ parentId }) => {
 
   let token = sessionStorage.getItem('token')
   let headers = {
@@ -29,8 +25,7 @@ const MoreAction = ({ parentId }) => {
         <ul className='flex flex-col justify-center w-full '>
           <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'>Share</li>
           <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'>Move</li>
-          <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'
-           onClick={()=>dispatch(CollectionEdit(parentId))}><><label htmlFor="edit">Edit</label></></li>
+          <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'>Edit</li>
           <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'
             onClick={postData}>Add request</li>
           <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'>Delete</li>
@@ -40,4 +35,4 @@ const MoreAction = ({ parentId }) => {
   )
 }
 
-export default MoreAction
+export default RequestAction

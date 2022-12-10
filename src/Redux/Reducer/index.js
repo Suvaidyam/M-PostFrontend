@@ -1,8 +1,10 @@
 import { combineReducers} from 'redux'
 import ProfileReducer from './ProfileReducer';
+import CollectionEditReducer from './CollectionEditReducer';
 
 const rootReducer = combineReducers({
-    ProfileReducer
+    ProfileReducer,
+    CollectionEditReducer
 });
 
 export default rootReducer;
