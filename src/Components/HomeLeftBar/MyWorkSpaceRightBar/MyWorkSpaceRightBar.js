@@ -3,8 +3,15 @@ import { GoFileDirectory } from 'react-icons/go'
 import { BiCaretRight, BiCaretDown, BiDotsHorizontalRounded } from 'react-icons/bi'
 import MoreAction from '../MoreAction/MoreAction'
 import axios from 'axios'
+import RequestAction from '../MoreAction/RequestAction'
+import { useDispatch, useSelector } from 'react-redux'
+import { CollectionEdit } from '../../../Redux/Action/CollectionEditAction'
 
 const MyWorkSpaceRightBar = () => {
+
+  const edit = useSelector(state=>state.CollectionEditReducer)
+  const dispatch = useDispatch()
+
 
   const [collection, setcollection] = useState([]);
   const [parentId, setparentId] = useState('');
@@ -27,6 +34,7 @@ const getData=()=>{
   console.log(err)
 })
 }
+
 useEffect(() => {
   return () => {
     getData()
@@ -43,6 +51,7 @@ const open = (e) => {
   setArr([...arr]);
 }
 
+
 const getDetails = (details) => {
   let method = (details?.method) ? details?.method.toUpperCase() : "NA";
   let colors = {
@@ -57,22 +66,23 @@ const getDetails = (details) => {
 
   return (
     <>
-      <div className="w-full h-[82%] scrollbar-hide overflow-y-scroll">
+      <div className="w-full h-[82%] scrollbar-hide overflow-y-scroll" >
         <div className="border-b">
           {newarr.map(e => (
             <div key={e._id}>
-              <div className={`w-full h-8 ${e.open?'bg-gray-200':null}  flex items-center relative px-2 cursor-pointer
+              <div className={`w-full h-8 ${e.open?'bg-gray-200':null} ${edit===e._id?'bg-gray-200':null}  flex items-center relative px-2 cursor-pointer
               hover:bg-gray-200 group`}>
+               {edit===e._id?<><input type="text" id='edit' className='outline-none px-2 text-sm ml-1' defaultValue={e.name}/></>:
                 <div className='flex items-center gap-2' onClick={() => toggle(e)} >
-                  {e.toggle ? < BiCaretDown className='cursor-pointer' /> : < BiCaretRight className='cursor-pointer' />}
-                  <GoFileDirectory />
-                  <p className='text-xs'>{e.name}</p>
-                </div>
+                {e.toggle ? < BiCaretDown className='cursor-pointer' /> : < BiCaretRight className='cursor-pointer' />}
+                <GoFileDirectory />
+                <p className='text-sm'>{e.name}</p>
+              </div>}
                 <p className='hidden group-hover:block absolute right-2' onClick={()=>setparentId(e._id)}>
                   <BiDotsHorizontalRounded className='cursor-pointer' onClick={() => open(e)}/>
                 </p>
                 {/* moreaction */}
-                {e.open?<div className="absolute z-50 right-1 top-8">
+                {e.open?<div className="absolute z-50 right-3 top-8">
                   <MoreAction parentId={parentId}/>
                 </div>:null}
               </div>
@@ -83,11 +93,14 @@ const getDetails = (details) => {
                        cursor-pointer hover:bg-gray-200 py-1 px-2">
                       <div className="flex items-center gap-2 w-full ">
                         <p className={`text-xs text-${getDetails(ce?.details).color}-500 w-1/4 flex justify-end`}>{getDetails(ce?.details).method}</p>
-                        <p className='text-sm'>{ce.name}</p>
+                        <p className='text-xs font-normal'>{ce.name}</p>
                       </div>
                       <p className='hidden group-hover:block absolute right-2'>
-                        <BiDotsHorizontalRounded />
+                        <BiDotsHorizontalRounded className='cursor-pointer' onClick={()=>dispatch(CollectionEdit(ce._id))}/>
                       </p>
+                      {edit===ce._id?<div className="absolute z-50 right-3 top-8">
+                  <RequestAction/>
+                </div>:null}
                     </div> : null}
                   </div>
                 ))}
