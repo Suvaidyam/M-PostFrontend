@@ -1,77 +1,64 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import QueryForm from "./QueryForm";
-import BodyForm from "./BodyForm";
+import React, { useState,useContext } from 'react'
+import BodyForm from './BodyForm'
+import QueryForm from './QueryForm'
 import { DataContext } from "../Context/DataProvider";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+const BodyTabs = () => {
 
+  const { paramsData, setparamsData, headersData, setheadersData } =useContext(DataContext);
+
+  const [fromData, setfromData] = useState(false)
+  const [urnlencoded, seturnlencoded] = useState(false)
+  const [json, setjson] = useState(false)
+
+  const fromdata=(e)=>{
+     setfromData(e.target.value)
+     seturnlencoded(false)
+     setjson(false)
+  }
+  const urlData=(e)=>{
+    seturnlencoded(e.target.value)
+     setfromData(false)
+     setjson(false)
+  }
+  const jsondata=(e)=>{
+    setjson(e.target.value)
+    setfromData(false)
+    seturnlencoded(false)
+  }
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
+    <>
+      <div className="w-full " >
+        <div className="w-full flex items-center gap-3 ml-6">
+          <div className="flex items-center">
+          <input className=' cursor-pointer'  type="radio" 
+            id="from-data" name="body" value="from-data" onClick={fromdata}/>
+            <label  htmlFor='from-data' className='text-xs cursor-pointer'
+             >from-data</label>
+          </div>
+          <div className="flex items-center">
+          <input className=' cursor-pointer'  type="radio" id="form-urnlencoded" 
+             name="body" value="form-urnlencoded" onClick={urlData}/>
+            <label  htmlFor='form-urnlencoded' className='text-xs cursor-pointer'>
+             x-www-form-urnlencoded</label>
+          </div>
+          <div className="flex items-center">
+          <input className=' cursor-pointer'  type="radio" id="json" name="body" value="json"
+          onClick={jsondata}/>
+            <label  htmlFor='json' className='text-xs cursor-pointer'>json</label>
+          </div>
+        </div>
+        <div className="w-full">
+          {/* QueryForm */}
+          {fromData===false?null:<QueryForm  data={paramsData} setdata={setparamsData}/>}
+          {/* headersFrom */}
+          {urnlencoded===false?null:<QueryForm data={headersData} setdata={setheadersData}/> }
+          {/* BodyForm */}
+          {json===false?null:<BodyForm />}
+        </div>
+      </div>
+    </>
+  )
 }
 
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-export default function BasicTabs() {
-  const [value, setValue] = React.useState(0);
-  const { paramsData, setparamsData, headersData, setheadersData } =
-    useContext(DataContext);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{height: '32px',minHeight:'32px'}}>
-        <Tabs sx={{height: '32px',minHeight:'32px'}}
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab sx={{height: '32px',minHeight:'32px',textTransform: "lowercase"}} label=" Form-Data" {...a11yProps(0)} />
-          <Tab sx={{height: '32px',minHeight:'32px',textTransform: "lowercase"}} label="x-www-Form-urnlencoded" {...a11yProps(1)} />
-          <Tab sx={{height: '32px',minHeight:'32px',textTransform: "lowercase"}} label="JSON" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        <QueryForm data={paramsData} setdata={setparamsData} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <QueryForm data={headersData} setdata={setheadersData} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <BodyForm />
-      </TabPanel>
-    </Box>
-  );
-}
+export default BodyTabs
