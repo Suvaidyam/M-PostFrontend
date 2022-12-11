@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import HomeLeftBar from "../HomeLeftBar/HomeLeftBar";
 import HomeRightBar from "../HomeRightBar/HomeRightBar";
 import DataProvider from "../Context/DataProvider";
-import { AiFillCaretDown, AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 import { BsCode, BsCaretRight } from "react-icons/bs";
 import { FiTrash2 } from "react-icons/fi";
 import { BiHelpCircle } from "react-icons/bi";
 import SetEnviroment from "../SetEnviroment/SetEnviroment";
 import Header from '../Header/Header'
+import RequestShow from "../RequestShow/RequestShow";
 const Home = () => {
+
   const [enviroment, setEnviroment] = useState(false);
+
   return (
     <>
     <Header/>
@@ -20,23 +23,10 @@ const Home = () => {
             <div className="w-[30%] border-r-2">
               <HomeLeftBar />
             </div>
-            {/* Right */}
-
-            <div className="w-[66%] bg-gray-100">
-              {/* header */}
-              <div className="w-full h-10 bg-white shadow-inner flex">
-                <div className="w-[80%] border"></div>
-                <div className="w-[20%] border flex justify-center items-center gap-2">
-                  <input
-                    type="text"
-                    name=""
-                    id=""
-                    defaultValue={"No Enviroment"}
-                    className="w-[70%] outline-none text-sm"
-                  />
-                  <AiFillCaretDown className="text-[9px] cursor-pointer" />
-                </div>
-              </div>
+             {/* Right */}
+              <div className="w-[66%] bg-gray-100">
+              {/* metod Request */}
+              <RequestShow/>
               {/* Right */}
               <HomeRightBar />
             </div>
