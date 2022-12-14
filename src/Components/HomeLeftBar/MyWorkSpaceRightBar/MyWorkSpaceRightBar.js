@@ -66,9 +66,9 @@ const MyWorkSpaceRightBar = () => {
   return (
     <>
       <div className="w-full h-[82%] scrollbar-hide overflow-y-scroll">
-        <div className="border-b">
+        <div className="">
           {newarr.map((e) => (
-            <div key={e._id}>
+            <div key={e._id} className='border-b'>
               <div
                 className={`w-full h-8 ${e.open ? "bg-gray-200" : null} ${
                   edit === e._id ? "bg-gray-200" : null
