@@ -16,7 +16,6 @@ const Header = () => {
 
 const [openProfile, setOpenProfile] = useState(false)
 const [url, setUrl] = useState(null)
-console.log(url)
 const items = useSelector((state) => state.ProfileReducer.url)
 
 let token = sessionStorage.getItem('token')
