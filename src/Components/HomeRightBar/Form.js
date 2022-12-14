@@ -2,12 +2,10 @@ import React from "react";
 import { AiOutlineSave, AiOutlineShareAlt } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { AddType ,AddUrl} from "../../Redux/Action/From";
+import { AddType, AddUrl } from "../../Redux/Action/From";
 
-const Form = ({ onSendClick,type,url }) => {
+const Form = ({ onSendClick, type, url }) => {
   const dispatch = useDispatch();
-
-  
 
   return (
     <>
@@ -24,7 +22,9 @@ const Form = ({ onSendClick,type,url }) => {
             <option value="post">POST</option>
             <option value="put">PUT</option>
             <option value="delete">DELETE</option>
-            <option value={type} selected>{type}</option>
+            <option value={type} selected>
+              {type}
+            </option>
           </select>
         </div>
 
@@ -54,9 +54,7 @@ const Form = ({ onSendClick,type,url }) => {
             <li>
               <AiOutlineSave className=" cursor-pointer" />
             </li>
-            <li>
-              <AiOutlineShareAlt className=" cursor-pointer" />
-            </li>
+
             <li>
               <BsThreeDots className=" cursor-pointer" />
             </li>

@@ -1,4 +1,44 @@
 .jsoneditor-react-container {
   width: 100%;
+  border: none;
   
+  
+}
+
+.jsoneditor-menu {
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    color: #2563EB;
+    background-color:#2563EB;
+
+    border-bottom:none;
+}
+
+
+.jsoneditor-menu>button.jsoneditor-transform {
+  display: none;
+}
+.jsoneditor-menu>button.jsoneditor-compact {
+  display: none;
+}
+.jsoneditor-menu>button.jsoneditor-repair {
+  display: none;
+}
+.jsoneditor-menu>button.jsoneditor-redo:disabled {
+display: none;
+}
+.jsoneditor-menu>button.jsoneditor-undo:disabled {
+display: none;
+}
+.jsoneditor-menu>button.jsoneditor-separator,
+.jsoneditor-menu>.jsoneditor-modes>button.jsoneditor-separator {
+display: none;
+}
+.jsoneditor-menu a.jsoneditor-poweredBy {
+  display: none;
+}
+
+.jsoneditor-menu>button.jsoneditor-sort {
+  display: none;
 }
