@@ -7,9 +7,11 @@ import { checkParams } from "../Utils/CommonUtils";
 import GetData from "../Service/GetData";
 import ErrorScreen from "./ErrorScreen";
 import SnackBar from "./SnackBar";
+import { useSelector } from "react-redux";
 
-const HomeRightBar = () => {
-  const { formData, paramsData, headersData, jsonText } =
+const HomeRightBar = ({type,url}) => {
+  const formData = useSelector((state) => state.AddFromReducer);
+  const { paramsData, headersData, jsonText } =
     useContext(DataContext);
   // console.log(jsonText);
   const [error, setError] = useState(false);
@@ -37,7 +39,7 @@ const HomeRightBar = () => {
     <>
       <div className="w-full  ">
         <div className="bg-white mt-3 mx-2   h-14">
-          <Form onSendClick={onSendClick} />
+          <Form onSendClick={onSendClick} type={type} url={url} />
         </div>
         <Tabs />
         <hr></hr>

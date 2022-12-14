@@ -1,13 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoIosClose } from "react-icons/io";
 import { RxDotFilled } from "react-icons/rx";
 import { AiOutlinePlus, AiFillCaretDown } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios';
+import { AddRequest } from '../../Redux/Action/AddRequest';
 
 const RequestShow = () => {
 
-    const add = useSelector(state => state.AddRequestReducer.request)
+  const [collection, setcollection] = useState([])
 
+    const add = useSelector(state => state.AddRequestReducer)
+    const dispatch = useDispatch();
+    
+    let newarr = collection.filter((e) => e.type ==="request");
+
+    let token = sessionStorage.getItem("token");
+    let headers = {
+      token,
+    };
+
+    const getData = () => {
+      axios
+        .get(`http://localhost:4000/collection`, { headers })
+        .then((res) => {
+          setcollection(res.data.collection);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+  
+    useEffect(() => {
+      return () => {
+        getData();
+      };
+    }, []);
     const getDetails = (details) => {
         let method = details?.method ? details?.method.toUpperCase() : "NA";
         let colors = {
@@ -23,10 +51,11 @@ const RequestShow = () => {
     return (
         <>
           <div className="w-full h-10 bg-white shadow-inner flex">
-            <div className="w-[80%] border flex h-full overflow-x-scroll scrollbar-hide">
-              {add.map(e => (
-               <div key={e._id} className="flex items-center justify-between 
-                 border-r w-44 min-w-44 px-1 py-1.5 h-full group cursor-pointer">
+            <div className="w-[80%]  flex h-full overflow-x-scroll scrollbar-hide">
+              {newarr.map(e => (
+               <div key={e._id} className={`flex items-center justify-between
+                ${e._id==add?'border-t-2 border-t-blue-400 border-r border-l':'border'}
+                w-44 min-w-44 px-1 py-1.5 h-full group cursor-pointer`} onClick={()=>dispatch(AddRequest(e._id))}>
                   <div className="flex items-center  w-44 min-w-44 h-full gap-2">
                     <p className={`text-xs text-${getDetails(e?.details).color}-500`}>
                     {getDetails(e?.details).method}</p>

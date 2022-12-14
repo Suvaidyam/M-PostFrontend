@@ -2,8 +2,9 @@ import axios from "axios";
 import { getHeadersAndParams } from "../Utils/CommonUtils";
 
 const GetData = async (formData, paramsData, headersData, jsonText) => {
-  const apiType = formData.type.toLowerCase();
-  const apiURL = formData.url;
+  console.log(formData)
+  const apiType = formData.type.type.toLowerCase();
+  const apiURL = formData.url.url;
   const apiHeaders = getHeadersAndParams(headersData);
   const apiParams = getHeadersAndParams(paramsData);
   if (typeof jsonText == 'string') {

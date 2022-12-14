@@ -1,12 +1,13 @@
 import React from "react";
 import { AiOutlineSave, AiOutlineShareAlt } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import { useContext } from "react";
-import { DataContext } from "../Context/DataProvider";
+import { useDispatch } from "react-redux";
+import { AddType ,AddUrl} from "../../Redux/Action/From";
 
-const Form = ({ onSendClick }) => {
-  const { formData, setformData } = useContext(DataContext);
-  // console.log(formData);
+const Form = ({ onSendClick,type,url }) => {
+  const dispatch = useDispatch();
+
+  
 
   return (
     <>
@@ -16,13 +17,14 @@ const Form = ({ onSendClick }) => {
           <select
             className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none "
             onClick={(e) => {
-              setformData({ ...formData, type: e.target.value });
+              dispatch(AddType({ type: e.target.value }));
             }}
           >
             <option value="get">GET</option>
             <option value="post">POST</option>
             <option value="put">PUT</option>
             <option value="delete">DELETE</option>
+            <option value={type} selected>{type}</option>
           </select>
         </div>
 
@@ -33,8 +35,9 @@ const Form = ({ onSendClick }) => {
             type="text"
             className=" text-xs font-semibold px-2 h-9 w-full border-gray-300 border   bg-white    focus:outline-none"
             onChange={(e) => {
-              setformData({ ...formData, url: e.target.value });
+              dispatch(AddUrl({ url: e.target.value }));
             }}
+            defaultValue={url}
           />
         </div>
         {/* button */}

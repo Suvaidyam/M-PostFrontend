@@ -123,7 +123,7 @@ const MyWorkSpaceRightBar = () => {
                           className="w-full relative group flex
                        cursor-pointer hover:bg-gray-200 py-1 px-2"
                         >
-                          <div className="flex items-center gap-2 w-full " onClick={()=>dispatch(AddRequest(ce))}>
+                          <div className="flex items-center gap-2 w-full " onClick={()=>dispatch(AddRequest(ce._id))}>
                             <p
                               className={`text-xs text-${
                                 getDetails(ce?.details).color
