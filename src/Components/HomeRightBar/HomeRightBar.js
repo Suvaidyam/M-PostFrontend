@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { BallTriangle } from "react-loader-spinner";
 // import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-const HomeRightBar = ({ type, url }) => {
+const HomeRightBar = ({ type, url,_id }) => {
   const formData = useSelector((state) => state.AddFromReducer);
   const { paramsData, headersData, jsonText } = useContext(DataContext);
   // console.log(jsonText);
@@ -52,7 +52,7 @@ const HomeRightBar = ({ type, url }) => {
     <>
       <div className="w-full  ">
         <div className="bg-white mt-3 mx-2   h-14">
-          <Form onSendClick={onSendClick} type={type} url={url} />
+          <Form onSendClick={onSendClick} type={type} url={url} _id={_id}/>
         </div>
 
         <div className=" h-screen ">

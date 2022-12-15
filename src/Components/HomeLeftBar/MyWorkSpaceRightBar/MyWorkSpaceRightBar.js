@@ -127,7 +127,7 @@ const MyWorkSpaceRightBar = () => {
                             <p
                               className={`text-xs text-${
                                 getDetails(ce?.details).color
-                              }-500 w-1/4 flex justify-end`}
+                              }-600 w-1/4 flex justify-end`}
                             >
                               {getDetails(ce?.details).method}
                             </p>
