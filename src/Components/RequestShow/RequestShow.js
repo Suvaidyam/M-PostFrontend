@@ -58,8 +58,8 @@ const RequestShow = () => {
               key={e._id}
               className={`flex items-center justify-between
                 ${
-                  e._id == add
-                    ? "border-t-2 border-t-blue-400 border-r border-l"
+                  e._id === add
+                    ? "border-t-2 border-t-blue-600 border-r border-l"
                     : "border"
                 }
                 w-44 min-w-44 px-1 py-1.5 h-full group cursor-pointer`}
@@ -67,7 +67,7 @@ const RequestShow = () => {
             >
               <div className="flex items-center  w-44 min-w-44 h-full gap-2">
                 <p
-                  className={`text-xs text-${getDetails(e?.details).color}-500`}
+                  className={`text-xs text-${getDetails(e?.details).color}-600`}
                 >
                   {getDetails(e?.details).method}
                 </p>
