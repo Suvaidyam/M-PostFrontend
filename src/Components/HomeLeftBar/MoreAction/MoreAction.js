@@ -14,7 +14,7 @@ const MoreAction = ({ parentId }) => {
 
   const postData = () => {
     axios.post(`http://localhost:4000/collection`,
-      { name: 'New Request', type: "request", parent: parentId, details: { method: 'GET', url: 'myUrl' } }
+      { name: 'New Request', type: "request", parent: parentId, details: { method: 'GET', url: 'http://localhost:4000/' } }
       , { headers })
       .then((res) => {
         // setcollection(res.data.collection)

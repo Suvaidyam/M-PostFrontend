@@ -63,7 +63,7 @@ const Home = () => {
               <RequestShow/>
               {/* Right */}
               {newarr.map(e=>(
-                e._id==add?<HomeRightBar type={e.details.method} url={e.details.url}/>:null
+                e._id==add?<HomeRightBar type={e.details.method} url={e.details.url} _id={e._id}/>:null
               ))}
               <div className="w-full flex flex-col justify-center items-center h-full gap-2">
                 <img className="w-32" src={logo} alt="" />
