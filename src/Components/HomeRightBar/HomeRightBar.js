@@ -21,8 +21,6 @@ const HomeRightBar = ({ type, url }) => {
   const [apiResponse, setApiResponse] = useState();
   const [apiStatus, setApiStatus] = useState();
   const [isLoading, setLoading] = useState(false);
-  console.log(apiStatus);
-  console.log(apiResponse);
 
   const onSendClick = async (e) => {
     if (

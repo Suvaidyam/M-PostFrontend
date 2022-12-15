@@ -14,7 +14,6 @@ const LoginForm = () => {
   const [isLoding, setisLoding] = useState(false);
   const [check, setCheck] = useState(true);
   const [open, setOpen] = useState(false);
-console.log(err)
   const navigate = useNavigate();
 
   const save = () => {

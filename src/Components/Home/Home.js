@@ -22,7 +22,7 @@ const Home = () => {
 
     const add = useSelector(state => state.AddRequestReducer)
     const fromdata = useSelector(state => state.AddFromReducer)
-    console.log('Home',fromdata)
+    
     let newarr = collection.filter((e) => e.type ==="request");
 
     let token = sessionStorage.getItem("token");
