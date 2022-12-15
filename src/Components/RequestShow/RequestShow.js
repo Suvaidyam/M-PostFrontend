@@ -8,11 +8,13 @@ import { AddRequest } from "../../Redux/Action/AddRequest";
 
 const RequestShow = () => {
   const [collection, setcollection] = useState([]);
+  const [Delete, setDelete] = useState(null);
 
   const add = useSelector((state) => state.AddRequestReducer);
   const dispatch = useDispatch();
 
   let newarr = collection.filter((e) => e.type === "request");
+  let arr = newarr.filter((e) => e._id !== Delete );
 
   let token = sessionStorage.getItem("token");
   let headers = {
@@ -51,7 +53,7 @@ const RequestShow = () => {
     <>
       <div className="w-full h-10 bg-white shadow-inner flex">
         <div className="w-[80%]  flex h-full overflow-x-scroll scrollbar-hide">
-          {newarr.map((e) => (
+          {arr.map((e) => (
             <div
               key={e._id}
               className={`flex items-center justify-between
@@ -72,7 +74,7 @@ const RequestShow = () => {
                 <p className="flex items-center text-xs  h-full">{e.name}</p>
               </div>
               <RxDotFilled className="text-2xl text-red-500 group-hover:hidden block" />
-              <IoIosClose className="text-2xl cursor-pointer hidden group-hover:block" />
+              <IoIosClose className="text-2xl cursor-pointer hidden group-hover:block" onClick={()=>setDelete(e._id)}/>
             </div>
           ))}
           <div className="h-full flex items-center ml-1">
