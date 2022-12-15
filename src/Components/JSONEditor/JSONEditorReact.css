@@ -4,6 +4,14 @@
   
   
 }
+.ace-jsoneditor {
+  min-height: 130px ;
+}
+.ace_scrollbar-v {
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+}
 
 .jsoneditor-menu {
     width: 100%;
