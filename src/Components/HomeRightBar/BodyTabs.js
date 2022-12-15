@@ -8,7 +8,7 @@ export default function BodyTabs() {
     useContext(DataContext);
 
   // 👇️ initialize state to default checked radio button
-  const [selected, setSelected] = useState("form-data");
+  const [selected, setSelected] = useState("json");
 
   const handleChange = (event) => {
     console.log(event.target.value);
