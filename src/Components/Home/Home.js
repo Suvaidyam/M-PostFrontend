@@ -16,40 +16,42 @@ import logo from '../../Assets/Vector.png'
 
 const Home = () => {
 
-  
+
   const [enviroment, setEnviroment] = useState(false);
   const [collection, setcollection] = useState([])
 
-    const add = useSelector(state => state.AddRequestReducer)
-    const fromdata = useSelector(state => state.AddFromReducer)
-    
-    let newarr = collection.filter((e) => e.type ==="request");
+  const add = useSelector(state => state.AddRequestReducer)
+  const fromdata = useSelector(state => state.AddFromReducer)
 
-    let token = sessionStorage.getItem("token");
-    let headers = {
-      token,
-    };
+  let tabs = useSelector((state) => state.TabsReducer)
 
-    const getData = () => {
-      axios
-        .get(`http://localhost:4000/collection`, { headers })
-        .then((res) => {
-          setcollection(res.data.collection);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  let newarr = collection.filter((e) => e.type === "request");
+
+  let token = sessionStorage.getItem("token");
+  let headers = {
+    token,
+  };
+
+  const getData = () => {
+    axios
+      .get(`http://localhost:4000/collection`, { headers })
+      .then((res) => {
+        setcollection(res.data.collection);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    return () => {
+      getData();
     };
-  
-    useEffect(() => {
-      return () => {
-        getData();
-      };
-    }, []);
+  }, []);
 
   return (
     <>
-    <Header/>
+      <Header />
       <DataProvider>
         <div className="w-full h-[88.5vh] ">
           <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex">
@@ -57,27 +59,26 @@ const Home = () => {
             <div className="w-[30%] border-r-2">
               <HomeLeftBar />
             </div>
-             {/* Right */}
-              <div className="w-[66%] bg-gray-100">
+            {/* Right */}
+            <div className="w-[66%] bg-gray-100">
               {/* metod Request */}
-              <RequestShow/>
+              <RequestShow />
               {/* Right */}
-              {newarr.map(e=>(
-                e._id==add?<HomeRightBar type={e.details.method} url={e.details.url} _id={e._id}/>:null
+              {tabs.map(e => (
+                e._id == add ? <HomeRightBar details={e.details} _id={e._id} /> : null
               ))}
               <div className="w-full flex flex-col justify-center items-center h-full gap-2">
                 <img className="w-32" src={logo} alt="" />
                 <div className="bg-gray-300 px-2 py-1 rounded-md cursor-pointer">
-                <p>Create a new request</p>
+                  <p>Create a new request</p>
                 </div>
               </div>
             </div>
             <div className="w-[4%] h-full flex flex-col justify-between items-center py-3 relative">
               <div className=" flex flex-col items-center justify-center gap-5">
                 <div
-                  className={`${
-                    enviroment === true ? "bg-slate-200 rounded-sm" : null
-                  }`}
+                  className={`${enviroment === true ? "bg-slate-200 rounded-sm" : null
+                    }`}
                 >
                   <p className="p-2 hover:bg-slate-200">
                     {" "}

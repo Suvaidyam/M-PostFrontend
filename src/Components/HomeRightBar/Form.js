@@ -1,31 +1,31 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { AddType, AddUrl } from "../../Redux/Action/From";
+import Http from "../../Services/http";
 
-const Form = ({ onSendClick, type, url ,_id}) => {
-  const dispatch = useDispatch();
-  const types = useSelector((state) => state.AddFromReducer)
+const Form = ({ _id, details = { method: "", url: "" } }) => {
+  const [data, setData] = useState(details);
 
-  let token = sessionStorage.getItem("token");
-    let headers = {
-      token,
-    };
   const Save = () => {
-    
-    axios.put(`http://localhost:4000/collection/${_id}`,{ details: { method: types.type.type, url: types.url.url }}, 
-    { headers })
-      .then((res) => {
-        // setcollection(res.data.collection);
-        console.log(res.data.collection)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    Http({
+      url: `collection/${_id}`,
+      method: 'put',
+      data: {
+        details: data
+      }
+    }).then((res) => {
+      console.log(res.data.collection)
+    }).catch((err) => {
+      console.log(err);
+    });
   };
-
+  const handleSend = (d) => {
+    console.log(d);
+    // onSendClick(data)
+  }
 
   return (
     <>
@@ -34,17 +34,14 @@ const Form = ({ onSendClick, type, url ,_id}) => {
         <div className="   w-28 h-9 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
           <select
             className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none "
-            onClick={(e) => {
-              dispatch(AddType({ type: e.target.value }));
+            onChange={(e) => {
+              setData({ ...data, method: e.target.value })
             }}
           >
-            <option value="get">GET</option>
-            <option value="post">POST</option>
-            <option value="put">PUT</option>
-            <option value="delete">DELETE</option>
-            <option value={type} selected>
-              {type.toUpperCase()}
-            </option>
+            <option value="GET" selected={data.method.toUpperCase() == 'GET'}>GET</option>
+            <option value="POST" selected={data.method.toUpperCase() == 'POST'}>POST</option>
+            <option value="PUT" selected={data.method.toUpperCase() == 'PUT'}>PUT</option>
+            <option value="DELETE" selected={data.method.toUpperCase() == 'DELETE'}>DELETE</option>
           </select>
         </div>
 
@@ -55,16 +52,16 @@ const Form = ({ onSendClick, type, url ,_id}) => {
             type="url"
             className=" text-xs font-semibold px-2 h-9 w-full border-gray-300 border   bg-white    focus:outline-none"
             onChange={(e) => {
-              dispatch(AddUrl({ url: e.target.value }));
+              setData({ ...data, url: e.target.value })
             }}
-            defaultValue={url}
+            defaultValue={data.url}
           />
         </div>
         {/* button */}
         <div className="h-9">
           <button
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-4 rounded-r-md "
-            onClick={(e) => onSendClick(e)}
+            onClick={() => handleSend(data)}
           >
             SEND
           </button>
@@ -72,7 +69,7 @@ const Form = ({ onSendClick, type, url ,_id}) => {
         <div>
           <ul className="flex gap-3 pl-3 text-xl">
             <li>
-              <AiOutlineSave className=" cursor-pointer" onClick={Save}/>
+              <AiOutlineSave className=" cursor-pointer" onClick={Save} />
             </li>
 
             <li>

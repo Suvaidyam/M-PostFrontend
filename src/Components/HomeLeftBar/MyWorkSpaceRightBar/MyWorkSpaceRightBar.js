@@ -11,6 +11,7 @@ import RequestAction from "../MoreAction/RequestAction";
 import { useDispatch, useSelector } from "react-redux";
 import { CollectionEdit } from "../../../Redux/Action/CollectionEditAction";
 import { AddRequest } from "../../../Redux/Action/AddRequest";
+import { Tabs } from "../../../Redux/Action/Tabs";
 
 const MyWorkSpaceRightBar = () => {
   const edit = useSelector((state) => state.CollectionEditReducer);
@@ -20,6 +21,9 @@ const MyWorkSpaceRightBar = () => {
   const [parentId, setparentId] = useState("");
   let newarr = collection.filter((e) => e.parent == null);
   const [arr, setArr] = useState(newarr);
+
+  let tabs = useSelector((state) => state.TabsReducer)
+
 
   let token = sessionStorage.getItem("token");
   let headers = {
@@ -50,7 +54,14 @@ const MyWorkSpaceRightBar = () => {
     e.open = !e.open;
     setArr([...arr]);
   };
-
+  const handleRequest = (e) => {
+    if (tabs.findIndex(f => f._id == e._id) < 0) {
+      tabs.push(e)
+      dispatch(Tabs(tabs));
+      dispatch(AddRequest(e._id))
+      console.log('CollectionRequestTabs.length', tabs.length);
+    }
+  }
   const getDetails = (details) => {
     let method = details?.method ? details?.method.toUpperCase() : "NA";
     let colors = {
@@ -70,9 +81,8 @@ const MyWorkSpaceRightBar = () => {
           {newarr.map((e) => (
             <div key={e._id} className='border-b'>
               <div
-                className={`w-full h-8 ${e.open ? "bg-gray-200" : null} ${
-                  edit === e._id ? "bg-gray-200" : null
-                }  flex items-center relative px-2 cursor-pointer
+                className={`w-full h-8 ${e.open ? "bg-gray-200" : null} ${edit === e._id ? "bg-gray-200" : null
+                  }  flex items-center relative px-2 cursor-pointer
               hover:bg-gray-200 group`}
               >
                 {edit === e._id ? (
@@ -123,11 +133,10 @@ const MyWorkSpaceRightBar = () => {
                           className="w-full relative group flex
                        cursor-pointer hover:bg-gray-200 py-1 px-2"
                         >
-                          <div className="flex items-center gap-2 w-full " onClick={()=>dispatch(AddRequest(ce._id))}>
+                          <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
                             <p
-                              className={`text-xs text-${
-                                getDetails(ce?.details).color
-                              }-600 w-1/4 flex justify-end`}
+                              className={`text-xs text-${getDetails(ce?.details).color
+                                }-600 w-1/4 flex justify-end`}
                             >
                               {getDetails(ce?.details).method}
                             </p>
