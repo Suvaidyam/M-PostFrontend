@@ -1,77 +1,73 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import React, { useState, useContext } from "react";
 import QueryForm from "./QueryForm";
 import BodyForm from "./BodyForm";
 import { DataContext } from "../Context/DataProvider";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-export default function BasicTabs() {
-  const [value, setValue] = React.useState(0);
+export default function BodyTabs() {
   const { paramsData, setparamsData, headersData, setheadersData } =
     useContext(DataContext);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  // 👇️ initialize state to default checked radio button
+  const [selected, setSelected] = useState("json");
+
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setSelected(event.target.value);
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box>
-        <Tabs
-          value={value}
+    <div>
+      <div className="mx-2 flex items-center   py-2 ">
+        <input
+          className="mx-2"
+          type="radio"
+          id="form-data"
+          name="choose"
+          value="form-data"
+          checked={selected === "form-data"}
           onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label=" Form-Data" {...a11yProps(0)} />
-          <Tab label="x-www-Form-urnlencoded" {...a11yProps(1)} />
-          <Tab label="JSON" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
+        />
+        <label htmlFor="form-data" className="font-medium text-xs">
+          form-data
+        </label>
+
+        <input
+          className="mx-2"
+          type="radio"
+          id="x-www-form-urlencoded"
+          name="choose"
+          value="x-www-form-urlencoded"
+          onChange={handleChange}
+          checked={selected === "x-www-form-urlencoded"}
+        />
+        <label htmlFor="x-www-form-urlencoded" className="font-medium text-xs">
+          x-www-form-urlencoded
+        </label>
+
+        <input
+          className="mx-2 "
+          type="radio"
+          id="json"
+          name="choose"
+          value="json"
+          onChange={handleChange}
+          checked={selected === "json"}
+        />
+        <label htmlFor="json" className="font-medium text-xs">
+          json
+        </label>
+      </div>
+      {selected === "form-data" ? (
         <QueryForm data={paramsData} setdata={setparamsData} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
+      ) : (
+        <></>
+      )}
+      {selected === "x-www-form-urlencoded" ? (
         <QueryForm data={headersData} setdata={setheadersData} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <BodyForm />
-      </TabPanel>
-    </Box>
+      ) : (
+        <></>
+      )}
+      {selected === "json" ? <BodyForm /> : <></>}
+    </div>
   );
 }

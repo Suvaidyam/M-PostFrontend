@@ -5,11 +5,13 @@ import {HiOutlineTrash} from 'react-icons/hi'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import { ProfileUrl } from '../../Redux/Action/ProfileAction'
+import { Puff } from  'react-loader-spinner'
 
 const Profile = ({setOpenProfile}) => {
 
     const [file, setfile] = useState(null)
     const [url, setUrl] = useState(null)
+    const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch()
     const items = useSelector((state) => state.ProfileReducer.url)
 
@@ -42,8 +44,16 @@ const Profile = ({setOpenProfile}) => {
           headers
         }).then((res) => {
           setUrl(res.data.user.url)
+          setLoading(true);
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
         }).catch((error) => {
           console.log(error)
+          setLoading(true);
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
         })
     }
     useEffect(() => {
@@ -59,8 +69,18 @@ const Profile = ({setOpenProfile}) => {
             <div className="w-[450px] h-[350px] bg-white rounded-md shadow-xl p-7 flex flex-col justify-between">
                 <h1 className='text-xl flex font-medium'>Change your profile picture</h1>
                 <div className='flex justify-between w-full'>
-                  <div className="w-32 h-32 border rounded-full cursor-pointer">
-                    <img className='w-32 h-32 border rounded-full object-cover' src={url?`http://localhost:4000/`+url:Avatar} alt="" />
+                  <div className="w-32 h-32 border rounded-full cursor-pointer flex justify-center items-center">
+                    {isLoading===false?<img className='w-32 h-32 border rounded-full object-cover' src={url?`http://localhost:4000/`+url:Avatar} alt="" />
+                    :<Puff
+                    height="80"
+                    width="80"
+                    radisu={1}
+                    color="#4fa94d"
+                    ariaLabel="puff-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                  />}
                   </div>
                   <div className='py-5 flex flex-col gap-4'>
                   <label htmlFor="file" className='cursor-pointer flex items-center gap-2'><TbUpload/> Upload picture

@@ -32,7 +32,6 @@ const RegisterForm = () => {
           company
         });
       }
-      console.log(formData)
     };
     postData();
 

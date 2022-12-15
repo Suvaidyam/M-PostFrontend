@@ -1,12 +1,31 @@
+import axios from "axios";
 import React from "react";
-import { AiOutlineSave, AiOutlineShareAlt } from "react-icons/ai";
+import { AiOutlineSave } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import { useContext } from "react";
-import { DataContext } from "../Context/DataProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { AddType, AddUrl } from "../../Redux/Action/From";
 
-const Form = ({ onSendClick }) => {
-  const { formData, setformData } = useContext(DataContext);
-  // console.log(formData);
+const Form = ({ onSendClick, type, url ,_id}) => {
+  const dispatch = useDispatch();
+  const types = useSelector((state) => state.AddFromReducer)
+
+  let token = sessionStorage.getItem("token");
+    let headers = {
+      token,
+    };
+  const Save = () => {
+    
+    axios.put(`http://localhost:4000/collection/${_id}`,{ details: { method: types.type.type, url: types.url.url }}, 
+    { headers })
+      .then((res) => {
+        // setcollection(res.data.collection);
+        console.log(res.data.collection)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   return (
     <>
@@ -16,13 +35,16 @@ const Form = ({ onSendClick }) => {
           <select
             className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none "
             onClick={(e) => {
-              setformData({ ...formData, type: e.target.value });
+              dispatch(AddType({ type: e.target.value }));
             }}
           >
             <option value="get">GET</option>
             <option value="post">POST</option>
             <option value="put">PUT</option>
             <option value="delete">DELETE</option>
+            <option value={type} selected>
+              {type.toUpperCase()}
+            </option>
           </select>
         </div>
 
@@ -30,11 +52,12 @@ const Form = ({ onSendClick }) => {
         <div className="w-full  ">
           <input
             placeholder="Entet Request URL"
-            type="text"
+            type="url"
             className=" text-xs font-semibold px-2 h-9 w-full border-gray-300 border   bg-white    focus:outline-none"
             onChange={(e) => {
-              setformData({ ...formData, url: e.target.value });
+              dispatch(AddUrl({ url: e.target.value }));
             }}
+            defaultValue={url}
           />
         </div>
         {/* button */}
@@ -49,11 +72,9 @@ const Form = ({ onSendClick }) => {
         <div>
           <ul className="flex gap-3 pl-3 text-xl">
             <li>
-              <AiOutlineSave className=" cursor-pointer" />
+              <AiOutlineSave className=" cursor-pointer" onClick={Save}/>
             </li>
-            <li>
-              <AiOutlineShareAlt className=" cursor-pointer" />
-            </li>
+
             <li>
               <BsThreeDots className=" cursor-pointer" />
             </li>
