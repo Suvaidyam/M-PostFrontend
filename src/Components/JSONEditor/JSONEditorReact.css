@@ -12,6 +12,13 @@
   overflow-y: scroll;
 
 }
+.jsoneditor {
+  color: #1a1a1a;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 0;
+}
 
 .jsoneditor-menu {
     width: 100%;
