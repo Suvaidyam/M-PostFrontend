@@ -3,9 +3,9 @@ import isEqual from "lodash/isEqual";
 import cloneDeep from "lodash/cloneDeep";
 
 import JSONEditor from "jsoneditor";
-import "jsoneditor/dist/jsoneditor.css";
+// import "jsoneditor/dist/jsoneditor.css";
 
-import "./JSONEditorReact.css";
+import "./JSON.css";
 
 export default class JSONEditorReact extends Component {
   componentDidMount() {
