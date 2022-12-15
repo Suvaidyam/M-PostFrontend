@@ -4,7 +4,7 @@ import AddRow from "./AddRow";
 const QueryForm = ({ data, setdata }) => {
   const [rows, addrows] = useState([0]);
   return (
-    <div className="px-3  bg-white overflow-y-scroll scrollbar-hide  h-28 pb-4 mx-2 mb-2">
+    <div className="px-3  bg-white overflow-y-scroll scrollbar-hide  h-40 pb-2 mx-2 mb-2">
       <div className="overflow-x-auto relative  pt-3">
         <table className="w-full text-sm text-left text-gray-600 ">
           <thead className="text-xs border text-gray-600 uppercase bg-white ">

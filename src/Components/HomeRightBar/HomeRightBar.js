@@ -9,14 +9,20 @@ import ErrorScreen from "./ErrorScreen";
 import SnackBar from "./SnackBar";
 import { useSelector } from "react-redux";
 
-const HomeRightBar = ({type,url,_id}) => {
+import { BallTriangle } from "react-loader-spinner";
+// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
+const HomeRightBar = ({ type, url }) => {
   const formData = useSelector((state) => state.AddFromReducer);
-  const { paramsData, headersData, jsonText } =
-    useContext(DataContext);
+  const { paramsData, headersData, jsonText } = useContext(DataContext);
   // console.log(jsonText);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
   const [apiResponse, setApiResponse] = useState();
+  const [apiStatus, setApiStatus] = useState();
+  const [isLoading, setLoading] = useState(false);
+  console.log(apiStatus);
+  console.log(apiResponse);
 
   const onSendClick = async (e) => {
     if (
@@ -30,29 +36,54 @@ const HomeRightBar = ({type,url,_id}) => {
       response = await GetData(formData, paramsData, headersData, jsonText);
     } catch (res) {
       response = res.response;
+      setApiStatus(res.response.status);
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
-
+    setApiStatus(response.status);
     setApiResponse(response.data);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   return (
     <>
       <div className="w-full  ">
         <div className="bg-white mt-3 mx-2   h-14">
-          <Form onSendClick={onSendClick} type={type} url={url} _id={_id} />
+          <Form onSendClick={onSendClick} type={type} url={url} />
         </div>
-        <Tabs />
-        <hr></hr>
-        <div
-          className="bg-white   min-h-screen"
-          style={{ wordWrap: "break-word" }}
-        >
+
+        <div className=" h-screen ">
+          <Tabs />
           <pre>
-            <Response data={apiResponse} />
-            <ErrorScreen />
-            {error && (
-              <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
+            {isLoading ? (
+              <div className="flex items-center justify-center pt-20">
+                <BallTriangle
+                  height={100}
+                  width={100}
+                  radius={5}
+                  color="#2563EB"
+                  ariaLabel="ball-triangle-loading"
+                  wrapperClass={{}}
+                  wrapperStyle=""
+                  visible={true}
+                />
+              </div>
+            ) : (
+              <>
+                {apiStatus === 404 ? (
+                  <ErrorScreen />
+                ) : (
+                  <Response data={apiResponse} />
+                )}
+              </>
             )}
+
+            <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
           </pre>
         </div>
       </div>

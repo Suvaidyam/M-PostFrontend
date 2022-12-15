@@ -17,7 +17,7 @@ export default function BodyTabs() {
 
   return (
     <div>
-      <div className="mx-2 flex items-center py-2 ">
+      <div className="mx-2 flex items-center   py-2 ">
         <input
           className="mx-2"
           type="radio"
