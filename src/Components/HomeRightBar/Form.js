@@ -1,31 +1,30 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-import { AddType, AddUrl } from "../../Redux/Action/From";
 import Http from "../../Services/http";
 
-const Form = ({ _id, details = { method: "", url: "" } }) => {
+const Form = ({ onSendClick, _id, details = { method: "", url: "" } }) => {
   const [data, setData] = useState(details);
 
   const Save = () => {
     Http({
       url: `collection/${_id}`,
-      method: 'put',
+      method: "put",
       data: {
-        details: data
-      }
-    }).then((res) => {
-      console.log(res.data.collection)
-    }).catch((err) => {
-      console.log(err);
-    });
+        details: data,
+      },
+    })
+      .then((res) => {
+        console.log(res.data.collection);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const handleSend = (d) => {
     console.log(d);
-    // onSendClick(data)
-  }
+    onSendClick(data);
+  };
 
   return (
     <>
@@ -35,13 +34,27 @@ const Form = ({ _id, details = { method: "", url: "" } }) => {
           <select
             className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none "
             onChange={(e) => {
-              setData({ ...data, method: e.target.value })
+              setData({ ...data, method: e.target.value });
             }}
           >
-            <option value="GET" selected={data.method.toUpperCase() == 'GET'}>GET</option>
-            <option value="POST" selected={data.method.toUpperCase() == 'POST'}>POST</option>
-            <option value="PUT" selected={data.method.toUpperCase() == 'PUT'}>PUT</option>
-            <option value="DELETE" selected={data.method.toUpperCase() == 'DELETE'}>DELETE</option>
+            <option value="GET" selected={data.method.toUpperCase() === "GET"}>
+              GET
+            </option>
+            <option
+              value="POST"
+              selected={data.method.toUpperCase() === "POST"}
+            >
+              POST
+            </option>
+            <option value="PUT" selected={data.method.toUpperCase() === "PUT"}>
+              PUT
+            </option>
+            <option
+              value="DELETE"
+              selected={data.method.toUpperCase() === "DELETE"}
+            >
+              DELETE
+            </option>
           </select>
         </div>
 
@@ -52,7 +65,7 @@ const Form = ({ _id, details = { method: "", url: "" } }) => {
             type="url"
             className=" text-xs font-semibold px-2 h-9 w-full border-gray-300 border   bg-white    focus:outline-none"
             onChange={(e) => {
-              setData({ ...data, url: e.target.value })
+              setData({ ...data, url: e.target.value });
             }}
             defaultValue={data.url}
           />

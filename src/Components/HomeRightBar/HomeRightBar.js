@@ -22,7 +22,7 @@ const HomeRightBar = ({ details, _id }) => {
   const [apiStatus, setApiStatus] = useState();
   const [isLoading, setLoading] = useState(false);
 
-  const onSendClick = async (e) => {
+  const onSendClick = async (data) => {
     if (
       !checkParams(formData, paramsData, headersData, jsonText, setErrorMsg)
     ) {
@@ -31,10 +31,10 @@ const HomeRightBar = ({ details, _id }) => {
     }
     let response;
     try {
-      response = await GetData(formData, paramsData, headersData, jsonText);
+      response = await GetData(data, paramsData, headersData, jsonText);
     } catch (res) {
       response = res.response;
-      setApiStatus(res.response.status);
+      // setApiStatus(res.response.status);
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
@@ -52,7 +52,7 @@ const HomeRightBar = ({ details, _id }) => {
     <>
       <div className="w-full  ">
         <div className="bg-white mt-3 mx-2   h-14">
-          <Form details={details} _id={_id} />
+          <Form onSendClick={onSendClick} details={details} _id={_id} />
         </div>
 
         <div className=" h-screen ">
