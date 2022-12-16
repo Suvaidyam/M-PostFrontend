@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../Context/DataProvider";
 
-import JSONEditor from "../BodyJsonEdiotor";
+import JSONEditorReact from "../JSONEditor";
 
 const BodyForm = () => {
   const { setjsonText } = useContext(DataContext);
@@ -24,7 +24,7 @@ const BodyForm = () => {
 
   return (
     <div className=" mb-2   scrollbar-hide  bg-white  ">
-      <JSONEditor
+      <JSONEditorReact
         text={JSON.stringify(data, null, 3)}
         mode={mode}
         indentation={4}
