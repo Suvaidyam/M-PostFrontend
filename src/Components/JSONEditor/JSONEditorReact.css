@@ -5,7 +5,17 @@
   
 }
 .ace-jsoneditor {
-  min-height: 130px ;
+  min-height: 95px ;
+}
+.jsoneditor-statusbar {
+  line-height: 26px;
+  height: 26px;
+  color: #808080;
+  background-color: #ebebeb;
+  border-top: 1px solid #d3d3d3;
+  box-sizing: border-box;
+  font-size: 14px;
+  display: none;
 }
 .ace_scrollbar-v {
   overflow-x: hidden;
@@ -18,6 +28,18 @@
   height: 100%;
   position: relative;
   padding: 0;
+}
+
+
+.jsoneditor {
+  color: #1a1a1a;
+  border: none !important;
+
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 0;
+  line-height: 100%;
 }
 
 .jsoneditor-menu {

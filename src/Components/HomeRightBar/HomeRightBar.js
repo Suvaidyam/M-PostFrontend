@@ -30,16 +30,17 @@ const HomeRightBar = ({ details, _id }) => {
     let response;
     try {
       response = await GetData(data, paramsData, headersData, jsonText);
+      setApiStatus(response.status);
+      setApiResponse(response);
     } catch (res) {
       response = res.response;
-      // setApiStatus(res.response.status);
+      setApiStatus(res.response.status);
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
       }, 1000);
     }
-    setApiStatus(response.status);
-    setApiResponse(response.data);
+
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -76,7 +77,7 @@ const HomeRightBar = ({ details, _id }) => {
                 {apiStatus === 404 ? (
                   <ErrorScreen />
                 ) : (
-                  <Response data={apiResponse} />
+                  <Response apiResponse={apiResponse} />
                 )}
               </>
             )}
