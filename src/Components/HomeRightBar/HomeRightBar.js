@@ -13,7 +13,7 @@ import { BallTriangle } from "react-loader-spinner";
 // import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const HomeRightBar = ({ details, _id }) => {
-  const formData = useSelector((state) => state.AddFromReducer);
+  // const formData = useSelector((state) => state.AddFromReducer);
   const { paramsData, headersData, jsonText } = useContext(DataContext);
   // console.log(jsonText);
   const [error, setError] = useState(false);
@@ -23,9 +23,7 @@ const HomeRightBar = ({ details, _id }) => {
   const [isLoading, setLoading] = useState(false);
 
   const onSendClick = async (data) => {
-    if (
-      !checkParams(formData, paramsData, headersData, jsonText, setErrorMsg)
-    ) {
+    if (!checkParams(data, paramsData, headersData, jsonText, setErrorMsg)) {
       setError(true);
       return false;
     }
@@ -55,8 +53,10 @@ const HomeRightBar = ({ details, _id }) => {
           <Form onSendClick={onSendClick} details={details} _id={_id} />
         </div>
 
-        <div className=" h-screen ">
+        <div className="  w-full px-2">
           <Tabs />
+        </div>
+        <div className="min-h ">
           <pre>
             {isLoading ? (
               <div className="flex items-center justify-center pt-20">

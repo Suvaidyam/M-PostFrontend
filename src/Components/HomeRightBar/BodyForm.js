@@ -23,7 +23,7 @@ const BodyForm = () => {
   };
 
   return (
-    <div className=" mb-2 mx-2  scrollbar-hide  bg-white  ">
+    <div className=" mb-2   scrollbar-hide  bg-white  ">
       <JSONEditor
         text={JSON.stringify(data, null, 3)}
         mode={mode}

@@ -5,9 +5,9 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import QueryForm from "./QueryForm";
-import BodyForm from "./BodyForm";
 import BodyTabs from "./BodyTabs";
 import { DataContext } from "../Context/DataProvider";
+import "./Tabs.css";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,27 +52,57 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%"}}>
-      <Box  sx={{height: '32px',minHeight:'32px'}}>
-        <Tabs sx={{height: '32px',minHeight:'32px'}}
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab sx={{height: '32px',minHeight:'32px',textTransform: "capitalize"}} label="Params" {...a11yProps(0)} />
-          <Tab sx={{height: '32px',minHeight:'32px',textTransform: "capitalize"}} label="Headers" {...a11yProps(1)} />
-          <Tab sx={{height: '32px',minHeight:'32px',textTransform: "capitalize"}} label="Body" {...a11yProps(2)} />
-        </Tabs>
+    <div className=" h-full  min-h-[224px] ">
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ height: "32px", minHeight: "32px", color: "#2563EB" }}>
+          <Tabs
+            sx={{ height: "32px", minHeight: "32px", color: "#2563EB" }}
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab
+              sx={{
+                height: "32px",
+                minHeight: "32px",
+                textTransform: "capitalize",
+                color: "#000000",
+              }}
+              label="Params"
+              {...a11yProps(0)}
+            />
+            <Tab
+              sx={{
+                height: "32px",
+                minHeight: "32px",
+                textTransform: "capitalize",
+                color: "#000000",
+              }}
+              label="Headers"
+              {...a11yProps(1)}
+            />
+            <Tab
+              sx={{
+                height: "32px",
+                minHeight: "32px",
+                textTransform: "capitalize",
+                color: "#000000",
+              }}
+              label="Body"
+              {...a11yProps(2)}
+            />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <QueryForm data={paramsData} setdata={setparamsData} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <QueryForm data={headersData} setdata={setheadersData} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <BodyTabs />
+        </TabPanel>
       </Box>
-      <TabPanel value={value} index={0}>
-        <QueryForm data={paramsData} setdata={setparamsData} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <QueryForm data={headersData} setdata={setheadersData} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <BodyTabs />
-      </TabPanel>
-    </Box>
+    </div>
   );
 }

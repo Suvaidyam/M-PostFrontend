@@ -1,6 +1,5 @@
 const checkValidJson = (text) => {
-  if (typeof text == 'object')
-    return true;
+  if (typeof text == "object") return true;
   if (
     /^[\],:{}\s]*$/.test(
       text
@@ -19,13 +18,13 @@ const checkValidJson = (text) => {
 };
 
 export const checkParams = (
-  formData,
+  data,
   paramsData,
   headersData,
   jsonText,
   setErrorMsg
 ) => {
-  if (!formData.url) {
+  if (!data.url) {
     setErrorMsg("Request URL is Missing");
     return false;
   }
