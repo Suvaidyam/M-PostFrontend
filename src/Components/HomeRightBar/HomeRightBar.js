@@ -9,9 +9,6 @@ import ErrorScreen from "./ErrorScreen";
 import SnackBar from "./SnackBar";
 import { useSelector } from "react-redux";
 
-import { BallTriangle } from "react-loader-spinner";
-// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-
 const HomeRightBar = ({ details, _id }) => {
   // const formData = useSelector((state) => state.AddFromReducer);
   const { paramsData, headersData, jsonText } = useContext(DataContext);
@@ -21,6 +18,7 @@ const HomeRightBar = ({ details, _id }) => {
   const [apiResponse, setApiResponse] = useState();
   const [apiStatus, setApiStatus] = useState();
   const [isLoading, setLoading] = useState(false);
+  console.log(apiStatus);
 
   const onSendClick = async (data) => {
     if (!checkParams(data, paramsData, headersData, jsonText, setErrorMsg)) {
@@ -56,31 +54,8 @@ const HomeRightBar = ({ details, _id }) => {
 
         <div className="  w-full px-2">
           <Tabs />
-        </div>
-        <div className="min-h ">
           <pre>
-            {isLoading ? (
-              <div className="flex items-center justify-center pt-20">
-                <BallTriangle
-                  height={100}
-                  width={100}
-                  radius={5}
-                  color="#2563EB"
-                  ariaLabel="ball-triangle-loading"
-                  wrapperClass={{}}
-                  wrapperStyle=""
-                  visible={true}
-                />
-              </div>
-            ) : (
-              <>
-                {apiStatus === 404 ? (
-                  <ErrorScreen />
-                ) : (
-                  <Response apiResponse={apiResponse} />
-                )}
-              </>
-            )}
+            <Response apiResponse={apiResponse} isLoading={isLoading} />
 
             <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
           </pre>
