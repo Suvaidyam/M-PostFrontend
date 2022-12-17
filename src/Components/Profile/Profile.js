@@ -69,8 +69,8 @@ const Profile = ({setOpenProfile}) => {
             <div className="w-[450px] h-[350px] bg-white rounded-md shadow-xl p-7 flex flex-col justify-between">
                 <h1 className='text-xl flex font-medium'>Change your profile picture</h1>
                 <div className='flex justify-between w-full'>
-                  <div className="w-32 h-32 border rounded-full cursor-pointer flex justify-center items-center">
-                    {isLoading===false?<img className='w-32 h-32 border rounded-full object-cover' src={url?`http://localhost:4000/`+url:Avatar} alt="" />
+                  <div className="w-32 h-32 border-2 border-blue-400 rounded-full cursor-pointer flex justify-center items-center">
+                    {isLoading===false?<img className='w-[126px] h-[125px] rounded-full object-cover' src={url?`http://localhost:4000/`+url:Avatar} alt="" />
                     :<Puff
                     height="80"
                     width="80"
@@ -83,15 +83,17 @@ const Profile = ({setOpenProfile}) => {
                   />}
                   </div>
                   <div className='py-5 flex flex-col gap-4'>
-                  <label htmlFor="file" className='cursor-pointer flex items-center gap-2'><TbUpload/> Upload picture
+                  <label htmlFor="file" className='cursor-pointer flex items-center gap-2 hover:text-blue-600'>
+                    <TbUpload/> Upload picture
                   <input type="file" id='file' className='h-0 w-0' onChange={(e)=>setfile(e.target.files[0])}/>
                   </label>
-                  <p className='flex items-center cursor-pointer gap-2'><HiOutlineTrash/> Remove picture</p>
+                  <p className='flex items-center cursor-pointer gap-2 hover:text-blue-600'>
+                    <HiOutlineTrash/> Remove picture</p>
                   </div>
                 </div>
                 <div className="w-full flex justify-between px-3">
-                   <button className='border px-8 py-1 rounded-md font-medium hover:bg-slate-100'
-                   onClick={Upload}>Save</button>
+                   <button className='border px-8 py-1 rounded-md font-medium 
+                    hover:bg-blue-200' onClick={Upload}>Save</button>
                    <button className='border px-8 py-1 rounded-md font-medium hover:bg-slate-100'
                     onClick={()=>setOpenProfile(false)}>Close</button>
                 </div>
