@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import Avatar from '../../Assets/avatar.png'
+import Avatar from '../../../Assets/avatar.png'
 import {TbUpload} from 'react-icons/tb'
 import {HiOutlineTrash} from 'react-icons/hi'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import { ProfileUrl } from '../../Redux/Action/ProfileAction'
+import { ProfileUrl } from '../../../Redux/Action/ProfileAction'
 import { Puff } from  'react-loader-spinner'
 
 const Profile = ({setOpenProfile}) => {
@@ -93,7 +93,7 @@ const Profile = ({setOpenProfile}) => {
                 </div>
                 <div className="w-full flex justify-between px-3">
                    <button className='border px-8 py-1 rounded-md font-medium 
-                    hover:bg-blue-200' onClick={Upload}>Save</button>
+                    hover:bg-blue-200 ' onClick={Upload}>Save</button>
                    <button className='border px-8 py-1 rounded-md font-medium hover:bg-slate-100'
                     onClick={()=>setOpenProfile(false)}>Close</button>
                 </div>
