@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {AiOutlineEye,AiOutlineEyeInvisible,AiOutlineCloseCircle} from 'react-icons/ai'
-import {motion} from 'framer-motion'
-import {IoCheckmarkDoneCircleOutline} from 'react-icons/io5'
-
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlineCloseCircle,
+} from "react-icons/ai";
+import { motion } from "framer-motion";
+import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -18,22 +21,22 @@ const LoginForm = () => {
 
   const save = () => {
     axios
-      .post(`http://localhost:4000/auth/login`, {
+      .post(`${process.env.REACT_APP_BASEURL}/auth/login`, {
         email: email,
         password: password,
       })
       .then((res) => {
-        setMsg(res.data.message)
-        setErr(res.status)
-        setisLoding(true)
+        setMsg(res.data.message);
+        setErr(res.status);
+        setisLoding(true);
         setTimeout(() => {
-          setisLoding(false)
-      }, 2000)
+          setisLoding(false);
+        }, 2000);
         sessionStorage.setItem("token", res.data.token);
         if (res.data.token) {
           setTimeout(() => {
             navigate("/workSpace");
-        }, 2000)
+          }, 2000);
           let token = res.data.token;
           let payload = token.split(".");
           let data = atob(payload[1]);
@@ -46,11 +49,11 @@ const LoginForm = () => {
       })
       .catch((err) => {
         setMsg(err.response.data.message);
-        setErr(err.response.status)
-        setisLoding(true)
+        setErr(err.response.status);
+        setisLoding(true);
         setTimeout(() => {
-          setisLoding(false)
-      }, 4000)
+          setisLoding(false);
+        }, 4000);
       });
   };
   return (
@@ -73,17 +76,23 @@ const LoginForm = () => {
             Password
           </label>
           <input
-            type={open===true?'text':'password'}
+            type={open === true ? "text" : "password"}
             id="password"
             className="border-2 outline-none w-full py-1 px-2"
             placeholder="Enter Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          {open===true?<AiOutlineEye className="absolute bottom-2 cursor-pointer right-2 text-xl" onClick={()=>setOpen(!open)}/>:
-          <AiOutlineEyeInvisible className="absolute bottom-2 cursor-pointer right-2 text-xl" onClick={()=>setOpen(!open)}/>
-          }
-          
-
+          {open === true ? (
+            <AiOutlineEye
+              className="absolute bottom-2 cursor-pointer right-2 text-xl"
+              onClick={() => setOpen(!open)}
+            />
+          ) : (
+            <AiOutlineEyeInvisible
+              className="absolute bottom-2 cursor-pointer right-2 text-xl"
+              onClick={() => setOpen(!open)}
+            />
+          )}
         </div>
         <div className="flex justify-between">
           <div className="flex items-center gap-1">
@@ -114,14 +123,27 @@ const LoginForm = () => {
           </button>
         </div>
         <div className="absolute bottom-2 left-2">
-              {isLoding === true ? <motion.p
-              initial={{opacity:0,}}
-              animate={{opacity:1}}
-              exit={{opacity:0}}
+          {isLoding === true ? (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               className={`text-md  flex  items-center gap-2 font-semibold relative bg-gray-200 p-2 
-              ${err === 200 ? 'text-green-600 border-b-2 border-emerald-400' : 'text-red-500 border-b-2 border-red-400'}`}>{msg}
-                 {err === 200 ?<IoCheckmarkDoneCircleOutline className='text-2xl pt-1'/>:<AiOutlineCloseCircle className='text-2xl pt-1'/>}  </motion.p> : null}
-           </div>
+              ${
+                err === 200
+                  ? "text-green-600 border-b-2 border-emerald-400"
+                  : "text-red-500 border-b-2 border-red-400"
+              }`}
+            >
+              {msg}
+              {err === 200 ? (
+                <IoCheckmarkDoneCircleOutline className="text-2xl pt-1" />
+              ) : (
+                <AiOutlineCloseCircle className="text-2xl pt-1" />
+              )}{" "}
+            </motion.p>
+          ) : null}
+        </div>
       </div>
     </>
   );

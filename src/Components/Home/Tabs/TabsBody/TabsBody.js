@@ -4,8 +4,8 @@ import Response from "./Response";
 import TopBar from "./TopBar";
 import { DataContext } from "../../../Context/DataProvider";
 import { checkParams } from "../../../Utils/CommonUtils";
-import GetData from "../../../Service/GetData";
 import SnackBar from "./SnackBar";
+import Http from "../../../../Services/http";
 
 const TabsBody = () => {
   const { paramsData, headersData, jsonText } = useContext(DataContext);
@@ -21,24 +21,38 @@ const TabsBody = () => {
       setError(true);
       return false;
     }
-    let response;
-    try {
-      response = await GetData(data, paramsData, headersData, jsonText);
-      setApiStatus(response.status);
-      setApiResponse(response);
-    } catch (res) {
-      response = res.response;
-      setApiStatus(res.response.status);
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
 
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    Http({
+      url: data.url,
+      method: data.method,
+      data: jsonText,
+      headers: headersData,
+      query: paramsData,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // try {
+    //   response = await GetData(data, paramsData, headersData, jsonText);
+    //   setApiStatus(response.status);
+    //   setApiResponse(response);
+    // } catch (res) {
+    //   response = res.response;
+    //   setApiStatus(res.response.status);
+    //   setLoading(true);
+    //   setTimeout(() => {
+    //     setLoading(false);
+    //   }, 1000);
+    // }
+
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 1000);
   };
   return (
     <>

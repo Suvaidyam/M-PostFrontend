@@ -4,14 +4,14 @@ import { BsThreeDots } from "react-icons/bs";
 import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
 
-const TopBar = ({ onSendClick, _id, details = { method: "", url: "" } }) => {
-  const [data, setData] = useState(details);
+const TopBar = ({ onSendClick }) => {
   const { tabData } = useContext(DataContext);
+  const [data, setData] = useState(tabData.details);
   console.log(tabData);
 
   const Save = () => {
     Http({
-      url: `collection/${_id}`,
+      url: `collection/${tabData._id}`,
       method: "put",
       data: {
         details: data,
