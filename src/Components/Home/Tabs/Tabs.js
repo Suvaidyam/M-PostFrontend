@@ -15,7 +15,7 @@ const Tabs = () => {
         {tabs.map((e) => (
           <>
             <TabsBody key={e._id} />
-            {setTabData(e.details)}
+            {setTabData(e)}
           </>
         ))}
       </div>

@@ -11,7 +11,7 @@ import Http from "../../../../Services/http";
 const TabsList = () => {
   const [collection, setcollection] = useState([]);
   const [Delete, setDelete] = useState(null);
-  let tabs = useSelector((state) => state.TabsReducer)
+  let tabs = useSelector((state) => state.TabsReducer);
   // const [tabs, setTabs] = useState(t);
   const newReqObj = {
     name: "New Request",
@@ -21,26 +21,26 @@ const TabsList = () => {
       method: "GET",
       headers: {},
       body: {},
-      query: {}
-    }
+      query: {},
+    },
   };
   const handleNewTab = () => {
     let el = { ...newReqObj, _id: tabs.length };
     el.name = el.name + tabs.length;
-    tabs.push(el)
-    dispatch(Tabs(tabs))
-    dispatch(AddRequest(el._id))
-    console.log("tabs.length[handleNewTab]", tabs.length, tabs)
-  }
+    tabs.push(el);
+    dispatch(Tabs(tabs));
+    dispatch(AddRequest(el._id));
+    console.log("tabs.length[handleNewTab]", tabs.length, tabs);
+  };
   const handleTabClose = (e) => {
-    let index = tabs.findIndex(f => f._id == e._id);
-    tabs.splice(index, 1)
+    let index = tabs.findIndex((f) => f._id == e._id);
+    tabs.splice(index, 1);
     if (tabs.length) {
-      dispatch(AddRequest(tabs[index ? (index - 1) : 0]._id))
+      dispatch(AddRequest(tabs[index ? index - 1 : 0]._id));
     }
-    dispatch(Tabs(tabs))
-    console.log("tabs.length[handleTabClose]", tabs.length)
-  }
+    dispatch(Tabs(tabs));
+    console.log("tabs.length[handleTabClose]", tabs.length);
+  };
 
   const add = useSelector((state) => state.AddRequestReducer);
   const dispatch = useDispatch();
@@ -49,16 +49,17 @@ const TabsList = () => {
 
   const getData = () => {
     Http({
-      method: 'GET',
-      url: 'collection'
-    }).then((res) => {
-      // console.log("res.data.collection", res.data.collection);
-      setcollection(res.data.collection);
-    }).catch((err) => {
-      console.log(err);
-    });
+      method: "GET",
+      url: "collection",
+    })
+      .then((res) => {
+        // console.log("res.data.collection", res.data.collection);
+        setcollection(res.data.collection);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
 
   useEffect(() => {
     return () => {
@@ -85,9 +86,10 @@ const TabsList = () => {
             <div
               key={e._id}
               className={`flex items-center justify-between
-                ${e._id === add
-                  ? "border-t-2 border-t-blue-600 border-r border-l"
-                  : "border"
+                ${
+                  e._id === add
+                    ? "border-t-2 border-t-blue-600 border-r border-l"
+                    : "border"
                 }
                 w-44 min-w-44 px-1 py-1.5 h-full group cursor-pointer`}
               onClick={() => dispatch(AddRequest(e._id))}
@@ -101,11 +103,17 @@ const TabsList = () => {
                 <p className="flex items-center text-xs  h-full">{e.name}</p>
               </div>
               <RxDotFilled className="text-2xl text-red-500 group-hover:hidden block" />
-              <IoIosClose className="text-2xl cursor-pointer hidden group-hover:block" onClick={() => handleTabClose(e)} />
+              <IoIosClose
+                className="text-2xl cursor-pointer hidden group-hover:block"
+                onClick={() => handleTabClose(e)}
+              />
             </div>
           ))}
           <div className="h-full flex items-center ml-1">
-            <AiOutlinePlus className="cursor-pointer hover:bg-slate-200 w-8 h-8 p-2 rounded-md" onClick={handleNewTab} />
+            <AiOutlinePlus
+              className="cursor-pointer hover:bg-slate-200 w-8 h-8 p-2 rounded-md"
+              onClick={handleNewTab}
+            />
           </div>
         </div>
         <div className="w-[20%] border flex justify-center items-center gap-2">
