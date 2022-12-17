@@ -1,17 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import HomeLeftBar from "../HomeLeftBar/HomeLeftBar";
-import HomeRightBar from "../HomeRightBar/HomeRightBar";
 import DataProvider from "../Context/DataProvider";
-import { AiOutlineEye } from "react-icons/ai";
-import { BsCode, BsCaretRight } from "react-icons/bs";
-import { FiTrash2 } from "react-icons/fi";
-import { BiHelpCircle } from "react-icons/bi";
-import SetEnviroment from "../SetEnviroment/SetEnviroment";
 import Header from '../Header/Header'
-import RequestShow from "../RequestShow/RequestShow";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import logo from '../../Assets/Vector.png'
+import LeftBar from "./LeftBar/LeftBar";
+import LeftBody from "./LeftBody/LeftBody";
+import MyWorkSpace from "./MyWorkSpace/MyWorkSpace";
+import Tabs from "./Tabs/Tabs";
+import TabsList from "./Tabs/TabsList/TabsList";
+import RightBar from "./RightBar/RightBar";
 
 
 const Home = () => {
@@ -53,18 +50,47 @@ const Home = () => {
     <>
       <Header />
       <DataProvider>
-        <div className="w-full h-[88.5vh] ">
-          <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex">
-            {/* Left */}
-            <div className="w-[30%] border-r-2">
-              <HomeLeftBar />
+         <div className="w-full h-[88.5vh]">
+            <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex">
+              {/* left */}
+              <div className="w-[30%] border-r-2 ">
+                <MyWorkSpace/>
+                <div className="flex">
+                  <div className="w-1/5">
+                    <LeftBar/>
+                  </div>
+                  <div className="w-4/5">
+                    <LeftBody/>
+                  </div>
+                </div>
+              </div>
+              {/* light */}
+              <div className="w-[70%] bg-gray-100">
+                <div className="flex">
+                  <div className="w-[94%]">
+                    <TabsList/>
+                    <Tabs/>
+                  </div>
+                  <div className="w-[6%]">
+                    <RightBar/>
+                  </div>
+                </div>
+              </div>
             </div>
+         </div>
+
+        {/* <div className="w-full h-[88.5vh] ">
+          <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex"> */}
+            {/* Left */}
+            {/* <div className="w-[30%] border-r-2">
+              <HomeLeftBar />
+            </div> */}
             {/* Right */}
-            <div className="w-[66%] bg-gray-100">
+            {/* <div className="w-[66%] bg-gray-100"> */}
               {/* metod Request */}
-              <RequestShow />
+              {/* <RequestShow /> */}
               {/* Right */}
-              {tabs.map(e => (
+              {/* {tabs.map(e => (
                 e._id == add ? <HomeRightBar details={e.details} _id={e._id} /> : null
               ))}
               <div className="w-full flex flex-col justify-center items-center h-full gap-2">
@@ -89,9 +115,9 @@ const Home = () => {
                   </p>
                 </div>
                 <BsCode className="cursor-pointer" />
-              </div>
+              </div> */}
               {/* Enviroment */}
-              {enviroment === true ? <SetEnviroment /> : null}
+              {/* {enviroment === true ? <SetEnviroment /> : null}
               <div className="flex flex-col gap-5 ">
                 <BsCaretRight className="cursor-pointer" />
                 <FiTrash2 className="cursor-pointer" />
@@ -99,7 +125,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>{" "}
+        </div> */}
       </DataProvider>
     </>
   );

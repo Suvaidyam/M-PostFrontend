@@ -3,12 +3,12 @@ import { IoIosClose } from "react-icons/io";
 import { RxDotFilled } from "react-icons/rx";
 import { AiOutlinePlus, AiFillCaretDown } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { AddRequest } from "../../Redux/Action/AddRequest";
+import { AddRequest } from "../../../../Redux/Action/AddRequest";
 
-import { Tabs } from "../../Redux/Action/Tabs";
+import { Tabs } from "../../../../Redux/Action/Tabs";
 
-import Http from "../../Services/http";
-const RequestShow = () => {
+import Http from "../../../../Services/http";
+const TabsList = () => {
   const [collection, setcollection] = useState([]);
   const [Delete, setDelete] = useState(null);
   let tabs = useSelector((state) => state.TabsReducer)
@@ -123,4 +123,4 @@ const RequestShow = () => {
   );
 };
 
-export default RequestShow;
+export default TabsList;
