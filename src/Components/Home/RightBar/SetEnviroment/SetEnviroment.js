@@ -3,8 +3,8 @@ import React from 'react'
 const SetEnviroment = () => {
   return (
     <>
-        <div className="w-[700px] h-[300px] border bg-gray-50 shadow-md rounded-md absolute
-         right-14 top-1 py-2 flex flex-col justify-between">
+        <div className="w-[700px] h-[300px] border bg-gray-50 shadow-xl rounded-md absolute
+         right-[58px] top-11 py-2 flex flex-col justify-between">
           <div className="w-full bg-gray-100 flex flex-col gap-5  p-2">
             <div className="flex justify-between">
               <p className='text-sm'>New Enviroment</p>

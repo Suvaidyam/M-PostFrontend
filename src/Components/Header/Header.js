@@ -78,12 +78,14 @@ return () => {
             {/* search */}
             <div className='cursor-pointer'><SearchMenu/></div>
             {/* dark mode */}
-            <div className='cursor-pointer w-8 h-8 border rounded-full flex justify-center items-center'>
-              <MdOutlineDarkMode/>
+            <div className='cursor-pointer w-8 h-8 border-2 rounded-full flex justify-center items-center
+            hover:border-blue-300 group'>
+              <MdOutlineDarkMode className='group-hover:text-blue-600'/>
               </div>
             {/* Notification */}
-           <div className='cursor-pointer w-8 h-8 border rounded-full flex justify-center items-center relative'>
-             <IoMdNotificationsOutline/>
+           <div className='cursor-pointer w-8 h-8 border-2 rounded-full flex justify-center items-center
+            hover:border-blue-300 relative group'>
+             <IoMdNotificationsOutline className='group-hover:text-blue-600'/>
              <p className='w-1.5 h-1.5 rounded-full bg-red-600 absolute top-2 right-2'></p>
              </div> 
            {/* Profile */}
