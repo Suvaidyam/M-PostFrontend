@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { DataContext } from "../Context/DataProvider";
+import { DataContext } from "../../../Context/DataProvider";
 
-import JSONEditorReact from "../JSONEditor";
+import JSONEditorReact from "../../../JSONEditor/index";
 
 const BodyForm = () => {
   const { setjsonText } = useContext(DataContext);

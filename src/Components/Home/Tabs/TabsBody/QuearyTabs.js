@@ -5,8 +5,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import QueryForm from "./QueryForm";
-import BodyTabs from "./BodyTabs";
-import { DataContext } from "../Context/DataProvider";
+import CenterTabs from "./CenterTabs";
+import { DataContext } from "../../../Context/DataProvider";
 import "./Tabs.css";
 
 function TabPanel(props) {
@@ -42,7 +42,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function QuearyTabs() {
   const [value, setValue] = React.useState(0);
   const { paramsData, setparamsData, headersData, setheadersData } =
     useContext(DataContext);
@@ -100,7 +100,7 @@ export default function BasicTabs() {
           <QueryForm data={headersData} setdata={setheadersData} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <BodyTabs />
+          <CenterTabs />
         </TabPanel>
       </Box>
     </div>

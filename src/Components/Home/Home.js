@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import DataProvider from "../Context/DataProvider";
-import Header from '../Header/Header'
+import Header from "../Header/Header";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import LeftBar from "./LeftBar/LeftBar";
@@ -10,17 +10,12 @@ import Tabs from "./Tabs/Tabs";
 import TabsList from "./Tabs/TabsList/TabsList";
 import RightBar from "./RightBar/RightBar";
 
-
 const Home = () => {
-
-
   const [enviroment, setEnviroment] = useState(false);
-  const [collection, setcollection] = useState([])
+  const [collection, setcollection] = useState([]);
 
-  const add = useSelector(state => state.AddRequestReducer)
-  const fromdata = useSelector(state => state.AddFromReducer)
-
-  let tabs = useSelector((state) => state.TabsReducer)
+  const add = useSelector((state) => state.AddRequestReducer);
+  const fromdata = useSelector((state) => state.AddFromReducer);
 
   let newarr = collection.filter((e) => e.type === "request");
 
@@ -50,47 +45,46 @@ const Home = () => {
     <>
       <Header />
       <DataProvider>
-         <div className="w-full h-[88.5vh]">
-            <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex">
-              {/* left */}
-              <div className="w-[30%] border-r-2 ">
-                <MyWorkSpace/>
-                <div className="flex">
-                  <div className="w-1/5">
-                    <LeftBar/>
-                  </div>
-                  <div className="w-4/5">
-                    <LeftBody/>
-                  </div>
+        <div className="w-full h-[88.5vh]">
+          <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex">
+            {/* left */}
+            <div className="w-[30%] border-r-2 ">
+              <MyWorkSpace />
+              <div className="flex">
+                <div className="w-1/5">
+                  <LeftBar />
                 </div>
-              </div>
-              {/* light */}
-              <div className="w-[70%] bg-gray-100">
-                <div className="flex">
-                  <div className="w-[94%]">
-                    <TabsList/>
-                    <Tabs/>
-                  </div>
-                  <div className="w-[6%]">
-                    <RightBar/>
-                  </div>
+                <div className="w-4/5">
+                  <LeftBody />
                 </div>
               </div>
             </div>
-         </div>
+            {/* light */}
+            <div className="w-[70%] bg-gray-100">
+              <div className="flex">
+                <div className="w-[94%]">
+                  <Tabs />
+                </div>
+                <div className="w-[6%]">
+                  <RightBar />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* <div className="w-full h-[88.5vh] ">
           <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex"> */}
-            {/* Left */}
-            {/* <div className="w-[30%] border-r-2">
+        {/* Left */}
+        {/* <div className="w-[30%] border-r-2">
               <HomeLeftBar />
             </div> */}
-            {/* Right */}
-            {/* <div className="w-[66%] bg-gray-100"> */}
-              {/* metod Request */}
-              {/* <RequestShow /> */}
-              {/* Right */}
-              {/* {tabs.map(e => (
+        {/* Right */}
+        {/* <div className="w-[66%] bg-gray-100"> */}
+        {/* metod Request */}
+        {/* <RequestShow /> */}
+        {/* Right */}
+        {/* {tabs.map(e => (
                 e._id == add ? <HomeRightBar details={e.details} _id={e._id} /> : null
               ))}
               <div className="w-full flex flex-col justify-center items-center h-full gap-2">
@@ -116,8 +110,8 @@ const Home = () => {
                 </div>
                 <BsCode className="cursor-pointer" />
               </div> */}
-              {/* Enviroment */}
-              {/* {enviroment === true ? <SetEnviroment /> : null}
+        {/* Enviroment */}
+        {/* {enviroment === true ? <SetEnviroment /> : null}
               <div className="flex flex-col gap-5 ">
                 <BsCaretRight className="cursor-pointer" />
                 <FiTrash2 className="cursor-pointer" />
