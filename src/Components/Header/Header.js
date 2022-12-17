@@ -9,7 +9,7 @@ import { CgProfile } from "react-icons/cg";
 import { BiLogOutCircle } from "react-icons/bi";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
-import Profile from '../Profile/Profile'
+import Profile from './Profile/Profile'
 import { useSelector } from 'react-redux'
 
 const Header = () => {
