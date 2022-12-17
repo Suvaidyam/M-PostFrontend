@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import Http from "../../Services/http";
+import Http from "../../../../Services/http";
+import { DataContext } from "../../../Context/DataProvider";
 
-const Form = ({ onSendClick, _id, details = { method: "", url: "" } }) => {
+const TopBar = ({ onSendClick, _id, details = { method: "", url: "" } }) => {
   const [data, setData] = useState(details);
+  const { tabData } = useContext(DataContext);
+  console.log(tabData);
 
   const Save = () => {
     Http({
@@ -95,4 +98,4 @@ const Form = ({ onSendClick, _id, details = { method: "", url: "" } }) => {
   );
 };
 
-export default Form;
+export default TopBar;

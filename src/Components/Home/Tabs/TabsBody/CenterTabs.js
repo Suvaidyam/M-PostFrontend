@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import QueryForm from "./QueryForm";
-import BodyForm from "./BodyForm";
-import { DataContext } from "../Context/DataProvider";
+import BodyFrom from "./BodyForm";
+import { DataContext } from "../../../Context/DataProvider";
 
-export default function BodyTabs() {
+export default function CenterTabs() {
   const { paramsData, setparamsData, headersData, setheadersData } =
     useContext(DataContext);
 
@@ -67,7 +67,7 @@ export default function BodyTabs() {
       ) : (
         <></>
       )}
-      {selected === "json" ? <BodyForm /> : <></>}
+      {selected === "json" ? <BodyFrom /> : <></>}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useState } from "react";
 export const DataContext = createContext("");
 
 const DataProvider = ({ children }) => {
-  const [formData, setformData] = useState({ url: "", type: "GET" });
+  const [tabData, setTabData] = useState("");
   const [paramsData, setparamsData] = useState([]);
   const [headersData, setheadersData] = useState([]);
   const [jsonText, setjsonText] = useState("");
@@ -13,8 +13,8 @@ const DataProvider = ({ children }) => {
     <>
       <DataContext.Provider
         value={{
-          formData,
-          setformData,
+          tabData,
+          setTabData,
           paramsData,
           setparamsData,
           headersData,

@@ -1,0 +1,53 @@
+import React, { useContext, useState } from "react";
+import QuearyTabs from "./QuearyTabs";
+import Response from "./Response";
+import TopBar from "./TopBar";
+import { DataContext } from "../../../Context/DataProvider";
+import { checkParams } from "../../../Utils/CommonUtils";
+import GetData from "../../../Service/GetData";
+import SnackBar from "./SnackBar";
+
+const TabsBody = () => {
+  const { paramsData, headersData, jsonText } = useContext(DataContext);
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState();
+  const [apiResponse, setApiResponse] = useState();
+  const [apiStatus, setApiStatus] = useState();
+  const [isLoading, setLoading] = useState(false);
+  console.log(apiStatus);
+
+  const onSendClick = async (data) => {
+    if (!checkParams(data, paramsData, headersData, jsonText, setErrorMsg)) {
+      setError(true);
+      return false;
+    }
+    let response;
+    try {
+      response = await GetData(data, paramsData, headersData, jsonText);
+      setApiStatus(response.status);
+      setApiResponse(response);
+    } catch (res) {
+      response = res.response;
+      setApiStatus(res.response.status);
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
+  return (
+    <>
+      <TopBar onSendClick={onSendClick} />
+      <QuearyTabs />
+      <Response apiResponse={apiResponse} isLoading={isLoading} />
+      <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
+    </>
+  );
+};
+
+export default TabsBody;

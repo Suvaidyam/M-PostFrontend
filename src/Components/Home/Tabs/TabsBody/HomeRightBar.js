@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import Form from "./Form";
+import Form from "./TopBar";
 import Response from "./Response";
-import Tabs from "./Tabs";
+import Tabs from "./QuearyTabs";
 import { DataContext } from "../Context/DataProvider";
 import { checkParams } from "../Utils/CommonUtils";
 import GetData from "../Service/GetData";
