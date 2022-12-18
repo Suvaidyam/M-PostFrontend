@@ -93,7 +93,7 @@ return () => {
            relative flex flex-col items-center group">
             <img className='w-12 h-12 border-2 rounded-full object-cover' src={url ? 'http://localhost:4000/' + url : Avatar} alt="" />
            <div className="w-32 shadow-xl absolute  top-11
-           hidden group-hover:block rounded-sm" >
+           hidden group-hover:block rounded-sm z-50" >
             <p className='p-1.5'></p>
             <ul className='bg-gray-200'>
             <li className='hover:bg-gray-400 px-2 py-1.5 rounded-t-sm flex justify-between
