@@ -85,7 +85,9 @@ const Response = ({ apiResponse, isLoading }) => {
                 <div className="px-2 pt-1 font-mono">
                   <ReactJson
                     src={
-                      apiResponse === undefined ? apiResponse : apiResponse.data
+                      apiResponse.status === 400
+                        ? apiResponse.data
+                        : apiResponse
                     }
                   />
                 </div>
