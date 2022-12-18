@@ -6,6 +6,8 @@ import { DataContext } from "../../Context/DataProvider";
 
 const Tabs = () => {
   let tabs = useSelector((state) => state.TabsReducer);
+  let add = useSelector((state) => state.AddRequestReducer);
+  console.log(add)
   const { setTabData } = useContext(DataContext);
 
   return (
@@ -14,8 +16,9 @@ const Tabs = () => {
         <TabsList />
         {tabs.map((e) => (
           <>
-            <TabsBody key={e._id} />
-            {setTabData(e)}
+            {e._id===add?
+           <> <TabsBody key={e._id}/>
+           {setTabData(e)}</>:null}
           </>
         ))}
       </div>

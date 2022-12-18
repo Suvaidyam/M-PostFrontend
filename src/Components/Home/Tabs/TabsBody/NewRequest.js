@@ -3,6 +3,9 @@ import http from '../../../../Services/http';
 
 const NewRequest = ({setopen}) => {
     const [collection, setcollection] = useState([])
+    const [parentId, setParentId] = useState()
+    const [name, setName] = useState()
+
 
    const newColl = collection.filter(e=>e.parent===null)
     const getData = () => {
@@ -19,6 +22,8 @@ const NewRequest = ({setopen}) => {
       };
 
       const Save=()=>{
+        console.log(parentId)
+        console.log(name)
         setopen(false)
       }
     
@@ -34,13 +39,14 @@ const NewRequest = ({setopen}) => {
             <div className="flex flex-col gap-2">
               <label htmlFor="name">Name</label>
             <input type="text" name="name" id="name" className='outline-none border-2 w-full px-2 py-1'
-            placeholder='Enter Name'/>
-            <label htmlFor="name">Collection</label>
-            <select name="" id="" className='outline-none border-2 w-full px-2 py-1'>
+            placeholder='Enter Name' onChange={(e)=>setName(e.target.value)}/>
+            <label htmlFor="parent">Parent Id</label>
+            <select name="parent" id="parent" className='outline-none border-2 w-full px-2 py-1'
+             onClick={(e)=>setParentId(e.target.value)}>
                 <option value="">Select Collection..</option>
                 {newColl.map(e=>(
 
-                <option key={e._id} value={e.parent}>{e.name}</option>
+                <option key={e._id} value={e._id}>{e.name}</option>
                 ))}
             </select>
             <button className='w-full bg-blue-600 text-white py-1 mt-5 rounded-sm font-medium'
