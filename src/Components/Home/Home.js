@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataProvider from "../Context/DataProvider";
 import Header from "../Header/Header";
 import { useSelector } from "react-redux";
@@ -7,11 +7,9 @@ import LeftBar from "./LeftBar/LeftBar";
 import LeftBody from "./LeftBody/LeftBody";
 import MyWorkSpace from "./MyWorkSpace/MyWorkSpace";
 import Tabs from "./Tabs/Tabs";
-import TabsList from "./Tabs/TabsList/TabsList";
 import RightBar from "./RightBar/RightBar";
 
 const Home = () => {
-  const [enviroment, setEnviroment] = useState(false);
   const [collection, setcollection] = useState([]);
 
   const add = useSelector((state) => state.AddRequestReducer);

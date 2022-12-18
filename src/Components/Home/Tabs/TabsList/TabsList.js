@@ -4,18 +4,16 @@ import { RxDotFilled } from "react-icons/rx";
 import { AiOutlinePlus, AiFillCaretDown } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { AddRequest } from "../../../../Redux/Action/AddRequest";
-
 import { Tabs } from "../../../../Redux/Action/Tabs";
-
 import Http from "../../../../Services/http";
+
 const TabsList = () => {
-  const [collection, setcollection] = useState([]);
-  const [Delete, setDelete] = useState(null);
+
   let tabs = useSelector((state) => state.TabsReducer);
-  // const [tabs, setTabs] = useState(t);
   const newReqObj = {
     name: "New Request",
     type: "request",
+    parent:null,
     details: {
       url: "",
       method: "GET",
@@ -45,16 +43,14 @@ const TabsList = () => {
   const add = useSelector((state) => state.AddRequestReducer);
   const dispatch = useDispatch();
 
-  let newarr = collection.filter((e) => e.type === "request");
 
   const getData = () => {
     Http({
       method: "GET",
-      url: "collection",
+      url: `${process.env.REACT_APP_BASEURL}/collection`,
     })
       .then((res) => {
-        // console.log("res.data.collection", res.data.collection);
-        setcollection(res.data.collection);
+        console.log("res.data.collection", res.data.collection);
       })
       .catch((err) => {
         console.log(err);

@@ -3,15 +3,17 @@ import { AiOutlineSave } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
+import NewRequest from "./NewRequest";
 
 const TopBar = ({ onSendClick }) => {
   const { tabData } = useContext(DataContext);
   const [data, setData] = useState(tabData.details);
+  const [open, setopen] = useState(false)
   console.log(tabData);
 
   const Save = () => {
     Http({
-      url: `collection/${tabData._id}`,
+      url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
       method: "put",
       data: {
         details: data,
@@ -31,7 +33,7 @@ const TopBar = ({ onSendClick }) => {
 
   return (
     <>
-      <div className="flex pt-2.5  items-center  px-3 ">
+      <div className="flex pt-2.5  items-center  px-3 relative ">
         {/* dropdown */}
         <div className="   w-28 h-9 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
           <select
@@ -85,14 +87,15 @@ const TopBar = ({ onSendClick }) => {
         <div>
           <ul className="flex gap-3 pl-3 text-xl">
             <li>
-              <AiOutlineSave className=" cursor-pointer" onClick={Save} />
+              <AiOutlineSave className=" cursor-pointer" onClick={tabData.parent?Save:()=>setopen(true)} />
             </li>
-
+            
             <li>
               <BsThreeDots className=" cursor-pointer" />
             </li>
           </ul>
         </div>
+        {open===true?<NewRequest setopen={setopen}/>:null}
       </div>
     </>
   );
