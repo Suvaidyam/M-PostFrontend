@@ -8,23 +8,33 @@ import SnackBar from "./SnackBar";
 import Http from "../../../../Services/http";
 
 const TabsBody = () => {
-  const { paramsData, headersData, jsonText } = useContext(DataContext);
+  const { topBarData, paramsData, headersData, jsonText } =
+    useContext(DataContext);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
   const [apiResponse, setApiResponse] = useState();
-  const [apiStatus, setApiStatus] = useState();
   const [isLoading, setLoading] = useState(false);
-  console.log(apiStatus);
+  console.log(paramsData, "aniket");
 
-  const onSendClick = async (data) => {
-    if (!checkParams(data, paramsData, headersData, jsonText, setErrorMsg)) {
+  const onSendClick = async () => {
+    if (
+      !checkParams(topBarData, paramsData, headersData, jsonText, setErrorMsg)
+    ) {
       setError(true);
       return false;
     }
 
+    console.log({
+      url: topBarData.url,
+      method: topBarData.method,
+      data: jsonText,
+      headers: headersData,
+      query: paramsData,
+    });
+
     Http({
-      url: data.url,
-      method: data.method,
+      url: topBarData.url,
+      method: topBarData.method,
       data: jsonText,
       headers: headersData,
       query: paramsData,

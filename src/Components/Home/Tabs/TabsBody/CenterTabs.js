@@ -4,7 +4,7 @@ import BodyFrom from "./BodyForm";
 import { DataContext } from "../../../Context/DataProvider";
 
 export default function CenterTabs() {
-  const { paramsData, setparamsData, headersData, setheadersData } =
+  const { paramsData, setParamsData, headersData, setHeadersData } =
     useContext(DataContext);
 
   // 👇️ initialize state to default checked radio button
@@ -58,12 +58,12 @@ export default function CenterTabs() {
         </label>
       </div>
       {selected === "form-data" ? (
-        <QueryForm data={paramsData} setdata={setparamsData} />
+        <QueryForm data={paramsData} setData={setParamsData} />
       ) : (
         <></>
       )}
       {selected === "x-www-form-urlencoded" ? (
-        <QueryForm data={headersData} setdata={setheadersData} />
+        <QueryForm data={headersData} setData={setHeadersData} />
       ) : (
         <></>
       )}

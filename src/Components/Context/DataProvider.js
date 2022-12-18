@@ -4,23 +4,26 @@ import { useState } from "react";
 export const DataContext = createContext("");
 
 const DataProvider = ({ children }) => {
+  const [topBarData, setTopBarData] = useState("");
   const [tabData, setTabData] = useState("");
-  const [paramsData, setparamsData] = useState([]);
-  const [headersData, setheadersData] = useState([]);
-  const [jsonText, setjsonText] = useState("");
+  const [paramsData, setParamsData] = useState([]);
+  const [headersData, setHeadersData] = useState([]);
+  const [jsonText, setJsonText] = useState("");
 
   return (
     <>
       <DataContext.Provider
         value={{
+          setTopBarData,
+          topBarData,
           tabData,
           setTabData,
           paramsData,
-          setparamsData,
+          setParamsData,
           headersData,
-          setheadersData,
+          setHeadersData,
           jsonText,
-          setjsonText,
+          setJsonText,
         }}
       >
         {children}

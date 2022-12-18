@@ -44,7 +44,7 @@ function a11yProps(index) {
 
 export default function QuearyTabs() {
   const [value, setValue] = React.useState(0);
-  const { paramsData, setparamsData, headersData, setheadersData } =
+  const { paramsData, setParamsData, headersData, setHeadersData } =
     useContext(DataContext);
 
   const handleChange = (event, newValue) => {
@@ -94,10 +94,10 @@ export default function QuearyTabs() {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <QueryForm data={paramsData} setdata={setparamsData} />
+          <QueryForm data={paramsData} setData={setParamsData} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <QueryForm data={headersData} setdata={setheadersData} />
+          <QueryForm data={headersData} setData={setHeadersData} />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <CenterTabs />

@@ -6,9 +6,9 @@ import { DataContext } from "../../../Context/DataProvider";
 import NewRequest from "./NewRequest";
 
 const TopBar = ({ onSendClick }) => {
-  const { tabData } = useContext(DataContext);
+  const { tabData, setTopBarData } = useContext(DataContext);
   const [data, setData] = useState(tabData.details);
-  const [open, setopen] = useState(false)
+  const [open, setopen] = useState(false);
   console.log(tabData);
 
   const Save = () => {
@@ -26,10 +26,7 @@ const TopBar = ({ onSendClick }) => {
         console.log(err);
       });
   };
-  const handleSend = (d) => {
-    console.log(d);
-    onSendClick(data);
-  };
+  setTopBarData(data);
 
   return (
     <>
@@ -79,7 +76,7 @@ const TopBar = ({ onSendClick }) => {
         <div className="h-9">
           <button
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-4 rounded-r-md "
-            onClick={() => handleSend(data)}
+            onClick={onSendClick}
           >
             SEND
           </button>
@@ -87,15 +84,18 @@ const TopBar = ({ onSendClick }) => {
         <div>
           <ul className="flex gap-3 pl-3 text-xl">
             <li>
-              <AiOutlineSave className=" cursor-pointer" onClick={tabData.parent?Save:()=>setopen(true)} />
+              <AiOutlineSave
+                className=" cursor-pointer"
+                onClick={tabData.parent ? Save : () => setopen(true)}
+              />
             </li>
-            
+
             <li>
               <BsThreeDots className=" cursor-pointer" />
             </li>
           </ul>
         </div>
-        {open===true?<NewRequest setopen={setopen}/>:null}
+        {open === true ? <NewRequest setopen={setopen} /> : null}
       </div>
     </>
   );

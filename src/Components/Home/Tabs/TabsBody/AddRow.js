@@ -1,30 +1,21 @@
 import React from "react";
 import { useState } from "react";
 
-const AddRow = ({ addrows, rowId, data, setdata }) => {
+const AddRow = ({ addRows, rowId, data, setData }) => {
   const [checkCheckBox, setCheckCheckBox] = useState(false);
 
   // checkBok
   const checkBox = (e) => {
     let result = data.filter((entry) => entry.id === Number(rowId))[0];
 
-    if (!checkCheckBox) {
-      setCheckCheckBox(true);
-      addrows((oldArr) => [...oldArr, rowId]);
-      result = { ...result, id: rowId, check: true };
-    } else {
-      setCheckCheckBox(false);
-      result = { ...result, id: rowId, check: false };
-    }
-
     let index = data.findIndex((value) => value.id === Number(rowId));
     if (index === -1) {
-      setdata((oldArr) => [...oldArr, result]);
+      setData((oldArr) => [...oldArr, result]);
     } else {
       const newArray = Object.assign([...data], {
         [index]: result,
       });
-      setdata(newArray);
+      setData(newArray);
     }
   };
 
@@ -37,14 +28,24 @@ const AddRow = ({ addrows, rowId, data, setdata }) => {
     let index = data.findIndex((value) => value.id === rowId);
 
     if (index === -1) {
-      setdata((oldArr) => [...oldArr, result]);
+      setData((oldArr) => [...oldArr, result]);
     } else {
       const newArray = Object.assign([...data], {
         [index]: result,
       });
-      setdata(newArray);
+      setData(newArray);
     }
     console.log(data);
+
+    setCheckCheckBox(true);
+    // row add onchange
+
+    if (data.length === rowId) {
+      addRows((oldArr) => [...oldArr, rowId]);
+      result = { ...result, id: rowId, check: true };
+    } else {
+      result = { ...result, id: rowId, check: false };
+    }
   };
   return (
     <>

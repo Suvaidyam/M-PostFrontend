@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import AddRow from "./AddRow";
 
-const QueryForm = ({ data, setdata }) => {
-  const [rows, addrows] = useState([0]);
+const QueryForm = ({ data, setData }) => {
+  const [rows, addRows] = useState([0]);
   return (
     <div className="px-3  bg-white overflow-y-scroll scrollbar-hide  h-[159px] pb-2  mb-2">
       <div className="overflow-x-auto relative  pt-3">
@@ -26,11 +26,11 @@ const QueryForm = ({ data, setdata }) => {
           <tbody>
             {rows.map((row, index) => (
               <AddRow
-                addrows={addrows}
+                addRows={addRows}
                 rowId={index}
                 key={index}
                 data={data}
-                setdata={setdata}
+                setData={setData}
               />
             ))}
           </tbody>

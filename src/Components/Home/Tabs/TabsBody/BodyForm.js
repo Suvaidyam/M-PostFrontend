@@ -4,17 +4,17 @@ import { DataContext } from "../../../Context/DataProvider";
 import JSONEditorReact from "../../../JSONEditor/index";
 
 const BodyForm = () => {
-  const { setjsonText } = useContext(DataContext);
+  const { setJsonText } = useContext(DataContext);
 
   const [data, setData] = React.useState({ email: "", password: "" });
   // const modes = ["tree", "form", "view", "code", "text"];
   const [mode, setMode] = useState("code");
 
-  setjsonText(data);
+  setJsonText(data);
   const handleChange = (newCode) => {
     try {
       newCode = JSON.parse(newCode);
-      setjsonText(newCode);
+      setJsonText(newCode);
       setData(newCode);
     } catch (error) {}
   };
