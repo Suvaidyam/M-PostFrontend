@@ -6,6 +6,7 @@ import { DataContext } from "../../../Context/DataProvider";
 import { checkParams } from "../../../Utils/CommonUtils";
 import SnackBar from "./SnackBar";
 import Http from "../../../../Services/http";
+import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 
 const TabsBody = () => {
   const { topBarData, paramsData, headersData, jsonText } =
@@ -14,7 +15,6 @@ const TabsBody = () => {
   const [errorMsg, setErrorMsg] = useState();
   const [apiResponse, setApiResponse] = useState();
   const [isLoading, setLoading] = useState(false);
-  console.log(paramsData, "aniket");
 
   const onSendClick = async () => {
     if (
@@ -24,27 +24,25 @@ const TabsBody = () => {
       return false;
     }
 
-    console.log({
-      url: topBarData.url,
-      method: topBarData.method,
-      data: jsonText,
-      headers: headersData,
-      query: paramsData,
-    });
-
     Http({
       url: topBarData.url,
       method: topBarData.method,
       data: jsonText,
-      headers: headersData,
-      query: paramsData,
+      headers: getHeadersAndParams(headersData),
+      query: getHeadersAndParams(paramsData),
     })
       .then((res) => {
+        setApiResponse(res.data);
         console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        setApiResponse(err.response);
       });
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
 
     // try {
     //   response = await GetData(data, paramsData, headersData, jsonText);
