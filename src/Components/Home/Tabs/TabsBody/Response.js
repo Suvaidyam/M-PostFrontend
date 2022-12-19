@@ -34,9 +34,7 @@ const Response = ({ apiResponse, isLoading }) => {
                     <span className="text-gray-800 text-sm font-medium">
                       Body
                     </span>
-                    <span className="text-gray-800 text-sm font-medium ">
-                      Cookies
-                    </span>
+
                     <span className="text-gray-800 text-sm font-medium">
                       Headers
                     </span>

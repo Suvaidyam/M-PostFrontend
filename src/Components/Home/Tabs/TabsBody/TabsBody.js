@@ -54,10 +54,16 @@ const TabsBody = () => {
 
   return (
     <>
-      <TopBar onSendClick={onSendClick} />
-      <QuearyTabs />
-      <Response apiResponse={apiResponse} isLoading={isLoading} />
-      <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
+      <div className=" mx-1">
+        <div className="h-14 w-full bg-white mt-2 ">
+          <TopBar onSendClick={onSendClick} />
+        </div>
+
+        <QuearyTabs />
+
+        <Response apiResponse={apiResponse} isLoading={isLoading} />
+        <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
+      </div>
     </>
   );
 };
