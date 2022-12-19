@@ -4,7 +4,7 @@ import { LineWave } from "react-loader-spinner";
 import ErrorScreen from "./ErrorScreen";
 
 const Response = ({ apiResponse, isLoading }) => {
-  console.log(apiResponse);
+  // console.log(apiResponse);
   return (
     <>
       {apiResponse === undefined ? (
@@ -82,7 +82,7 @@ const Response = ({ apiResponse, isLoading }) => {
                     </span>
                   </div>
                 </div>
-                <div className="px-2 pt-1 font-mono">
+                <div className="px-2 pt-1 font-mono word-break: break-all ">
                   <ReactJson
                     src={
                       apiResponse.status === 400

@@ -4,10 +4,10 @@ import { DataContext } from "../../../Context/DataProvider";
 import JSONEditorReact from "../../../JSONEditor/index";
 
 const BodyForm = () => {
-  const {headersData,tabData, setJsonText } = useContext(DataContext);
-  console.log(headersData)
+  const { headersData, tabData, setJsonText } = useContext(DataContext);
+  console.log(headersData);
 
-  const [data, setData] = React.useState( tabData.details.body);
+  const [data, setData] = React.useState(tabData.details.body);
   // const modes = ["tree", "form", "view", "code", "text"];
   const [mode, setMode] = useState("code");
 

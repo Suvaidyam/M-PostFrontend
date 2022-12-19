@@ -7,6 +7,13 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
   // checkBok
   const checkBox = (e) => {
     let result = data.filter((entry) => entry.id === Number(rowId))[0];
+    if (!checkCheckBox) {
+      setCheckCheckBox(true);
+      result = { ...result, id: rowId, check: true };
+    } else {
+      setCheckCheckBox(false);
+      result = { ...result, id: rowId, check: false };
+    }
 
     let index = data.findIndex((value) => value.id === Number(rowId));
     if (index === -1) {
@@ -22,7 +29,12 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
   // input text
   const onTextChenge = (e) => {
     let result = data.filter((entry) => entry.id === rowId)[0];
-    result = { ...result, id: rowId, [e.target.name]: e.target.value };
+    result = {
+      ...result,
+      id: rowId,
+      [e.target.name]: e.target.value,
+      check: checkCheckBox,
+    };
     // console.log("row", result);
 
     let index = data.findIndex((value) => value.id === rowId);
@@ -35,18 +47,17 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
       });
       setData(newArray);
     }
-    console.log(data);
 
-    setCheckCheckBox(true);
     // row add onchange
-
     if (data.length === rowId) {
+      setCheckCheckBox(true);
       addRows((oldArr) => [...oldArr, rowId]);
       result = { ...result, id: rowId, check: true };
     } else {
       result = { ...result, id: rowId, check: false };
     }
   };
+
   return (
     <>
       <tr className="bg-white border  w-full">
@@ -57,7 +68,7 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
               id="checkbox-table-search-1"
               type="checkbox"
               className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
-              onChange={checkBox}
+              onClick={checkBox}
               name={rowId}
             />
           </div>
