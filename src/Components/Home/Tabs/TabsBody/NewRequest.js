@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import http from '../../../../Services/http';
+import { DataContext } from '../../../Context/DataProvider';
 
-const NewRequest = ({setopen}) => {
-    const [collection, setcollection] = useState([])
-    const [parentId, setParentId] = useState()
-    const [name, setName] = useState()
+const NewRequest = ({setopen,details}) => {
 
+     const { tabData } = useContext(DataContext);
+     const [data, setData] = useState(tabData.details);
+     const [collection, setcollection] = useState([])
 
    const newColl = collection.filter(e=>e.parent===null)
     const getData = () => {
         http({
-          method: "GET",
+          method: "get",
           url: `${process.env.REACT_APP_BASEURL}/collection`,
         })
           .then((res) => {
@@ -22,9 +23,27 @@ const NewRequest = ({setopen}) => {
       };
 
       const Save=()=>{
-        console.log(parentId)
-        console.log(name)
-        setopen(false)
+        http({
+          method: "post",
+          url: `${process.env.REACT_APP_BASEURL}/collection`,
+          data:{
+            name:data.name,
+            parent:data.parent,
+            type:'request',
+            details:{
+              url:details.url,
+              method:details.method,
+            }
+          }
+        })
+          .then((res) => {
+            // setcollection( res.data.collection);
+            setopen(false)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+       
       }
     
       useEffect(() => {
@@ -39,10 +58,10 @@ const NewRequest = ({setopen}) => {
             <div className="flex flex-col gap-2">
               <label htmlFor="name">Name</label>
             <input type="text" name="name" id="name" className='outline-none border-2 w-full px-2 py-1'
-            placeholder='Enter Name' onChange={(e)=>setName(e.target.value)}/>
+            placeholder='Enter Name' onChange={(e)=>setData({...data,name:e.target.value})}/>
             <label htmlFor="parent">Parent Id</label>
             <select name="parent" id="parent" className='outline-none border-2 w-full px-2 py-1'
-             onClick={(e)=>setParentId(e.target.value)}>
+            onChange={(e)=>setData({...data,parent:e.target.value})}>
                 <option value="">Select Collection..</option>
                 {newColl.map(e=>(
 

@@ -21,7 +21,7 @@ const BodyHead = () => {
     <>
      <div className="w-full h-full">
        <div className="w-full h-full">
-       <div className="w-full h-14 border-b-2 gap-2  flex items-center justify-center">
+       <div className="w-full h-14 border-b gap-2  flex items-center justify-center">
               <SearchMenu/>
               <IoAddSharp className='text-2xl cursor-pointer' onClick={postData}/>
             </div>

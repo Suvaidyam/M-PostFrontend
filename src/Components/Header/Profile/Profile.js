@@ -93,8 +93,8 @@ const Profile = ({setOpenProfile}) => {
                 </div>
                 <div className="w-full flex justify-between px-3">
                    <button className='border px-8 py-1 rounded-md font-medium 
-                    hover:bg-blue-200 ' onClick={Upload}>Save</button>
-                   <button className='border px-8 py-1 rounded-md font-medium hover:bg-slate-100'
+                    hover:bg-blue-600 hover:text-white' onClick={Upload}>Save</button>
+                   <button className='border px-8 py-1 rounded-md font-medium hover:bg-blue-600 hover:text-white'
                     onClick={()=>setOpenProfile(false)}>Close</button>
                 </div>
             </div>

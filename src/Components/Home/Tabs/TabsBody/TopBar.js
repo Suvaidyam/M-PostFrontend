@@ -8,7 +8,6 @@ import NewRequest from "./NewRequest";
 const TopBar = ({ onSendClick }) => {
   const {jsonText, tabData ,setTopBarData} = useContext(DataContext);
   const [data, setData] = useState(tabData.details);
-  console.log(data)
   const [open, setopen] = useState(false)
   const [msg, setMsg] = useState()
   const [isLoding, setIsLoding] = useState(false)
@@ -21,7 +20,8 @@ const TopBar = ({ onSendClick }) => {
         details:{
           url:data.url,
           method:data.method.toLowerCase(),
-          body:jsonText},
+          body:jsonText
+        },
       },
     })
       .then((res) => {
@@ -104,7 +104,8 @@ const TopBar = ({ onSendClick }) => {
             </li>
           </ul>
         </div>
-        {open === true ? <NewRequest setopen={setopen} /> : null}
+        {open === true ? <NewRequest setopen={setopen} details={data}/> : null}
+        
       </div>
     </>
   );
