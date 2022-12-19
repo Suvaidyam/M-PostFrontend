@@ -6,7 +6,7 @@ import { DataContext } from "../../../Context/DataProvider";
 import NewRequest from "./NewRequest";
 
 const TopBar = ({ onSendClick }) => {
-  const { tabData ,setTopBarData} = useContext(DataContext);
+  const {jsonText, tabData ,setTopBarData} = useContext(DataContext);
   const [data, setData] = useState(tabData.details);
   console.log(data)
   const [open, setopen] = useState(false)
@@ -18,7 +18,10 @@ const TopBar = ({ onSendClick }) => {
       url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
       method: "put",
       data: {
-        details: data,
+        details:{
+          url:data.url,
+          method:data.method.toLowerCase(),
+          body:jsonText},
       },
     })
       .then((res) => {
