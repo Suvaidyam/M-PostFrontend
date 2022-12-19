@@ -13,7 +13,7 @@ const TabsBody = () => {
     useContext(DataContext);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
-  const [apiResponse, setApiResponse] = useState();
+  const [apiResponse, setApiResponse] = useState({});
   const [isLoading, setLoading] = useState(false);
 
   const onSendClick = async () => {
@@ -23,13 +23,13 @@ const TabsBody = () => {
       setError(true);
       return false;
     }
-    console.log({
-      url: topBarData.url,
-      method: topBarData.method,
-      data: jsonText,
-      headers: headersData,
-      query: getHeadersAndParams(paramsData),
-    });
+    // console.log({
+    //   url: topBarData.url,
+    //   method: topBarData.method,
+    //   data: jsonText,
+    //   headers: headersData,
+    //   query: getHeadersAndParams(paramsData),
+    // });
 
     Http({
       url: topBarData.url,
@@ -39,10 +39,11 @@ const TabsBody = () => {
       query: getHeadersAndParams(paramsData),
     })
       .then((res) => {
-        setApiResponse(res.data);
-        console.log(res);
+        // console.log("res", res);
+        setApiResponse(res);
       })
       .catch((err) => {
+        // console.log("Error", err);
         setApiResponse(err.response);
       });
 

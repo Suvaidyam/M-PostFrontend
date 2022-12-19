@@ -13,7 +13,7 @@ const TabsList = () => {
   const newReqObj = {
     name: "New Request",
     type: "request",
-    parent:null,
+    parent: null,
     details: {
       url: "",
       method: "GET",
@@ -28,7 +28,7 @@ const TabsList = () => {
     tabs.push(el);
     dispatch(Tabs(tabs));
     dispatch(AddRequest(el._id));
-    console.log("tabs.length[handleNewTab]", tabs.length, tabs);
+    // console.log("tabs.length[handleNewTab]", tabs.length, tabs);
   };
   const handleTabClose = (e) => {
     let index = tabs.findIndex((f) => f._id == e._id);
@@ -37,7 +37,7 @@ const TabsList = () => {
       dispatch(AddRequest(tabs[index ? index - 1 : 0]._id));
     }
     dispatch(Tabs(tabs));
-    console.log("tabs.length[handleTabClose]", tabs.length);
+    // console.log("tabs.length[handleTabClose]", tabs.length);
   };
 
   const add = useSelector((state) => state.AddRequestReducer);
@@ -50,7 +50,7 @@ const TabsList = () => {
       url: `${process.env.REACT_APP_BASEURL}/collection`,
     })
       .then((res) => {
-        console.log("res.data.collection", res.data.collection);
+        // console.log("res.data.collection", res.data.collection);
       })
       .catch((err) => {
         console.log(err);
@@ -82,10 +82,9 @@ const TabsList = () => {
             <div
               key={e._id}
               className={`flex items-center justify-between
-                ${
-                  e._id === add
-                    ? "border-t-2 border-t-blue-600 border-r border-l"
-                    : "border"
+                ${e._id === add
+                  ? "border-t-2 border-t-blue-600 border-r border-l"
+                  : "border"
                 }
                 w-44 min-w-44 px-1 py-1.5 h-full group cursor-pointer`}
               onClick={() => dispatch(AddRequest(e._id))}
