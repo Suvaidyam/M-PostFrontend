@@ -6,27 +6,27 @@ import { DataContext } from "../../../Context/DataProvider";
 import NewRequest from "./NewRequest";
 
 const TopBar = ({ onSendClick }) => {
-  const {jsonText, tabData ,setTopBarData} = useContext(DataContext);
+  const { jsonText, tabData, setTopBarData } = useContext(DataContext);
   const [data, setData] = useState(tabData.details);
-  const [open, setopen] = useState(false)
-  const [msg, setMsg] = useState()
-  const [isLoding, setIsLoding] = useState(false)
+  const [open, setopen] = useState(false);
+  const [msg, setMsg] = useState();
+  const [isLoding, setIsLoding] = useState(false);
 
   const Save = () => {
     Http({
       url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
       method: "put",
       data: {
-        details:{
-          url:data.url,
-          method:data.method.toLowerCase(),
-          body:jsonText
+        details: {
+          url: data.url,
+          method: data.method.toLowerCase(),
+          body: jsonText,
         },
       },
     })
       .then((res) => {
         setMsg(res.data.message);
-        setIsLoding(true)
+        setIsLoding(true);
         setTimeout(() => {
           setIsLoding(false);
         }, 1000);
@@ -39,8 +39,14 @@ const TopBar = ({ onSendClick }) => {
 
   return (
     <>
-    {isLoding===true?<p className="absolute bg-gray-500 text-white w-56 h-10 flex items-center 
-        px-2 rounded-sm bottom-3 right-16 border-b-4 border-green-500">{msg}</p>:null}
+      {isLoding === true ? (
+        <p
+          className="absolute bg-gray-500 text-white w-56 h-10 flex items-center 
+        px-2 rounded-sm bottom-3 right-16 border-b-4 border-green-500"
+        >
+          {msg}
+        </p>
+      ) : null}
       <div className="flex pt-2.5  items-center  px-3 relative ">
         {/* dropdown */}
         <div className="   w-28 h-9 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
@@ -95,17 +101,24 @@ const TopBar = ({ onSendClick }) => {
         <div>
           <ul className="flex gap-3 pl-3 text-xl">
             <li>
-            {isLoding===true?
-              <p className="flex items-center text-gray-400"><AiOutlineSave />..</p>
-              :<AiOutlineSave className=" cursor-pointer" onClick={tabData.parent?Save:()=>setopen(true)} />}
+              {isLoding === true ? (
+                <p className="flex items-center text-gray-400">
+                  <AiOutlineSave />
+                  ..
+                </p>
+              ) : (
+                <AiOutlineSave
+                  className=" cursor-pointer"
+                  onClick={tabData.parent ? Save : () => setopen(true)}
+                />
+              )}
             </li>
             <li>
               <BsThreeDots className=" cursor-pointer" />
             </li>
           </ul>
         </div>
-        {open === true ? <NewRequest setopen={setopen} details={data}/> : null}
-        
+        {open === true ? <NewRequest setopen={setopen} details={data} /> : null}
       </div>
     </>
   );

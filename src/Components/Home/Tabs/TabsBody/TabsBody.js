@@ -23,6 +23,13 @@ const TabsBody = () => {
       setError(true);
       return false;
     }
+    console.log({
+      url: topBarData.url,
+      method: topBarData.method,
+      data: jsonText,
+      headers: headersData,
+      query: getHeadersAndParams(paramsData),
+    });
 
     Http({
       url: topBarData.url,
@@ -43,25 +50,8 @@ const TabsBody = () => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-
-    // try {
-    //   response = await GetData(data, paramsData, headersData, jsonText);
-    //   setApiStatus(response.status);
-    //   setApiResponse(response);
-    // } catch (res) {
-    //   response = res.response;
-    //   setApiStatus(res.response.status);
-    //   setLoading(true);
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //   }, 1000);
-    // }
-
-    // setLoading(true);
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 1000);
   };
+
   return (
     <>
       <TopBar onSendClick={onSendClick} />
