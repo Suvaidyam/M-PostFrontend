@@ -2,8 +2,21 @@ import ReactJson from "react-json-view";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { LineWave } from "react-loader-spinner";
 import ErrorScreen from "./ErrorScreen";
+import { useState } from "react";
 
 const Response = ({ apiResponse, isLoading }) => {
+
+  const [body, setBody] = useState(true)
+  const [header, setHeader] = useState(false)
+
+  const BodyTab=()=>{
+    setBody(true)
+    setHeader(false)
+  }
+  const HeaderTab=()=>{
+    setBody(false)
+    setHeader(true)
+  }
   // console.log("apiResponse", apiResponse);
   let { data, headers } = apiResponse;// ? apiResponse : {};
 
@@ -64,13 +77,15 @@ const Response = ({ apiResponse, isLoading }) => {
                 <div className="flex justify-between ">
                   {/* Show this part in tabs - Body and Headers */}
                   <div className="px-2 flex items-center  py-1 gap-5">
-                    <span className="text-gray-800 text-sm font-medium">
+                    <span className={`text-sm font-medium cursor-pointer
+                     ${body===true?'text-blue-600':'text-gray-800 '}`} onClick={BodyTab}>
                       Body
                     </span>
-
-                    <span className="text-gray-800 text-sm font-medium">
-                      Headers {getResponseHeaderElem(headers)}
+                    <span className={`text-sm font-medium cursor-pointer
+                     ${header===true?'text-blue-600':'text-gray-800 '}`} onClick={HeaderTab}>
+                      Headers
                     </span>
+                    
                   </div>
                   <div className="px-2 flex items-center gap-5">
                     <span className="text-gray-800 text-sm font-medium">
@@ -87,19 +102,33 @@ const Response = ({ apiResponse, isLoading }) => {
                         <b> Size:</b>{apiResponse.resSize}B
                       </span>
                     </pre>
-                    <span className="text-gray-800 text-sm font-medium">
+                    <button className="text-gray-800 text-sm font-medium">
                       SaveResponse
-                    </span>
+                    </button>
                   </div>
                 </div>
+                {header===true?
+                <div className="w-full mt-1">
+                <div className="w-full flex">
+                 <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">Key</div>
+                 <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">Value</div>
+                </div>
+                {getResponseHeaderElem(headers).map(e=>(
+                  <div className="w-full flex">
+                  {console.log(e)}
+                 <div className="w-1/2 border py-1.5 px-2 text-sm ">{e.key}</div>
+                 <div className="w-1/2 border py-1.5 px-2 text-sm ">{e.props.children[1]}</div>
+                </div>
+                ))}
+             </div> :null}
                 <div className="px-2 pt-1 font-mono word-break: break-all ">
-                  <ReactJson
+                 {body===true? <ReactJson
                     src={
                       data.status === 400
                         ? data.data
                         : data
                     }
-                  />
+                  />:null}
                 </div>
               </>
             )}

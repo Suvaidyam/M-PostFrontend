@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
+import { DataContext } from "../../../Context/DataProvider";
 
 const AddRow = ({ addRows, rowId, data, setData }) => {
+
+  const { tabData } = useContext(DataContext);
+  const [query, setQuery] = useState(tabData.details.query)
+  console.log(query)
+
   const [checkCheckBox, setCheckCheckBox] = useState(false);
 
   // checkBok
@@ -83,6 +89,7 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
             placeholder="Key "
             name="key"
             onChange={onTextChenge}
+            
           />
         </th>
         <th className=" p-0.5   font-medium text-gray-900 whitespace-nowrap dark:text-white">
