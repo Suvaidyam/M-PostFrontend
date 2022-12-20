@@ -24,7 +24,7 @@ const QueryForm = ({ data, setData }) => {
             </tr>
           </thead>
           <tbody>
-            {rows.map((index) => (
+            {rows.map((row, index) => (
               <AddRow
                 addRows={addRows}
                 rowId={index}
