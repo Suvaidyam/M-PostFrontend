@@ -7,7 +7,6 @@ import { DataContext } from "../../Context/DataProvider";
 const Tabs = () => {
   let tabs = useSelector((state) => state.TabsReducer);
   let add = useSelector((state) => state.AddRequestReducer);
-  console.log(add)
   const { setTabData } = useContext(DataContext);
 
   return (
