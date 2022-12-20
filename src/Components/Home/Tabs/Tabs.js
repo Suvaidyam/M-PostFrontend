@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import TabsBody from "./TabsBody/TabsBody";
 import TabsList from "./TabsList/TabsList";
 import { DataContext } from "../../Context/DataProvider";
+import logo from '../../../Assets/Vector.png'
 
 const Tabs = () => {
   let tabs = useSelector((state) => state.TabsReducer);
@@ -11,7 +12,7 @@ const Tabs = () => {
 
   return (
     <>
-      <div className="w-full  ">
+      <div className="w-full  h-[85vh]">
         <TabsList />
         {tabs.map((e) => (
           <>
@@ -20,6 +21,13 @@ const Tabs = () => {
            {setTabData(e)}</>:null}
           </>
         ))}
+        <div className="w-full h-full flex flex-col justify-center items-center gap-7">
+          <img className="w-36" src={logo} alt="" />
+          <p className="text-sm bg-slate-200 rounded-sm px-5 font-medium py-2  text-gray-500 ">Create a new request</p>
+          <div className="flex">
+            <button className="border border-gray-500 text-xs font-semibold rounded-sm text-gray-500 px-1">GET</button>
+          </div>
+        </div>
       </div>
     </>
   );
