@@ -3,10 +3,11 @@ import { AiOutlineSave } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
+import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 import NewRequest from "./NewRequest";
 
 const TopBar = ({ onSendClick }) => {
-  const { jsonText, tabData, setTopBarData } = useContext(DataContext);
+  const { jsonText, tabData, setTopBarData,headersData ,paramsData} = useContext(DataContext);
   const [data, setData] = useState(tabData.details);
   const [open, setopen] = useState(false);
   const [msg, setMsg] = useState();
@@ -21,6 +22,8 @@ const TopBar = ({ onSendClick }) => {
           url: data.url,
           method: data.method.toLowerCase(),
           body: jsonText,
+          headers:getHeadersAndParams(headersData),
+          query:getHeadersAndParams(paramsData)
         },
       },
     })

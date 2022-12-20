@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import http from '../../../../Services/http';
 import { DataContext } from '../../../Context/DataProvider';
+import { getHeadersAndParams } from '../../../Utils/CommonUtils';
 
 const NewRequest = ({setopen,details}) => {
 
-     const { tabData } = useContext(DataContext);
+     const {jsonText, tabData,headersData,paramsData } = useContext(DataContext);
      const [data, setData] = useState(tabData.details);
      const [collection, setcollection] = useState([])
 
@@ -33,6 +34,9 @@ const NewRequest = ({setopen,details}) => {
             details:{
               url:details.url,
               method:details.method,
+              body:jsonText,
+              headers:getHeadersAndParams(headersData),
+              query:getHeadersAndParams(paramsData)
             }
           }
         })

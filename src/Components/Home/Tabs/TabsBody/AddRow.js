@@ -35,7 +35,7 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
       [e.target.name]: e.target.value,
       check: checkCheckBox,
     };
-    console.log("row", result);
+    // console.log("row", result);
 
     let index = data.findIndex((value) => value.id === rowId);
 
