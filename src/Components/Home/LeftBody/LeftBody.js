@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { GoFileDirectory } from "react-icons/go";
-import { BiCaretRight, BiCaretDown, BiDotsHorizontalRounded,} from "react-icons/bi";
+import {
+  BiCaretRight,
+  BiCaretDown,
+  BiDotsHorizontalRounded,
+} from "react-icons/bi";
 import MoreAction from "./MoreAction/MoreAction";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,15 +13,15 @@ import { Tabs } from "../../../Redux/Action/Tabs";
 import BodyHead from "./BodyHead/BodyHead";
 
 const LeftBody = () => {
-
   const dispatch = useDispatch();
 
   const [collection, setcollection] = useState([]);
   const [parentId, setparentId] = useState("");
   let newarr = collection.filter((e) => e.parent == null);
+  console.log(collection, "kiliop");
   const [arr, setArr] = useState(newarr);
 
-  let tabs = useSelector((state) => state.TabsReducer)
+  let tabs = useSelector((state) => state.TabsReducer);
 
   let token = sessionStorage.getItem("token");
   let headers = {
@@ -49,13 +53,13 @@ const LeftBody = () => {
     setArr([...arr]);
   };
   const handleRequest = (e) => {
-    if (tabs.findIndex(f => f._id == e._id) < 0) {
-      tabs.push(e)
+    if (tabs.findIndex((f) => f._id == e._id) < 0) {
+      tabs.push(e);
       dispatch(Tabs(tabs));
-      dispatch(AddRequest(e._id))
-      console.log('CollectionRequestTabs.length', tabs.length);
+      dispatch(AddRequest(e._id));
+      console.log("CollectionRequestTabs.length", tabs.length);
     }
-  }
+  };
   const getDetails = (details) => {
     let method = details?.method ? details?.method.toUpperCase() : "NA";
     let colors = {
@@ -72,24 +76,36 @@ const LeftBody = () => {
     <>
       <div className="w-full h-[82%] scrollbar-hide overflow-y-scroll">
         <div className="">
-            <div>
-                <BodyHead/>
-            </div>
+          <div>
+            <BodyHead />
+          </div>
           {newarr.map((e) => (
-            <div key={e._id} className='border-b'>
+            <div key={e._id} className="border-b">
               <div
                 className={`w-full h-8 ${e.open ? "bg-gray-200" : null}
                    flex items-center relative px-2 cursor-pointer
-                   hover:bg-gray-200 group`} >
-                  <div className="flex items-center gap-2"onClick={() => toggle(e)} >
-                    {e.toggle ? ( <BiCaretDown className="cursor-pointer" /> ) : 
-                    ( <BiCaretRight className="cursor-pointer" />)}
-                    <GoFileDirectory />
-                    <p className="text-sm">{e.name}</p>
-                  </div>
-                <p className="hidden group-hover:block absolute right-2"
-                  onClick={() => setparentId(e._id)} >
-                  <BiDotsHorizontalRounded className="cursor-pointer"  onClick={() => open(e)}  />
+                   hover:bg-gray-200 group`}
+              >
+                <div
+                  className="flex items-center gap-2"
+                  onClick={() => toggle(e)}
+                >
+                  {e.toggle ? (
+                    <BiCaretDown className="cursor-pointer" />
+                  ) : (
+                    <BiCaretRight className="cursor-pointer" />
+                  )}
+                  <GoFileDirectory />
+                  <p className="text-sm">{e.name}</p>
+                </div>
+                <p
+                  className="hidden group-hover:block absolute right-2"
+                  onClick={() => setparentId(e._id)}
+                >
+                  <BiDotsHorizontalRounded
+                    className="cursor-pointer"
+                    onClick={() => open(e)}
+                  />
                 </p>
                 {/* moreaction */}
                 {e.open ? (
@@ -103,21 +119,28 @@ const LeftBody = () => {
                   {collection.map((ce) => (
                     <div key={ce._id}>
                       {e._id === ce.parent ? (
-                        <div className="w-full relative group flex cursor-pointer hover:bg-gray-200 
-                        py-1 px-2" >
-                          <div className="flex items-center gap-2 w-full " onClick={() => 
-                            handleRequest(ce)}>
-                            <p className={`text-xs text-${getDetails(ce?.details).color }-600 
-                            w-1/4 flex justify-end`} > {getDetails(ce?.details).method}
+                        <div
+                          className="w-full relative group flex cursor-pointer hover:bg-gray-200 
+                        py-1 px-2"
+                        >
+                          <div
+                            className="flex items-center gap-2 w-full "
+                            onClick={() => handleRequest(ce)}
+                          >
+                            <p
+                              className={`text-xs text-${
+                                getDetails(ce?.details).color
+                              }-600 
+                            w-1/4 flex justify-end`}
+                            >
+                              {" "}
+                              {getDetails(ce?.details).method}
                             </p>
                             <p className="text-xs font-normal">{ce.name}</p>
                           </div>
                           <p className="hidden group-hover:block absolute right-2">
-                            <BiDotsHorizontalRounded
-                              className="cursor-pointer"
-                            />
+                            <BiDotsHorizontalRounded className="cursor-pointer" />
                           </p>
-                       
                         </div>
                       ) : null}
                     </div>
