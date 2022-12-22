@@ -1,14 +1,17 @@
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "../../../Context/DataProvider";
 
-const MoreAction = ({ parentId }) => {
+const MoreAction = () => {
+  const {collEdit, setCollEdit,collId } = useContext(DataContext);
+ 
   let token = sessionStorage.getItem("token");
   let headers = {
     token,
   };
   const deleteData = () => {
     axios
-      .delete(`http://localhost:4000/collection/${parentId}`, {
+      .delete(`http://localhost:4000/collection/${collId}`, {
         headers,
       })
       .then((res) => {
@@ -26,8 +29,8 @@ const MoreAction = ({ parentId }) => {
         {
           name: "New Request",
           type: "request",
-          parent: parentId,
-          details: { method: "GET", url: "http://localhost:4000/" },
+          parent: collId,
+          details: { method: "GET", url: "" },
         },
         { headers }
       )
@@ -48,7 +51,8 @@ const MoreAction = ({ parentId }) => {
           <li className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md">
             Move
           </li>
-          <li className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md">
+          <li className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md" 
+          onClick={()=>setCollEdit(!collEdit)}>
             <label htmlFor="edit">Edit</label>
           </li>
           <li

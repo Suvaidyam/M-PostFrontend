@@ -1,6 +1,23 @@
 import React from 'react'
+import { useDispatch ,useSelector} from 'react-redux';
+import { Tabs } from '../../../../Redux/Action/Tabs';
+// import { useSelector } from 'react-redux';
 
 const SetEnviroment = () => {
+  let tabs = useSelector((state) => state.TabsReducer);
+const dispatch =useDispatch()
+  const newInvObj = {
+    name: "New Environment",
+    variable: '',
+    type: "request",
+    parent: null,
+  };
+  const handleNewInv=()=>{
+    let el = { ...newInvObj, _id: tabs.length + 1*10 };
+    el.name = el.name ;
+    tabs.push(el);
+    dispatch(Tabs(tabs));
+  }
   return (
     <>
         <div className="w-[700px] h-[300px] border bg-gray-50 shadow-xl rounded-md absolute
@@ -20,7 +37,7 @@ const SetEnviroment = () => {
           <div className="w-full bg-gray-100 flex flex-col gap-5  p-2">
             <div className="flex justify-between">
               <p className='text-sm'>Golbal</p>
-              <p className='text-sm text-blue-500 cursor-pointer'>Add</p>
+              <p className='text-sm text-blue-500 cursor-pointer' onClick={handleNewInv}>Add</p>
             </div>
             <div className="flex items-center flex-col gap-2">
                <p className='w-1/5 text-sm font-medium'>No global variables</p>
