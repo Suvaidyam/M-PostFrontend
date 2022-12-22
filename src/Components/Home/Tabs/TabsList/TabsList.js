@@ -31,7 +31,7 @@ const TabsList = () => {
     // console.log("tabs.length[handleNewTab]", tabs.length, tabs);
   };
   const handleTabClose = (e) => {
-    let index = tabs.findIndex((f) => f._id == e._id);
+    let index = tabs.findIndex((f) => f._id === e._id);
     tabs.splice(index, 1);
     if (tabs.length) {
       dispatch(AddRequest(tabs[index ? index - 1 : 0]._id));

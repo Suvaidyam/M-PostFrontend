@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GoFileDirectory } from "react-icons/go";
 import {
   BiCaretRight,
@@ -11,14 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddRequest } from "../../../Redux/Action/AddRequest";
 import { Tabs } from "../../../Redux/Action/Tabs";
 import BodyHead from "./BodyHead/BodyHead";
+import { DataContext } from "../../Context/DataProvider";
 
 const LeftBody = () => {
+
+  const { setCollId } = useContext(DataContext);
   const dispatch = useDispatch();
 
   const [collection, setcollection] = useState([]);
-  const [parentId, setparentId] = useState("");
   let newarr = collection.filter((e) => e.parent == null);
-  console.log(collection, "kiliop");
   const [arr, setArr] = useState(newarr);
 
   let tabs = useSelector((state) => state.TabsReducer);
@@ -42,7 +43,7 @@ const LeftBody = () => {
     return () => {
       getData();
     };
-  }, [parentId]);
+  }, []);
 
   const toggle = (e) => {
     e.toggle = !e.toggle;
@@ -57,7 +58,6 @@ const LeftBody = () => {
       tabs.push(e);
       dispatch(Tabs(tabs));
       dispatch(AddRequest(e._id));
-      console.log("CollectionRequestTabs.length", tabs.length);
     }
   };
   const getDetails = (details) => {
@@ -100,7 +100,7 @@ const LeftBody = () => {
                 </div>
                 <p
                   className="hidden group-hover:block absolute right-2"
-                  onClick={() => setparentId(e._id)}
+                  onClick={() => setCollId(e._id)}
                 >
                   <BiDotsHorizontalRounded
                     className="cursor-pointer"
@@ -110,7 +110,7 @@ const LeftBody = () => {
                 {/* moreaction */}
                 {e.open ? (
                   <div className="absolute z-50 right-3 top-8">
-                    <MoreAction parentId={parentId} />
+                    <MoreAction/>
                   </div>
                 ) : null}
               </div>
@@ -138,7 +138,7 @@ const LeftBody = () => {
                             </p>
                             <p className="text-xs font-normal">{ce.name}</p>
                           </div>
-                          <p className="hidden group-hover:block absolute right-2">
+                          <p className="hidden group-hover:block absolute right-2"  onClick={() => setCollId(e._id)}>
                             <BiDotsHorizontalRounded className="cursor-pointer" />
                           </p>
                         </div>
