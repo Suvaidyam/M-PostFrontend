@@ -1,41 +1,72 @@
-import axios from 'axios'
-import React from 'react'
+import axios from "axios";
+import React from "react";
 
 const MoreAction = ({ parentId }) => {
-
-
-  let token = sessionStorage.getItem('token')
+  let token = sessionStorage.getItem("token");
   let headers = {
-    token
-  }
+    token,
+  };
+  const deleteData = () => {
+    axios
+      .delete(`http://localhost:4000/collection/${parentId}`, {
+        headers,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const postData = () => {
-    axios.post(`http://localhost:4000/collection`,
-      { name: 'New Request', type: "request", parent: parentId, 
-      details: { method: 'GET', url: 'http://localhost:4000/' } }
-      , { headers })
+    axios
+      .post(
+        `http://localhost:4000/collection`,
+        {
+          name: "New Request",
+          type: "request",
+          parent: parentId,
+          details: { method: "GET", url: "http://localhost:4000/" },
+        },
+        { headers }
+      )
       .then((res) => {
         // setcollection(res.data.collection)
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   return (
     <>
       <div className="w-44 border bg-gray-100 drop-shadow-md rounded-md">
-        <ul className='flex flex-col justify-center w-full '>
-          <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'>Share</li>
-          <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'>Move</li>
-          <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'>
-            <label htmlFor="edit">Edit</label></li>
-          <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'
-            onClick={postData}>Add request</li>
-          <li className='px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md'>Delete</li>
+        <ul className="flex flex-col justify-center w-full ">
+          <li className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md">
+            Share
+          </li>
+          <li className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md">
+            Move
+          </li>
+          <li className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md">
+            <label htmlFor="edit">Edit</label>
+          </li>
+          <li
+            className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md"
+            onClick={postData}
+          >
+            Add request
+          </li>
+          <li
+            className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md"
+            onClick={deleteData}
+          >
+            Delete
+          </li>
         </ul>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default MoreAction
+export default MoreAction;
