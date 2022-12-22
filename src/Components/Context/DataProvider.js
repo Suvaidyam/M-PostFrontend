@@ -10,7 +10,7 @@ const DataProvider = ({ children }) => {
   const [headersData, setHeadersData] = useState([]);
   const [jsonText, setJsonText] = useState("");
   const [collEdit, setCollEdit] = useState(false);
-  const [collId, setcollId] = useState();
+  const [colId, setcolId] = useState(null);
 
   return (
     <>
@@ -28,8 +28,8 @@ const DataProvider = ({ children }) => {
           setJsonText,
           collEdit,
           setCollEdit,
-          collId,
-          setcollId
+          colId,
+          setcolId
         }}
       >
         {children}

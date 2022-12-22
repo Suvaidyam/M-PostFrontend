@@ -84,7 +84,7 @@ return () => {
               </div>
             {/* Notification */}
            <div className='cursor-pointer w-8 h-8 border-2 rounded-full flex justify-center items-center
-            hover:border-blue-300 relative group'>
+            hover:border-blue-300 relative group '>
              <IoMdNotificationsOutline className='group-hover:text-blue-600'/>
              <p className='w-1.5 h-1.5 rounded-full bg-red-600 absolute top-2 right-2'></p>
              </div> 
@@ -92,13 +92,13 @@ return () => {
            <div className="w-12 h-12 border-2 border-blue-500 rounded-full cursor-pointer 
            relative flex flex-col items-center group">
             <img className='w-12 h-12 border-2 rounded-full object-cover' src={url ? 'http://localhost:4000/' + url : Avatar} alt="" />
-           <div className="w-32 shadow-xl absolute  top-11
-           hidden group-hover:block rounded-sm z-50" >
+           <div className="w-44 shadow-xl absolute  top-10 right-0
+           hidden group-hover:block rounded-md z-50" >
             <p className='p-1.5'></p>
-            <ul className='bg-gray-200'>
-            <li className='hover:bg-gray-400 px-2 py-1.5 rounded-t-sm flex justify-between
+            <ul className='bg-white border rounded-md py-1'>
+            <li className='hover:bg-blue-400 border-b px-2 py-1.5 rounded-t-sm flex justify-between
             items-center hover:text-white font-medium text-sm' onClick={()=>setOpenProfile(!openProfile)}>Profile <CgProfile/></li>
-            <li className='bg-red-200 hover:bg-red-500 px-2 py-1.5 rounded-b-sm flex 
+            <li className=' hover:bg-red-500 px-2 py-1.5 rounded-b-sm flex 
             justify-between  items-center hover:text-white font-medium text-sm' onClick={signout}>Logout 
             <BiLogOutCircle/></li>
             </ul>

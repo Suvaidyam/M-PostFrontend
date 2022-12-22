@@ -3,7 +3,8 @@ import React, { useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 
 const MoreAction = () => {
-  const {collEdit, setCollEdit,collId } = useContext(DataContext);
+  const {collEdit, setCollEdit,colId } = useContext(DataContext);
+ console.log(colId)
  
   let token = sessionStorage.getItem("token");
   let headers = {
@@ -11,7 +12,7 @@ const MoreAction = () => {
   };
   const deleteData = () => {
     axios
-      .delete(`http://localhost:4000/collection/${collId}`, {
+      .delete(`http://localhost:4000/collection/${colId._id}`, {
         headers,
       })
       .then((res) => {
@@ -29,7 +30,7 @@ const MoreAction = () => {
         {
           name: "New Request",
           type: "request",
-          parent: collId,
+          parent: colId.parent,
           details: { method: "GET", url: "" },
         },
         { headers }
@@ -41,32 +42,22 @@ const MoreAction = () => {
         console.log(err);
       });
   };
+  const moreaction=[
+    {name:'Share',onclick:''},
+    {name:'Rename',onclick:()=>setCollEdit(!collEdit)},
+    {name:'Add folder',onclick:''},
+    {name:'Add request',onclick:postData},
+    {name:'Delete',onclick:deleteData},
+  ]
   return (
     <>
-      <div className="w-44 border bg-gray-100 drop-shadow-md rounded-md">
-        <ul className="flex flex-col justify-center w-full ">
-          <li className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md">
-            Share
-          </li>
-          <li className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md">
-            Move
-          </li>
-          <li className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md" 
-          onClick={()=>setCollEdit(!collEdit)}>
-            <label htmlFor="edit">Edit</label>
-          </li>
-          <li
-            className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md"
-            onClick={postData}
-          >
-            Add request
-          </li>
-          <li
-            className="px-4 py-1 hover:bg-gray-50 text-sm font-normal rounded-md"
-            onClick={deleteData}
-          >
-            Delete
-          </li>
+      <div className="w-48 border bg-gray-100 drop-shadow-md rounded-md">
+        <ul className="flex flex-col justify-center w-full py-1 ">
+         {moreaction.map(e=>(
+           <li className="px-4 py-1.5 hover:bg-white text-sm font-normal " onClick={e.onclick}>
+           {e.name}
+         </li>
+         ))}
         </ul>
       </div>
     </>
