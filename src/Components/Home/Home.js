@@ -14,8 +14,8 @@ const Home = () => {
   return (
     <>
       <Header />
-        <div className="w-full h-[88.5vh]">
-          <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex relative">
+        <div className="w-full h-[88.5vh] ">
+          <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex ">
             {/* left */}
             <div className="w-[30%] h-full border-r-2 ">
               <MyWorkSpace />

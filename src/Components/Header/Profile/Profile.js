@@ -65,7 +65,7 @@ const Profile = ({setOpenProfile}) => {
   return (
     <>
         <div className="w-full h-full flex justify-center items-center 
-         fixed z-[1000] top-0 ">
+         fixed z-[1000] top-0 inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
             <div className="w-[450px] h-[350px] bg-white rounded-md shadow-xl p-7 flex flex-col justify-between">
                 <h1 className='text-xl flex font-medium'>Change your profile picture</h1>
                 <div className='flex justify-between w-full'>

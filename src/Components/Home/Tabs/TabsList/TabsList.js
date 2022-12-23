@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
 import { RxDotFilled } from "react-icons/rx";
 import { AiOutlinePlus, AiFillCaretDown } from "react-icons/ai";

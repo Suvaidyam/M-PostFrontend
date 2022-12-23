@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { DataContext } from '../../../Context/DataProvider';
 import Http from "../../../../Services/http";
+import {GrFormClose} from 'react-icons/gr'
 
 const EditCollection = () => {
   const {setCollEdit ,colId} = useContext(DataContext);
@@ -24,9 +25,13 @@ const EditCollection = () => {
   }
   return (
     <>
-       <div className="w-full h-full absolute z-50 flex justify-center items-center">
-          <div className="w-[400px] h-[170px] shadow-xl bg-gray-100 p-6 gap-5 flex flex-col 
+       <div className="w-full h-full absolute z-50 flex justify-center items-center 
+         inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+          <div className="w-[400px] h-[165px] shadow-xl bg-gray-100 px-6 py-4 flex flex-col 
           rounded-sm">
+            <div className="w-full flex justify-end"><GrFormClose className='cursor-pointer'
+            onClick={()=>setCollEdit(false)}/></div>
+            <div className=" flex flex-col gap-5">
             <div>
             <label htmlFor="name">Name</label>
              <input type="text" id='name' className='outline-none border-2 w-full py-1 px-2
@@ -35,6 +40,7 @@ const EditCollection = () => {
             </div>
              <button className='w-full bg-blue-600 py-1 text-white' onClick={name.length===0?null:PutData}>
               Update</button>
+            </div>
           </div>
         </div> 
     </>

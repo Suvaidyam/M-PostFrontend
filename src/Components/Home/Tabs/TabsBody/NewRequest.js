@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import http from '../../../../Services/http';
 import { DataContext } from '../../../Context/DataProvider';
 import { getHeadersAndParams } from '../../../Utils/CommonUtils';
+import {GrFormClose} from 'react-icons/gr'
 
 const NewRequest = ({setopen,details}) => {
 
@@ -59,6 +60,8 @@ const NewRequest = ({setopen,details}) => {
     <>
         <div className="w-full h-full absolute z-50">
            <div className="w-[450px] h-[280px] bg-white rounded-md shadow-lg px-10 py-6">
+           <div className="w-full flex justify-end"><GrFormClose className='cursor-pointer'
+            onClick={()=>setopen(false)}/></div>
             <div className="flex flex-col gap-2">
               <label htmlFor="name">Name</label>
             <input type="text" name="name" id="name" className='outline-none border-2 w-full px-2 py-1'
