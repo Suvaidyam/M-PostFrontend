@@ -6,12 +6,12 @@ import {
   BiDotsHorizontalRounded,
 } from "react-icons/bi";
 import MoreAction from "./MoreAction/MoreAction";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { AddRequest } from "../../../Redux/Action/AddRequest";
 import { Tabs } from "../../../Redux/Action/Tabs";
 import BodyHead from "./BodyHead/BodyHead";
 import { DataContext } from "../../Context/DataProvider";
+import Http from "../../../Services/http";
 
 const LeftBody = () => {
   const { setcolId } = useContext(DataContext);
@@ -22,14 +22,12 @@ const LeftBody = () => {
   const [arr, setArr] = useState(newarr);
 
   let tabs = useSelector((state) => state.TabsReducer);
-
-  let token = sessionStorage.getItem("token");
-  let headers = {
-    token,
-  };
+  
   const getData = () => {
-    axios
-      .get(`http://localhost:4000/collection`, { headers })
+    Http({
+      method: "get",
+      url: `${process.env.REACT_APP_BASEURL}/collection`,
+    })
       .then((res) => {
         setcollection(res.data.collection);
       })
@@ -52,8 +50,12 @@ const LeftBody = () => {
     e.open = !e.open;
     setArr([...arr]);
   };
+  const openRequest = (ce) => {
+    ce.openRequest = !ce.openRequest;
+    setArr([...arr]);
+  };
   const handleRequest = (e) => {
-    if (tabs.findIndex((f) => f._id == e._id) < 0) {
+    if (tabs.findIndex((f) => f._id === e._id) < 0) {
       tabs.push(e);
       dispatch(Tabs(tabs));
       dispatch(AddRequest(e._id));
@@ -110,8 +112,12 @@ const LeftBody = () => {
                             <p className="text-xs font-normal">{ce.name}</p>
                           </div>
                           <p className="hidden group-hover:block absolute right-2"  onClick={() => setcolId(ce)}>
-                            <BiDotsHorizontalRounded className="cursor-pointer" />
+                            <BiDotsHorizontalRounded className="cursor-pointer"  onClick={() => openRequest(ce)}/>
                           </p>
+                          {/* moreaction */}
+                        {ce.openRequest? (
+                          <div className="absolute z-50 right-3 top-9"><MoreAction/> </div>
+                        ) : null}
                         </div>
                       ) : null}
                     </div>

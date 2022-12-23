@@ -48,7 +48,7 @@ const MoreAction = () => {
       <div className="w-48 border bg-gray-100 drop-shadow-md rounded-md">
         <ul className="flex flex-col justify-center w-full py-1 ">
          {moreaction.map(e=>(
-           <label htmlFor={e.htmlFor} className="px-4 py-1.5 hover:bg-white text-sm font-normal "
+           <label key={e.name} htmlFor={e.htmlFor} className="px-4 py-1.5 hover:bg-white text-sm font-normal "
             onClick={e.onclick} >
            {e.name}
          </label>
