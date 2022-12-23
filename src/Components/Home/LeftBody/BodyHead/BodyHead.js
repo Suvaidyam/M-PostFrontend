@@ -1,21 +1,24 @@
 import React from 'react'
 import {IoAddSharp} from 'react-icons/io5'
-import axios from 'axios'
 import SearchMenu from '../../../SearchMenu/SearchMenu'
+import http from '../../../../Services/http'
 
 const BodyHead = () => {
-  let token = sessionStorage.getItem('token')
-  let headers = {
-    token
-  }
+ 
   const postData=()=>{
-    axios.post(`http://localhost:4000/collection`,{type:"folder"},{headers})
-  .then((res)=>{
-    // setcollection(res.data.collection)
-  })
-  .catch((err)=>{
-    console.log(err)
-  })
+    http({
+      url: `${process.env.REACT_APP_BASEURL}/collection`,
+      method: "post",
+      data:{
+        type:"folder"
+      }
+    })
+      .then((res) => {
+        console.log(res)        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   return (
     <>
