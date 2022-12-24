@@ -38,7 +38,7 @@ const EditCollection = () => {
              border-gray-400 bg-gray-100' placeholder='Enter collection name' 
              onChange={(e)=>setname(e.target.value)} defaultValue={colId.name}/>
             </div>
-             <button className='w-full bg-blue-600 py-1 text-white' onClick={name.length===0?null:PutData}>
+             <button disabled={name.length===0?true:false} className={`w-full ${name.length===0?'bg-slate-300':' bg-blue-600'} py-1 text-white`} onClick={name.length===0?null:PutData}>
               Update</button>
             </div>
           </div>
