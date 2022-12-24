@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddRequest } from "../../../../Redux/Action/AddRequest";
 import { Tabs } from "../../../../Redux/Action/Tabs";
 import Http from "../../../../Services/http";
+import { motion } from "framer-motion";
 
 const TabsList = () => {
 
@@ -104,12 +105,12 @@ const TabsList = () => {
               />
             </div>
           ))}
-          <div className="h-full flex items-center ml-1">
+          <motion.div  whileTap={{ scale: 0.75 }} className="h-full flex items-center ml-1">
             <AiOutlinePlus
               className="cursor-pointer hover:bg-slate-200 w-8 h-8 p-2 rounded-md"
               onClick={handleNewTab}
             />
-          </div>
+          </motion.div>
         </div>
         <div className="w-[20%] border flex justify-center items-center gap-2">
           <input

@@ -11,6 +11,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import Profile from './Profile/Profile'
 import { useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
 
 const Header = () => {
 
@@ -78,16 +79,16 @@ return () => {
             {/* search */}
             <div className='cursor-pointer'><SearchMenu/></div>
             {/* dark mode */}
-            <div className='cursor-pointer w-8 h-8 border-2 rounded-full flex justify-center items-center
+            <motion.div  whileTap={{ scale: 0.75 }}  className='cursor-pointer w-8 h-8 border-2 rounded-full flex justify-center items-center
             hover:border-blue-300 group'>
               <MdOutlineDarkMode className='group-hover:text-blue-600'/>
-              </div>
+              </motion.div>
             {/* Notification */}
-           <div className='cursor-pointer w-8 h-8 border-2 rounded-full flex justify-center items-center
+           <motion.div  whileTap={{ scale: 0.75 }} className='cursor-pointer w-8 h-8 border-2 rounded-full flex justify-center items-center
             hover:border-blue-300 relative group '>
              <IoMdNotificationsOutline className='group-hover:text-blue-600'/>
              <p className='w-1.5 h-1.5 rounded-full bg-red-600 absolute top-2 right-2'></p>
-             </div> 
+             </motion.div> 
            {/* Profile */}
            <div className="w-12 h-12 border-2 border-blue-500 rounded-full cursor-pointer 
            relative flex flex-col items-center group">
@@ -105,7 +106,8 @@ return () => {
            </div>
            </div>
            {/* Share */}
-           <button className='bg-blue-600 text-white py-1 w-20 rounded-sm'>SHARE</button>
+           <motion.button whileTap={{ scale: 0.90 }}
+           className='bg-blue-600 text-white py-1 w-20 rounded-sm'>SHARE</motion.button>
           </div>
         </div>
         {/* Profile */}
