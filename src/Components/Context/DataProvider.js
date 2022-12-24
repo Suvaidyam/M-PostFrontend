@@ -11,6 +11,8 @@ const DataProvider = ({ children }) => {
   const [jsonText, setJsonText] = useState("");
   const [collEdit, setCollEdit] = useState(false);
   const [colId, setcolId] = useState(null);
+  const [responseData, setResponseData] = useState([]);
+  console.log(responseData, "responseData");
 
   return (
     <>
@@ -29,7 +31,9 @@ const DataProvider = ({ children }) => {
           collEdit,
           setCollEdit,
           colId,
-          setcolId
+          setcolId,
+          responseData,
+          setResponseData,
         }}
       >
         {children}
