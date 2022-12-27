@@ -16,11 +16,14 @@ const TabsList = () => {
     type: "request",
     parent: null,
     details: {
-      url: "",
-      method: "GET",
-      headers: {},
-      body: {},
-      query: {},
+      request: {
+        url: "",
+        method: "GET",
+        headers: {},
+        body: {},
+        query: {}
+      },
+      response: {}
     },
   };
   const handleNewTab = () => {
@@ -92,9 +95,9 @@ const TabsList = () => {
             >
               <div className="flex items-center  w-44 min-w-44 h-full gap-2">
                 <p
-                  className={`text-xs text-${getDetails(e?.details).color}-600`}
+                  className={`text-xs text-${getDetails(e?.details?.request).color}-600`}
                 >
-                  {getDetails(e?.details).method}
+                  {getDetails(e?.details?.request).method}
                 </p>
                 <p className="flex items-center text-xs  h-full">{e.name}</p>
               </div>
@@ -105,7 +108,7 @@ const TabsList = () => {
               />
             </div>
           ))}
-          <motion.div  whileTap={{ scale: 0.75 }} className="h-full flex items-center ml-1">
+          <motion.div whileTap={{ scale: 0.75 }} className="h-full flex items-center ml-1">
             <AiOutlinePlus
               className="cursor-pointer hover:bg-slate-200 w-8 h-8 p-2 rounded-md"
               onClick={handleNewTab}

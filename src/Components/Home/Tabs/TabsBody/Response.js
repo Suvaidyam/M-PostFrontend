@@ -6,7 +6,7 @@ import { useState, useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 
 const Response = ({ apiResponse, isLoading }) => {
-  const { setResponseData } = useContext(DataContext);
+  const { responseData, setResponseData } = useContext(DataContext);
 
   const [body, setBody] = useState(true);
   const [header, setHeader] = useState(false);
@@ -19,7 +19,7 @@ const Response = ({ apiResponse, isLoading }) => {
     setBody(false);
     setHeader(true);
   };
-  // console.log("apiResponse", apiResponse);
+  console.log("apiResponse", apiResponse);
   let { data, headers } = apiResponse; // ? apiResponse : {};
 
   const getStatusElem = (res) => {

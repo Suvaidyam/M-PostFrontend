@@ -12,7 +12,7 @@ const DataProvider = ({ children }) => {
   const [collEdit, setCollEdit] = useState(false);
   const [colId, setcolId] = useState(null);
   const [responseData, setResponseData] = useState([]);
-  console.log(responseData, "responseData");
+  // console.log(responseData, "responseData");
 
   return (
     <>

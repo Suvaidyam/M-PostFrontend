@@ -9,11 +9,11 @@ import Http from "../../../../Services/http";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 
 const TabsBody = () => {
-  const { topBarData, paramsData, headersData, jsonText } =
+  const { topBarData, paramsData, headersData, jsonText, setResponseData, responseData } =
     useContext(DataContext);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
-  const [apiResponse, setApiResponse] = useState({});
+  // const [apiResponse, setApiResponse] = useState(responseData);
   const [isLoading, setLoading] = useState(false);
 
   const onSendClick = async () => {
@@ -23,13 +23,6 @@ const TabsBody = () => {
       setError(true);
       return false;
     }
-    // console.log({
-    //   url: topBarData.url,
-    //   method: topBarData.method,
-    //   data: jsonText,
-    //   headers: headersData,
-    //   query: getHeadersAndParams(paramsData),
-    // });
 
     Http({
       url: topBarData.url,
@@ -39,12 +32,10 @@ const TabsBody = () => {
       query: getHeadersAndParams(paramsData),
     })
       .then((res) => {
-        // console.log("res", res);
-        setApiResponse(res);
+        setResponseData(res)
       })
       .catch((err) => {
-        // console.log("Error", err);
-        setApiResponse(err.response);
+        setResponseData(err.response?.data)
       });
 
     setLoading(true);
@@ -62,7 +53,7 @@ const TabsBody = () => {
 
         <QuearyTabs />
 
-        <Response apiResponse={apiResponse} isLoading={isLoading} />
+        <Response apiResponse={responseData} isLoading={isLoading} />
         <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
       </div>
     </>

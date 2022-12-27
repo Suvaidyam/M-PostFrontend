@@ -7,23 +7,28 @@ import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 import NewRequest from "./NewRequest";
 
 const TopBar = ({ onSendClick }) => {
-  const { jsonText, tabData, setTopBarData,headersData ,paramsData} = useContext(DataContext);
-  const [data, setData] = useState(tabData.details);
+  const { jsonText, tabData, setTopBarData, headersData, paramsData, responseData } = useContext(DataContext);
+  const [data, setData] = useState(tabData?.details?.request);
   const [open, setopen] = useState(false);
   const [msg, setMsg] = useState();
   const [isLoding, setIsLoding] = useState(false);
+  console.log("tabData[2]", tabData, data);
 
   const Save = () => {
+    // console.log("responseData:", responseData);
     Http({
       url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
       method: "put",
       data: {
         details: {
-          url: data.url,
-          method: data.method.toLowerCase(),
-          body: jsonText,
-          headers:getHeadersAndParams(headersData),
-          query:getHeadersAndParams(paramsData)
+          request: {
+            url: data?.url,
+            method: data?.method?.toLowerCase(),
+            body: jsonText,
+            headers: getHeadersAndParams(headersData),
+            query: getHeadersAndParams(paramsData)
+          },
+          response: responseData
         },
       },
     })
@@ -44,7 +49,7 @@ const TopBar = ({ onSendClick }) => {
     <>
       {isLoding === true ? (
         <p
-          className="absolute bg-gray-500 text-white w-56 h-10 flex items-center 
+          className="absolute bg-gray-500 text-white w-56 h-10 flex items-center
         px-2 rounded-sm bottom-3 right-16 border-b-4 border-green-500"
         >
           {msg}
@@ -58,22 +63,19 @@ const TopBar = ({ onSendClick }) => {
             onChange={(e) => {
               setData({ ...data, method: e.target.value });
             }}
+            defaultValue={data?.method?.toUpperCase()}
           >
-            <option value="GET" selected={data.method.toUpperCase() === "GET"}>
+            <option value="GET">
               GET
             </option>
-            <option
-              value="POST"
-              selected={data.method.toUpperCase() === "POST"}
-            >
+            <option value="POST">
               POST
             </option>
-            <option value="PUT" selected={data.method.toUpperCase() === "PUT"}>
+            <option value="PUT">
               PUT
             </option>
             <option
               value="DELETE"
-              selected={data.method.toUpperCase() === "DELETE"}
             >
               DELETE
             </option>
@@ -89,7 +91,7 @@ const TopBar = ({ onSendClick }) => {
             onChange={(e) => {
               setData({ ...data, url: e.target.value });
             }}
-            defaultValue={data.url}
+            defaultValue={data?.url}
           />
         </div>
         {/* button */}

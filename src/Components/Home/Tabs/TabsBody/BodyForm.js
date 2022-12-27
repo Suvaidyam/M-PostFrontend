@@ -6,7 +6,7 @@ import JSONEditorReact from "../../../JSONEditor/index";
 const BodyForm = () => {
   const { tabData, setJsonText } = useContext(DataContext);
 
-  const [data, setData] = React.useState(tabData.details.body);
+  const [data, setData] = React.useState(tabData?.request?.details?.body);
   // const modes = ["tree", "form", "view", "code", "text"];
   const [mode, setMode] = useState("code");
 
@@ -16,7 +16,7 @@ const BodyForm = () => {
       newCode = JSON.parse(newCode);
       setJsonText(newCode);
       setData(newCode);
-    } catch (error) {}
+    } catch (error) { }
   };
   const handleModeChange = (mode) => {
     setMode(mode);
