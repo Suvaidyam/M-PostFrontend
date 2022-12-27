@@ -3,7 +3,7 @@ import { Snackbar } from "@mui/material";
 import { DataContext } from "../../../Context/DataProvider";
 
 const SnackBar = ({ error, setError }) => {
-  const { errorMsg } = useContext(DataContext);
+  const { Msg } = useContext(DataContext);
 
   const handleClose = () => {
     setError(false);
@@ -15,7 +15,7 @@ const SnackBar = ({ error, setError }) => {
         open={error}
         autoHideDuration={4000}
         onClose={handleClose}
-        message={errorMsg}
+        message={Msg}
       />
     </>
   );
