@@ -11,7 +11,7 @@ const DataProvider = ({ children }) => {
   const [jsonText, setJsonText] = useState("");
   const [collEdit, setCollEdit] = useState(false);
   const [colId, setcolId] = useState(null);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [Msg, setMsg] = useState("");
   const [responseData, setResponseData] = useState([]);
   console.log(responseData, "responseData");
 
