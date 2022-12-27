@@ -22,14 +22,14 @@ export const checkParams = (
   paramsData,
   headersData,
   jsonText,
-  setErrorMsg
+  setMsg
 ) => {
   if (!data.url) {
-    setErrorMsg("Request URL is Missing");
+    setMsg("Request URL is Missing");
     return false;
   }
   if (!checkValidJson(jsonText)) {
-    setErrorMsg("Text is Not Valid Json");
+    setMsg("Text is Not Valid Json");
     return false;
   }
   return true;

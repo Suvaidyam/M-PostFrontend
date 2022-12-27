@@ -11,6 +11,7 @@ const DataProvider = ({ children }) => {
   const [jsonText, setJsonText] = useState("");
   const [collEdit, setCollEdit] = useState(false);
   const [colId, setcolId] = useState(null);
+  const [errorMsg, setErrorMsg] = useState("");
   const [responseData, setResponseData] = useState([]);
   console.log(responseData, "responseData");
 
@@ -32,6 +33,8 @@ const DataProvider = ({ children }) => {
           setCollEdit,
           colId,
           setcolId,
+          setMsg,
+          Msg,
           responseData,
           setResponseData,
         }}

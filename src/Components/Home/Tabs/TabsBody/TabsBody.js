@@ -9,17 +9,15 @@ import Http from "../../../../Services/http";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 
 const TabsBody = () => {
-  const { topBarData, paramsData, headersData, jsonText } =
+  const { setMsg, topBarData, paramsData, headersData, jsonText } =
     useContext(DataContext);
   const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState();
+
   const [apiResponse, setApiResponse] = useState({});
   const [isLoading, setLoading] = useState(false);
 
   const onSendClick = async () => {
-    if (
-      !checkParams(topBarData, paramsData, headersData, jsonText, setErrorMsg)
-    ) {
+    if (!checkParams(topBarData, paramsData, headersData, jsonText, setMsg)) {
       setError(true);
       return false;
     }
@@ -63,7 +61,7 @@ const TabsBody = () => {
         <QuearyTabs />
 
         <Response apiResponse={apiResponse} isLoading={isLoading} />
-        <SnackBar error={error} setError={setError} errorMsg={errorMsg} />
+        <SnackBar error={error} setError={setError} />
       </div>
     </>
   );
