@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { RxDotFilled } from "react-icons/rx";
 import { AiOutlinePlus, AiFillCaretDown } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { AddRequest } from "../../../../Redux/Action/AddRequest";
 import { Tabs } from "../../../../Redux/Action/Tabs";
-import Http from "../../../../Services/http";
 import { motion } from "framer-motion";
+import http from "../../../../Services/http";
 
 const TabsList = () => {
-
+const [enviroment, setenviroment] = useState('No Enviroment')
+const [newEnviroment, setNewEnviroment] = useState()
+const [open, setOpen] = useState(false)
   let tabs = useSelector((state) => state.TabsReducer);
   const newReqObj = {
     name: "New Request",
@@ -45,24 +47,6 @@ const TabsList = () => {
   const dispatch = useDispatch();
 
 
-  const getData = () => {
-    Http({
-      method: "GET",
-      url: `${process.env.REACT_APP_BASEURL}/collection`,
-    })
-      .then((res) => {
-        // console.log("res.data.collection", res.data.collection);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    return () => {
-      getData();
-    };
-  }, []);
   const getDetails = (details) => {
     let method = details?.method ? details?.method.toUpperCase() : "NA";
     let colors = {
@@ -74,6 +58,25 @@ const TabsList = () => {
     };
     return { method, color: colors[method.toUpperCase()] };
   };
+
+  const getData = () => {
+    http({
+      method: "get",
+      url: `${process.env.REACT_APP_BASEURL}/environment`,
+    })
+      .then((res) => {
+        setNewEnviroment(res.data.environment);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    return () => {
+      getData();
+    };
+  }, [newEnviroment]);
 
   return (
     <>
@@ -112,15 +115,30 @@ const TabsList = () => {
             />
           </motion.div>
         </div>
-        <div className="w-[20%] border flex justify-center items-center gap-2">
+        <div className="w-[20%] border flex justify-center items-center gap-2 relative">
           <input
             type="text"
             name=""
-            id=""
-            defaultValue={"No Enviroment"}
-            className="w-[70%] outline-none text-sm"
+            value={enviroment}
+            className="w-[80%] outline-none text-xs font-medium "
           />
-          <AiFillCaretDown className="text-[9px] cursor-pointer" />
+          <AiFillCaretDown className="text-[10px] cursor-pointer" onClick={()=>setOpen(!open)}/>
+          {open===true?
+          <ul onClick={(e)=>setenviroment(e.target.value)} className="absolute top-10 w-40 border
+          border-gray-500 bg-white rounded-md   ">
+          <div className="w-full border-b p-1">
+          <option className="w-full bg-slate-200 rounded-sm font-medium p-2 text-xs cursor-pointer 
+           "
+           value='No Enviroment' onClick={()=>setOpen(false)}>No Enviroment</option>
+          </div>
+          <div className="w-full p-1 flex flex-col gap-1">
+          {newEnviroment.map(e=>(
+            <option key={e._id} className={`w-full hover:bg-slate-200  rounded-sm p-2 text-xs 
+            cursor-pointer font-medium`}
+            value={e.name} onClick={()=>setOpen(false)}>{e.name}</option>
+          ))}
+          </div>
+         </ul>:null}
         </div>
       </div>
     </>
