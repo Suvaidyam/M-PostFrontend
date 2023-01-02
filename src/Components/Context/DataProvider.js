@@ -8,6 +8,7 @@ const DataProvider = ({ children }) => {
   const [tabData, setTabData] = useState("");
   const [paramsData, setParamsData] = useState([]);
   const [headersData, setHeadersData] = useState([]);
+  const [enviroment, SetEnviroment] = useState([]);
   const [jsonText, setJsonText] = useState("");
   const [collEdit, setCollEdit] = useState(false);
   const [colId, setcolId] = useState(null);
@@ -37,6 +38,8 @@ const DataProvider = ({ children }) => {
           Msg,
           responseData,
           setResponseData,
+          SetEnviroment,
+          enviroment,
         }}
       >
         {children}
