@@ -3,10 +3,9 @@ import { useState } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 
 const AddRow = ({ addRows, rowId, data, setData }) => {
-
   const { tabData } = useContext(DataContext);
-  const [query, setQuery] = useState(tabData.details.query)
-  console.log(query)
+  // const [query, setQuery] = useState(tabData.details.query);
+  // console.log(query);
 
   const [checkCheckBox, setCheckCheckBox] = useState(false);
 
@@ -81,7 +80,7 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
         </td>
         <th
           scope="row"
-          className=" p-0.5    border font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className=" p-1    border font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           <input
             type="text"
@@ -89,10 +88,9 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
             placeholder="Key "
             name="key"
             onChange={onTextChenge}
-            
           />
         </th>
-        <th className=" p-0.5   font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <th className=" p-1   font-medium text-gray-900 whitespace-nowrap dark:text-white">
           <input
             name="value"
             type="text"
@@ -103,7 +101,7 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
         </th>
         <th
           scope="row"
-          className=" p-0.5  border font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className=" p-1  border font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           <input
             type="text"
