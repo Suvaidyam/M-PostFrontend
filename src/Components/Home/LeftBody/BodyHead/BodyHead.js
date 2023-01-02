@@ -1,25 +1,10 @@
 import React from "react";
 import { IoAddSharp } from "react-icons/io5";
 import SearchMenu from "../../../SearchMenu/SearchMenu";
-import http from "../../../../Services/http";
 import { motion } from "framer-motion";
 
-const BodyHead = () => {
-  const postData = () => {
-    http({
-      url: `${process.env.REACT_APP_BASEURL}/collection`,
-      method: "post",
-      data: {
-        type: "folder",
-      },
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+const BodyHead = ({postData}) => {
+ 
   return (
     <>
       <div className="w-full h-full">

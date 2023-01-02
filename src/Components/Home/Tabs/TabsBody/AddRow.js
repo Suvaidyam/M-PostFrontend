@@ -2,10 +2,9 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 
-const AddRow = ({ addRows, rowId, data, setData }) => {
+const AddRow = ({ addRows, rowId, data, setData,variable,value,description,type ,envirValue}) => {
   const { tabData } = useContext(DataContext);
   // const [query, setQuery] = useState(tabData.details.query);
-  // console.log(query);
 
   const [checkCheckBox, setCheckCheckBox] = useState(false);
 
@@ -80,34 +79,36 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
         </td>
         <th
           scope="row"
-          className=" p-1    border font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className=" p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white"
         >
           <input
             type="text"
             className="w-full px-6 border py-0.5 focus:outline-none "
-            placeholder="Key "
+            placeholder={variable}
             name="key"
             onChange={onTextChenge}
+            // defaultValue={envirValue.key}
+
           />
         </th>
-        <th className=" p-1   font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <th className=" p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
           <input
             name="value"
-            type="text"
+            type={type}
             className="w-full px-6 border py-0.5 focus:outline-none "
-            placeholder="Value "
+            placeholder={value}
             onChange={onTextChenge}
           />
         </th>
         <th
           scope="row"
-          className=" p-1  border font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className=" p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white"
         >
           <input
-            type="text"
+            type={type}
             name="description"
             className="w-full px-4 border py-0.5  focus:outline-none "
-            placeholder="  Description "
+            placeholder={description}
             onChange={onTextChenge}
           />
         </th>

@@ -31,6 +31,7 @@ const QueryForm = ({ data, setData }) => {
                 key={index}
                 data={data}
                 setData={setData}
+                {...{variable:'Key',value:'Value',description:'Description',type:'text'}}
               />
             ))}
           </tbody>

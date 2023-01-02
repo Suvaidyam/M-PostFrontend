@@ -72,12 +72,27 @@ const CollectionBody = () => {
     };
     return { method, color: colors[method.toUpperCase()] };
   };
+  const postData = () => {
+    Http({
+      url: `${process.env.REACT_APP_BASEURL}/collection`,
+      method: "post",
+      data: {
+        type: "folder",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
       <div className="w-full h-full  ">
         <div className="">
-          <BodyHead />
+          <BodyHead {...{postData}}/>
           {/* collection */}
           <div className="w-full h-[83vh] scrollbar-hide overflow-y-scroll">
             {newarr.map((e) => (
