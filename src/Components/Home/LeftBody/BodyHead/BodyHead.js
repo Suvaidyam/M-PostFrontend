@@ -24,7 +24,7 @@ const BodyHead = () => {
     <>
       <div className="w-full h-full">
         <div className="w-full h-14 border-b gap-2  flex items-center justify-center">
-          <div className="w-[245px]">
+          <div className="w-full pl-3">
             <SearchMenu />
           </div>
           <motion.div whileTap={{ scale: 0.75 }}>

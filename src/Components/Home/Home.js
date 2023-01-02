@@ -16,10 +16,10 @@ const Home = () => {
       <div className="w-full h-[88.5vh] ">
         <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex ">
           {/* left */}
-          <div className="w-[30%] h-full border-r-2 ">
+          <div className="w-[30%] min-w-[300px] h-full border-r-2 ">
             <MyWorkSpace />
             <div className="flex h-full border-t ">
-              <div className="w-full h-full border-r">
+              <div className="w-full  h-full border-r">
                 <LeftBar />
               </div>
             </div>
