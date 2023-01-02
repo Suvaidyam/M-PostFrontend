@@ -76,7 +76,7 @@ const [open, setOpen] = useState(false)
     return () => {
       getData();
     };
-  }, [newEnviroment]);
+  }, []);
 
   return (
     <>

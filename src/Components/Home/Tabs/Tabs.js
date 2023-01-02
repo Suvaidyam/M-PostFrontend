@@ -4,6 +4,7 @@ import TabsBody from "./TabsBody/TabsBody";
 import TabsList from "./TabsList/TabsList";
 import { DataContext } from "../../Context/DataProvider";
 import logo from '../../../Assets/Vector.png'
+import EnvironmentTab from "./EnvironmentTab/EnvironmentTab";
 
 const Tabs = () => {
   let tabs = useSelector((state) => state.TabsReducer);
@@ -16,9 +17,11 @@ const Tabs = () => {
         <TabsList />
         {tabs.map((e) => (
           <>
+          {console.log(e)}
             {e._id===add?
+            e.type==="request"?
            <> <TabsBody key={e._id}/>
-           {setTabData(e)}</>:null}
+           {setTabData(e)}</>:<EnvironmentTab/>:null}
           </>
         ))}
         <div className="w-full h-full flex flex-col justify-center items-center gap-7">

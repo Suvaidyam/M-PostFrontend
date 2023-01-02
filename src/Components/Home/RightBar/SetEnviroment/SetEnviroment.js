@@ -39,7 +39,7 @@ const dispatch =useDispatch()
     return () => {
       getData();
     };
-  }, [newEnviroment]);
+  }, []);
   return (
     <>
         <div className="w-[700px] h-[400px] border bg-gray-50 shadow-xl rounded-md absolute
