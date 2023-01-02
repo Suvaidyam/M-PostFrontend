@@ -24,6 +24,18 @@ const EnvironmentBody = () => {
       dispatch(AddRequest(e._id));
     }
   };
+  const postData = () => {
+    http({
+      url: `${process.env.REACT_APP_BASEURL}/environment`,
+      method: "post",
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getData = () => {
     http({
@@ -43,17 +55,15 @@ const EnvironmentBody = () => {
       getData();
     };
   }, []);
-  const toggle = (e) => {
-    e.toggle = !e.toggle;
-  };
+ 
   return (
     <div className="w-full">
-      <BodyHead />
+      <BodyHead {...{postData}}/>
         <div className="w-full relative">
         {newEnviroment.map(e=>(
             <div key={e._id} onClick={handleRequest(e)} className="w-full border-b hover:bg-gray-200
             flex group relative">
-             <p className="w-full px-4 py-1.5 text-sm cursor-pointer ">{e.name}</p>
+             <p className="w-full px-4 py-1.5 text-sm cursor-pointer "  onClick={() => dispatch(AddRequest(e._id))}>{e.name}</p>
               <p className=" absolute right-2 flex justify-end top-2"  onClick={()=>setcolId(e)}>
                 <BiDotsHorizontalRounded className="cursor-pointer hidden group-hover:block" 
                 onClick={()=>setOpen(!open)} />

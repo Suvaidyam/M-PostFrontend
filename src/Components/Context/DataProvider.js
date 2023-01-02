@@ -14,7 +14,6 @@ const DataProvider = ({ children }) => {
   const [colId, setcolId] = useState(null);
   const [Msg, setMsg] = useState("");
   const [responseData, setResponseData] = useState([]);
-  console.log(responseData, "responseData");
 
   return (
     <>

@@ -17,7 +17,6 @@ const Tabs = () => {
         <TabsList />
         {tabs.map((e) => (
           <>
-          {console.log(e)}
             {e._id===add?
             e.type==="request"?
            <> <TabsBody key={e._id}/>

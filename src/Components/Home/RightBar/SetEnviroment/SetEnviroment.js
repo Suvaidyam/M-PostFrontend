@@ -2,25 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch ,useSelector} from 'react-redux';
 import { Tabs } from '../../../../Redux/Action/Tabs';
 import http from '../../../../Services/http';
-// import { useSelector } from 'react-redux';
 
 const SetEnviroment = () => {
 
   const [newEnviroment, setNewEnviroment] = useState([])
 
   let tabs = useSelector((state) => state.TabsReducer);
-const dispatch =useDispatch()
+  const dispatch =useDispatch()
   const newInvObj = {
     name: "New Environment",
     variable: '',
     type: "request",
+    method: "NA",
     parent: null,
   };
   const handleNewInv=()=>{
-    let el = { ...newInvObj, _id: tabs.length + 1*10 };
+    let el = { ...newInvObj, _id: tabs.length };
     el.name = el.name ;
     tabs.push(el);
     dispatch(Tabs(tabs));
+    // dispatch(AddRequest(el._id));
   }
   const getData = () => {
     http({

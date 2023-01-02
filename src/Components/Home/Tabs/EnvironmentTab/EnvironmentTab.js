@@ -1,24 +1,71 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import AddRow from "../TabsBody/AddRow";
 import { DataContext } from "../../../Context/DataProvider";
+import http from "../../../../Services/http";
+import { useSelector } from "react-redux";
 
 const EnvironmentTab = () => {
   const { SetEnviroment, enviroment } = useContext(DataContext);
   const [rows, addRows] = useState([0]);
+  const [envirValue, setEnvirValue] = useState()
+  const [effect, setEffect] = useState(false)
+  let _id = useSelector((state) => state.AddRequestReducer);
 
+  const postData = () => {
+    http({
+      method: "put",
+      url: `${process.env.REACT_APP_BASEURL}/environment/${_id}`,
+      data:{
+        details:[{
+          variable:enviroment[0].key,
+          value:enviroment[0].value,
+          current_value:enviroment[0].description
+        }]
+      }
+    })
+      .then((res) => {
+        // setNewEnviroment(res.data.environment);
+        setEffect(true)
+        setTimeout(()=>{
+          setEffect(false)
+        },1000)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getData = () => {
+    http({
+      method: "get",
+      url: `${process.env.REACT_APP_BASEURL}/environment`,
+    })
+      .then((res) => {
+        setEnvirValue(res.data.environment);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    return () => {
+      getData();
+    };
+  }, []);
   return (
     <>
       <div className="w-full min-h-screen  bg-white ">
         <div className=" h-14 px-5 flex items-center justify-between">
           <div>
-            <p className="font-serif">Globals</p>
+            <p className="font-semibold">Globals</p>
           </div>
           <div className=" flex items-center justify-center">
             <div className="">
-              <button className="flex justify-start items-center h-8 w-20  rounded pl-4 hover:bg-gray-200">
+              <button className="flex justify-start items-center text-lg rounded px-4 py-2
+               hover:bg-gray-200" onClick={postData}>
                 <AiOutlineSave />
-                <span className="ml-0.5  font-serif">save</span>
+                <span className="ml-0.5 text-sm font-semibold">{effect===true?<>...</>:<>save</>}</span>
               </button>
             </div>
           </div>
@@ -60,6 +107,7 @@ const EnvironmentTab = () => {
                     key={index}
                     data={enviroment}
                     setData={SetEnviroment}
+                    {...{variable:'Add a new variable',value:'',description:'',type:'url',envirValue}}
                   />
                 ))}
               </tbody>
