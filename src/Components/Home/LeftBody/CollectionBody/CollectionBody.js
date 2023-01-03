@@ -102,7 +102,7 @@ const CollectionBody = () => {
                flex items-center relative px-2 cursor-pointer hover:bg-gray-200 group`}
                 >
                   <div
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 text-gray-700"
                     onClick={() => toggle(e)}
                   >
                     {e.toggle ? (
