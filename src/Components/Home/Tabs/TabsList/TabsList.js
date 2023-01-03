@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { RxDotFilled } from "react-icons/rx";
-import { AiOutlinePlus, AiFillCaretDown } from "react-icons/ai";
+import { AiOutlinePlus, AiFillCaretDown,AiOutlineAntDesign } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { AddRequest } from "../../../../Redux/Action/AddRequest";
 import { Tabs } from "../../../../Redux/Action/Tabs";
@@ -81,14 +81,14 @@ const [open, setOpen] = useState(false)
   return (
     <>
       <div className="w-full h-10 bg-white shadow-inner flex">
-        <div className="w-[80%]  flex h-full overflow-x-scroll scrollbar-hide">
+        <div className="w-[80%]  flex h-full overflow-x-scroll scrollbar-hide border-b">
           {tabs.map((e) => (
             <div
               key={e._id}
               className={`flex items-center justify-between
                 ${e._id === add
-                  ? "border-t-2 border-t-blue-600 border-r border-l"
-                  : "border"
+                  ? "border-t-2 border-t-blue-600 border-r "
+                  : "border-r"
                 }
                 w-44 min-w-44 px-1 py-1.5 h-full group cursor-pointer`}
               onClick={() => dispatch(AddRequest(e._id))}
@@ -97,7 +97,8 @@ const [open, setOpen] = useState(false)
                 <p
                   className={`text-xs text-${getDetails(e?.details).color}-600`}
                 >
-                  {getDetails(e?.details).method}
+                  {getDetails(e?.details).method==='NA'?<AiOutlineAntDesign className="text-xl text-gray-500"/>
+                  :<>{getDetails(e?.details).method}</>}
                 </p>
                 <p className="flex items-center text-xs  h-full">{e.name}</p>
               </div>
