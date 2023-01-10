@@ -12,11 +12,12 @@ import { Tabs } from "../../../../Redux/Action/Tabs";
 import BodyHead from "../BodyHead/BodyHead";
 import { DataContext } from "../../../Context/DataProvider";
 import Http from "../../../../Services/http";
+import { CollectionLoader } from "../../../Loader/Loader";
 
 const CollectionBody = () => {
   const { setcolId } = useContext(DataContext);
   const dispatch = useDispatch();
-
+  const [loader, setLoader] = useState(true);
   const [collection, setcollection] = useState([]);
   let newarr = collection.filter((e) => e.parent == null);
   const [arr, setArr] = useState(newarr);
@@ -29,6 +30,9 @@ const CollectionBody = () => {
       url: `${process.env.REACT_APP_BASEURL}/collection`,
     })
       .then((res) => {
+        setTimeout(() => {
+          setLoader(false);
+        }, 1000);
         setcollection(res.data.collection);
       })
       .catch((err) => {
@@ -92,92 +96,105 @@ const CollectionBody = () => {
     <>
       <div className="w-full h-full  ">
         <div className="">
-          <BodyHead {...{postData}}/>
+          <BodyHead {...{ postData, title: "create collection" }} />
           {/* collection */}
-          <div className="w-full h-[83vh] scrollbar-hide overflow-y-scroll">
-            {newarr.map((e) => (
-              <div key={e._id} className="border-b">
-                <div
-                  className={`w-full h-8 ${e.open ? "bg-gray-200" : null}
+          {loader == true ? (
+            <>
+              {newarr.map((e) => (
+                <CollectionLoader key={e._id} />
+              ))}
+            </>
+          ) : (
+            <>
+              {" "}
+              <div className="w-full h-[83vh] scrollbar-hide overflow-y-scroll">
+                {newarr.map((e) => (
+                  <div key={e._id} className="border-b">
+                    <div
+                      className={`w-full h-8 ${e.open ? "bg-gray-200" : null}
                flex items-center relative px-2 cursor-pointer hover:bg-gray-200 group`}
-                >
-                  <div
-                    className="flex items-center gap-2 text-gray-700"
-                    onClick={() => toggle(e)}
-                  >
-                    {e.toggle ? (
-                      <BiCaretDown className="cursor-pointer" />
-                    ) : (
-                      <BiCaretRight className="cursor-pointer" />
-                    )}
-                    <GoFileDirectory />
-                    <p className="text-sm">{e.name}</p>
-                  </div>
-                  <p
-                    className="hidden group-hover:block absolute right-2"
-                    onClick={() => setcolId(e)}
-                  >
-                    <BiDotsHorizontalRounded
-                      className="cursor-pointer"
-                      onClick={() => open(e)}
-                    />
-                  </p>
-                  {/* moreaction */}
-                  {e.open ? (
-                    <div className="absolute z-50 right-3 top-9">
-                      <MoreAction />{" "}
+                    >
+                      <div
+                        className="flex items-center gap-2 text-gray-700"
+                        onClick={() => toggle(e)}
+                      >
+                        {e.toggle ? (
+                          <BiCaretDown className="cursor-pointer" />
+                        ) : (
+                          <BiCaretRight className="cursor-pointer" />
+                        )}
+                        <GoFileDirectory />
+                        <p className="text-sm">{e.name}</p>
+                      </div>
+                      <p
+                        className="hidden group-hover:block absolute right-2"
+                        onClick={() => setcolId(e)}
+                      >
+                        <BiDotsHorizontalRounded
+                          className="cursor-pointer"
+                          onClick={() => open(e)}
+                        />
+                      </p>
+                      {/* moreaction */}
+                      {e.open ? (
+                        <div className="absolute z-50 right-3 top-9">
+                          <MoreAction />{" "}
+                        </div>
+                      ) : null}
                     </div>
-                  ) : null}
-                </div>
-                {/* request */}
-                {e.toggle ? (
-                  <div className=" w-full">
-                    {collection.map((ce) => (
-                      <div key={ce._id}>
-                        {e._id === ce.parent ? (
-                          <div
-                            className="w-full relative group flex cursor-pointer
+                    {/* request */}
+                    {e.toggle ? (
+                      <div className=" w-full">
+                        {collection.map((ce) => (
+                          <div key={ce._id}>
+                            {e._id === ce.parent ? (
+                              <div
+                                className="w-full relative group flex cursor-pointer
                        hover:bg-gray-200 py-1 px-2"
-                          >
-                            <div
-                              className="flex items-center gap-2 w-full "
-                              onClick={() => handleRequest(ce)}
-                            >
-                              <p
-                                className={`text-xs text-${
-                                  getDetails(ce?.details).color
-                                }-600 
-                            w-1/4 flex justify-end`}
                               >
-                                {" "}
-                                {getDetails(ce?.details).method}
-                              </p>
-                              <p className="text-xs font-normal">{ce.name}</p>
-                            </div>
-                            <p
-                              className="hidden group-hover:block absolute right-2"
-                              onClick={() => setcolId(ce)}
-                            >
-                              <BiDotsHorizontalRounded
-                                className="cursor-pointer"
-                                onClick={() => openRequest(ce)}
-                              />
-                            </p>
-                            {/* moreaction */}
-                            {ce.openRequest ? (
-                              <div className="absolute z-50 right-3 top-9">
-                                <MoreAction />{" "}
+                                <div
+                                  className="flex items-center gap-2 w-full "
+                                  onClick={() => handleRequest(ce)}
+                                >
+                                  <p
+                                    className={`text-xs text-${
+                                      getDetails(ce?.details).color
+                                    }-600 
+                            w-1/4 flex justify-end`}
+                                  >
+                                    {" "}
+                                    {getDetails(ce?.details).method}
+                                  </p>
+                                  <p className="text-xs font-normal">
+                                    {ce.name}
+                                  </p>
+                                </div>
+                                <p
+                                  className="hidden group-hover:block absolute right-2"
+                                  onClick={() => setcolId(ce)}
+                                >
+                                  <BiDotsHorizontalRounded
+                                    className="cursor-pointer"
+                                    onClick={() => openRequest(ce)}
+                                  />
+                                </p>
+                                {/* moreaction */}
+                                {ce.openRequest ? (
+                                  <div className="absolute z-50 right-3 top-9">
+                                    <MoreAction />{" "}
+                                  </div>
+                                ) : null}
                               </div>
                             ) : null}
                           </div>
-                        ) : null}
+                        ))}
                       </div>
-                    ))}
+                    ) : null}
                   </div>
-                ) : null}
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </div>
       </div>
     </>

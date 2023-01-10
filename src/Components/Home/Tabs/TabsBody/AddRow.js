@@ -2,11 +2,22 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 
-const AddRow = ({ addRows, rowId, data, setData,variable,value,description,type ,envirValue}) => {
+const AddRow = ({
+  addRows,
+  rowId,
+  data,
+  setData,
+  variable,
+  value,
+  description,
+  type,
+  envirValue,
+}) => {
   const { tabData } = useContext(DataContext);
   // const [query, setQuery] = useState(tabData.details.query);
 
   const [checkCheckBox, setCheckCheckBox] = useState(false);
+  const [hide, setHide] = useState(false);
 
   // checkBok
   const checkBox = (e) => {
@@ -40,6 +51,7 @@ const AddRow = ({ addRows, rowId, data, setData,variable,value,description,type 
       check: checkCheckBox,
     };
     // console.log("row", result);
+    setHide(true);
 
     let index = data.findIndex((value) => value.id === rowId);
 
@@ -67,14 +79,21 @@ const AddRow = ({ addRows, rowId, data, setData,variable,value,description,type 
       <tr className="bg-white border  w-full">
         <td className=" w-4   px-4">
           <div className="flex items-center ">
-            <input
-              checked={checkCheckBox}
-              id="checkbox-table-search-1"
-              type="checkbox"
-              className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
-              onClick={checkBox}
-              name={rowId}
-            />
+            {hide === true ? (
+              <>
+                {" "}
+                <input
+                  checked={checkCheckBox}
+                  id="checkbox-table-search-1"
+                  type="checkbox"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
+                  onClick={checkBox}
+                  name={rowId}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </td>
         <th
@@ -88,7 +107,6 @@ const AddRow = ({ addRows, rowId, data, setData,variable,value,description,type 
             name="key"
             onChange={onTextChenge}
             // defaultValue={envirValue.key}
-
           />
         </th>
         <th className=" p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
