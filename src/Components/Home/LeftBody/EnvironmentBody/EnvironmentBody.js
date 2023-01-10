@@ -97,7 +97,7 @@ const EnvironmentBody = () => {
                 </p>
               </div>
             ))}
-            {open === true ? <MoreAction className="absolute right-2" /> : null}
+            {open === true ? <MoreAction className="absolute right-2" {...{collection:'environment'}}/> : null}
           </div>
         </>
       )}

@@ -138,7 +138,7 @@ const CollectionBody = () => {
                       {/* moreaction */}
                       {e.open ? (
                         <div className="absolute z-50 right-3 top-9">
-                          <MoreAction />{" "}
+                          <MoreAction {...{collection:'collection'}}/>{" "}
                         </div>
                       ) : null}
                     </div>
@@ -181,7 +181,7 @@ const CollectionBody = () => {
                                 {/* moreaction */}
                                 {ce.openRequest ? (
                                   <div className="absolute z-50 right-3 top-9">
-                                    <MoreAction />{" "}
+                                    <MoreAction {...{collection:'collection'}}/>{" "}
                                   </div>
                                 ) : null}
                               </div>

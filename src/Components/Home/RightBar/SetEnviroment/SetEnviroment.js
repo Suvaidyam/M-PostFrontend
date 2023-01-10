@@ -94,20 +94,26 @@ const SetEnviroment = () => {
               </div>
               <div className="w-full h-[120px] overflow-y-scroll scrollbar-hide">
                 {newEnviroment.map((e) => (
-                  <div
-                    key={e._id}
+                  <>
+                  <div key={e._id}>
+                  {e.details.map(el=>(
+                     <div
+                    key={el._id}
                     className="w-full  flex p-2 hover:bg-gray-200"
                   >
                     <p className="w-1/5 text-xs text-gray-700 font-medium">
-                      {e.details[0].variable}
+                      {el.variable}
                     </p>
                     <p className="w-2/5 text-xs text-gray-700 font-medium">
-                      {e.details[0].value}
+                      {el.value}
                     </p>
                     <p className="w-2/5 text-xs text-gray-700 font-medium">
-                      {e.details[0].value}
+                      {el.value}
                     </p>
                   </div>
+                  ))}
+                  </div>
+                  </>
                 ))}
               </div>
             </div>
@@ -150,21 +156,27 @@ const SetEnviroment = () => {
                 )}
               </div>
               <div className="w-full h-[120px] overflow-y-scroll scrollbar-hide">
-                {newEnviroment.map((e) => (
-                  <div
-                    key={e._id}
+              {newEnviroment.map((e) => (
+                  <>
+                  <div key={e._id}>
+                  {e.details.map(el=>(
+                     <div
+                    key={el._id}
                     className="w-full  flex p-2 hover:bg-gray-200"
                   >
                     <p className="w-1/5 text-xs text-gray-700 font-medium">
-                      {e.details[0].variable}
+                      {el.variable}
                     </p>
                     <p className="w-2/5 text-xs text-gray-700 font-medium">
-                      {e.details[0].value}
+                      {el.value}
                     </p>
                     <p className="w-2/5 text-xs text-gray-700 font-medium">
-                      {e.details[0].value}
+                      {el.value}
                     </p>
                   </div>
+                  ))}
+                  </div>
+                  </>
                 ))}
               </div>
             </div>
