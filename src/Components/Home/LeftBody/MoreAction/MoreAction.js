@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
 
-const MoreAction = () => {
+const MoreAction = ({collection}) => {
   const {collEdit, setCollEdit,colId } = useContext(DataContext);
  
   const deleteData = () => {
     Http({
-      url: `${process.env.REACT_APP_BASEURL}/collection/${colId._id}`,
+      url: `${process.env.REACT_APP_BASEURL}/${collection}/${colId._id}`,
       method: "delete",
     })
       .then((res) => {

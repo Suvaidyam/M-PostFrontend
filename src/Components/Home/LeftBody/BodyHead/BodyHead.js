@@ -3,7 +3,7 @@ import { IoAddSharp } from "react-icons/io5";
 import SearchMenu from "../../../SearchMenu/SearchMenu";
 import { motion } from "framer-motion";
 
-const BodyHead = ({postData}) => {
+const BodyHead = ({postData,title}) => {
  
   return (
     <>
@@ -14,8 +14,9 @@ const BodyHead = ({postData}) => {
           </div>
           <motion.div whileTap={{ scale: 0.75 }}>
             <IoAddSharp
-              className="text-2xl cursor-pointer"
+              className="text-2xl cursor-pointer "
               onClick={postData}
+              title={title}
             />
           </motion.div>
         </div>
