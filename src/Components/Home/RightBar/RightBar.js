@@ -3,8 +3,8 @@ import { AiOutlineEye } from "react-icons/ai";
 import { BsCaretRight, BsCode } from "react-icons/bs";
 import { FiTrash2 } from "react-icons/fi";
 import { BiHelpCircle } from "react-icons/bi";
-import SetEnviroment from "./SetEnviroment/SetEnviroment";
 import { motion } from "framer-motion";
+import ModelBox from "../../ModelBox/ModelBox";
 
 const RightBar = () => {
   const [open, setOpen] = useState(false);
@@ -26,12 +26,9 @@ const RightBar = () => {
                              }`}
               onClick={envirmentOpen}
             >
-              <AiOutlineEye
-                className={`group-hover:text-blue-600 
-                            ${open === true ? "text-blue-600" : null}`}
-              />
+              <ModelBox />
             </motion.div>
-            {open === true ? <SetEnviroment /> : null}
+
             <motion.div
               whileTap={{ scale: 0.75 }}
               className="hover:bg-blue-200 w-8 h-8 flex justify-center items-center 

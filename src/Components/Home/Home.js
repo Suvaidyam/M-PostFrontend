@@ -6,7 +6,6 @@ import Tabs from "./Tabs/Tabs";
 import RightBar from "./RightBar/RightBar";
 
 const Home = () => {
-
   return (
     <>
       <Header />
