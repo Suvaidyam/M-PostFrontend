@@ -3,12 +3,12 @@ import { DataContext } from '../../../Context/DataProvider';
 import Http from "../../../../Services/http";
 import {GrFormClose} from 'react-icons/gr'
 
-const EditCollection = () => {
+const EditCollection = ({apiUrl}) => {
   const {setCollEdit ,colId} = useContext(DataContext);
   const [name, setname] = useState('')
   const PutData=()=>{
     Http({
-      url: `${process.env.REACT_APP_BASEURL}/collection/${colId._id}`,
+      url: `${process.env.REACT_APP_BASEURL}/${apiUrl}/${colId._id}`,
       method: "put",
       data: {
         name:name

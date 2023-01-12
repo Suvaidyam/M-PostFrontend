@@ -13,9 +13,10 @@ import BodyHead from "../BodyHead/BodyHead";
 import { DataContext } from "../../../Context/DataProvider";
 import Http from "../../../../Services/http";
 import { CollectionLoader } from "../../../Loader/Loader";
+import EditCollection from "../MoreAction/EditCollection";
 
 const CollectionBody = () => {
-  const { setcolId } = useContext(DataContext);
+  const { setcolId ,collEdit} = useContext(DataContext);
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const [collection, setcollection] = useState([]);
@@ -196,6 +197,7 @@ const CollectionBody = () => {
             </>
           )}
         </div>
+        {collEdit === true ? <EditCollection {...{apiUrl:'collection'}}/> : null}
       </div>
     </>
   );
