@@ -9,6 +9,7 @@ const SetEnviroment = () => {
   const [loader, setLoader] = useState(true);
 
   let tabs = useSelector((state) => state.TabsReducer);
+  let showEnv_id = useSelector((state) => state.AddRequestReducer);
   const dispatch = useDispatch();
   const newInvObj = {
     name: "New Environment",
@@ -92,11 +93,13 @@ const SetEnviroment = () => {
                 {newEnviroment.map((e) => (
                   <>
                   <div key={e._id}>
-                  {e.details.map(el=>(
-                     <div
+                  {e.collectionId===null?null:<>
+                    {e.details.map(el=>(
+                    e._id===showEnv_id?<>
+                    <div
                     key={el._id}
                     className="w-full  flex p-2 hover:bg-gray-200"
-                  >
+                    >
                     <p className="w-1/5 text-xs text-gray-700 font-medium">
                       {el.variable}
                     </p>
@@ -106,8 +109,9 @@ const SetEnviroment = () => {
                     <p className="w-2/5 text-xs text-gray-700 font-medium">
                       {el.value}
                     </p>
-                  </div>
-                  ))}
+                  </div></>:null
+                    
+                  ))}</>}
                   </div>
                   </>
                 ))}
@@ -120,7 +124,7 @@ const SetEnviroment = () => {
                   <p className="text-sm">Golbal</p>
                   <p
                     className="text-sm text-blue-500 cursor-pointer"
-                    onClick={newEnviroment.length >= 1 ? null : handleNewInv}
+                    onClick={newEnviroment[0].details.length >= 1 ? null : handleNewInv}
                   >
                     {newEnviroment[0].details.length >= 1 ? <>Edit</> : <>Add</>}
                   </p>
@@ -155,7 +159,8 @@ const SetEnviroment = () => {
               {newEnviroment.map((e) => (
                   <>
                   <div key={e._id}>
-                  {e.details.map(el=>(
+                  {e.collectionId===null?<>
+                    {e.details.map(el=>(
                      <div
                     key={el._id}
                     className="w-full  flex p-2 hover:bg-gray-200"
@@ -171,6 +176,8 @@ const SetEnviroment = () => {
                     </p>
                   </div>
                   ))}
+                  </>:null}
+                  
                   </div>
                   </>
                 ))}

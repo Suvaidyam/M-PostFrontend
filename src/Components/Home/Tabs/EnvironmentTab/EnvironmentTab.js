@@ -8,10 +8,9 @@ import { useSelector } from "react-redux";
 const EnvironmentTab = () => {
   const { SetEnviroment, enviroment } = useContext(DataContext);
   const [rows, addRows] = useState([0]);
-  const [envirValue, setEnvirValue] = useState()
+  const [envirValue, setEnvirValue] = useState([])
   const [effect, setEffect] = useState(false)
   let _id = useSelector((state) => state.AddRequestReducer);
-console.log(enviroment)
   const postData = () => {
     http({
       method: "put",
@@ -21,7 +20,7 @@ console.log(enviroment)
       }
     })
       .then((res) => {
-        // setNewEnviroment(res.data.environment);
+        console.log(res)
         setEffect(true)
         setTimeout(()=>{
           setEffect(false)
