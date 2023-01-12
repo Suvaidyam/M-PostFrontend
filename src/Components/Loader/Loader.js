@@ -35,8 +35,8 @@ export const EnvLoader = () => {
 export const CollectionLoader = () => {
   return (
     <>
-      <div className=" flex flex-col items-center  mx-2 ">
-        <div className="bg-gray-200 animate-bounce  leading-snug h-8 w-full mt-1"></div>
+      <div className=" flex flex-col items-center   mx-2 ">
+        <div className="bg-gray-300 animate-pulse leading-relaxed h-8 w-full mt-1"></div>
       </div>
     </>
   );

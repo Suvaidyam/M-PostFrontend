@@ -45,8 +45,8 @@ const SetEnviroment = () => {
   return (
     <>
       <div
-        className="w-[700px] h-[400px] border bg-gray-50 shadow-xl rounded-md absolute
-       right-[58px] top-11 py-2 flex flex-col justify-between"
+        className="w-[700px] h-[400px] border bg-gray-50 shadow-inner rounded-md 
+        py-2 flex flex-col justify-between"
       >
         {loader === true ? (
           <EnvLoader />
@@ -58,9 +58,15 @@ const SetEnviroment = () => {
                   <p className="text-sm">Enviroment</p>
                   <p
                     className="text-sm text-blue-500 cursor-pointer"
-                    onClick={newEnviroment[0].details.length >= 1 ? null : handleNewInv}
+                    onClick={
+                      newEnviroment[0].details.length >= 1 ? null : handleNewInv
+                    }
                   >
-                    {newEnviroment[0].details.length >= 1 ? <>Edit</> : <>Add</>}
+                    {newEnviroment[0].details.length >= 1 ? (
+                      <>Edit</>
+                    ) : (
+                      <>Add</>
+                    )}
                   </p>
                 </div>
                 {newEnviroment[0].details.length >= 1 ? (
@@ -92,27 +98,32 @@ const SetEnviroment = () => {
               <div className="w-full h-[120px] overflow-y-scroll scrollbar-hide">
                 {newEnviroment.map((e) => (
                   <>
-                  <div key={e._id}>
-                  {e.collectionId===null?null:<>
-                    {e.details.map(el=>(
-                    e._id===showEnv_id?<>
-                    <div
-                    key={el._id}
-                    className="w-full  flex p-2 hover:bg-gray-200"
-                    >
-                    <p className="w-1/5 text-xs text-gray-700 font-medium">
-                      {el.variable}
-                    </p>
-                    <p className="w-2/5 text-xs text-gray-700 font-medium">
-                      {el.value}
-                    </p>
-                    <p className="w-2/5 text-xs text-gray-700 font-medium">
-                      {el.value}
-                    </p>
-                  </div></>:null
-                    
-                  ))}</>}
-                  </div>
+                    <div key={e._id}>
+                      {e.collectionId === null ? null : (
+                        <>
+                          {e.details.map((el) =>
+                            e._id === showEnv_id ? (
+                              <>
+                                <div
+                                  key={el._id}
+                                  className="w-full  flex p-2 hover:bg-gray-200"
+                                >
+                                  <p className="w-1/5 text-xs text-gray-700 font-medium">
+                                    {el.variable}
+                                  </p>
+                                  <p className="w-2/5 text-xs text-gray-700 font-medium">
+                                    {el.value}
+                                  </p>
+                                  <p className="w-2/5 text-xs text-gray-700 font-medium">
+                                    {el.value}
+                                  </p>
+                                </div>
+                              </>
+                            ) : null
+                          )}
+                        </>
+                      )}
+                    </div>
                   </>
                 ))}
               </div>
@@ -124,9 +135,15 @@ const SetEnviroment = () => {
                   <p className="text-sm">Golbal</p>
                   <p
                     className="text-sm text-blue-500 cursor-pointer"
-                    onClick={newEnviroment[0].details.length >= 1 ? null : handleNewInv}
+                    onClick={
+                      newEnviroment[0].details.length >= 1 ? null : handleNewInv
+                    }
                   >
-                    {newEnviroment[0].details.length >= 1 ? <>Edit</> : <>Add</>}
+                    {newEnviroment[0].details.length >= 1 ? (
+                      <>Edit</>
+                    ) : (
+                      <>Add</>
+                    )}
                   </p>
                 </div>
                 {newEnviroment[0].details.length >= 1 ? (
@@ -156,29 +173,30 @@ const SetEnviroment = () => {
                 )}
               </div>
               <div className="w-full h-[120px] overflow-y-scroll scrollbar-hide">
-              {newEnviroment.map((e) => (
+                {newEnviroment.map((e) => (
                   <>
-                  <div key={e._id}>
-                  {e.collectionId===null?<>
-                    {e.details.map(el=>(
-                     <div
-                    key={el._id}
-                    className="w-full  flex p-2 hover:bg-gray-200"
-                  >
-                    <p className="w-1/5 text-xs text-gray-700 font-medium">
-                      {el.variable}
-                    </p>
-                    <p className="w-2/5 text-xs text-gray-700 font-medium">
-                      {el.value}
-                    </p>
-                    <p className="w-2/5 text-xs text-gray-700 font-medium">
-                      {el.value}
-                    </p>
-                  </div>
-                  ))}
-                  </>:null}
-                  
-                  </div>
+                    <div key={e._id}>
+                      {e.collectionId === null ? (
+                        <>
+                          {e.details.map((el) => (
+                            <div
+                              key={el._id}
+                              className="w-full  flex p-2 hover:bg-gray-200"
+                            >
+                              <p className="w-1/5 text-xs text-gray-700 font-medium">
+                                {el.variable}
+                              </p>
+                              <p className="w-2/5 text-xs text-gray-700 font-medium">
+                                {el.value}
+                              </p>
+                              <p className="w-2/5 text-xs text-gray-700 font-medium">
+                                {el.value}
+                              </p>
+                            </div>
+                          ))}
+                        </>
+                      ) : null}
+                    </div>
                   </>
                 ))}
               </div>
