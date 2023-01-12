@@ -1,14 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import Header from "../Header/Header";
 import LeftBar from "./LeftBar/LeftBar";
 import MyWorkSpace from "./MyWorkSpace/MyWorkSpace";
 import Tabs from "./Tabs/Tabs";
 import RightBar from "./RightBar/RightBar";
-import { DataContext } from "../Context/DataProvider";
-import EditCollection from "./LeftBody/MoreAction/EditCollection";
 
 const Home = () => {
-  const { collEdit } = useContext(DataContext);
 
   return (
     <>
@@ -35,7 +32,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-          {collEdit === true ? <EditCollection /> : null}
         </div>
       </div>
     </>

@@ -11,6 +11,9 @@ const AddRow = ({
   value,
   description,
   type,
+  variableN,
+  valueN ,
+  descriptionN,
   envirValue,
 }) => {
   const { tabData } = useContext(DataContext);
@@ -104,14 +107,14 @@ const AddRow = ({
             type="text"
             className="w-full px-6 border py-0.5 focus:outline-none "
             placeholder={variable}
-            name="key"
+            name={variableN}
             onChange={onTextChenge}
             // defaultValue={envirValue.key}
           />
         </th>
         <th className=" p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
           <input
-            name="value"
+            name={valueN}
             type={type}
             className="w-full px-6 border py-0.5 focus:outline-none "
             placeholder={value}
@@ -124,7 +127,7 @@ const AddRow = ({
         >
           <input
             type={type}
-            name="description"
+            name={descriptionN}
             className="w-full px-4 border py-0.5  focus:outline-none "
             placeholder={description}
             onChange={onTextChenge}

@@ -11,17 +11,13 @@ const EnvironmentTab = () => {
   const [envirValue, setEnvirValue] = useState()
   const [effect, setEffect] = useState(false)
   let _id = useSelector((state) => state.AddRequestReducer);
-
+console.log(enviroment)
   const postData = () => {
     http({
       method: "put",
       url: `${process.env.REACT_APP_BASEURL}/environment/${_id}`,
       data:{
-        details:[{
-          variable:enviroment[0].key,
-          value:enviroment[0].value,
-          current_value:enviroment[0].description
-        }]
+        details:enviroment
       }
     })
       .then((res) => {
@@ -107,9 +103,12 @@ const EnvironmentTab = () => {
                     key={index}
                     data={enviroment}
                     setData={SetEnviroment}
-                    {...{variable:'Add a new variable',value:'',description:'',type:'url',envirValue}}
+                    {...{variable:'Add a new variable',value:'',
+                    description:'',type:'url',envirValue,
+                    variableN:'variable',valueN:'value',descriptionN:'current_value',}}
                   />
                 ))}
+
               </tbody>
             </table>
           </div>

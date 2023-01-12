@@ -8,12 +8,13 @@ import { AddRequest } from "../../../../Redux/Action/AddRequest";
 import MoreAction from "../MoreAction/MoreAction";
 import { DataContext } from "../../../Context/DataProvider";
 import { CollectionLoader } from "../../../Loader/Loader";
+import EditCollection from "../MoreAction/EditCollection";
 
 const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
   const [loader, setLoader] = useState(true);
   const [open, setOpen] = useState(false);
-  const { setcolId } = useContext(DataContext);
+  const { setcolId,collEdit } = useContext(DataContext);
 
   const dispatch = useDispatch();
 
@@ -101,6 +102,7 @@ const EnvironmentBody = () => {
           </div>
         </>
       )}
+      {collEdit === true ? <EditCollection {...{apiUrl:'environment'}}/> : null}
     </div>
   );
 };

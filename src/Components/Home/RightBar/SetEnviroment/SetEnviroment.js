@@ -12,10 +12,6 @@ const SetEnviroment = () => {
   const dispatch = useDispatch();
   const newInvObj = {
     name: "New Environment",
-    variable: "",
-    type: "request",
-    method: "NA",
-    parent: null,
   };
   const handleNewInv = () => {
     let el = { ...newInvObj, _id: tabs.length };
@@ -61,12 +57,12 @@ const SetEnviroment = () => {
                   <p className="text-sm">Enviroment</p>
                   <p
                     className="text-sm text-blue-500 cursor-pointer"
-                    onClick={newEnviroment.length >= 1 ? null : handleNewInv}
+                    onClick={newEnviroment[0].details.length >= 1 ? null : handleNewInv}
                   >
-                    {newEnviroment.length >= 1 ? <>Edit</> : <>Add</>}
+                    {newEnviroment[0].details.length >= 1 ? <>Edit</> : <>Add</>}
                   </p>
                 </div>
-                {newEnviroment.length >= 1 ? (
+                {newEnviroment[0].details.length >= 1 ? (
                   <>
                     <div className="flex">
                       <p className="w-1/5 text-xs text-gray-700 font-bold">
@@ -126,10 +122,10 @@ const SetEnviroment = () => {
                     className="text-sm text-blue-500 cursor-pointer"
                     onClick={newEnviroment.length >= 1 ? null : handleNewInv}
                   >
-                    {newEnviroment.length >= 1 ? <>Edit</> : <>Add</>}
+                    {newEnviroment[0].details.length >= 1 ? <>Edit</> : <>Add</>}
                   </p>
                 </div>
-                {newEnviroment.length >= 1 ? (
+                {newEnviroment[0].details.length >= 1 ? (
                   <>
                     <div className="flex">
                       <p className="w-1/5 text-xs text-gray-700 font-bold">
