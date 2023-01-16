@@ -6,10 +6,13 @@ import { EnvLoader } from "../../../Loader/Loader";
 
 const SetEnviroment = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
+  const global = newEnviroment.filter(e=>e.collectionId===null)
+  let showEnv_id = useSelector((state) => state.AddRequestReducer);
+  const local = newEnviroment.filter(e=>e._id===showEnv_id)
+
   const [loader, setLoader] = useState(true);
 
   let tabs = useSelector((state) => state.TabsReducer);
-  let showEnv_id = useSelector((state) => state.AddRequestReducer);
   const dispatch = useDispatch();
   const newInvObj = {
     name: "New Environment",
@@ -59,17 +62,17 @@ const SetEnviroment = () => {
                   <p
                     className="text-sm text-blue-500 cursor-pointer"
                     onClick={
-                      newEnviroment[0].details.length >= 1 ? null : handleNewInv
+                      local[0].details.length >= 1  ? null : handleNewInv
                     }
                   >
-                    {newEnviroment[0].details.length >= 1 ? (
+                    {local[0].details.length >=1? (
                       <>Edit</>
                     ) : (
                       <>Add</>
                     )}
                   </p>
                 </div>
-                {newEnviroment[0].details.length >= 1 ? (
+                {local[0].details.length >= 1   ? (
                   <>
                     <div className="flex">
                       <p className="w-1/5 text-xs text-gray-700 font-bold">
@@ -136,17 +139,17 @@ const SetEnviroment = () => {
                   <p
                     className="text-sm text-blue-500 cursor-pointer"
                     onClick={
-                      newEnviroment[0].details.length >= 1 ? null : handleNewInv
+                      global[0].details.length >= 1 ? null : handleNewInv
                     }
                   >
-                    {newEnviroment[0].details.length >= 1 ? (
+                    {global[0].details.length >= 1 ? (
                       <>Edit</>
                     ) : (
                       <>Add</>
                     )}
                   </p>
                 </div>
-                {newEnviroment[0].details.length >= 1 ? (
+                {global[0].details.length >= 1? (
                   <>
                     <div className="flex">
                       <p className="w-1/5 text-xs text-gray-700 font-bold">
@@ -173,7 +176,7 @@ const SetEnviroment = () => {
                 )}
               </div>
               <div className="w-full h-[120px] overflow-y-scroll scrollbar-hide">
-                {newEnviroment.map((e) => (
+                {global.map((e) => (
                   <>
                     <div key={e._id}>
                       {e.collectionId === null ? (

@@ -10,8 +10,10 @@ import http from "../../../../Services/http";
 
 const TabsList = () => {
 const [enviroment, setenviroment] = useState('No Enviroment')
-const [newEnviroment, setNewEnviroment] = useState()
+const [newEnviroment, setNewEnviroment] = useState([])
 const [open, setOpen] = useState(false)
+const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
+
   let tabs = useSelector((state) => state.TabsReducer);
   const newReqObj = {
     name: "New Request",
@@ -133,7 +135,7 @@ const [open, setOpen] = useState(false)
            value='No Enviroment' onClick={()=>setOpen(false)}>No Enviroment</option>
           </div>
           <div className="w-full p-1 flex flex-col gap-1">
-          {newEnviroment.map(e=>(
+          {local_variable.map(e=>(
             <option key={e._id} className={`w-full hover:bg-slate-200  rounded-sm p-2 text-xs 
             cursor-pointer font-medium`}
             value={e.name} onClick={()=>setOpen(false)}>{e.name}</option>
