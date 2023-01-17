@@ -6,6 +6,7 @@ import {
   BiDotsHorizontalRounded,
 } from "react-icons/bi";
 import MoreAction from "../MoreAction/MoreAction";
+import { Scrollbars } from 'react-custom-scrollbars';
 import { useDispatch, useSelector } from "react-redux";
 import { AddRequest } from "../../../../Redux/Action/AddRequest";
 import { Tabs } from "../../../../Redux/Action/Tabs";
@@ -108,12 +109,12 @@ const CollectionBody = () => {
           ) : (
             <>
               {" "}
-              <div className="w-full h-[83vh] scrollbar-hide overflow-y-scroll">
+              <Scrollbars className="w-full h-[83vh] min-h-[71vh] scrollbar-hide overflow-y-scroll">
                 {newarr.map((e) => (
                   <div key={e._id} className="border-b">
                     <div
                       className={`w-full h-8 ${e.open ? "bg-gray-200" : null}
-               flex items-center relative px-2 cursor-pointer hover:bg-gray-200 group`}
+                    flex items-center relative px-2 cursor-pointer hover:bg-gray-200 group`}
                     >
                       <div
                         className="flex items-center gap-2 text-gray-700"
@@ -193,7 +194,7 @@ const CollectionBody = () => {
                     ) : null}
                   </div>
                 ))}
-              </div>
+              </Scrollbars>
             </>
           )}
         </div>

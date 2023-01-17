@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Tabs } from "../../../../Redux/Action/Tabs";
 import http from "../../../../Services/http";
 import { EnvLoader } from "../../../Loader/Loader";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const SetEnviroment = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
@@ -98,8 +99,8 @@ const SetEnviroment = () => {
                   </div>
                 )}
               </div>
-              <div className="w-full h-[120px] overflow-y-scroll scrollbar-hide">
-                {newEnviroment.map((e) => (
+              <Scrollbars className="w-full h-[120px] min-h-[120px]" >
+              {local.map((e) => (
                   <>
                     <div key={e._id}>
                       {e.collectionId === null ? null : (
@@ -129,7 +130,7 @@ const SetEnviroment = () => {
                     </div>
                   </>
                 ))}
-              </div>
+              </Scrollbars>
             </div>
             {/* golbal variable */}
             <div className="w-full flex flex-col">
@@ -175,7 +176,7 @@ const SetEnviroment = () => {
                   </div>
                 )}
               </div>
-              <div className="w-full h-[120px] overflow-y-scroll scrollbar-hide">
+              <Scrollbars className="w-full h-[120px] min-h-[120px]" >
                 {global.map((e) => (
                   <>
                     <div key={e._id}>
@@ -202,7 +203,7 @@ const SetEnviroment = () => {
                     </div>
                   </>
                 ))}
-              </div>
+              </Scrollbars>
             </div>
           </>
         )}

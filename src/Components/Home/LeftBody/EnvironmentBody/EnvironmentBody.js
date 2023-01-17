@@ -10,6 +10,7 @@ import MoreAction from "../MoreAction/MoreAction";
 import { DataContext } from "../../../Context/DataProvider";
 import { CollectionLoader } from "../../../Loader/Loader";
 import EditCollection from "../MoreAction/EditCollection";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
@@ -85,6 +86,7 @@ const EnvironmentBody = () => {
            </div>
             ))}
             {/* local */}
+            <Scrollbars className="w-full h-[85vh] min-h-[63vh]">
             {local_variable.map((e) => (
               <div
                 key={e._id}
@@ -112,6 +114,7 @@ const EnvironmentBody = () => {
                 </p>
               </div>
             ))}
+            </Scrollbars>
             {open === true ? <MoreAction className="absolute right-2" {...{collection:'environment'}}/> : null}
           </div>
         </>
