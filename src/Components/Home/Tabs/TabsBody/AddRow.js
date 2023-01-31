@@ -14,7 +14,6 @@ const AddRow = ({
   variableN,
   valueN ,
   descriptionN,
-  envirValue,
 }) => {
   const { tabData } = useContext(DataContext);
   // const [query, setQuery] = useState(tabData.details.query);

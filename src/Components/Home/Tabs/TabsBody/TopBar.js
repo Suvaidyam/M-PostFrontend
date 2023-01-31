@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import Http from "../../../../Services/http";
@@ -39,7 +39,30 @@ const TopBar = ({ onSendClick }) => {
       });
   };
   setTopBarData(data);
+  const getData = () => {
+    Http({
+      method: "get",
+      url: `${process.env.REACT_APP_BASEURL}/environment`,
+    })
+      .then((res) => {
+        console.log(res.data.environment);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  let str = data?.url||''
+  let urll = 'http://localhost:4000'
+  str = str.replace('{{url}}',urll)
+ 
+  useEffect(() => {
+    return () => {
+      setData({ ...data, url: str })
+      getData();
+    }
+  }, [])
+  
   return (
     <>
       {isLoding === true ? (
@@ -89,7 +112,7 @@ const TopBar = ({ onSendClick }) => {
             onChange={(e) => {
               setData({ ...data, url: e.target.value });
             }}
-            defaultValue={data.url}
+            defaultValue={data?.url||''}
           />
         </div>
         {/* button */}

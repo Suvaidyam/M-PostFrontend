@@ -127,7 +127,7 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
           />
           <AiFillCaretDown className="text-[10px] cursor-pointer" onClick={()=>setOpen(!open)}/>
           {open===true?
-          <ul onClick={(e)=>setenviroment(e.target.value)} className="absolute top-10 w-40 border
+          <ul onClick={(e)=>setenviroment(e.target.value)} className="absolute z-10 top-10 w-40 border
           border-gray-500 bg-white rounded-md   ">
           <div className="w-full border-b p-1">
           <option className="w-full bg-slate-200 rounded-sm font-medium p-2 text-xs cursor-pointer 

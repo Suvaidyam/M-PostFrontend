@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 const EnvironmentTab = () => {
   const { SetEnviroment, enviroment } = useContext(DataContext);
   const [rows, addRows] = useState([0]);
-  const [envirValue, setEnvirValue] = useState([])
   const [effect, setEffect] = useState(false)
   let _id = useSelector((state) => state.AddRequestReducer);
   const postData = () => {
@@ -30,24 +29,7 @@ const EnvironmentTab = () => {
         console.log(err);
       });
   };
-  const getData = () => {
-    http({
-      method: "get",
-      url: `${process.env.REACT_APP_BASEURL}/environment`,
-    })
-      .then((res) => {
-        setEnvirValue(res.data.environment);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    return () => {
-      getData();
-    };
-  }, []);
+ 
   return (
     <>
       <div className="w-full min-h-screen  bg-white ">
@@ -103,8 +85,8 @@ const EnvironmentTab = () => {
                     data={enviroment}
                     setData={SetEnviroment}
                     {...{variable:'Add a new variable',value:'',
-                    description:'',type:'url',envirValue,
-                    variableN:'variable',valueN:'value',descriptionN:'current_value',}}
+                    description:'',type:'url', variableN:'variable',
+                    valueN:'value',descriptionN:'current_value',}}
                   />
                 ))}
 
