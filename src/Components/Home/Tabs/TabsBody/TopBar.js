@@ -7,7 +7,8 @@ import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 import NewRequest from "./NewRequest";
 
 const TopBar = ({ onSendClick }) => {
-  const { jsonText, tabData, setTopBarData,headersData ,paramsData} = useContext(DataContext);
+  const { jsonText, tabData, setTopBarData, headersData, paramsData } =
+    useContext(DataContext);
   const [data, setData] = useState(tabData.details);
   const [open, setopen] = useState(false);
   const [msg, setMsg] = useState();
@@ -23,8 +24,8 @@ const TopBar = ({ onSendClick }) => {
           url: data.url,
           method: data.method.toLowerCase(),
           body: jsonText,
-          headers:getHeadersAndParams(headersData),
-          query:getHeadersAndParams(paramsData)
+          headers: getHeadersAndParams(headersData),
+          query: getHeadersAndParams(paramsData),
         },
       },
     })
@@ -46,24 +47,25 @@ const TopBar = ({ onSendClick }) => {
       url: `${process.env.REACT_APP_BASEURL}/environment`,
     })
       .then((res) => {
-        res.data.environment.map(e=>e.details.map(el=>setIsEnv([el])))
+        res.data.environment.map((e) =>
+          e.details.map((el) => setIsEnv((env) => [...env, el]))
+        );
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  isEnv.map(e=>(
-    data.url=data.url.replace(`{{${e.variable}}}`,e.value)
-    // , console.log(data.url.replace(`{{${e.variable}}}`,e.value))
-    ))
+  isEnv.map((e) => {
+    return (data.url = data.url.replace(`{{${e.variable}}}`, e.value));
+  });
   useEffect(() => {
     return () => {
-      setData({ ...data, url:data.url})
+      setData({ ...data, url: data.url });
       getData();
-    }
-  }, [])
-  
+    };
+  }, []);
+
   return (
     <>
       {isLoding === true ? (
@@ -113,7 +115,7 @@ const TopBar = ({ onSendClick }) => {
             onChange={(e) => {
               setData({ ...data, url: e.target.value });
             }}
-            defaultValue={data?.url||''}
+            defaultValue={data?.url || ""}
           />
         </div>
         {/* button */}
