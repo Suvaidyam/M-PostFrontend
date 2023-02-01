@@ -12,6 +12,7 @@ const TopBar = ({ onSendClick }) => {
   const [open, setopen] = useState(false);
   const [msg, setMsg] = useState();
   const [isLoding, setIsLoding] = useState(false);
+  const [isEnv, setIsEnv] = useState([]);
 
   const Save = () => {
     Http({
@@ -45,20 +46,20 @@ const TopBar = ({ onSendClick }) => {
       url: `${process.env.REACT_APP_BASEURL}/environment`,
     })
       .then((res) => {
-        console.log(res.data.environment);
+        res.data.environment.map(e=>e.details.map(el=>setIsEnv([el])))
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  let str = data?.url||''
-  let urll = 'http://localhost:4000'
-  str = str.replace('{{url}}',urll)
- 
+  isEnv.map(e=>(
+    data.url=data.url.replace(`{{${e.variable}}}`,e.value)
+    // , console.log(data.url.replace(`{{${e.variable}}}`,e.value))
+    ))
   useEffect(() => {
     return () => {
-      setData({ ...data, url: str })
+      setData({ ...data, url:data.url})
       getData();
     }
   }, [])
