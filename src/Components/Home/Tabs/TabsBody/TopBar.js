@@ -15,7 +15,12 @@ const TopBar = ({ onSendClick }) => {
   const [isLoding, setIsLoding] = useState(false);
   const [isEnv, setIsEnv] = useState([]);
 
+ 
+  
   const Save = () => {
+     isEnv.map((e) => {
+    return (data.url = data.url.replace(e.value, `{{${e.variable}}}`));
+  });
     Http({
       url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
       method: "put",

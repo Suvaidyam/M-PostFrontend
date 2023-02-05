@@ -7,6 +7,7 @@ import { AddRequest } from "../../../../Redux/Action/AddRequest";
 import { Tabs } from "../../../../Redux/Action/Tabs";
 import { motion } from "framer-motion";
 import http from "../../../../Services/http";
+import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
 
 const TabsList = () => {
 const [enviroment, setenviroment] = useState('No Enviroment')
@@ -132,13 +133,13 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
           <div className="w-full border-b p-1">
           <option className="w-full bg-slate-200 rounded-sm font-medium p-2 text-xs cursor-pointer 
            "
-           value='No Enviroment' onClick={()=>setOpen(false)}>No Enviroment</option>
+           value='No Enviroment' onClick={()=>dispatch(OpenEnv(null))&&setOpen(false)}>No Enviroment</option>
           </div>
           <div className="w-full p-1 flex flex-col gap-1">
           {local_variable.map(e=>(
             <option key={e._id} className={`w-full hover:bg-slate-200  rounded-sm p-2 text-xs 
             cursor-pointer font-medium`}
-            value={e.name} onClick={()=>setOpen(false)}>{e.name}</option>
+            value={e.name} onClick={()=>dispatch(OpenEnv(e._id))&&setOpen(false)} >{e.name}</option>
           ))}
           </div>
          </ul>:null}
