@@ -5,12 +5,12 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { IoCheckmarkDoneCircleOutline,IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Tabs } from "../../../../Redux/Action/Tabs";
-import { AddRequest } from "../../../../Redux/Action/AddRequest";
 import MoreAction from "../MoreAction/MoreAction";
 import { DataContext } from "../../../Context/DataProvider";
 import { CollectionLoader } from "../../../Loader/Loader";
 import EditCollection from "../MoreAction/EditCollection";
 import { Scrollbars } from 'react-custom-scrollbars';
+import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
 
 const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
@@ -19,7 +19,7 @@ const EnvironmentBody = () => {
   const { setcolId,collEdit } = useContext(DataContext);
   const global_variable = newEnviroment.filter(e=>e.collectionId===null)
   const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
-  let showEnv_id = useSelector((state) => state.AddRequestReducer);
+  let showEnv_id = useSelector((state) => state.OpenEnvReducer);
   const dispatch = useDispatch();
 
   let tabs = useSelector((state) => state.TabsReducer);
@@ -28,7 +28,7 @@ const EnvironmentBody = () => {
     if (tabs.findIndex((f) => f._id === e._id) < 0) {
       tabs.push(e);
       dispatch(Tabs(tabs));
-      dispatch(AddRequest(e._id));
+      dispatch(OpenEnv(e._id));
     }
   };
   const postData = () => {
@@ -82,7 +82,7 @@ const EnvironmentBody = () => {
             {global_variable.map(e=>(
               <div key={e._id} className="w-full py-2 border-b-2 mb-0.5 "  onClick={handleRequest(e)}>
               <p className="px-4 py-1.5 text-sm font-semibold bg-slate-100 hover:bg-slate-200
-              cursor-pointer" onClick={() => dispatch(AddRequest(e._id))}>{e.name}</p>
+              cursor-pointer" onClick={() => dispatch(OpenEnv(e._id))}>{e.name}</p>
            </div>
             ))}
             {/* local */}
@@ -94,7 +94,7 @@ const EnvironmentBody = () => {
                 className={`w-full border-b flex group relative 
                 ${e._id===showEnv_id?'bg-gray-300':'hover:bg-gray-200'}`}
               >
-                <div className="flex justify-between w-full" onClick={() => dispatch(AddRequest(e._id))}>
+                <div className="flex justify-between w-full" onClick={() => dispatch(OpenEnv(e._id))}>
                 <p className="w-full px-4 py-1.5 text-sm cursor-pointer " >
                   {e.name}
                 </p>

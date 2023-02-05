@@ -8,9 +8,8 @@ import { Scrollbars } from 'react-custom-scrollbars';
 const SetEnviroment = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
   const global = newEnviroment.filter(e=>e.collectionId===null)
-  let showEnv_id = useSelector((state) => state.AddRequestReducer);
+  let showEnv_id = useSelector((state) => state.OpenEnvReducer);
   const local = newEnviroment.filter(e=>e._id===showEnv_id)
-
   const [loader, setLoader] = useState(true);
 
   let tabs = useSelector((state) => state.TabsReducer);
@@ -49,7 +48,7 @@ const SetEnviroment = () => {
   return (
     <>
       <div
-        className="w-[700px] h-[400px] border bg-gray-50 shadow-inner rounded-md 
+        className="w-[700px] h-[425px] border bg-gray-50 shadow-inner rounded-md 
         py-2 flex flex-col justify-between"
       >
         {loader === true ? (
@@ -63,17 +62,17 @@ const SetEnviroment = () => {
                   <p
                     className="text-sm text-blue-500 cursor-pointer"
                     onClick={
-                      local[0].details.length >= 1  ? null : handleNewInv
+                      local[0]?.details.length >= 1  ? null : handleNewInv
                     }
                   >
-                    {local[0].details.length >=1? (
+                    {local[0]?.details.length >=1? (
                       <>Edit</>
                     ) : (
                       <>Add</>
                     )}
                   </p>
                 </div>
-                {local[0].details.length >= 1   ? (
+                {local[0]?.details.length >= 1   ? (
                   <>
                     <div className="flex">
                       <p className="w-1/5 text-xs text-gray-700 font-bold">
@@ -140,17 +139,17 @@ const SetEnviroment = () => {
                   <p
                     className="text-sm text-blue-500 cursor-pointer"
                     onClick={
-                      global[0].details.length >= 1 ? null : handleNewInv
+                      global[0]?.details.length >= 1 ? null : handleNewInv
                     }
                   >
-                    {global[0].details.length >= 1 ? (
+                    {global[0]?.details.length >= 1 ? (
                       <>Edit</>
                     ) : (
                       <>Add</>
                     )}
                   </p>
                 </div>
-                {global[0].details.length >= 1? (
+                {global[0]?.details.length >= 1? (
                   <>
                     <div className="flex">
                       <p className="w-1/5 text-xs text-gray-700 font-bold">
