@@ -6,6 +6,7 @@ import { DataContext } from "../../../Context/DataProvider";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 import NewRequest from "./NewRequest";
 import "./inde.css";
+import VariableValue from "./VariableValue";
 
 const TopBar = ({ onSendClick }) => {
   const REGEX = /({{.*?}})/g;
@@ -121,13 +122,15 @@ const TopBar = ({ onSendClick }) => {
             // defaultValue={data?.url || ""}
           />
 
-          <div className="input-renderer">
+          <div className="input-renderer ">
             {data.url.split(REGEX).map((word, i) => {
               if (word.match(REGEX) !== null) {
                 return (
-                  <span key={i} className="bg-[#2564ebc7] text-white">
+                  <div key={i} className="text-[#1D4ED8] group relative z-50">
                     {word}
-                  </span>
+                    {/* hover and show variable */}
+                    <div className="hidden group-hover:block"><VariableValue data={word}/></div>
+                  </div>
                 );
               } else {
                 return <span key={i}>{word}</span>;
