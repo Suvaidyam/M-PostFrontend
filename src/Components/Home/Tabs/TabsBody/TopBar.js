@@ -5,8 +5,10 @@ import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 import NewRequest from "./NewRequest";
+import "./inde.css";
 
 const TopBar = ({ onSendClick }) => {
+  const REGEX = /({{.*?}})/g;
   const { jsonText, tabData, setTopBarData, headersData, paramsData } =
     useContext(DataContext);
   const [data, setData] = useState(tabData.details);
@@ -14,13 +16,9 @@ const TopBar = ({ onSendClick }) => {
   const [msg, setMsg] = useState();
   const [isLoding, setIsLoding] = useState(false);
   const [isEnv, setIsEnv] = useState([]);
+  // const [value, setValue] = useState("");
 
- 
-  
   const Save = () => {
-     isEnv.map((e) => {
-    return (data.url = data.url.replace(e.value, `{{${e.variable}}}`));
-  });
     Http({
       url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
       method: "put",
@@ -112,16 +110,30 @@ const TopBar = ({ onSendClick }) => {
         </div>
 
         {/* input field */}
-        <div className="w-full  ">
+        <div className="w-full  input-container ">
           <input
             placeholder="Entet Request URL"
             type="url"
-            className=" text-xs font-semibold px-2 h-9 w-full border-gray-300 border   bg-white    focus:outline-none"
+            className=" text-xs font-semibold px-2 h-9 w-full border-gray-300 border   bg-white   focus:outline-none"
             onChange={(e) => {
               setData({ ...data, url: e.target.value });
             }}
-            defaultValue={data?.url || ""}
+            // defaultValue={data?.url || ""}
           />
+
+          <div className="input-renderer">
+            {data.url.split(REGEX).map((word, i) => {
+              if (word.match(REGEX) !== null) {
+                return (
+                  <span key={i} className="bg-[#2564ebc7] text-white">
+                    {word}
+                  </span>
+                );
+              } else {
+                return <span key={i}>{word}</span>;
+              }
+            })}
+          </div>
         </div>
         {/* button */}
         <div className="h-9">
