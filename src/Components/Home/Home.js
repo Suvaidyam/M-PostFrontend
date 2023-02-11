@@ -8,9 +8,9 @@ import RightBar from "./RightBar/RightBar";
 const Home = () => {
   return (
     <>
+      <div className="w-full h-screen ">
       <Header />
-      <div className="w-full h-[88.5vh] ">
-        <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex ">
+        <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex pt-[65px]">
           {/* left */}
           <div className="w-[30%] min-w-[300px] h-full border-r-2 ">
             <MyWorkSpace />
@@ -21,12 +21,12 @@ const Home = () => {
             </div>
           </div>
           {/* light */}
-          <div className="w-[70%] bg-gray-100">
-            <div className="flex">
-              <div className="w-[94%]">
+          <div className="w-[70%] bg-gray-100 h-full">
+            <div className="flex h-full">
+              <div className="w-[94%] h-full">
                 <Tabs />
               </div>
-              <div className="w-[6%]">
+              <div className="w-[6%] min-w-[55px] h-full">
                 <RightBar />
               </div>
             </div>

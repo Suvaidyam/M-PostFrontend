@@ -67,7 +67,7 @@ return () => {
   }
   return (
     <>
-     <div className="w-full h-16 shadow-md">
+     <div className="w-full h-16 shadow-md fixed bg-white">
         <div className="w-full h-full  flex justify-between items-center px-4 max-w-[1720px] mx-auto">
           <div className="flex items-center gap-8">
             {/* Logo */}

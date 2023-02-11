@@ -17,7 +17,7 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
 
   let tabs = useSelector((state) => state.TabsReducer);
   const newReqObj = {
-    name: "New Request",
+    name: "Untitled Request",
     type: "request",
     parent: null,
     details: {
@@ -30,7 +30,7 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
   };
   const handleNewTab = () => {
     let el = { ...newReqObj, _id: tabs.length };
-    el.name = el.name + tabs.length;
+    el.name = el.name;
     tabs.push(el);
     dispatch(Tabs(tabs));
     dispatch(AddRequest(el._id));

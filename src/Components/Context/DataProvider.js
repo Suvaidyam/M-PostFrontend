@@ -5,7 +5,7 @@ export const DataContext = createContext("");
 
 const DataProvider = ({ children }) => {
   const [topBarData, setTopBarData] = useState("");
-  const [tabData, setTabData] = useState("");
+  const [tabData, setTabData] = useState([]);
   const [paramsData, setParamsData] = useState([]);
   const [headersData, setHeadersData] = useState([]);
   const [enviroment, SetEnviroment] = useState([]);

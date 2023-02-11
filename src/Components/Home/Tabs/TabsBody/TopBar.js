@@ -17,7 +17,6 @@ const TopBar = ({ onSendClick }) => {
   const [msg, setMsg] = useState();
   const [isLoding, setIsLoding] = useState(false);
   const [isEnv, setIsEnv] = useState([]);
-  // const [value, setValue] = useState("");
 
   const Save = () => {
     Http({

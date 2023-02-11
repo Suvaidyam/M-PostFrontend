@@ -6,8 +6,8 @@ import { BiCodeBlock, BiCollapse } from "react-icons/bi";
 const LeftBar = () => {
   return (
     <>
-      <div className="w-full  flex ">
-        <div className=" w-1/5 min-w-[75px] px-1 flex flex-col h-screen  items-center border-r-2">
+      <div className="w-full flex h-full">
+        <div className=" w-1/5 min-w-[75px] px-1 flex flex-col h-full items-center border-r-2 border-l-2">
           <NavLink
             to="collection"
             className="w-full  flex flex-col items-center justify-center
