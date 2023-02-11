@@ -7,7 +7,7 @@ const LeftBar = () => {
   return (
     <>
       <div className="w-full flex h-full">
-        <div className=" w-1/5 min-w-[75px] px-1 flex flex-col h-full border-r-2 gap-1 ">
+        <div className=" w-1/5 min-w-[75px] px-1 flex flex-col h-full border-r-[1.5px] gap-1 ">
           <NavLink
             to="collection"
             className="w-full  flex flex-col items-center justify-center rounded  mt-1

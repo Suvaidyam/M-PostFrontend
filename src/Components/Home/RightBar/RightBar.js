@@ -15,7 +15,7 @@ const RightBar = () => {
 
   return (
     <>
-      <div className=" flex border-2 flex-col items-center justify-center gap-5 h-full bg-white py-1 relative">
+      <div className=" flex border-l-[1.5px] flex-col items-center justify-center gap-5 h-full bg-white py-1.5 relative">
         <div className="flex flex-col justify-between h-full ">
           <div className="flex flex-col gap-1">
             <motion.div

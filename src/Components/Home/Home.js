@@ -10,7 +10,7 @@ const Home = () => {
     <>
       <div className="w-full h-screen ">
       <Header />
-        <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex pt-[65px]">
+        <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex pt-[66px]">
           {/* left */}
           <div className="w-[30%] min-w-[300px] h-full border-r-2 ">
             <MyWorkSpace />

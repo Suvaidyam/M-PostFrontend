@@ -114,7 +114,8 @@ const TopBar = ({ onSendClick }) => {
           <input
             placeholder="Entet Request URL"
             type="url"
-            className=" text-xs font-semibold px-2 h-9 w-full border-gray-300 border   bg-white   focus:outline-none"
+            className="text-xs font-semibold px-2 h-9 w-full border-gray-300 border
+             bg-white focus:outline-none"
             onChange={(e) => {
               setData({ ...data, url: e.target.value });
             }}
@@ -132,7 +133,7 @@ const TopBar = ({ onSendClick }) => {
                   </div>
                 );
               } else {
-                return <span key={i}>{word}</span>;
+                return <span key={i} className='text-xs font-semibold px-2'>{word}</span>;
               }
             })}
           </div>

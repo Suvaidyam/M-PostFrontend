@@ -6,7 +6,7 @@ import {motion} from 'framer-motion'
 const MyWorkSpace = () => {
   return (
     <>
-     <div className="w-full h-10 flex justify-between items-center px-3 ">
+     <div className="w-full h-10 flex justify-between items-center px-3 border-r">
        <div className="text-sm font-medium">My workspace</div>
        <div className="flex items-center gap-3">
         <motion.button whileTap={{ scale: 0.75 }} 
