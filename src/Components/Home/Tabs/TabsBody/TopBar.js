@@ -126,8 +126,8 @@ const TopBar = ({ onSendClick }) => {
             {data.url.split(REGEX).map((word, i) => {
               if (word.match(REGEX) !== null) {
                 return (
-                  <div key={i} className="text-[#1D4ED8] group relative z-50">
-                    {word}
+                  <div key={i} className="text-[#1D4ED8] relative group z-50">
+                    <span className='text-xs font-semibold absolute -left-2 -top-2'>{word}</span>
                     {/* hover and show variable */}
                     <div className="hidden group-hover:block"><VariableValue data={word}/></div>
                   </div>
