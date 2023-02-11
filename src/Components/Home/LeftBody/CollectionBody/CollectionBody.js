@@ -98,7 +98,7 @@ const CollectionBody = () => {
     <>
       <div className="w-full h-full  ">
         <div className="">
-          <BodyHead {...{ postData, title: "create collection" }} />
+          <BodyHead {...{ postData, title: "Create collection" }} />
           {/* collection */}
           {loader == true ? (
             <>

@@ -68,7 +68,7 @@ const EnvironmentBody = () => {
 
   return (
     <div className="w-full">
-      <BodyHead {...{ postData, title: "create environment" }} />
+      <BodyHead {...{ postData, title: "Create environment" }} />
       {loader === true ? (
         <>
           {newEnviroment.map((e) => (

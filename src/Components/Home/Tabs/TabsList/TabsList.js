@@ -83,17 +83,17 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
 
   return (
     <>
-      <div className="w-full h-10 bg-white shadow-inner flex">
+      <div className="w-full h-11 bg-white flex">
         <div className="w-[80%]  flex h-full overflow-x-scroll scrollbar-hide border-b">
           {tabs.map((e) => (
             <div
               key={e._id}
               className={`flex items-center justify-between
                 ${e._id === add
-                  ? "border-t-2 border-t-blue-600 border-r "
+                  ? "border-b-2 border-b-blue-600 border-r "
                   : "border-r"
                 }
-                w-44 min-w-44 px-1 py-1.5 h-full group cursor-pointer`}
+                w-44 min-w-44 px-1 h-full group cursor-pointer`}
               onClick={() => dispatch(AddRequest(e._id))}
             >
               <div className="flex items-center  w-44 min-w-44 h-full gap-2">
@@ -119,7 +119,7 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
             />
           </motion.div>
         </div>
-        <div className="w-[20%] border flex justify-center items-center gap-2 relative">
+        <div className="w-[20%] border-l border-b flex justify-center items-center gap-2 relative">
           <input
             type="text"
             name=""

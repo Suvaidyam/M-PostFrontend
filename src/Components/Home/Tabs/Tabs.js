@@ -13,7 +13,7 @@ const Tabs = () => {
 
   return (
     <>
-      <div className="w-full  h-[85vh]">
+      <div className="w-full  h-full">
         <TabsList />
         {tabs.map((e) => (
           <>
