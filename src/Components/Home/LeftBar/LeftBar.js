@@ -10,11 +10,9 @@ const LeftBar = () => {
         <div className=" w-1/5 min-w-[75px] px-1 flex flex-col h-full border-r-[1.5px] gap-1 ">
           <NavLink
             to="collection"
-            className="w-full  flex flex-col items-center justify-center rounded  mt-1
-  
-        py-3 text-xs gap-1"
+            className="w-full  flex flex-col items-center justify-center rounded  mt-1 py-3 text-xs gap-1"
             style={({ isActive }) => ({
-              background: isActive ? " #e8eeff  " : "",
+              background: isActive ? "#e8eeff" : "",
             })}
           >
             <MdOutlineCollectionsBookmark className="text-xl" />

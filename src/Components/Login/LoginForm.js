@@ -35,7 +35,7 @@ const LoginForm = () => {
         sessionStorage.setItem("token", res.data.token);
         if (res.data.token) {
           setTimeout(() => {
-            navigate("/workSpace");
+            navigate("/workSpace/collection");
           }, 2000);
           let token = res.data.token;
           let payload = token.split(".");
