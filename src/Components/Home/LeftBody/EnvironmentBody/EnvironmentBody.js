@@ -16,7 +16,7 @@ const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
   const [loader, setLoader] = useState(true);
   const [open, setOpen] = useState(false);
-  const { setcolId,collEdit, setchangeAction , changeAction } = useContext(DataContext);
+  const { setcolId,collEdit } = useContext(DataContext);
   const global_variable = newEnviroment.filter(e=>e.collectionId===null)
   const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
@@ -32,14 +32,12 @@ const EnvironmentBody = () => {
     }
   };
   const postData = () => {
-    
     http({
       url: `${process.env.REACT_APP_BASEURL}/environment`,
       method: "post",
     })
       .then((res) => {
         console.log(res);
-        setchangeAction(true)
       })
       .catch((err) => {
         console.log(err);
@@ -47,14 +45,13 @@ const EnvironmentBody = () => {
   };
 
   const getData = () => {
-    setLoader(true);
     http({
       method: "get",
       url: `${process.env.REACT_APP_BASEURL}/environment`,
     })
       .then((res) => {
         setTimeout(() => {
-        setLoader(false);
+          setLoader(false);
         }, 1000);
         setNewEnviroment(res.data.environment);
       })
@@ -67,7 +64,7 @@ const EnvironmentBody = () => {
     return () => {
       getData();
     };
-  }, [changeAction]);
+  }, []);
 
   return (
     <div className="w-full">
@@ -85,12 +82,13 @@ const EnvironmentBody = () => {
             {global_variable.map(e=>(
               <div key={e._id} className="w-full py-2 border-b-2 mb-0.5 "  onClick={handleRequest(e)}>
               <p className="px-4 py-1.5 text-sm font-semibold bg-slate-100 hover:bg-slate-200
-              cursor-pointer" onClick={() => dispatch(OpenEnv(e._id))}>{e.name}</p>
+              cursor-pointer">{e.name}</p>
            </div>
             ))}
             {/* local */}
             <Scrollbars className="w-full h-[85vh] min-h-[63vh]">
             {local_variable.map((e) => (
+              <>
               <div
                 key={e._id}
                 onClick={handleRequest(e)}
@@ -116,9 +114,12 @@ const EnvironmentBody = () => {
                   />
                 </p>
               </div>
+             <div className="w-full flex justify-end mt-1 pr-2">
+             {open === true ? <MoreAction className="absolute right-2" {...{collection:'environment'}}/> : null}
+             </div>
+              </>
             ))}
             </Scrollbars>
-            {open === true ? <MoreAction className="absolute right-2" {...{collection:'environment'}}/> : null}
           </div>
         </>
       )}

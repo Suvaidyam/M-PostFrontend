@@ -90,7 +90,7 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
               key={e._id}
               className={`flex items-center justify-between
                 ${e._id === add
-                  ? "border-b-2 border-b-blue-600 border-r "
+                  ? "border-b-2 border-b-blue-600 border-r duration-300"
                   : "border-r"
                 }
                 w-44 min-w-44 px-1 h-full group cursor-pointer`}
