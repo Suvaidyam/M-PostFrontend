@@ -16,8 +16,7 @@ const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
   const [loader, setLoader] = useState(true);
   const [open, setOpen] = useState(false);
-  const [envFolder, setenvFolder] = useState("false");
-  const { setcolId,collEdit } = useContext(DataContext);
+  const { setcolId,collEdit, setchangeAction , changeAction } = useContext(DataContext);
   const global_variable = newEnviroment.filter(e=>e.collectionId===null)
   const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
@@ -40,7 +39,7 @@ const EnvironmentBody = () => {
     })
       .then((res) => {
         console.log(res);
-        setenvFolder("true")
+        setchangeAction(true)
       })
       .catch((err) => {
         console.log(err);
@@ -68,7 +67,7 @@ const EnvironmentBody = () => {
     return () => {
       getData();
     };
-  }, [envFolder]);
+  }, [changeAction]);
 
   return (
     <div className="w-full">

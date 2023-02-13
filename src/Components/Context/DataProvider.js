@@ -14,6 +14,7 @@ const DataProvider = ({ children }) => {
   const [colId, setcolId] = useState(null);
   const [Msg, setMsg] = useState("");
   const [responseData, setResponseData] = useState([]);
+  const [changeAction, setchangeAction] = useState(false);
 
   return (
     <>
@@ -39,6 +40,8 @@ const DataProvider = ({ children }) => {
           setResponseData,
           SetEnviroment,
           enviroment,
+          changeAction,
+          setchangeAction
         }}
       >
         {children}

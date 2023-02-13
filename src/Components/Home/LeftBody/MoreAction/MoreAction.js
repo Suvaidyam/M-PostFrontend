@@ -3,7 +3,7 @@ import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
 
 const MoreAction = ({collection}) => {
-  const {collEdit, setCollEdit,colId } = useContext(DataContext);
+  const {collEdit, setCollEdit,colId, setchangeAction , changeAction} = useContext(DataContext);
  
   const deleteData = () => {
     Http({
@@ -11,7 +11,8 @@ const MoreAction = ({collection}) => {
       method: "delete",
     })
       .then((res) => {
-        console.log(res)        
+        console.log(res)  
+        setchangeAction(true)      
       })
       .catch((err) => {
         console.log(err);
@@ -41,7 +42,7 @@ const MoreAction = ({collection}) => {
     {name:'Rename',onclick:()=>setCollEdit(!collEdit) ,htmlFor:"name"},
     {name:'Add folder',onclick:''},
     {name:'Add request',onclick:postData},
-    {name:'Delete',onclick:deleteData},
+    {name:'Delete',onclick:deleteData}
   ]
   return (
     <>
