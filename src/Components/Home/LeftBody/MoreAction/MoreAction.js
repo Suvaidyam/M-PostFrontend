@@ -31,6 +31,7 @@ const MoreAction = ({collection}) => {
       }
     })
       .then((res) => {
+        setchangeAction(true)
         console.log(res)        
       })
       .catch((err) => {
