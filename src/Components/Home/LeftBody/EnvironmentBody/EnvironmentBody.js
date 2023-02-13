@@ -16,6 +16,7 @@ const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
   const [loader, setLoader] = useState(true);
   const [open, setOpen] = useState(false);
+  const [envFolder, setenvFolder] = useState("false");
   const { setcolId,collEdit } = useContext(DataContext);
   const global_variable = newEnviroment.filter(e=>e.collectionId===null)
   const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
@@ -32,12 +33,14 @@ const EnvironmentBody = () => {
     }
   };
   const postData = () => {
+    
     http({
       url: `${process.env.REACT_APP_BASEURL}/environment`,
       method: "post",
     })
       .then((res) => {
         console.log(res);
+        setenvFolder("true")
       })
       .catch((err) => {
         console.log(err);
@@ -45,13 +48,14 @@ const EnvironmentBody = () => {
   };
 
   const getData = () => {
+    setLoader(true);
     http({
       method: "get",
       url: `${process.env.REACT_APP_BASEURL}/environment`,
     })
       .then((res) => {
         setTimeout(() => {
-          setLoader(false);
+        setLoader(false);
         }, 1000);
         setNewEnviroment(res.data.environment);
       })
@@ -64,7 +68,7 @@ const EnvironmentBody = () => {
     return () => {
       getData();
     };
-  }, []);
+  }, [envFolder]);
 
   return (
     <div className="w-full">

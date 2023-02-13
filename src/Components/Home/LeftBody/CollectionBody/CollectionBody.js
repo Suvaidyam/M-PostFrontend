@@ -23,17 +23,19 @@ const CollectionBody = () => {
   const [collection, setcollection] = useState([]);
   let newarr = collection.filter((e) => e.parent == null);
   const [arr, setArr] = useState(newarr);
+  const [collectionFolder, setcollectionFolder] = useState("false");
 
   let tabs = useSelector((state) => state.TabsReducer);
 
   const getData = () => {
+    setLoader(true)
     Http({
       method: "get",
       url: `${process.env.REACT_APP_BASEURL}/collection`,
     })
       .then((res) => {
         setTimeout(() => {
-          setLoader(false);
+        setLoader(false);
         }, 1000);
         setcollection(res.data.collection);
       })
@@ -45,8 +47,9 @@ const CollectionBody = () => {
   useEffect(() => {
     return () => {
       getData();
+      setcollectionFolder("false")
     };
-  }, []);
+  }, [collectionFolder]);
 
   const toggle = (e) => {
     e.toggle = !e.toggle;
@@ -88,6 +91,7 @@ const CollectionBody = () => {
     })
       .then((res) => {
         console.log(res);
+        setcollectionFolder("true")
       })
       .catch((err) => {
         console.log(err);
