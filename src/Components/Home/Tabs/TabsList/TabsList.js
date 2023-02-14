@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { RxDotFilled } from "react-icons/rx";
-import { AiOutlinePlus, AiFillCaretDown,AiOutlineAntDesign } from "react-icons/ai";
+import { AiOutlinePlus, AiFillCaretDown, AiOutlineAntDesign } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { AddRequest } from "../../../../Redux/Action/AddRequest";
 import { Tabs } from "../../../../Redux/Action/Tabs";
@@ -10,11 +10,9 @@ import http from "../../../../Services/http";
 import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
 
 const TabsList = () => {
-const [enviroment, setenviroment] = useState('No Enviroment')
-const [newEnviroment, setNewEnviroment] = useState([])
-const [open, setOpen] = useState(false)
-const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
-
+  const [newEnviroment, setNewEnviroment] = useState([])
+  const local_variable = newEnviroment.filter(e => e.collectionId !== null)
+  let showEnv_id = useSelector((state) => state.OpenEnvReducer);
   let tabs = useSelector((state) => state.TabsReducer);
   const newReqObj = {
     name: "Untitled Request",
@@ -100,8 +98,8 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
                 <p
                   className={`text-xs text-${getDetails(e?.details).color}-600`}
                 >
-                  {getDetails(e?.details).method==='NA'?<AiOutlineAntDesign className="text-xl text-gray-500"/>
-                  :<>{getDetails(e?.details).method}</>}
+                  {getDetails(e?.details).method === 'NA' ? <AiOutlineAntDesign className="text-xl text-gray-500" />
+                    : <>{getDetails(e?.details).method}</>}
                 </p>
                 <p className="flex items-center text-xs  h-full">{e.name}</p>
               </div>
@@ -112,7 +110,7 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
               />
             </div>
           ))}
-          <motion.div  whileTap={{ scale: 0.75 }} className="h-full flex items-center ml-1">
+          <motion.div whileTap={{ scale: 0.75 }} className="h-full flex items-center ml-1">
             <AiOutlinePlus
               className="cursor-pointer hover:bg-slate-200 w-8 h-8 p-2 rounded-md"
               onClick={handleNewTab}
@@ -120,29 +118,13 @@ const local_variable = newEnviroment.filter(e=>e.collectionId!==null)
           </motion.div>
         </div>
         <div className="w-[20%] border-l border-b flex justify-center items-center gap-2 relative">
-          <input
-            type="text"
-            name=""
-            value={enviroment}
-            className="w-[80%] outline-none text-xs font-medium "
-          />
-          <AiFillCaretDown className="text-[10px] cursor-pointer" onClick={()=>setOpen(!open)}/>
-          {open===true?
-          <ul onClick={(e)=>setenviroment(e.target.value)} className="absolute z-10 top-10 w-40 border
-          border-gray-500 bg-white rounded-md   ">
-          <div className="w-full border-b p-1">
-          <option className="w-full bg-slate-200 rounded-sm font-medium p-2 text-xs cursor-pointer 
-           "
-           value='No Enviroment' onClick={()=>dispatch(OpenEnv(null))&&setOpen(false)}>No Enviroment</option>
-          </div>
-          <div className="w-full p-1 flex flex-col gap-1">
-          {local_variable.map(e=>(
-            <option key={e._id} className={`w-full hover:bg-slate-200  rounded-sm p-2 text-xs 
-            cursor-pointer font-medium`}
-            value={e.name} onClick={()=>dispatch(OpenEnv(e._id))&&setOpen(false)} >{e.name}</option>
-          ))}
-          </div>
-         </ul>:null}
+          <select className="w-full h-full outline-none text-sm pl-2" onChange={(e)=>dispatch(OpenEnv(e.target.value))}>
+            <option value="null" className={`w-full text-sm`} >No Enviroment</option>
+            {local_variable.map(e => (
+              <option selected={e._id===showEnv_id} key={e._id} className={`w-full text-sm `}
+                value={e._id}  >{e.name}</option>
+            ))}
+          </select>
         </div>
       </div>
     </>
