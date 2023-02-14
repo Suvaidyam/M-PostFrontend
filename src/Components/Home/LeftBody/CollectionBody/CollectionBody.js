@@ -23,7 +23,6 @@ const CollectionBody = () => {
   const [collection, setcollection] = useState([]);
   let newarr = collection.filter((e) => e.parent == null);
   const [arr, setArr] = useState(newarr);
-  const [collectionFolder, setcollectionFolder] = useState("false");
 
   let tabs = useSelector((state) => state.TabsReducer);
 
@@ -36,7 +35,7 @@ const CollectionBody = () => {
       .then((res) => {
         setTimeout(() => {
         setLoader(false);
-        }, 1000);
+        }, 100);
         setcollection(res.data.collection);
       })
       .catch((err) => {
