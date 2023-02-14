@@ -1,9 +1,10 @@
-import ReactJson from "react-json-view";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { LineWave } from "react-loader-spinner";
 import ErrorScreen from "./ErrorScreen";
 import { useState, useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
+import JSONInput from "react-json-editor-ajrm";
+import locale from "react-json-editor-ajrm/locale/en";
 
 const Response = ({ apiResponse, isLoading }) => {
   const { setResponseData } = useContext(DataContext);
@@ -152,7 +153,16 @@ const Response = ({ apiResponse, isLoading }) => {
                 ) : null}
                 <div className="px-2 pt-1 font-mono word-break: break-all ">
                   {body === true ? (
-                    <ReactJson src={data.status === 400 ? data.data : data} />
+                    <JSONInput
+                      id="a_unique_id"
+                      placeholder={data.status === 400 ? data.data : data}
+                      locale={locale}
+                      theme="light_mitsuketa_tribute"
+                      colors={{
+                        string: "#FFA055",
+                      }}
+                      width="100%"
+                    />
                   ) : null}
                 </div>
               </>
