@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Avatar from '../../../Assets/avatar.png'
 import {TbUpload} from 'react-icons/tb'
 import {HiOutlineTrash} from 'react-icons/hi'
-import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import { ProfileUrl } from '../../../Redux/Action/ProfileAction'
 import { Puff } from  'react-loader-spinner'
+import http from '../../../Services/http'
 
 const Profile = ({setOpenProfile}) => {
 
@@ -14,11 +14,6 @@ const Profile = ({setOpenProfile}) => {
     const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch()
     const items = useSelector((state) => state.ProfileReducer.url)
-
-    let token = sessionStorage.getItem('token')
-    let headers = {
-      token
-    }
     const paylode=sessionStorage.getItem('paylode')
     const{_id} =JSON.parse(paylode) 
 
@@ -28,20 +23,20 @@ const Profile = ({setOpenProfile}) => {
         const body = new FormData()
     body.append('file', file)
 
-    axios.put(`http://localhost:4000/employee/${_id}`,
-      body,
-      {
-        headers
-      }).then((res) => {
+    http({
+      method: "put",
+      url: `${process.env.REACT_APP_BASEURL}/employee/${_id}`,
+      data:body
+    }).then((res) => {
         console.log(res)
       }).catch((error) => {
         console.log(error)
       })
     }
     const getImg =()=>{
-        axios.get(`http://localhost:4000/employee/${_id}`,
-        {
-          headers
+        http({
+          method: "get",
+          url: `${process.env.REACT_APP_BASEURL}/employee/${_id}`,
         }).then((res) => {
           setUrl(res.data.user.url)
           setLoading(true);
@@ -55,6 +50,24 @@ const Profile = ({setOpenProfile}) => {
             setLoading(false);
           }, 1000);
         })
+    }
+    const deleteImg =()=>{
+      http({
+        method: "delete",
+        url: `${process.env.REACT_APP_BASEURL}/employee/deletePhoto`,
+      }).then((res) => {
+        setUrl(res.data.user.url)
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      }).catch((error) => {
+        console.log(error)
+          setLoading(true);
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+      })
     }
     useEffect(() => {
       return () => {
@@ -87,7 +100,7 @@ const Profile = ({setOpenProfile}) => {
                     <TbUpload/> Upload picture
                   <input type="file" id='file' className='h-0 w-0' onChange={(e)=>setfile(e.target.files[0])}/>
                   </label>
-                  <p className='flex items-center cursor-pointer gap-2 hover:text-blue-600'>
+                  <p className='flex items-center cursor-pointer gap-2 hover:text-blue-600' onClick={deleteImg}>
                     <HiOutlineTrash/> Remove picture</p>
                   </div>
                 </div>
