@@ -94,17 +94,17 @@ const EnvironmentBody = () => {
               </div>
             {/* local */}
             <Scrollbars className="w-full h-[85vh] min-h-[63vh]">
-              <div className=" w-full">
+              <div className=" w-full pt-1">
                 {local_variable.map((ce) => (<div key={ce._id}>
-                  <div className={`w-full h-8 relative group flex cursor-pointer items-center hover:bg-gray-200
+                  <div className={`w-full h-8  relative group flex cursor-pointer items-center hover:bg-gray-200
                    border-b py-1 px-2 ${ce._id === showEnv_id && 'bg-gray-200'}`} >
                     <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)} >
                       <p className="text-xs font-normal pl-4"> {ce.name}</p>
                     </div>
                     {ce._id === showEnv_id ? <IoCheckmarkDoneCircleSharp className="cursor-pointer mr-8
-                    text-gray-500 text-2xl"/> :
+                    text-gray-500 text-2xl" onClick={() => dispatch(OpenEnv(null)) }/> :
                       <IoCheckmarkDoneCircleOutline className="cursor-pointer hidden group-hover:block mr-8
-                         text-gray-500 text-2xl"/>}
+                         text-gray-500 text-2xl" onClick={() => dispatch(OpenEnv(ce._id)) }/>}
                     <p className="hidden group-hover:block absolute right-2" onClick={() => setcolId(ce)}  >
                       <BiDotsHorizontalRounded className="cursor-pointer" onClick={() => openRequest(ce)} />
                     </p>

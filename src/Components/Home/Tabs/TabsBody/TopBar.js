@@ -119,21 +119,21 @@ const TopBar = ({ onSendClick }) => {
             onChange={(e) => {
               setData({ ...data, url: e.target.value });
             }}
-            // defaultValue={data?.url || ""}
+            defaultValue={data?.url || ""}
           />
 
-          <div className="input-renderer ">
+          <div className="input-renderer px-2 ">
             {data.url.split(REGEX).map((word, i) => {
               if (word.match(REGEX) !== null) {
                 return (
-                  <div key={i} className="text-[#1D4ED8] relative group z-50">
-                    <span className='text-xs font-semibold absolute -left-2 -top-2'>{word}</span>
+                  <div key={i} className="text-[#1D4ED8] group z-50">
+                    <span className='text-xs font-semibold cursor-pointer'>{word}</span>
                     {/* hover and show variable */}
                     <div className="hidden group-hover:block"><VariableValue data={word}/></div>
                   </div>
                 );
               } else {
-                return <span key={i} className='text-xs font-semibold px-2'>{word}</span>;
+                return <span key={i} className='text-xs font-semibold '>{word}</span>;
               }
             })}
           </div>
