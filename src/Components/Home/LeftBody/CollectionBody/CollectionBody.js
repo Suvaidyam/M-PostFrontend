@@ -65,8 +65,8 @@ const CollectionBody = () => {
   };
   const handleRequest = (e) => {
     if (tabs.findIndex((f) => f._id === e._id) < 0) {
-      tabs.push(e);
-      dispatch(Tabs(tabs));
+      // tabs.push(e);
+      dispatch(Tabs([...tabs,e]));
       dispatch(AddRequest(e._id));
     }
   };
