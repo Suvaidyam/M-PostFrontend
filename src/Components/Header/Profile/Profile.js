@@ -9,9 +9,9 @@ import http from '../../../Services/http'
 import { DataContext } from '../../Context/DataProvider';
 
 const Profile = ({setOpenProfile}) => {
-
+    
     const [file, setfile] = useState(null)
-    const {url, setUrl} =useContext(DataContext)
+    const {url, setUrl,setMsg,setError} =useContext(DataContext)
     const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch()
     const items = useSelector((state) => state.ProfileReducer.url)
@@ -29,10 +29,12 @@ const Profile = ({setOpenProfile}) => {
       url: `${process.env.REACT_APP_BASEURL}/employee/updateImage/${_id}`,
       data:body
     }).then((res) => {
-        console.log(res)
+      setMsg(res.data.message)
+      setError(true)
         setUrl(null)
       }).catch((error) => {
-        console.log(error)
+        setMsg(error.response.data.message)
+        setError(true)
       })
     }
     const getImg =()=>{
@@ -59,12 +61,15 @@ const Profile = ({setOpenProfile}) => {
         url: `${process.env.REACT_APP_BASEURL}/employee/deletePhoto`,
       }).then((res) => {
         setUrl(res.data.user.url)
+        setMsg(res.data.message)
+      setError(true)
         setLoading(true);
         setTimeout(() => {
           setLoading(false);
         }, 1000);
       }).catch((error) => {
-        console.log(error)
+        setMsg(error.response.data.message)
+        setError(true)
           setLoading(true);
           setTimeout(() => {
             setLoading(false);

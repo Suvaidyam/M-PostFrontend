@@ -10,11 +10,10 @@ import VariableValue from "./VariableValue";
 
 const TopBar = ({ onSendClick }) => {
   const REGEX = /({{.*?}})/g;
-  const { jsonText, tabData, setTopBarData, headersData, paramsData } =
+  const { jsonText, tabData, setTopBarData, headersData, paramsData,setMsg,setError } =
     useContext(DataContext);
   const [data, setData] = useState(tabData.details);
   const [open, setopen] = useState(false);
-  const [msg, setMsg] = useState();
   const [isLoding, setIsLoding] = useState(false);
   const [isEnv, setIsEnv] = useState([]);
 
@@ -33,7 +32,8 @@ const TopBar = ({ onSendClick }) => {
       },
     })
       .then((res) => {
-        setMsg(res.data.message);
+        setMsg("Save Successfully");
+        setError(true)
         setIsLoding(true);
         setTimeout(() => {
           setIsLoding(false);
@@ -41,6 +41,8 @@ const TopBar = ({ onSendClick }) => {
       })
       .catch((err) => {
         console.log(err);
+        setMsg(err.response.data.message);
+        setError(true)
       });
   };
   setTopBarData(data);
@@ -71,14 +73,7 @@ const TopBar = ({ onSendClick }) => {
 
   return (
     <>
-      {isLoding === true ? (
-        <p
-          className="absolute bg-gray-500 text-white w-56 h-10 flex items-center 
-        px-2 rounded-sm bottom-3 right-16 border-b-4 border-green-500"
-        >
-          {msg}
-        </p>
-      ) : null}
+  
       <div className="flex pt-2.5  items-center  px-3 relative ">
         {/* dropdown */}
         <div className="   w-28 h-9 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">

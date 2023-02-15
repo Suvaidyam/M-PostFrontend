@@ -9,9 +9,9 @@ import Http from "../../../../Services/http";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 
 const TabsBody = () => {
-  const { setMsg, topBarData, paramsData, headersData, jsonText } =
+  const { setMsg,setError, topBarData, paramsData, headersData, jsonText } =
     useContext(DataContext);
-  const [error, setError] = useState(false);
+
 
   const [apiResponse, setApiResponse] = useState({});
   const [isLoading, setLoading] = useState(false);
@@ -61,7 +61,7 @@ const TabsBody = () => {
         <QuearyTabs />
 
         <Response apiResponse={apiResponse} isLoading={isLoading} />
-        <SnackBar error={error} setError={setError} />
+        <SnackBar  />
       </div>
     </>
   );

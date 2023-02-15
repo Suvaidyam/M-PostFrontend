@@ -13,6 +13,7 @@ const DataProvider = ({ children }) => {
   const [collEdit, setCollEdit] = useState(false);
   const [colId, setcolId] = useState(null);
   const [Msg, setMsg] = useState("");
+  const [error, setError] = useState(false);
   const [responseData, setResponseData] = useState([]);
   const [changeAction, setchangeAction] = useState('');
   const [url, setUrl] = useState('');
@@ -37,6 +38,8 @@ const DataProvider = ({ children }) => {
           setcolId,
           setMsg,
           Msg,
+          error,
+          setError,
           responseData,
           setResponseData,
           SetEnviroment,
