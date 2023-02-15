@@ -17,7 +17,7 @@ import { CollectionLoader } from "../../../Loader/Loader";
 import EditCollection from "../MoreAction/EditCollection";
 
 const CollectionBody = () => {
-  const { setcolId ,collEdit , setchangeAction , changeAction} = useContext(DataContext);
+  const { setcolId ,collEdit , setchangeAction , changeAction,setMsg,setError} = useContext(DataContext);
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const [collection, setcollection] = useState([]);
@@ -86,14 +86,17 @@ const CollectionBody = () => {
       method: "post",
       data: {
         type: "folder",
+        name:'New Collection'
       },
     })
       .then((res) => {
-        console.log(res);
+        setMsg(res.data.message);
+        setError(true)
         setchangeAction("E")
       })
       .catch((err) => {
-        console.log(err);
+        setMsg(err.response.data.message);
+        setError(true)
       });
   };
 

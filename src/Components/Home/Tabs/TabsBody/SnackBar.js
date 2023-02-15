@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Snackbar } from "@mui/material";
 import { DataContext } from "../../../Context/DataProvider";
 
-const SnackBar = ({ error, setError }) => {
-  const { Msg } = useContext(DataContext);
+const SnackBar = () => {
+  const { Msg,error,setError } = useContext(DataContext);
 
   const handleClose = () => {
     setError(false);

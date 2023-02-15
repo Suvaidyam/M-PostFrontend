@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import http from "../../../Services/http";
+import { DataContext } from "../../Context/DataProvider";
 
 const CreateWorkSpace = ({setOpen}) => {
+  const {setMsg,setError}=useContext(DataContext)
   const [name, setName] = useState('')
   const [visibility, setVisibility] = useState('')
 
@@ -16,10 +18,13 @@ const CreateWorkSpace = ({setOpen}) => {
     })
       .then((res) => {
         setOpen(false)
-        console.log(res.data);
+        setMsg(res.data.message);
+        setError(true)
+        
       })
       .catch((err) => {
-        console.log(err);
+        setMsg(err.response.data.message);
+        setError(true)
       });
   }
   return (
@@ -70,6 +75,7 @@ const CreateWorkSpace = ({setOpen}) => {
            " onClick={postData}>Create Workspace</button>
         </div>
       </div>
+      
     </>
   )
 };
