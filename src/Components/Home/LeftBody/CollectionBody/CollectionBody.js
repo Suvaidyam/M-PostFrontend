@@ -46,7 +46,7 @@ const CollectionBody = () => {
   useEffect(() => {
     return () => {
       getData();
-      setchangeAction(false)
+      setchangeAction("F")
     };
   }, [changeAction]);
 
@@ -90,7 +90,7 @@ const CollectionBody = () => {
     })
       .then((res) => {
         console.log(res);
-        setchangeAction(true)
+        setchangeAction("E")
       })
       .catch((err) => {
         console.log(err);

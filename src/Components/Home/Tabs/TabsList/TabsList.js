@@ -8,8 +8,11 @@ import { Tabs } from "../../../../Redux/Action/Tabs";
 import { motion } from "framer-motion";
 import http from "../../../../Services/http";
 import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
+import { useContext } from "react";
+import  { DataContext } from "../../../Context/DataProvider";
 
 const TabsList = () => {
+  const{setchangeAction, changeAction} =useContext(DataContext)
   const [newEnviroment, setNewEnviroment] = useState([])
   const local_variable = newEnviroment.filter(e => e.collectionId !== null)
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
@@ -77,7 +80,7 @@ const TabsList = () => {
     return () => {
       getData();
     };
-  }, []);
+  }, [changeAction]);
 
   return (
     <>

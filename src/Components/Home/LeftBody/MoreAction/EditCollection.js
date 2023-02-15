@@ -17,7 +17,7 @@ const EditCollection = ({apiUrl}) => {
       .then((res) => {
         // setMsg(res.data.message);
         setCollEdit(false)
-        setchangeAction(true)
+        setchangeAction("B")
         
       })
       .catch((err) => {
