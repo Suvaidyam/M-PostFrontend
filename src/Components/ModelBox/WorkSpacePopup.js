@@ -13,7 +13,7 @@ const WorkSpacePopup = () => {
     <div className=" rounded-md scrollbar-hide">
       <button onClick={onOpenModal}>Create WorkSpace</button>
       <Modal open={open} onClose={onCloseModal} center>
-        <CreateWorkSpace />
+        <CreateWorkSpace {...{setOpen}} />
       </Modal>
     </div>
   );
