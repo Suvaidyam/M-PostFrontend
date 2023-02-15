@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const CreateWorkSpace = () => {
-  return (
-    <div>
-        tgtg
-    </div>
-  )
-}
+  return <div>tgtgkumlk</div>;
+};
 
-export default CreateWorkSpace
+export default CreateWorkSpace;
