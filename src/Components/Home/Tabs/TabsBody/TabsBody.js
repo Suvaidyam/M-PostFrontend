@@ -4,7 +4,6 @@ import Response from "./Response";
 import TopBar from "./TopBar";
 import { DataContext } from "../../../Context/DataProvider";
 import { checkParams } from "../../../Utils/CommonUtils";
-import SnackBar from "./SnackBar";
 import Http from "../../../../Services/http";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 
@@ -21,13 +20,6 @@ const TabsBody = () => {
       setError(true);
       return false;
     }
-    // console.log({
-    //   url: topBarData.url,
-    //   method: topBarData.method,
-    //   data: jsonText,
-    //   headers: headersData,
-    //   query: getHeadersAndParams(paramsData),
-    // });
 
     Http({
       url: topBarData.url,
@@ -61,7 +53,6 @@ const TabsBody = () => {
         <QuearyTabs />
 
         <Response apiResponse={apiResponse} isLoading={isLoading} />
-        <SnackBar  />
       </div>
     </>
   );
