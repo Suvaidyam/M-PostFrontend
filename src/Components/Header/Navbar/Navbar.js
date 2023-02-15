@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
-import WorkSpace from "../WorkSpace/WorkSpace";
+import WorkSpaceDropDwon from "../WorkSpaceDropDwon/WorkSpaceDropDown";
 
 const Navbar = () => {
   const [open, setopen] = useState(false)
@@ -14,7 +14,7 @@ const Navbar = () => {
         <NavLink to="/reports">Reports</NavLink>
         <NavLink to="/explore">Explore</NavLink>
         {/* workSpace */}
-        {(open===true)&&<WorkSpace {...{setopen}}/>}
+        {(open===true)&&<WorkSpaceDropDwon {...{setopen}}/>}
         
       </div>
     </>

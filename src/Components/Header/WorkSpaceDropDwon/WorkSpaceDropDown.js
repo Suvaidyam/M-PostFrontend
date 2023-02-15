@@ -4,7 +4,7 @@ import {IoIosArrowRoundForward} from 'react-icons/io'
 import http from '../../../Services/http';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-const WorkSpace = ({setopen}) => {
+const WorkSpaceDropDwon = ({setopen}) => {
 
     const [workspace, setworkspace] = useState([])
 
@@ -54,4 +54,4 @@ const WorkSpace = ({setopen}) => {
   )
 }
 
-export default WorkSpace
+export default WorkSpaceDropDwon
