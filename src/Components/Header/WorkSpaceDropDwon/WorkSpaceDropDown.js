@@ -15,7 +15,6 @@ const WorkSpaceDropDwon = ({ setopen }) => {
     })
       .then((res) => {
         setworkspace(res.data.workSpace);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
