@@ -52,7 +52,7 @@ export default function QuearyTabs() {
   };
 
   return (
-    <div className=" h-full  min-h-[200px] ">
+    <div className=" ">
       <Box sx={{ width: "100%" }}>
         <Box sx={{ height: "32px", minHeight: "32px", color: "#2563EB" }}>
           <Tabs

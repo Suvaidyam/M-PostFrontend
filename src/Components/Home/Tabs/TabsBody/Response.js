@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 import JSONInput from "react-json-editor-ajrm";
 import locale from "react-json-editor-ajrm/locale/en";
-
+import './Tabs.css'
 const Response = ({ apiResponse, isLoading }) => {
   const { setResponseData } = useContext(DataContext);
 
@@ -60,7 +60,7 @@ const Response = ({ apiResponse, isLoading }) => {
         <ErrorScreen />
       ) : (
         <>
-          <div className=" h-screen  bg-white  overflow-scroll scrollbar-hide ">
+          <div className="h-full bg-white ">
             {isLoading ? (
               <div className="flex items-center justify-center  pt-12">
                 <LineWave

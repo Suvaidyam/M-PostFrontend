@@ -11,3 +11,7 @@
 .css-13bygta-MuiButtonBase-root-MuiTab-root.Mui-selected {
     color: #2563EB !important;
 }
+#a_unique_id-container{
+    height: 180px !important;
+    min-height: 180px;
+}

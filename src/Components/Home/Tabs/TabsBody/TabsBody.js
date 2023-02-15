@@ -45,7 +45,7 @@ const TabsBody = () => {
 
   return (
     <>
-      <div className=" mx-1">
+      <div className=" h-full mx-1">
         <div className="h-14 w-full bg-white mt-2 ">
           <TopBar onSendClick={onSendClick} />
         </div>
