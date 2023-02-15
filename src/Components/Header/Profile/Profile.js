@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Avatar from '../../../Assets/avatar.png'
 import {TbUpload} from 'react-icons/tb'
 import {HiOutlineTrash} from 'react-icons/hi'
@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ProfileUrl } from '../../../Redux/Action/ProfileAction'
 import { Puff } from  'react-loader-spinner'
 import http from '../../../Services/http'
+import { DataContext } from '../../Context/DataProvider';
 
 const Profile = ({setOpenProfile}) => {
 
     const [file, setfile] = useState(null)
-    const [url, setUrl] = useState(null)
+    const {url, setUrl} =useContext(DataContext)
     const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch()
     const items = useSelector((state) => state.ProfileReducer.url)
@@ -25,10 +26,11 @@ const Profile = ({setOpenProfile}) => {
 
     http({
       method: "put",
-      url: `${process.env.REACT_APP_BASEURL}/employee/${_id}`,
+      url: `${process.env.REACT_APP_BASEURL}/employee/updateImage/${_id}`,
       data:body
     }).then((res) => {
         console.log(res)
+        setUrl(null)
       }).catch((error) => {
         console.log(error)
       })
@@ -41,7 +43,7 @@ const Profile = ({setOpenProfile}) => {
           setUrl(res.data.user.url)
           setLoading(true);
           setTimeout(() => {
-            setLoading(false);
+          setLoading(false);
           }, 1000);
         }).catch((error) => {
           console.log(error)

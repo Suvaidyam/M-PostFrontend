@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useContext, useEffect, useState } from 'react'
 import Vector from '../../Assets/Vector.png'
 import Avatar from '../../Assets/avatar.png'
 import SearchMenu from '../SearchMenu/SearchMenu'
@@ -11,13 +11,15 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import Profile from './Profile/Profile'
 import { useSelector } from 'react-redux'
-import { motion } from 'framer-motion'
-
+import { motion } from 'framer-motion';
+import { DataContext } from '../Context/DataProvider'
 const Header = () => {
-
+  const {url , seturl} =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
-const [url, setUrl] = useState(null)
-const items = useSelector((state) => state.ProfileReducer.url)
+const [Profileurl, setProfileUrl] = useState(null)
+const items = useSelector((state) => state.ProfileReducer.url);
+
+
 
 let token = sessionStorage.getItem('token')
     let headers = {
@@ -31,7 +33,7 @@ const getImg =()=>{
   {
     headers
   }).then((res) => {
-    setUrl(res.data.user.url)
+    setProfileUrl(res.data.user.url)
   }).catch((error) => {
     console.log(error)
   })
@@ -39,9 +41,9 @@ const getImg =()=>{
 useEffect(() => {
 return () => {
   getImg()
-  setUrl(items)
+  setProfileUrl(items)
 }
-}, [])
+},[url])
 
   const navigate = useNavigate();
   const signout = async () => {
@@ -92,7 +94,7 @@ return () => {
            {/* Profile */}
            <div className="w-12 h-12 border-2 border-blue-500 rounded-full cursor-pointer 
            relative flex flex-col items-center group">
-            <img className='w-12 h-12 border-2 rounded-full object-cover' src={url ? 'http://localhost:4000/' + url : Avatar} alt="" />
+            <img className='w-12 h-12 border-2 rounded-full object-cover' src={Profileurl ? 'http://localhost:4000/' + Profileurl : Avatar} alt="" />
            <div className="w-44 shadow-xl absolute  top-10 right-0
            hidden group-hover:block rounded-md z-50" >
             <p className='p-1.5'></p>
