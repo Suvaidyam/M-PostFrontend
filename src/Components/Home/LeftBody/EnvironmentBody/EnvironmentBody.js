@@ -28,6 +28,9 @@ const EnvironmentBody = () => {
     http({
       url: `${process.env.REACT_APP_BASEURL}/environment`,
       method: "post",
+      data:{
+        name:'New Environment'
+      }
     })
       .then((res) => {
         setchangeAction('A')
