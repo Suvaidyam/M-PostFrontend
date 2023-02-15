@@ -36,7 +36,7 @@ const CreateWorkSpace = ({setOpen}) => {
             <p className="text-sm text-gray-600 font-semibold">Visibility</p>
             <div class="flex items-start">
               <div class="flex h-5 items-center">
-                <input value='Personal' id="personal" name="candidates" type="radio" class="h-4 w-4 rounded border-gray-300
+                <input value='PERSONAL' id="personal" name="candidates" type="radio" class="h-4 w-4 rounded border-gray-300
                  text-indigo-600 focus:ring-indigo-500" onChange={(e)=>setVisibility(e.target.value)}/>
               </div>
               <div class="ml-3 text-sm">
@@ -46,7 +46,7 @@ const CreateWorkSpace = ({setOpen}) => {
             </div>
             <div class="flex items-start">
               <div class="flex h-5 items-center">
-                <input value='Team' id="comments" name="candidates" type="radio" class="h-4 w-4 rounded border-gray-300
+                <input value='TEAM' id="comments" name="candidates" type="radio" class="h-4 w-4 rounded border-gray-300
                  text-indigo-600 focus:ring-indigo-500" onChange={(e)=>setVisibility(e.target.value)}/>
               </div>
               <div class="ml-3 text-sm">
@@ -57,7 +57,7 @@ const CreateWorkSpace = ({setOpen}) => {
 
             <div class="flex items-start">
               <div class="flex h-5 items-center">
-                <input value='Pubilc' id="offers" name="candidates" type="radio" class="h-4 w-4 rounded border-gray-300
+                <input value='PUBLIC' id="offers" name="candidates" type="radio" class="h-4 w-4 rounded border-gray-300
                  text-indigo-600 focus:ring-indigo-500" onChange={(e)=>setVisibility(e.target.value)}/>
               </div>
               <div class="ml-3 text-sm">
