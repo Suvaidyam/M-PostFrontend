@@ -12,7 +12,7 @@ const MoreAction = ({collection}) => {
     })
       .then((res) => {
         console.log(res)  
-        setchangeAction(true)      
+        setchangeAction("C")      
       })
       .catch((err) => {
         console.log(err);
@@ -31,7 +31,7 @@ const MoreAction = ({collection}) => {
       }
     })
       .then((res) => {
-        setchangeAction(true)
+        setchangeAction("D")
         console.log(res)        
       })
       .catch((err) => {

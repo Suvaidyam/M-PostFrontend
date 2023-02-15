@@ -15,12 +15,12 @@ import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
 const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
   const [loader, setLoader] = useState(true);
-  const { setcolId, collEdit } = useContext(DataContext);
+  const { setcolId, collEdit, changeAction,setchangeAction } = useContext(DataContext);
   const global_variable = newEnviroment.filter(e => e.collectionId === null)
   const local_variable = newEnviroment.filter(e => e.collectionId !== null)
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
   const dispatch = useDispatch();
-
+ 
   let tabs = useSelector((state) => state.TabsReducer);
 
 
@@ -30,6 +30,7 @@ const EnvironmentBody = () => {
       method: "post",
     })
       .then((res) => {
+        setchangeAction('A')
         console.log(res);
       })
       .catch((err) => {
@@ -38,6 +39,7 @@ const EnvironmentBody = () => {
   };
 
   const getData = () => {
+    setLoader(true)
     http({
       method: "get",
       url: `${process.env.REACT_APP_BASEURL}/environment`,
@@ -57,7 +59,7 @@ const EnvironmentBody = () => {
     return () => {
       getData();
     };
-  }, []);
+  }, [changeAction]);
   const handleRequest = (e) => {
     if (tabs.findIndex((f) => f._id === e._id) < 0) {
       // tabs.push(e);
