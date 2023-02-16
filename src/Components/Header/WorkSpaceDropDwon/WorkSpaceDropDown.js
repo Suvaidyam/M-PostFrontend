@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BiGroup } from "react-icons/bi";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import http from "../../../Services/http";
 import { Scrollbars } from "react-custom-scrollbars";
 import WorkSpacePopup from "../../ModelBox/WorkSpacePopup";
+import { CollectionLoader } from "../../Loader/Loader";
+import { DataContext } from "../../Context/DataProvider";
 
-const WorkSpaceDropDwon = ({ setopen }) => {
+const WorkSpaceDropDwon = () => {
+  const {workSpaceId,setWorkSpaceId}=useContext(DataContext)
   const [workspace, setworkspace] = useState([]);
+  const [Loder, setLoder] = useState(true)
 
   const getData = () => {
     http({
@@ -15,6 +19,9 @@ const WorkSpaceDropDwon = ({ setopen }) => {
     })
       .then((res) => {
         setworkspace(res.data.workSpace);
+        setTimeout(() => {
+          setLoder(false)
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
@@ -34,6 +41,12 @@ const WorkSpaceDropDwon = ({ setopen }) => {
          rounded-md pt-3 px-3 flex flex-col justify-between"
       >
         <div className="w-full h-full flex flex-col gap-2">
+          {Loder===true?
+          <>
+          <div className="w-full bg-gray-200 px-4 py-4 rounded-md text-sm font-medium
+          text-gray-600"></div>
+          <p className="bg-gray-200 font-semibold p-2 text-xs w-28"></p>
+          </>:<>
           <button
             className="bg-gray-200 px-4 py-1.5 rounded-md text-sm font-medium
           text-gray-600"
@@ -44,16 +57,23 @@ const WorkSpaceDropDwon = ({ setopen }) => {
           <p className="text-gray-400 font-semibold text-xs">
             Recently visited
           </p>
+          </>
+        }
+          
           <Scrollbars>
             <div className="w-full h-full min-h-[290px] ">
               {workspace?.map((e) => (
-                <p
-                  key={e._id}
-                  className="text-xs flex items-center gap-2 cursor-pointer hover:bg-gray-200 py-1.5 px-2"
-                >
+                <>
+                {Loder===true?
+                <div key={e._id}><CollectionLoader/></div>:
+                <p  key={e._id}
+                  className={`text-xs flex items-center gap-2 cursor-pointer hover:bg-gray-200 py-1.5 px-2
+                   ${workSpaceId._id===e._id && 'bg-gray-200'}`} onClick={()=>setWorkSpaceId(e)}>
                   <BiGroup className="text-lg text-gray-500" />
                   {e.name}
-                </p>
+                </p>}
+                 
+                </>
               ))}
             </div>
           </Scrollbars>

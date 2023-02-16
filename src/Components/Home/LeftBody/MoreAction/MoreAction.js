@@ -3,7 +3,7 @@ import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
 
 const MoreAction = ({collection}) => {
-  const {collEdit, setCollEdit,colId, setchangeAction , setMsg,setError} = useContext(DataContext);
+  const {collEdit, setCollEdit,colId, setchangeAction , setMsg,setError,workSpaceId} = useContext(DataContext);
  
   const deleteData = () => {
     Http({
@@ -29,6 +29,7 @@ const MoreAction = ({collection}) => {
         name: "New Request",
         type: "request",
         parent: colId._id,
+        workspace_id:workSpaceId._id,
         details: { method: "GET", url: "" },
       }
     })

@@ -6,7 +6,7 @@ import {GrFormClose} from 'react-icons/gr'
 
 const NewRequest = ({setopen,details}) => {
 
-     const {jsonText, tabData,headersData,paramsData ,setMsg,setError} = useContext(DataContext);
+     const {jsonText, tabData,headersData,paramsData ,setMsg,setError,workSpaceId} = useContext(DataContext);
      const [data, setData] = useState(tabData.details);
      const [collection, setcollection] = useState([])
 
@@ -32,6 +32,7 @@ const NewRequest = ({setopen,details}) => {
             name:data.name,
             parent:data.parent,
             type:'request',
+            workspace_id:workSpaceId._id,
             details:{
               url:details.url,
               method:details.method,
