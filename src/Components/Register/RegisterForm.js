@@ -1,7 +1,10 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Company from "./Company";
+import {DataContext} from '../Context/DataProvider'
+import { useContext } from "react";
+import SnackBar from "../Home/Tabs/TabsBody/SnackBar";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -11,8 +14,32 @@ const RegisterForm = () => {
   const [companyName, setCompanyName] = useState("");
   const [companyLogo, setCompanyLogo] = useState(null);
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [check, setCheck] = useState(true);
+  const {setMsg,setError }=useContext(DataContext);
+
+  // const PasswordMatch=()=>{
+  //   if(password === confirmPassword ){
+  //     setMsg("Password Matched");
+  //     setError(true)
+  //   }else{
+  //     setMsg("Oops !   Password Not Matched");
+  //     setError(true)
+  //   }
+  // }
+  // useEffect(()=>{
+  //   PasswordMatch()
+  // },[confirmPassword]);
+  // const EmailValidation =()=>{
+  //   var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  //   if(!email.match(mailformat)){
+  //     setMsg("Please Enter a Valid Email");
+  //     setError(true)
+  //   }
+  // }
+  // useEffect(()=>{
+  //   EmailValidation()
+  // },[email])
 
   const navigate = useNavigate();
 
@@ -39,21 +66,21 @@ const RegisterForm = () => {
       .post(`http://localhost:4000/auth/register`, formData
       )
       .then((res) => {
-        sessionStorage.setItem("token", res.data.token);
-        if (res.data.token) {
-          navigate("/");
-          let token = res.data.token;
-          let payload = token.split(".");
-          let data = atob(payload[1]);
-          // dispatch(ProfileDetailsAction(data))
-
-          sessionStorage.setItem("paylode", data);
+        setMsg(res.data.message);
+        setError(true)
+        if (res.data) {
+          setTimeout(() => {
+            navigate("/");
+            setError(false)
+          }, 1000);
+          
         } else {
           console.log("unauthorized");
         }
       })
       .catch((err) => {
         setMsg(err.response.data.message);
+        setError(true)
       });
   };
   return (
@@ -110,7 +137,7 @@ const RegisterForm = () => {
             id="repassword"
             className="border-2 outline-none w-full py-1 px-2"
             placeholder="Enter RePassword"
-            // onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
       </div>
@@ -139,6 +166,7 @@ const RegisterForm = () => {
             SIGNUP
           </button>
         </div>
+        <SnackBar/>
     </>
   );
 };

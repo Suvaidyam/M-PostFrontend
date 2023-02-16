@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux'
 import { motion } from 'framer-motion';
 import { DataContext } from '../Context/DataProvider'
 const Header = () => {
-  const {url , seturl} =useContext(DataContext)
+  const {url , seturl, setMsg,setError } =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
 const [Profileurl, setProfileUrl] = useState(null)
 const items = useSelector((state) => state.ProfileReducer.url);
@@ -56,8 +56,13 @@ return () => {
           }
         })
         .then((res) => {
-          console.log(res)
-          navigate("/")
+          console.log(res);
+          setMsg(res.data.message);
+          setError(true)
+          setTimeout(() => {
+            setError(false)
+            navigate("/");
+          }, 1000);
         })
         .catch((err) => console.log(err))
       sessionStorage.removeItem('token')
