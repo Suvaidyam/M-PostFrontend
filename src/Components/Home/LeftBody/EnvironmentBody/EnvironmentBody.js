@@ -15,9 +15,9 @@ import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
 const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
   const [loader, setLoader] = useState(true);
-  const { setcolId, collEdit, changeAction,setchangeAction,setMsg,setError } = useContext(DataContext);
-  const global_variable = newEnviroment.filter(e => e.collectionId === null)
-  const local_variable = newEnviroment.filter(e => e.collectionId !== null)
+  const { setcolId, collEdit, changeAction,setchangeAction,setMsg,setError,workSpaceId } = useContext(DataContext);
+  const global_variable = newEnviroment.filter(e => e.name === 'Globals')
+  const local_variable = newEnviroment.filter(e => e.name !== 'Globals')
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
   const dispatch = useDispatch();
  
@@ -29,7 +29,8 @@ const EnvironmentBody = () => {
       url: `${process.env.REACT_APP_BASEURL}/environment`,
       method: "post",
       data:{
-        name:'New Environment'
+        name:'New Environment',
+        workspace_id:workSpaceId._id
       }
     })
       .then((res) => {

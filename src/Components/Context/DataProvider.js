@@ -17,7 +17,9 @@ const DataProvider = ({ children }) => {
   const [responseData, setResponseData] = useState([]);
   const [changeAction, setchangeAction] = useState('');
   const [url, setUrl] = useState('');
-
+  // workspce id provide to filtter to all task
+  const [workSpaceId, setWorkSpaceId] = useState('');
+console.log(workSpaceId)
   return (
     <>
       <DataContext.Provider
@@ -47,7 +49,9 @@ const DataProvider = ({ children }) => {
           changeAction,
           setchangeAction,
           url, 
-          setUrl
+          setUrl,
+          setWorkSpaceId,
+          workSpaceId
         }}
       >
         {children}
