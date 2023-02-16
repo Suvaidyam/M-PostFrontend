@@ -7,10 +7,10 @@ import { motion } from "framer-motion";
 import ModelBox from "../../ModelBox/ModelBox";
 
 const RightBar = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpenn] = useState(false);
 
   const envirmentOpen = () => {
-    setOpen(!open);
+    setOpenn(!open);
   };
 
   return (
@@ -20,13 +20,13 @@ const RightBar = () => {
           <div className="flex flex-col gap-1">
             <motion.div
               whileTap={{ scale: 0.75 }}
-              className={`hover:bg-blue-200 w-8 h-8 flex justify-center items-center
+              className={`hover:bg-blue-200 w-10 h-10 flex justify-center items-center
                              cursor-pointer rounded-md  group ${
                                open === true ? "bg-blue-200" : null
                              }`}
               onClick={envirmentOpen}
             >
-              <ModelBox />
+              <ModelBox {...{ set: setOpenn }} />
             </motion.div>
 
             <motion.div

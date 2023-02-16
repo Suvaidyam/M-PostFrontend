@@ -24,6 +24,7 @@
     "react-json-view": "^1.21.3",
     "react-loader-spinner": "^5.3.4",
     "react-redux": "^8.0.5",
+    "react-resizable-element": "^0.1.5",
     "react-responsive-modal": "^6.4.1",
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",

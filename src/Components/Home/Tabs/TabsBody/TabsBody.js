@@ -6,11 +6,10 @@ import { DataContext } from "../../../Context/DataProvider";
 import { checkParams } from "../../../Utils/CommonUtils";
 import Http from "../../../../Services/http";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
-
+import { Resizable } from "react-resizable-element";
 const TabsBody = () => {
-  const { setMsg,setError, topBarData, paramsData, headersData, jsonText } =
+  const { setMsg, setError, topBarData, paramsData, headersData, jsonText } =
     useContext(DataContext);
-
 
   const [apiResponse, setApiResponse] = useState({});
   const [isLoading, setLoading] = useState(false);
@@ -45,14 +44,17 @@ const TabsBody = () => {
 
   return (
     <>
-      <div className=" h-full mx-1">
-        <div className="h-14 w-full bg-white mt-2 ">
+      <div className=" h-full mx-1 mb-48">
+        <div className="h-14 w-full bg-white mt-2 mb-2 ">
           <TopBar onSendClick={onSendClick} />
         </div>
 
-        <QuearyTabs />
-
-        <Response apiResponse={apiResponse} isLoading={isLoading} />
+        <Resizable direction="bottom">
+          <QuearyTabs />
+        </Resizable>
+        <Resizable direction="bottom">
+          <Response apiResponse={apiResponse} isLoading={isLoading} />
+        </Resizable>
       </div>
     </>
   );
