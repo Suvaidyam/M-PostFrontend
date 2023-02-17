@@ -12,9 +12,9 @@ import { useContext } from "react";
 import  { DataContext } from "../../../Context/DataProvider";
 
 const TabsList = () => {
-  const{setchangeAction, changeAction} =useContext(DataContext)
+  const{ changeAction} =useContext(DataContext)
   const [newEnviroment, setNewEnviroment] = useState([])
-  const local_variable = newEnviroment.filter(e => e.collectionId !== null)
+  const local_variable = newEnviroment.filter(e => e.name !== 'Globals')
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
   let tabs = useSelector((state) => state.TabsReducer);
   const newReqObj = {

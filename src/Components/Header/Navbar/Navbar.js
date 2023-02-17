@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
 import WorkSpaceDropDwon from "../WorkSpaceDropDwon/WorkSpaceDropDown";
 
-const Navbar = () => {
+const Navbar = ({setTab,tab}) => {
   const [open, setopen] = useState(false);
+
   let menuRef = useRef();
   useEffect(() => {
     let handler = (e) => {
@@ -20,17 +21,16 @@ const Navbar = () => {
   return (
     <>
       <div className="flex gap-8 relative " ref={menuRef}>
-        <NavLink
+        <Link
           to="/workSpace"
           className="flex items-center gap-2"
-          onClick={() => {
-            setopen(!open);
-          }}
+         
         >
-          Workspace <AiFillCaretDown className="text-xs" />
-        </NavLink>
-        <NavLink to="/reports">Reports</NavLink>
-        <NavLink to="/explore">Explore</NavLink>
+          <p onClick={()=>setTab('workspace')} className={`cursor-pointer ${tab==='workspace' && 'text-blue-600'}`}>Workspace</p> 
+          <AiFillCaretDown className="text-xs"  onClick={() => {  setopen(!open)}}/>
+        </Link>
+        <p onClick={()=>setTab('reports')} className={`cursor-pointer ${tab==='reports' && 'text-blue-600'}`}>Reports</p>
+        <p onClick={()=>setTab('explore')} className={`cursor-pointer ${tab==='explore' && 'text-blue-600'}`}>Explore</p>
         {/* workSpace */}
         {open && <WorkSpaceDropDwon {...{ setopen }} />}
       </div>

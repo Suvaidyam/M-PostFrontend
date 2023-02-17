@@ -1,7 +1,7 @@
 import React from "react";
 
 const Explore = () => {
-  return <div>hyyyyy</div>;
+  return <div>Explore</div>;
 };
 
 export default Explore;

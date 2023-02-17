@@ -9,8 +9,7 @@ import CollectionBody from "../Home/LeftBody/CollectionBody/CollectionBody";
 import ApiBody from "../Home/LeftBody/ApiBody/ApiBody";
 import EnvironmentBody from "../Home/LeftBody/EnvironmentBody/EnvironmentBody";
 import HistoryBody from "../Home/LeftBody/HistoryBody/HistoryBody";
-import Reports from "../Home/Reports/Reports";
-import Explore from "../Home/Explore/Explore";
+
 const Router = () => {
   return (
     <>
@@ -19,9 +18,6 @@ const Router = () => {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="explore" element={<Explore />} />
-
             <Route path="/workSpace/" element={<Protected Component={Home} />}>
               <Route index element={<CollectionBody />} />
               <Route path="collection" element={<CollectionBody />} />

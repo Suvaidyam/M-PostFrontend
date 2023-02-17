@@ -7,7 +7,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 const SetEnviroment = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
-  const global = newEnviroment.filter(e=>e.collectionId===null)
+  const global = newEnviroment.filter(e=>e.name==='Globals')
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
   const local = newEnviroment.filter(e=>e._id===showEnv_id)
   const [loader, setLoader] = useState(true);
