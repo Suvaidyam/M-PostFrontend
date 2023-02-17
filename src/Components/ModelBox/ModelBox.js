@@ -8,7 +8,7 @@ const ModelBox = ({ set }) => {
   const [open, setOpen] = useState(false);
 
   const onOpenModal = () => {
-    // setOpen(true);
+    setOpen(true);
     set(true);
   };
   const onCloseModal = () => setOpen(false);
