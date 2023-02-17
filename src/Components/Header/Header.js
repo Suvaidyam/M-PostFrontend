@@ -13,7 +13,8 @@ import Profile from './Profile/Profile'
 import { useSelector } from 'react-redux'
 import { motion } from 'framer-motion';
 import { DataContext } from '../Context/DataProvider'
-const Header = () => {
+
+const Header = ({setTab,tab}) => {
   const {url , seturl, setMsg,setError } =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
 const [Profileurl, setProfileUrl] = useState(null)
@@ -80,7 +81,7 @@ return () => {
             {/* Logo */}
             <div ><img src={Vector} alt=""  className='w-12'/></div>
             {/* navbar */}
-            <Navbar/>
+            <Navbar {...{setTab,tab}}/>
           </div>
           <div className="flex gap-5 items-center">
             {/* search */}
