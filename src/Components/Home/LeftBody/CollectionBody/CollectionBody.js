@@ -107,7 +107,7 @@ const CollectionBody = () => {
         <div className="">
           <BodyHead {...{ postData, title: "Create collection" }} />
           {/* collection */}
-          {loader == true ? (
+          {loader === true ? (
             <>
               {newarr.map((e) => (
                 <CollectionLoader key={e._id} />

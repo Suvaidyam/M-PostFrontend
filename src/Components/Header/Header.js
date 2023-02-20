@@ -15,7 +15,7 @@ import { motion } from 'framer-motion';
 import { DataContext } from '../Context/DataProvider'
 
 const Header = ({setTab,tab}) => {
-  const {url , seturl, setMsg,setError } =useContext(DataContext)
+  const {url , setMsg,setError } =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
 const [Profileurl, setProfileUrl] = useState(null)
 const items = useSelector((state) => state.ProfileReducer.url);
