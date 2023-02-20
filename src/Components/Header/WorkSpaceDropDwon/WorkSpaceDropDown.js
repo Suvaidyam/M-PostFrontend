@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BiGroup } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import http from "../../../Services/http";
 import { Scrollbars } from "react-custom-scrollbars";
@@ -68,9 +69,10 @@ const WorkSpaceDropDwon = () => {
                 <div key={e._id}><CollectionLoader/></div>:
                 <p  key={e._id}
                   className={`text-xs flex items-center gap-2 cursor-pointer hover:bg-gray-200 py-1.5 px-2
-                   ${workSpaceId._id===e._id && 'bg-gray-200'}`} onClick={()=>setWorkSpaceId(e)}>
+                   ${workSpaceId._id===e._id && 'bg-gray-300'} group`} onClick={()=>setWorkSpaceId(e)}>
                   <BiGroup className="text-lg text-gray-500" />
-                  {e.name}
+                  {e.name}<MdDelete className="hidden group-hover:block ml-auto text-lg hover:text-red-600
+                  text-gray-600"/>
                 </p>}
                  
                 </>

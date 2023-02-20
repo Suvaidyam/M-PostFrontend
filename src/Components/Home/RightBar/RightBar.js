@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { AiOutlineEye } from "react-icons/ai";
 import { BsCaretRight, BsCode } from "react-icons/bs";
 import { FiTrash2 } from "react-icons/fi";
 import { BiHelpCircle } from "react-icons/bi";

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AiOutlineEye,
   AiOutlineEyeInvisible,
@@ -108,9 +108,9 @@ const LoginForm = () => {
               <span className="text-red-500">terms & conditions</span>
             </label>
           </div>
-          <a href="#" className="text-sm text-blue-600">
+          <Link to='#' className="text-sm text-blue-600">
             Forget Password?
-          </a>
+          </Link>
         </div>
         <div className="w-full flex justify-end">
           <button
