@@ -6,15 +6,16 @@ import {GrFormClose} from 'react-icons/gr'
 
 const NewRequest = ({setopen,details}) => {
 
-     const {jsonText, tabData,headersData,paramsData ,setMsg,setError,workSpaceId} = useContext(DataContext);
+     const {jsonText, tabData,headersData,paramsData ,setMsg,setError,setchangeAction} = useContext(DataContext);
      const [data, setData] = useState(tabData.details);
      const [collection, setcollection] = useState([])
 
    const newColl = collection.filter(e=>e.parent===null)
     const getData = () => {
+      let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
         http({
           method: "get",
-          url: `${process.env.REACT_APP_BASEURL}/collection`,
+          url: `${process.env.REACT_APP_BASEURL}/collection/${workSpace_Id?._id}`,
         })
           .then((res) => {
             setcollection( res.data.collection);
@@ -25,6 +26,7 @@ const NewRequest = ({setopen,details}) => {
       };
 
       const Save=()=>{
+        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
         http({
           method: "post",
           url: `${process.env.REACT_APP_BASEURL}/collection`,
@@ -32,7 +34,7 @@ const NewRequest = ({setopen,details}) => {
             name:data.name,
             parent:data.parent,
             type:'request',
-            workspace_id:workSpaceId._id,
+            workspace_id:workSpace_Id._id,
             details:{
               url:details.url,
               method:details.method,
@@ -46,6 +48,7 @@ const NewRequest = ({setopen,details}) => {
             setMsg( res.data.message);
             setError(true)
             setopen(false)
+            setchangeAction("EE")
           })
           .catch((err) => {
             setMsg( err.response.data.message);
