@@ -18,8 +18,7 @@ const DataProvider = ({ children }) => {
   const [changeAction, setchangeAction] = useState('');
   const [url, setUrl] = useState('');
   // workspce id provide to filtter to all task
-  let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
-  const [workSpaceId, setWorkSpaceId] = useState(workSpace_Id);
+  const [workSpaceId, setWorkSpaceId] = useState({});
 
   return (
     <>
