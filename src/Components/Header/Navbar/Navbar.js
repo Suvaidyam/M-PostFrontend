@@ -6,23 +6,25 @@ import WorkSpaceDropDwon from "../WorkSpaceDropDwon/WorkSpaceDropDown";
 const Navbar = ({setTab,tab}) => {
   const [open, setopen] = useState(false);
 
-  let menuRef = useRef();
-  useEffect(() => {
-    let handler = (e) => {
-      if (!menuRef.current.contains(e.target)) {
-        setopen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
+  // let menuRef = useRef();
+  // useEffect(() => {
+  //   let handler = (e) => {
+  //     if (!menuRef.current.contains(e.target)) {
+  //       setopen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handler);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handler);
+  //   };
+  // });
   return (
     <>
-      <div className="flex gap-8 relative " ref={menuRef}>
+      <div className="flex gap-8 relative " 
+      // ref={menuRef}
+      >
         <Link
-          to="/workSpace"
+          to="/workSpace/collection"
           className="flex items-center gap-2"
          
         >

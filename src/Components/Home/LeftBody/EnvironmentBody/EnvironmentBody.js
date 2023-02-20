@@ -23,14 +23,15 @@ const EnvironmentBody = () => {
  
   let tabs = useSelector((state) => state.TabsReducer);
 
-
+ 
   const postData = () => {
+    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
     http({
       url: `${process.env.REACT_APP_BASEURL}/environment`,
       method: "post",
       data:{
         name:'New Environment',
-        workspace_id:workSpaceId._id
+        workspace_id:workSpace_Id._id
       }
     })
       .then((res) => {
@@ -46,15 +47,17 @@ const EnvironmentBody = () => {
 
   const getData = () => {
     setLoader(true)
+    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
     http({
       method: "get",
-      url: `${process.env.REACT_APP_BASEURL}/environment`,
+      url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
     })
       .then((res) => {
         setTimeout(() => {
           setLoader(false);
         }, 1000);
         setNewEnviroment(res.data.environment);
+        console.log(res.data.environment)
       })
       .catch((err) => {
         console.log(err);
@@ -65,7 +68,7 @@ const EnvironmentBody = () => {
     return () => {
       getData();
     };
-  }, [changeAction]);
+  }, [changeAction, workSpaceId]);
   const handleRequest = (e) => {
     if (tabs.findIndex((f) => f._id === e._id) < 0) {
       // tabs.push(e);

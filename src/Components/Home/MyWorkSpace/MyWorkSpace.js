@@ -5,11 +5,11 @@ import {motion} from 'framer-motion'
 import { DataContext } from '../../Context/DataProvider'
 
 const MyWorkSpace = () => {
-  const {workSpaceId}=useContext(DataContext)
+  let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
   return (
     <>
      <div className="w-full h-10 flex justify-between items-center px-3 border-r">
-       <div className="text-sm font-medium">{workSpaceId?.name}</div>
+       <div className="text-sm font-medium">{workSpace_Id?.name ? workSpace_Id.name : <p>Please Sleact Workspace</p>}</div>
        <div className="flex items-center gap-3">
         <motion.button whileTap={{ scale: 0.75 }} 
         className='w-6 h-6 bg-yellow-200 rounded-full flex justify-center items-center 

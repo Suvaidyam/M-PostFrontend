@@ -14,7 +14,7 @@ import  { DataContext } from "../../../Context/DataProvider";
 const TabsList = () => {
   const{ changeAction} =useContext(DataContext)
   const [newEnviroment, setNewEnviroment] = useState([])
-  const local_variable = newEnviroment.filter(e => e.name !== 'Globals')
+  const local_variable = newEnviroment?.filter(e => e.name !== 'Globals')
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
   let tabs = useSelector((state) => state.TabsReducer);
   const newReqObj = {
@@ -64,9 +64,10 @@ const TabsList = () => {
   };
 
   const getData = () => {
+    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
     http({
       method: "get",
-      url: `${process.env.REACT_APP_BASEURL}/environment`,
+      url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
     })
       .then((res) => {
         setNewEnviroment(res.data.environment);
@@ -123,7 +124,7 @@ const TabsList = () => {
         <div className="w-[20%] border-l border-b flex justify-center items-center gap-2 relative">
           <select className="w-full h-full outline-none text-sm pl-2" onChange={(e)=>dispatch(OpenEnv(e.target.value))}>
             <option value="null" className={`w-full text-sm`} >No Enviroment</option>
-            {local_variable.map(e => (
+            {local_variable?.map(e => (
               <option selected={e._id===showEnv_id} key={e._id} className={`w-full text-sm `}
                 value={e._id}  >{e.name}</option>
             ))}
