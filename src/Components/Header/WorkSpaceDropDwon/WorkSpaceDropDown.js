@@ -13,6 +13,7 @@ const WorkSpaceDropDwon = () => {
   const [workspace, setworkspace] = useState([]);
   const [Loder, setLoder] = useState(true)
 
+  localStorage.setItem("workSpace", JSON.stringify(workSpaceId));
   const getData = () => {
     http({
       method: "get",

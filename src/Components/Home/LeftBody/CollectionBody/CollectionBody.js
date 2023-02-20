@@ -26,11 +26,14 @@ const CollectionBody = () => {
 
   let tabs = useSelector((state) => state.TabsReducer);
 
+
   const getData = () => {
     setLoader(true)
+    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
+
     Http({
       method: "get",
-      url: `${process.env.REACT_APP_BASEURL}/collection`,
+      url: `${process.env.REACT_APP_BASEURL}/collection/${workSpace_Id?._id}`,
     })
       .then((res) => {
         setTimeout(() => {
@@ -48,7 +51,7 @@ const CollectionBody = () => {
       getData();
       setchangeAction("F")
     };
-  }, [changeAction]);
+  }, [changeAction, workSpaceId]);
 
   const toggle = (e) => {
     e.toggle = !e.toggle;
@@ -81,13 +84,14 @@ const CollectionBody = () => {
     return { method, color: colors[method.toUpperCase()] };
   };
   const postData = () => {
+    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
     Http({
       url: `${process.env.REACT_APP_BASEURL}/collection`,
       method: "post",
       data: {
         type: "folder",
         name:'New Collection',
-        workspace_id:workSpaceId._id
+        workspace_id:workSpace_Id._id
       },
     })
       .then((res) => {

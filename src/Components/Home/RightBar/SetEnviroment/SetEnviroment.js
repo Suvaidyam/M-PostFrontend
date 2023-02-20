@@ -9,7 +9,8 @@ const SetEnviroment = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
   const global = newEnviroment.filter(e=>e.name==='Globals')
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
-  const local = newEnviroment.filter(e=>e._id===showEnv_id)
+  const local = newEnviroment.filter(e=>e._id==showEnv_id)
+  console.log("locs",local)
   const [loader, setLoader] = useState(true);
 
   let tabs = useSelector((state) => state.TabsReducer);
@@ -25,15 +26,17 @@ const SetEnviroment = () => {
     // dispatch(AddRequest(el._id));
   };
   const getData = () => {
+    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
     http({
       method: "get",
-      url: `${process.env.REACT_APP_BASEURL}/environment`,
+      url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
     })
       .then((res) => {
         setTimeout(() => {
           setLoader(false);
         }, 1000);
         setNewEnviroment(res.data.environment);
+        console.log(res.data.environment)
       })
       .catch((err) => {
         console.log(err);
@@ -102,7 +105,7 @@ const SetEnviroment = () => {
               {local.map((e) => (
                   <>
                     <div key={e._id}>
-                      {e.collectionId === null ? null : (
+                      {e.name !== "Globals" ?  (
                         <>
                           {e.details.map((el) =>
                             e._id === showEnv_id ? (
@@ -125,7 +128,7 @@ const SetEnviroment = () => {
                             ) : null
                           )}
                         </>
-                      )}
+                      ):null}
                     </div>
                   </>
                 ))}
@@ -179,7 +182,7 @@ const SetEnviroment = () => {
                 {global.map((e) => (
                   <>
                     <div key={e._id}>
-                      {e.collectionId === null ? (
+                      {e.name === "Globals" ? (
                         <>
                           {e.details.map((el) => (
                             <div
