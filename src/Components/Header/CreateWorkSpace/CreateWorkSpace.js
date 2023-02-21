@@ -3,7 +3,7 @@ import http from "../../../Services/http";
 import { DataContext } from "../../Context/DataProvider";
 
 const CreateWorkSpace = ({ setOpen }) => {
-  const { setMsg, setError } = useContext(DataContext);
+  const { setMsg, setError ,setworkSpaceopen, workSpaceopen} = useContext(DataContext);
   const [name, setName] = useState("");
   const [visibility, setVisibility] = useState("");
 
@@ -19,9 +19,11 @@ const CreateWorkSpace = ({ setOpen }) => {
       .then((res) => {
         setOpen(false);
         setMsg(res.data.message);
+        setworkSpaceopen(!workSpaceopen)
         setError(true);
       })
       .catch((err) => {
+        setworkSpaceopen(!workSpaceopen)
         setMsg(err.response.data.message);
         setError(true);
       });

@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
 import WorkSpaceDropDwon from "../WorkSpaceDropDwon/WorkSpaceDropDown";
+import { useContext } from "react";
+import { DataContext } from "../../Context/DataProvider";
 
 const Navbar = ({setTab,tab}) => {
-  const [open, setopen] = useState(false);
+  const {workSpaceopen, setworkSpaceopen}=useContext(DataContext)
+  // const [open, setopen] = useState(false);
 
   // let menuRef = useRef();
   // useEffect(() => {
@@ -29,12 +32,12 @@ const Navbar = ({setTab,tab}) => {
          
         >
           <p onClick={()=>setTab('workspace')} className={`cursor-pointer ${tab==='workspace' && 'text-blue-600'}`}>Workspace</p> 
-          <AiFillCaretDown className="text-xs"  onClick={() => {  setopen(!open)}}/>
+          <AiFillCaretDown className="text-xs"  onClick={() => {  setworkSpaceopen(!workSpaceopen)}}/>
         </Link>
         <p onClick={()=>setTab('reports')} className={`cursor-pointer ${tab==='reports' && 'text-blue-600'}`}>Reports</p>
         <p onClick={()=>setTab('explore')} className={`cursor-pointer ${tab==='explore' && 'text-blue-600'}`}>Explore</p>
         {/* workSpace */}
-        {open && <WorkSpaceDropDwon {...{ setopen }} />}
+        {workSpaceopen && <WorkSpaceDropDwon />}
       </div>
     </>
   );

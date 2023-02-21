@@ -19,6 +19,7 @@ const DataProvider = ({ children }) => {
   const [url, setUrl] = useState('');
   // workspce id provide to filtter to all task
   const [workSpaceId, setWorkSpaceId] = useState({});
+  const [workSpaceopen, setworkSpaceopen] = useState(false);
 
   return (
     <>
@@ -51,7 +52,9 @@ const DataProvider = ({ children }) => {
           url, 
           setUrl,
           setWorkSpaceId,
-          workSpaceId
+          workSpaceId,
+          workSpaceopen,
+          setworkSpaceopen
         }}
       >
         {children}
