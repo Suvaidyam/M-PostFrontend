@@ -48,9 +48,10 @@ const TopBar = ({ onSendClick }) => {
   };
   setTopBarData(data);
   const getData = () => {
+    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
     Http({
       method: "get",
-      url: `${process.env.REACT_APP_BASEURL}/environment`,
+      url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
     })
       .then((res) => {
         res.data.environment.map((e) =>
