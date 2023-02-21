@@ -9,7 +9,7 @@ import { CollectionLoader } from "../../Loader/Loader";
 import { DataContext } from "../../Context/DataProvider";
 
 const WorkSpaceDropDwon = () => {
-  const {workSpaceId,setWorkSpaceId}=useContext(DataContext)
+  const {workSpaceId,setWorkSpaceId, workSpaceopen, setworkSpaceopen}=useContext(DataContext)
   const [workspace, setworkspace] = useState([]);
   const [Loder, setLoder] = useState(true)
 
@@ -21,6 +21,7 @@ const WorkSpaceDropDwon = () => {
     })
       .then((res) => {
         setworkspace(res.data.workSpace);
+        console.log(res.data.workSpace) 
         setTimeout(() => {
           setLoder(false)
         }, 1000);
@@ -70,7 +71,7 @@ const WorkSpaceDropDwon = () => {
                 <div key={e._id}><CollectionLoader/></div>:
                 <p  key={e._id}
                   className={`text-xs flex items-center gap-2 cursor-pointer hover:bg-gray-200 py-1.5 px-2
-                   ${workSpaceId._id===e._id && 'bg-gray-300'} group`} onClick={()=>setWorkSpaceId(e)}>
+                   ${workSpaceId._id===e._id && 'bg-gray-300'} group`} onClick={()=>{setWorkSpaceId(e); setTimeout(()=>{setworkSpaceopen(!workSpaceopen)},50)}}>
                   <BiGroup className="text-lg text-gray-500" />
                   {e.name}<MdDelete className="hidden group-hover:block ml-auto text-lg hover:text-red-600
                   text-gray-600"/>
