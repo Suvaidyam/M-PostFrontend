@@ -62,7 +62,7 @@ const Response = ({ apiResponse, isLoading }) => {
         <ErrorScreen />
       ) : (
         <>
-          <div className="h-full  bg-white border ">
+          <div className="h-full bg-white border ">
             {isLoading ? (
               <div className="flex items-center justify-center  pt-12">
                 <LineWave
@@ -80,7 +80,7 @@ const Response = ({ apiResponse, isLoading }) => {
               </div>
             ) : (
               <>
-                <div className="flex justify-between ">
+                <div className="flex justify-between fixed z-50 bg-white w-[63%]">
                   {/* Show this part in tabs - Body and Headers */}
                   <div className="px-2 flex items-center  py-1 gap-5">
                     <span
@@ -153,11 +153,11 @@ const Response = ({ apiResponse, isLoading }) => {
                     ))}
                   </div>
                 ) : null}
-                <div className="px-2 pt-1 font-mono word-break: break-all ">
+                <div className="px-2 pt-6 font-mono word-break: break-all ">
                   {body === true ? (
-                    <div className="scrollbar-hide  min-h-screen">
+                    <div className="scrollbar-hide">
                       <CodeMirror
-                        height="200px"
+                        height="auto"
                         value={
                           data.status === 500
                             ? data.data

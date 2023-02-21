@@ -85,7 +85,7 @@ const TabsList = () => {
 
   return (
     <>
-      <div className="w-full h-11 bg-white flex">
+      <div className="w-full h-[8%] bg-white flex">
         <div className="w-[80%]  flex h-full overflow-x-scroll scrollbar-hide border-b">
           {tabs.map((e) => (
             <div
