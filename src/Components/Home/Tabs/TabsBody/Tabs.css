@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
 .css-1aquho2-MuiTabs-indicator {
     position: absolute;
     height: 2px;
@@ -11,11 +12,28 @@
 .css-13bygta-MuiButtonBase-root-MuiTab-root.Mui-selected {
     color: #2563EB !important;
 }
-/* #a_unique_id-container{
-    height: 100vh !important;
-    min-height: 180px;
-    
-} */
+.cm-gutters{
+    background-color: white !important;
+}
+.cm-gutterElement{
+    font-size: 12px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ce{
+    font-size: 12px !important;
+}
+.cm-line{
+    font-size: 12px !important;
+    font-family: 'Poppins', sans-serif;
+}
+.cm-activeLine{
+ background-color: white;
+ border-bottom: 1px solid rgba(128, 128, 128, 0.457) !important;
+ border-top: 1px solid rgba(128, 128, 128, 0.457) !important;
+ font-size: 12px !important;
+}
 #a_unique_id{
     font-size: 13px;
     font-weight: 200;
