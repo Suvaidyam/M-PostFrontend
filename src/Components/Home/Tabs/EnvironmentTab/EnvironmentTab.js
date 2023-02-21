@@ -6,7 +6,7 @@ import http from "../../../../Services/http";
 import { useSelector } from "react-redux";
 
 const EnvironmentTab = () => {
-  const { SetEnviroment, enviroment } = useContext(DataContext);
+  const { SetEnviroment, enviroment ,setStatus, setMsg,setError} = useContext(DataContext);
   const [rows, addRows] = useState([0]);
   const [effect, setEffect] = useState(false)
   let _id = useSelector((state) => state.AddRequestReducer);
@@ -19,14 +19,18 @@ const EnvironmentTab = () => {
       }
     })
       .then((res) => {
-        console.log(res)
+        setMsg('Save Successfully')
+        setStatus(res.status)
+         setError(true)
         setEffect(true)
         setTimeout(()=>{
           setEffect(false)
         },1000)
       })
       .catch((err) => {
-        console.log(err);
+        setMsg(err.response.data.message)
+        setStatus(err.response.status)
+         setError(true)
       });
   };
  

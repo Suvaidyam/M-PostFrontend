@@ -14,6 +14,7 @@ const DataProvider = ({ children }) => {
   const [colId, setcolId] = useState(null);
   const [Msg, setMsg] = useState("");
   const [error, setError] = useState(false);
+  const [status, setStatus] = useState('200');
   const [responseData, setResponseData] = useState([]);
   const [changeAction, setchangeAction] = useState('');
   const [url, setUrl] = useState('');
@@ -43,6 +44,8 @@ const DataProvider = ({ children }) => {
           Msg,
           error,
           setError,
+          status, 
+          setStatus,
           responseData,
           setResponseData,
           SetEnviroment,

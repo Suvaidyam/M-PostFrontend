@@ -17,7 +17,8 @@ import { CollectionLoader } from "../../../Loader/Loader";
 import EditCollection from "../MoreAction/EditCollection";
 
 const CollectionBody = () => {
-  const { setcolId ,collEdit , setchangeAction,workSpaceId, changeAction,setMsg,setError} = useContext(DataContext);
+  const { setcolId ,collEdit , setchangeAction,workSpaceId, setStatus,
+    changeAction,setMsg,setError} = useContext(DataContext);
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const [collection, setcollection] = useState([]);
@@ -96,11 +97,13 @@ const CollectionBody = () => {
     })
       .then((res) => {
         setMsg(res.data.message);
+        setStatus(res.status);
         setError(true)
         setchangeAction("E")
       })
       .catch((err) => {
         setMsg(err.response.data.message);
+        setStatus(err.response.status);
         setError(true)
       });
   };

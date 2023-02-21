@@ -3,7 +3,8 @@ import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
 
 const MoreAction = ({collection}) => {
-  const {collEdit, setCollEdit,colId, setchangeAction , setMsg,setError,workSpaceId} = useContext(DataContext);
+  const {collEdit, setCollEdit,colId, setchangeAction , setStatus,
+    setMsg,setError,workSpaceId} = useContext(DataContext);
  
   const deleteData = () => {
     Http({
@@ -12,11 +13,13 @@ const MoreAction = ({collection}) => {
     })
       .then((res) => {
         setMsg(res.data.message);
+        setStatus(res.status);
         setError(true) 
         setchangeAction("C")      
       })
       .catch((err) => {
         setMsg(err.response.data.message);
+        setStatus(err.response.status);
         setError(true) 
       });
   };
@@ -36,10 +39,12 @@ const MoreAction = ({collection}) => {
       .then((res) => {
         setchangeAction("D")
         setMsg(res.data.message);
+        setStatus(res.status);
         setError(true)        
       })
       .catch((err) => {
         setMsg(err.response.data.message);
+        setStatus(err.response.status);
         setError(true) 
       });
   };
