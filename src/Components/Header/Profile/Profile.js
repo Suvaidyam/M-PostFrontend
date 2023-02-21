@@ -11,7 +11,7 @@ import { DataContext } from '../../Context/DataProvider';
 const Profile = ({setOpenProfile}) => {
     
     const [file, setfile] = useState(null)
-    const {url, setUrl,setMsg,setError} =useContext(DataContext)
+    const {url, setUrl,setMsg,setError,setStatus} =useContext(DataContext)
     const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch()
     const items = useSelector((state) => state.ProfileReducer.url)
@@ -30,10 +30,12 @@ const Profile = ({setOpenProfile}) => {
       data:body
     }).then((res) => {
       setMsg(res.data.message)
+      setStatus(res.status)
       setError(true)
         setUrl(null)
       }).catch((error) => {
         setMsg(error.response.data.message)
+        setStatus(error.response.status)
         setError(true)
       })
     }
@@ -62,6 +64,7 @@ const Profile = ({setOpenProfile}) => {
       }).then((res) => {
         setUrl(res.data.user.url)
         setMsg(res.data.message)
+        setStatus(res.status)
       setError(true)
         setLoading(true);
         setTimeout(() => {
@@ -69,6 +72,7 @@ const Profile = ({setOpenProfile}) => {
         }, 1000);
       }).catch((error) => {
         setMsg(error.response.data.message)
+        setStatus(error.response.status)
         setError(true)
           setLoading(true);
           setTimeout(() => {

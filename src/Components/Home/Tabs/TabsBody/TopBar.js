@@ -10,8 +10,8 @@ import VariableValue from "./VariableValue";
 
 const TopBar = ({ onSendClick }) => {
   const REGEX = /({{.*?}})/g;
-  const { jsonText, tabData, setTopBarData, headersData, paramsData,setMsg,setError } =
-    useContext(DataContext);
+  const { jsonText, tabData, setTopBarData, headersData,setStatus,
+     paramsData,setMsg,setError } = useContext(DataContext);
   const [data, setData] = useState(tabData.details);
   const [open, setopen] = useState(false);
   const [isLoding, setIsLoding] = useState(false);
@@ -33,6 +33,7 @@ const TopBar = ({ onSendClick }) => {
     })
       .then((res) => {
         setMsg("Save Successfully");
+        setStatus(res.status);
         setError(true)
         setIsLoding(true);
         setTimeout(() => {
@@ -40,8 +41,8 @@ const TopBar = ({ onSendClick }) => {
         }, 1000);
       })
       .catch((err) => {
-        console.log(err);
         setMsg(err.response.data.message);
+        setStatus(err.response.status);
         setError(true)
       });
   };

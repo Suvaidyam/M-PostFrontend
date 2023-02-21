@@ -1,20 +1,18 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AiOutlineEye,
   AiOutlineEyeInvisible,
-  AiOutlineCloseCircle,
 } from "react-icons/ai";
-import { motion } from "framer-motion";
-import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+
+import { DataContext } from "../Context/DataProvider";
+import SnackBar from "../Home/Tabs/TabsBody/SnackBar";
 
 const LoginForm = () => {
+  const {setMsg,setError, setStatus }=useContext(DataContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
-  const [err, setErr] = useState(200);
-  const [isLoding, setisLoding] = useState(false);
   const [check, setCheck] = useState(true);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -27,11 +25,8 @@ const LoginForm = () => {
       })
       .then((res) => {
         setMsg(res.data.message);
-        setErr(res.status);
-        setisLoding(true);
-        setTimeout(() => {
-          setisLoding(false);
-        }, 2000);
+        setError(true)
+        setStatus(res.status)
         sessionStorage.setItem("token", res.data.token);
         if (res.data.token) {
           setTimeout(() => {
@@ -49,11 +44,8 @@ const LoginForm = () => {
       })
       .catch((err) => {
         setMsg(err.response.data.message);
-        setErr(err.response.status);
-        setisLoding(true);
-        setTimeout(() => {
-          setisLoding(false);
-        }, 4000);
+        setError(true);
+        setStatus(err.response.status)
       });
   };
   return (
@@ -121,28 +113,7 @@ const LoginForm = () => {
           >
             LOGIN
           </button>
-        </div>
-        <div className="absolute bottom-2 left-2">
-          {isLoding === true ? (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className={`text-md  flex  items-center gap-2 font-semibold relative bg-gray-200 p-2 
-              ${
-                err === 200
-                  ? "text-green-600 border-b-2 border-emerald-400"
-                  : "text-red-500 border-b-2 border-red-400"
-              }`}
-            >
-              {msg}
-              {err === 200 ? (
-                <IoCheckmarkDoneCircleOutline className="text-2xl pt-1" />
-              ) : (
-                <AiOutlineCloseCircle className="text-2xl pt-1" />
-              )}{" "}
-            </motion.p>
-          ) : null}
+          <SnackBar/>
         </div>
       </div>
     </>

@@ -16,7 +16,7 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [check, setCheck] = useState(true);
-  const {setMsg,setError }=useContext(DataContext);
+  const {setMsg,setError,setStatus }=useContext(DataContext);
 
   // const PasswordMatch=()=>{
   //   if(password === confirmPassword ){
@@ -67,6 +67,7 @@ const RegisterForm = () => {
       )
       .then((res) => {
         setMsg(res.data.message);
+        setStatus(res.status);
         setError(true)
         if (res.data) {
           setTimeout(() => {
@@ -80,6 +81,7 @@ const RegisterForm = () => {
       })
       .catch((err) => {
         setMsg(err.response.data.message);
+        setStatus(err.response.status);
         setError(true)
       });
   };

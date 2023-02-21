@@ -15,7 +15,8 @@ import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
 const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
   const [loader, setLoader] = useState(true);
-  const { setcolId, collEdit, changeAction,setchangeAction,setMsg,setError,workSpaceId } = useContext(DataContext);
+  const { setcolId, collEdit, changeAction,setchangeAction,setMsg,
+    setError,workSpaceId,setStatus } = useContext(DataContext);
   const global_variable = newEnviroment.filter(e => e.name === 'Globals')
   const local_variable = newEnviroment.filter(e => e.name !== 'Globals')
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
@@ -37,10 +38,12 @@ const EnvironmentBody = () => {
       .then((res) => {
         setchangeAction('A')
         setMsg(res.data.message);
+        setStatus(res.status);
         setError(true)
       })
       .catch((err) => {
         setMsg(err.response.data.message);
+        setStatus(err.response.status);
         setError(true)
       });
   };
