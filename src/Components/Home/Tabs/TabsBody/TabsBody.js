@@ -44,17 +44,19 @@ const TabsBody = () => {
 
   return (
     <>
-      <div className=" h-full mx-1 mb-48">
-        <div className="h-14 w-full bg-white mt-2 mb-2 ">
+      <div className=" h-[92%] mx-1 mb-48">
+        <div className="h-[12%] w-full bg-white  ">
           <TopBar onSendClick={onSendClick} />
         </div>
 
-        <Resizable direction="bottom">
+      <div className="w-full h-[88%] flex flex-col justify-between">
+      <Resizable direction="bottom" className="bg-white border-b border-gray-800 overflow-y-scroll h-full ">
           <QuearyTabs />
         </Resizable>
-        <Resizable direction="bottom">
+        <Resizable direction="top" className="bg-white border-t border-gray-800 overflow-y-scroll h-full ">
           <Response apiResponse={apiResponse} isLoading={isLoading} />
         </Resizable>
+      </div>
       </div>
     </>
   );
