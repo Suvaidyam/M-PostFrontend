@@ -1,14 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
-
-import JSONEditorReact from "../../../JSONEditor/index";
+import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
 
 const BodyForm = () => {
   const { tabData, setJsonText } = useContext(DataContext);
 
   const [data, setData] = React.useState(tabData.details.body);
-  // const modes = ["tree", "form", "view", "code", "text"];
-  const [mode, setMode] = useState("code");
 
   setJsonText(data);
   const handleChange = (newCode) => {
@@ -18,18 +16,15 @@ const BodyForm = () => {
       setData(newCode);
     } catch (error) {}
   };
-  const handleModeChange = (mode) => {
-    setMode(mode);
-  };
 
   return (
     <div className=" mb-2   scrollbar-hide  bg-white  ">
-      <JSONEditorReact
-        text={JSON.stringify(data, null, 3)}
-        mode={mode}
-        indentation={4}
-        onChangeText={handleChange}
-        onModeChange={handleModeChange}
+      <CodeMirror
+        className=" "
+        height="127px"
+        value={JSON.stringify(data, 0, 3)}
+        extensions={[javascript({ jsx: true })]}
+        onChange={handleChange}
       />
     </div>
   );
