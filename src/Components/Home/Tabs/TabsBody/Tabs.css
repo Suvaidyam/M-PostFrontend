@@ -26,7 +26,7 @@
 }
 .cm-line{
     font-size: 12px !important;
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
 }
 .cm-activeLine{
  background-color: white;
@@ -37,4 +37,13 @@
 #a_unique_id{
     font-size: 13px;
     font-weight: 200;
+}
+.Resizable-module_handle__1mp2v:hover{
+    border-top: 2px solid #2563EB;
+}
+
+.Resizable-module_handle__1mp2v[data-direction=bottom]
+ {
+   
+    cursor: s-resize !important;
 }
