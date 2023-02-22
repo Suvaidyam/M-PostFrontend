@@ -100,7 +100,7 @@ const LoginForm = () => {
               <span className="text-red-500">terms & conditions</span>
             </label>
           </div>
-          <Link to='#' className="text-sm text-blue-600">
+          <Link to='/forget' className="text-sm text-blue-600">
             Forget Password?
           </Link>
         </div>
