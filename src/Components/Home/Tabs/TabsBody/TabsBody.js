@@ -54,7 +54,7 @@ const TabsBody = () => {
         <div className="w-full h-[88%] flex flex-col mt-2 justify-between ">
           <Resizable
             direction="bottom"
-            className="bg-white  overflow-y-scroll pt-1  scrollbar-hide h-full "
+            className="bg-white  overflow-y-scroll pt-1   scrollbar-hide h-full "
           >
             <QuearyTabs />
           </Resizable>
