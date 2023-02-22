@@ -10,6 +10,7 @@ import ApiBody from "../Home/LeftBody/ApiBody/ApiBody";
 import EnvironmentBody from "../Home/LeftBody/EnvironmentBody/EnvironmentBody";
 import HistoryBody from "../Home/LeftBody/HistoryBody/HistoryBody";
 import SnackBar from "../Home/Tabs/TabsBody/SnackBar";
+import FrogetPassword from "../Login/ForgetPassword/ForgetPassword";
 
 const Router = () => {
   return (
@@ -19,6 +20,7 @@ const Router = () => {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forget" element={<FrogetPassword />} />
             <Route path="/workSpace/" element={<Protected Component={Home} />}>
               <Route index element={<CollectionBody />} />
               <Route path="collection" element={<CollectionBody />} />
