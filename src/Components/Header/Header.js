@@ -59,7 +59,8 @@ return () => {
         .then((res) => {
           console.log(res);
           setMsg(res.data.message);
-          setError(true)
+          setError(true);
+          localStorage.clear('workSpace')
           setTimeout(() => {
             setError(false)
             navigate("/");
