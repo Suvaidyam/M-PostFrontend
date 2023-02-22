@@ -12,7 +12,7 @@ import { useContext } from "react";
 import  { DataContext } from "../../../Context/DataProvider";
 
 const TabsList = () => {
-  const{ changeAction} =useContext(DataContext)
+  const{ changeAction, workSpaceId} =useContext(DataContext)
   const [newEnviroment, setNewEnviroment] = useState([])
   const local_variable = newEnviroment?.filter(e => e.name !== 'Globals')
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
@@ -81,7 +81,7 @@ const TabsList = () => {
     return () => {
       getData();
     };
-  }, [changeAction]);
+  }, [changeAction,workSpaceId]);
 
   return (
     <>
