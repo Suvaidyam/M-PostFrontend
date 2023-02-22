@@ -7,7 +7,6 @@ import {
 } from "react-icons/ai";
 
 import { DataContext } from "../Context/DataProvider";
-import SnackBar from "../Home/Tabs/TabsBody/SnackBar";
 
 const LoginForm = () => {
   const {setMsg,setError, setStatus }=useContext(DataContext);
@@ -31,6 +30,7 @@ const LoginForm = () => {
         if (res.data.token) {
           setTimeout(() => {
             navigate("/workSpace/collection");
+            setError(false)
           }, 2000);
           let token = res.data.token;
           let payload = token.split(".");
@@ -113,7 +113,6 @@ const LoginForm = () => {
           >
             LOGIN
           </button>
-          <SnackBar/>
         </div>
       </div>
     </>
