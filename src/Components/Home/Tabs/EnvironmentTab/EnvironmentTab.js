@@ -6,7 +6,7 @@ import http from "../../../../Services/http";
 import { useSelector } from "react-redux";
 
 const EnvironmentTab = () => {
-  const { SetEnviroment, enviroment ,setStatus, setMsg,setError} = useContext(DataContext);
+  const { SetEnviroment, enviroment ,setStatus, setMsg,setError,tabData} = useContext(DataContext);
   const [rows, addRows] = useState([0]);
   const [effect, setEffect] = useState(false)
   let _id = useSelector((state) => state.AddRequestReducer);
@@ -39,7 +39,7 @@ const EnvironmentTab = () => {
       <div className="w-full min-h-screen  bg-white ">
         <div className=" h-14 px-5 flex items-center justify-between">
           <div>
-            <p className="font-semibold">Globals</p>
+            <p className="font-semibold">{tabData?.name}</p>
           </div>
           <div className=" flex items-center justify-center">
             <div className="">
