@@ -7,6 +7,8 @@ import { checkParams } from "../../../Utils/CommonUtils";
 import Http from "../../../../Services/http";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 import { Resizable } from "react-resizable-element";
+import { Scrollbars } from 'react-custom-scrollbars';
+
 const TabsBody = () => {
   const { setMsg, setError, topBarData, paramsData, headersData, jsonText } =
     useContext(DataContext);
@@ -49,14 +51,18 @@ const TabsBody = () => {
           <TopBar onSendClick={onSendClick} />
         </div>
 
-      <div className="w-full h-[88%] flex flex-col justify-between">
-      <Resizable direction="bottom" className="bg-white border-b border-gray-800 overflow-y-scroll h-full ">
-          <QuearyTabs />
-        </Resizable>
-        <Resizable direction="top" className="bg-white border-t border-gray-800 overflow-y-scroll h-full ">
-          <Response apiResponse={apiResponse} isLoading={isLoading} />
-        </Resizable>
-      </div>
+        <div className="w-full h-[88%] flex flex-col justify-between">
+          <Resizable direction="bottom" className="bg-white border-b border-gray-800 overflow-y-scroll scrollbar-hide h-full ">
+            <Scrollbars className="w-full" >
+              <QuearyTabs />
+            </Scrollbars >
+          </Resizable>
+          <Resizable direction="top" className="bg-white border-t border-gray-800 overflow-y-scroll scrollbar-hide h-full ">
+            <Scrollbars className="w-full" >
+              <Response apiResponse={apiResponse} isLoading={isLoading} />
+            </Scrollbars >
+          </Resizable>
+        </div>
       </div>
     </>
   );
