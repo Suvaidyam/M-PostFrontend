@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GoFileDirectory } from "react-icons/go";
+import { FcFolder } from "react-icons/fc";
 import {
   BiCaretRight,
   BiCaretDown,
   BiDotsHorizontalRounded,
 } from "react-icons/bi";
 import MoreAction from "../MoreAction/MoreAction";
-import { Scrollbars } from 'react-custom-scrollbars';
+import { Scrollbars } from "react-custom-scrollbars";
 import { useDispatch, useSelector } from "react-redux";
 import { AddRequest } from "../../../../Redux/Action/AddRequest";
 import { Tabs } from "../../../../Redux/Action/Tabs";
@@ -17,8 +17,16 @@ import { CollectionLoader } from "../../../Loader/Loader";
 import EditCollection from "../MoreAction/EditCollection";
 
 const CollectionBody = () => {
-  const { setcolId ,collEdit , setchangeAction,workSpaceId, setStatus,
-    changeAction,setMsg,setError} = useContext(DataContext);
+  const {
+    setcolId,
+    collEdit,
+    setchangeAction,
+    workSpaceId,
+    setStatus,
+    changeAction,
+    setMsg,
+    setError,
+  } = useContext(DataContext);
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const [collection, setcollection] = useState([]);
@@ -27,10 +35,9 @@ const CollectionBody = () => {
 
   let tabs = useSelector((state) => state.TabsReducer);
 
-
   const getData = () => {
-    setLoader(true)
-    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
+    setLoader(true);
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
 
     Http({
       method: "get",
@@ -38,7 +45,7 @@ const CollectionBody = () => {
     })
       .then((res) => {
         setTimeout(() => {
-        setLoader(false);
+          setLoader(false);
         }, 100);
         setcollection(res.data.collection);
       })
@@ -50,7 +57,7 @@ const CollectionBody = () => {
   useEffect(() => {
     return () => {
       getData();
-      setchangeAction("F")
+      setchangeAction("F");
     };
   }, [changeAction, workSpaceId]);
 
@@ -69,7 +76,7 @@ const CollectionBody = () => {
   const handleRequest = (e) => {
     if (tabs.findIndex((f) => f._id === e._id) < 0) {
       // tabs.push(e);
-      dispatch(Tabs([...tabs,e]));
+      dispatch(Tabs([...tabs, e]));
       dispatch(AddRequest(e._id));
     }
   };
@@ -85,26 +92,26 @@ const CollectionBody = () => {
     return { method, color: colors[method.toUpperCase()] };
   };
   const postData = () => {
-    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
     Http({
       url: `${process.env.REACT_APP_BASEURL}/collection`,
       method: "post",
       data: {
         type: "folder",
-        name:'New Collection',
-        workspace_id:workSpace_Id._id
+        name: "New Collection",
+        workspace_id: workSpace_Id._id,
       },
     })
       .then((res) => {
         setMsg(res.data.message);
         setStatus(res.status);
-        setError(true)
-        setchangeAction("E")
+        setError(true);
+        setchangeAction("E");
       })
       .catch((err) => {
         setMsg(err.response.data.message);
         setStatus(err.response.status);
-        setError(true)
+        setError(true);
       });
   };
 
@@ -139,7 +146,7 @@ const CollectionBody = () => {
                         ) : (
                           <BiCaretRight className="cursor-pointer" />
                         )}
-                        <GoFileDirectory />
+                        <FcFolder className="text-xl" />
                         <p className="text-sm">{e.name}</p>
                       </div>
                       <p
@@ -154,7 +161,7 @@ const CollectionBody = () => {
                       {/* moreaction */}
                       {e.open ? (
                         <div className="absolute z-50 right-3 top-9">
-                          <MoreAction {...{collection:'collection'}}/>{" "}
+                          <MoreAction {...{ collection: "collection" }} />{" "}
                         </div>
                       ) : null}
                     </div>
@@ -197,7 +204,9 @@ const CollectionBody = () => {
                                 {/* moreaction */}
                                 {ce.openRequest ? (
                                   <div className="absolute z-50 right-3 top-9">
-                                    <MoreAction {...{collection:'collection'}}/>{" "}
+                                    <MoreAction
+                                      {...{ collection: "collection" }}
+                                    />{" "}
                                   </div>
                                 ) : null}
                               </div>
@@ -212,7 +221,9 @@ const CollectionBody = () => {
             </>
           )}
         </div>
-        {collEdit === true ? <EditCollection {...{apiUrl:'collection'}}/> : null}
+        {collEdit === true ? (
+          <EditCollection {...{ apiUrl: "collection" }} />
+        ) : null}
       </div>
     </>
   );
