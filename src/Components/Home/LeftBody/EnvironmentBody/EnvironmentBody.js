@@ -11,6 +11,7 @@ import { CollectionLoader } from "../../../Loader/Loader";
 import EditCollection from "../MoreAction/EditCollection";
 import { Scrollbars } from 'react-custom-scrollbars';
 import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
+import { AddRequest } from "../../../../Redux/Action/AddRequest";
 
 const EnvironmentBody = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
@@ -77,6 +78,7 @@ const EnvironmentBody = () => {
       // tabs.push(e);
       dispatch(Tabs([...tabs, e]));
       dispatch(OpenEnv(e._id));
+      dispatch(AddRequest(e._id));
     }
   };
   const openRequest = (ce) => {

@@ -14,10 +14,11 @@ const AddRow = ({
   variableN,
   valueN ,
   descriptionN,
+  
 }) => {
   const { tabData } = useContext(DataContext);
-  // const [query, setQuery] = useState(tabData.details.query);
-
+  // const [query, setQuery] = useState(tabData.details);
+// console.log(query)
   const [checkCheckBox, setCheckCheckBox] = useState(false);
   const [hide, setHide] = useState(false);
 

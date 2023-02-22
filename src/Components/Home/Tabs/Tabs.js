@@ -20,7 +20,7 @@ const Tabs = () => {
             {e._id===add?
             e.type==="request"?
            <> <TabsBody key={e._id}/>
-           {setTabData(e)}</>:<EnvironmentTab/>:null}
+           {setTabData(e)}</>:<><EnvironmentTab/>{setTabData(e)}</>:null}
           </>
         ))}
         <div className="w-full h-full flex flex-col justify-center items-center gap-7">
