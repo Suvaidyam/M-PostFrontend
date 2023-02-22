@@ -9,6 +9,7 @@ import CollectionBody from "../Home/LeftBody/CollectionBody/CollectionBody";
 import ApiBody from "../Home/LeftBody/ApiBody/ApiBody";
 import EnvironmentBody from "../Home/LeftBody/EnvironmentBody/EnvironmentBody";
 import HistoryBody from "../Home/LeftBody/HistoryBody/HistoryBody";
+import SnackBar from "../Home/Tabs/TabsBody/SnackBar";
 
 const Router = () => {
   return (
@@ -26,6 +27,7 @@ const Router = () => {
               <Route path="history" element={<HistoryBody />} />
             </Route>
           </Routes>
+          <SnackBar />
         </DataProvider>
       </BrowserRouter>
     </>

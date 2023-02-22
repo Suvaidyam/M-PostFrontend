@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Company from "./Company";
 import {DataContext} from '../Context/DataProvider'
 import { useContext } from "react";
-import SnackBar from "../Home/Tabs/TabsBody/SnackBar";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -168,7 +167,6 @@ const RegisterForm = () => {
             SIGNUP
           </button>
         </div>
-        <SnackBar/>
     </>
   );
 };

@@ -4,7 +4,6 @@ import LeftBar from "./LeftBar/LeftBar";
 import MyWorkSpace from "./MyWorkSpace/MyWorkSpace";
 import Tabs from "./Tabs/Tabs";
 import RightBar from "./RightBar/RightBar";
-import SnackBar from '../Home/Tabs/TabsBody/SnackBar'
 import { useState } from "react";
 import Explore from "../Explore/Explore";
 import Reports from "../Reports/Reports";
@@ -49,7 +48,7 @@ const Home = () => {
         <div className="pt-[66px]"><Explore/></div>
         </>}
       </div>
-      <SnackBar />
+      
     </>
   );
 };
