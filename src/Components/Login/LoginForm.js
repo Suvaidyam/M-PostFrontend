@@ -8,7 +8,8 @@ import {
 
 import { DataContext } from "../Context/DataProvider";
 
-const LoginForm = () => {
+
+const LoginForm = ({openForgetPopUp,setOpenForgetPopUp}) => {
   const {setMsg,setError, setStatus }=useContext(DataContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -100,7 +101,7 @@ const LoginForm = () => {
               <span className="text-red-500">terms & conditions</span>
             </label>
           </div>
-          <Link to='/forget' className="text-sm text-blue-600">
+          <Link  className="text-sm text-blue-600" onClick={()=>setOpenForgetPopUp(!openForgetPopUp)}>
             Forget Password?
           </Link>
         </div>
@@ -114,7 +115,9 @@ const LoginForm = () => {
             LOGIN
           </button>
         </div>
+       
       </div>
+        
     </>
   );
 };

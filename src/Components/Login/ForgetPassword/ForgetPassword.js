@@ -1,27 +1,30 @@
 import React, { useState } from 'react'
-import { IoIosArrowRoundBack } from 'react-icons/io'
+import { IoIosArrowRoundBack, IoIosHelpCircleOutline } from 'react-icons/io'
+import { AiFillLock } from 'react-icons/ai'
+import { MdClose, MdOutlineDone } from 'react-icons/md'
+import { CiMail } from 'react-icons/ci'
 import { Link } from 'react-router-dom';
-import {
-  Stepper,
-  Step,
-  useStepper,
-  StepTitle
-} from "react-progress-stepper";
+import { Stepper, Step, useStepper, StepTitle } from "react-progress-stepper";
 import '../../../App.css'
-import { Alert } from "@mui/material";
+import OTPInput, { ResendOTP } from "otp-input-react";
 
-const FrogetPassword = () => {
+const FrogetPassword = ({ setOpenForgetPopUp }) => {
   const { step, incrementStep, decrementStep } = useStepper(0, 3);
- 
+  const [OTP, setOTP] = useState("");
+
   return (
     <>
       <div className="w-full h-screen">
-        <div className="w-full h-full p-4 flex ">
-          <Link to='/' className=' w-10 h-6 hover:bg-blue-200 flex justify-center items-center rounded-md'>
-            <IoIosArrowRoundBack className='text-3xl cursor-pointer ' /></Link>
+        <div className="w-full h-full p-4 flex inset-0 bg-gray-500 bg-opacity-75 transition-opacity 
+         justify-center">
+
           {/* stepper */}
-          <div className="w-full h-full flex justify-center">
-            <div className="w-1/2  flex flex-col justify-between items-center">
+          <div className="w-[470px] h-full  bg-white p-2 rounded-md drop-shadow-lg">
+            <Link to='/' className=' h-8 rounded-md flex justify-between'>
+              <IoIosArrowRoundBack className='text-3xl cursor-pointer' onClick={decrementStep} />
+              <p className='font-medium text-gray-600'>Recover Password</p>
+            </Link>
+            <div className="w-full h-[95%] flex flex-col items-center ">
               <Stepper step={step}>
 
                 <Step>
@@ -34,56 +37,97 @@ const FrogetPassword = () => {
                   <StepTitle>Password</StepTitle>
                 </Step>
               </Stepper>
-              <div className="w-full flex justify-center ">
-                {/* Email verify */}
+              <div className="w-full h-full flex justify-center px-8">
+                {/*=============== Email verify =================*/}
                 {step === 0 && <>
-                  <div className="w-full p-3 flex flex-col items-center mt-6 gap-3">
-                    <div className="w-36 h-36 rounded-full bg-slate-500"></div>
-                    <p className='text-gray-500 font-medium'>Please Enter Your Email Address to Recieve a verifycation Otp</p>
-                    <div className='w-full'>
-                    <label htmlFor="">Email</label>
-                    <input type="email" name="" id="" className='outline-none border-2
-                     focus:border-blue-500 w-full h-8 px-2 text-slate-600' placeholder='Enter your email'/>
+                  <div className="w-full pt-5 flex flex-col items-center mt-6 gap-5">
+                    <div className="w-32 h-32 rounded-full bg-blue-300 flex justify-center items-center relative">
+                      <AiFillLock className='text-7xl text-blue-600' />
+                      <p className='absolute right-6 text-red-500 bottom-6 text-3xl'><IoIosHelpCircleOutline /></p>
+                    </div>
+                    <p className='text-gray-600 text-center text-sm tracking-wider font-medium px-5'>
+                      Please Enter Your Email Address to Recieve a verifycation Otp</p>
+                    <div className="relative z-0 w-full mb-6 group">
+                      <input type="email" name="email" id="email" className="block py-1.5 w-full text-sm
+                       text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
+                       dark:border-gray-600 focus:outline-none focus:ring-0
+                        focus:border-blue-600 peer" placeholder=" " />
+                      <label htmlFor="email" className="font-medium absolute  text-gray-700 
+                      duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                        peer-focus:scale-75 peer-focus:-translate-y-6 text-sm">Email Address </label>
                     </div>
                   </div>
                 </>}
-                 {/* Otp verify */}
+                {/* ===============Otp verify ===========*/}
                 {step === 1 && <>
-                  <div className="w-full p-3 flex flex-col items-center mt-6 gap-3">
-                    <div className="w-36 h-36 rounded-full bg-slate-500"></div>
-                    <p className='text-gray-500 font-medium'>Please Enter The 4 digit Code Send To Your Email Address</p>
-                    <div className='w-full'>
-                    <label htmlFor="">Email</label>
-                    <input type="email" name="" id="" className='outline-none border-2
-                     focus:border-blue-500 w-full h-8 px-2 text-slate-600' placeholder='Enter your email'/>
+                  <div className="w-full pt-5 flex flex-col items-center mt-6 gap-5 ">
+                    <div className="w-32 h-32 rounded-full bg-blue-300 flex justify-center items-center ">
+                      <CiMail className='text-7xl text-blue-500' />
                     </div>
+                    <p className='text-gray-600 text-center text-sm tracking-wider font-medium px-5'>
+                      Please Enter The 4 Digit Code Sent To <span className='text-blue-500'>rahul@gmail.com</span></p>
+                    <OTPInput value={OTP} onChange={setOTP} autoFocus OTPLength={4} otpType="number" 
+                    disabled={false} secure />
+                    <ResendOTP onResendClick={() => console.log("Resend clicked")} />
                   </div>
                 </>}
-                 {/* password verify */}
+                {/* password verify */}
                 {step === 2 && <>
-                  <div className="w-full p-3 flex flex-col items-center mt-6 gap-3">
-                    <div className="w-36 h-36 rounded-full bg-slate-500"></div>
-                    <p className='text-gray-500 font-medium'>Please Enter Your Email Address to Recieve a verifycation Otp</p>
-                    <div className='w-full'>
-                    <label htmlFor="">Email</label>
-                    <input type="email" name="" id="" className='outline-none border-2
-                     focus:border-blue-500 w-full h-8 px-2 text-slate-600' placeholder='Enter your email'/>
+                  <div className="w-full pt-5 flex flex-col items-center mt-6 gap-5 ">
+                    <div className="w-32 h-32 rounded-full bg-blue-300 flex justify-center items-center relative">
+                      <AiFillLock className='text-7xl text-blue-500' />
+                      <p className='absolute right-7 text-green-500 bottom-6 w-6 h-6 border-2 rounded-full 
+                      flex justify-center items-center border-green-500'>
+                        <MdOutlineDone className='text-2xl' /></p>
+                    </div>
+                    <p className='text-gray-600 text-center text-sm tracking-wider font-medium px-5'>
+                      Your New Password Must Be Differnt from Previously Used Password
+                    </p>
+                    {/* new password */}
+                    <div className="relative z-0 w-full mb-3 group">
+                      <input type="password" name="password" id="password" className="block py-1.5 w-full text-sm
+                       text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
+                       dark:border-gray-600 focus:outline-none focus:ring-0
+                        focus:border-blue-600 peer" placeholder=" " />
+                      <label htmlFor="password" className="font-medium absolute  text-gray-700 
+                      duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                        peer-focus:scale-75 peer-focus:-translate-y-6 text-sm">New Password</label>
+                    </div>
+                    {/* confrom Password */}
+                    <div className="relative z-0 w-full mb-6 group">
+                      <input type="password" name="password" id="password" className="block py-1.5 w-full text-sm
+                       text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
+                       dark:border-gray-600 focus:outline-none focus:ring-0
+                        focus:border-blue-600 peer" placeholder=" " />
+                      <label htmlFor="password" className="font-medium absolute  text-gray-700 
+                      duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                        peer-focus:scale-75 peer-focus:-translate-y-6 text-sm">Confrom Password</label>
                     </div>
                   </div>
                 </>}
-                 {/* verify success */}
+                {/* verify success */}
                 {step === 3 && <>
-                  <Alert severity="success" sx={{ width: '20%' }}>
-                    Done
-                  </Alert>
+                  <div className="w-full h-full pt-5 flex flex-col justify-center items-center gap-2">
+                    <p className='text-2xl font-medium text-gray-500'>PASSWORD UPDATED</p>
+                    <div className="w-24 h-24 bg-green-500 rounded-full flex justify-center items-center">
+                    <MdOutlineDone className='text-6xl text-white' />
+                    </div>
+                    <p className='text-sm'>Your password has been updated</p>
+                    <button className='w-36 h-9 bg-blue-500 text-white'  onClick={() => setOpenForgetPopUp(false)}>LOGIN</button>
+                  </div>
                 </>}
               </div>
-              <div className="w-full flex justify-between">
-                <button onClick={decrementStep} className='bg-orange-500 w-28 h-8 rounded-md text-white'>Prev</button>
-                <button onClick={incrementStep} className='bg-blue-500 w-28 h-8 rounded-md text-white'>Next</button>
-              </div>
+             {step !==3 && <div className="w-full h-full flex justify-between p-8">
+                <button onClick={incrementStep} className='bg-blue-500 w-full h-9 
+                 text-white ' >Next</button>
+              </div>}
             </div>
           </div>
+          <p className='w-10 h-10 rounded-full bg-blue-300 bg-opacity-100 transition-opacity
+          flex justify-center cursor-pointer items-center'><MdClose className='text-2xl' onClick={() => setOpenForgetPopUp(false)} /></p>
         </div>
       </div>
     </>
