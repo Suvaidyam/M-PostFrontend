@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { IoIosArrowRoundBack, IoIosHelpCircleOutline } from 'react-icons/io'
-import { AiFillLock } from 'react-icons/ai'
+import { AiFillLock,AiOutlineEye ,AiOutlineEyeInvisible} from 'react-icons/ai'
 import { MdClose, MdOutlineDone } from 'react-icons/md'
 import { CiMail } from 'react-icons/ci'
 import { Link } from 'react-router-dom';
@@ -10,7 +10,9 @@ import OTPInput, { ResendOTP } from "otp-input-react";
 
 const FrogetPassword = ({ setOpenForgetPopUp }) => {
   const { step, incrementStep, decrementStep } = useStepper(0, 3);
+  const [email, setEmail] = useState("");
   const [OTP, setOTP] = useState("");
+  const [vissiable, setvissiable] = useState(false);
 
   return (
     <>
@@ -51,7 +53,7 @@ const FrogetPassword = ({ setOpenForgetPopUp }) => {
                       <input type="email" name="email" id="email" className="block py-1.5 w-full text-sm
                        text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
                        dark:border-gray-600 focus:outline-none focus:ring-0
-                        focus:border-blue-600 peer" placeholder=" " />
+                        focus:border-blue-600 peer" placeholder=" " onChange={(e)=>setEmail(e.target.value)}/>
                       <label htmlFor="email" className="font-medium absolute  text-gray-700 
                       duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
@@ -66,7 +68,7 @@ const FrogetPassword = ({ setOpenForgetPopUp }) => {
                       <CiMail className='text-7xl text-blue-500' />
                     </div>
                     <p className='text-gray-600 text-center text-sm tracking-wider font-medium px-5'>
-                      Please Enter The 4 Digit Code Sent To <span className='text-blue-500'>rahul@gmail.com</span></p>
+                      Please Enter The 4 Digit Code Sent To <span className='text-blue-500'>{email}</span></p>
                     <OTPInput value={OTP} onChange={setOTP} autoFocus OTPLength={4} otpType="number" 
                     disabled={false} secure />
                     <ResendOTP onResendClick={() => console.log("Resend clicked")} />
@@ -86,7 +88,7 @@ const FrogetPassword = ({ setOpenForgetPopUp }) => {
                     </p>
                     {/* new password */}
                     <div className="relative z-0 w-full mb-3 group">
-                      <input type="password" name="password" id="password" className="block py-1.5 w-full text-sm
+                      <input type={vissiable===true?'text':'password'} name="password" id="password" className="block py-1.5 w-full text-sm
                        text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
                        dark:border-gray-600 focus:outline-none focus:ring-0
                         focus:border-blue-600 peer" placeholder=" " />
@@ -94,6 +96,9 @@ const FrogetPassword = ({ setOpenForgetPopUp }) => {
                       duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
                         peer-focus:scale-75 peer-focus:-translate-y-6 text-sm">New Password</label>
+                        {vissiable===true?<AiOutlineEye className='absolute right-0 top-3 cursor-pointer' onClick={()=>setvissiable(!vissiable)}/>:
+                        <AiOutlineEyeInvisible className='absolute right-0 top-3 cursor-pointer' onClick={()=>setvissiable(!vissiable)}/>}
+                        
                     </div>
                     {/* confrom Password */}
                     <div className="relative z-0 w-full mb-6 group">
