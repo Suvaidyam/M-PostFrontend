@@ -153,15 +153,15 @@ const Response = ({ apiResponse, isLoading }) => {
                     ))}
                   </div>
                 ) : null}
-                <div className="px-2 font-mono word-break: break-all ">
+                <div className="px-2   ">
                   {body === true ? (
-                    <div className="scrollbar-hide">
+                    <div className="scrollbar-hide font-semibold  ">
                       <CodeMirror
                         height="auto"
                         value={
                           data.status === 500
                             ? data.data
-                            : JSON.stringify(data, 0, 2)
+                            : JSON.stringify(data, null, 3)
                         }
                         editable={false}
                         extensions={[javascript({ jsx: true })]}
