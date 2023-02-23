@@ -42,7 +42,7 @@
     z-index: 1000 !important;
 }
 .Resizable-module_handle__1mp2v:hover{
-    border-top: 2px solid #0951ec8f;
+    border-top: 2px solid #0951ecb0;
 }
 
 .Resizable-module_handle__1mp2v[data-direction=bottom]
@@ -50,6 +50,14 @@
    
     cursor: s-resize !important;
 }
-.Resizable-module_handle__1mp2v[data-direction=bottom] {
-    bottom: -7px !important;
+
+.ͼ1 .cm-scroller {
+
+    line-height: 1.4;
+    height: 100%;
+ overflow-wrap: break-word;
+    position: relative;
+    z-index: 0;
+    display: flex !important;
+    align-items: flex-start !important;
 }

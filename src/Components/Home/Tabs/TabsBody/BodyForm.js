@@ -18,7 +18,7 @@ const BodyForm = () => {
   };
 
   return (
-    <div className=" mb-2   scrollbar-hide  bg-white  ">
+    <div className=" mb-2 font-semibold  scrollbar-hide  bg-white  ">
       <CodeMirror
         className=" "
         height="127px"
