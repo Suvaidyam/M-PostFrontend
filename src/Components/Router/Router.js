@@ -20,7 +20,6 @@ const Router = () => {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/forget" element={<FrogetPassword />} />
             <Route path="/workSpace/" element={<Protected Component={Home} />}>
               <Route index element={<CollectionBody />} />
               <Route path="collection" element={<CollectionBody />} />
