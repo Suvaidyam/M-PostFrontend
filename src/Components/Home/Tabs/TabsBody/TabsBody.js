@@ -17,6 +17,23 @@ const TabsBody = () => {
   const [isLoading, setLoading] = useState(false);
 
   const onSendClick = async () => {
+
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
+    Http({
+      method: "post",
+      url: `${process.env.REACT_APP_BASEURL}/history`,
+      data:{
+        workspace_id:workSpace_Id,
+        url:topBarData.url,
+        method: topBarData.method
+      }
+    })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     if (!checkParams(topBarData, paramsData, headersData, jsonText, setMsg)) {
       setError(true);
       return false;
