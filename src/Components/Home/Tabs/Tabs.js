@@ -29,7 +29,7 @@ const Tabs = () => {
 
   return (
     <>
-      <div className="w-full  h-full">
+      <div className="w-full  h-full relative">
         <TabsList />
         {tabs.map((e) => (
           <>
@@ -40,7 +40,7 @@ const Tabs = () => {
           </>
         ))}
         {loader===true? <>
-        <div className="flex items-center justify-center h-[80%] w-[70%] absolute bg-gray-100">
+        <div className="flex items-center justify-center h-full w-full absolute bg-gray-100 z-50 top-0">
         <BallTriangle
           height={100}
           width={100}
