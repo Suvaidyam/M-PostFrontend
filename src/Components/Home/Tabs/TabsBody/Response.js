@@ -62,7 +62,7 @@ const Response = ({ apiResponse, isLoading }) => {
         <ErrorScreen />
       ) : (
         <>
-          <div className=" h-full bg-white border relative">
+          <div className="w-full h-full bg-white border ">
             {isLoading ? (
               <div className="flex items-center justify-center  pt-12">
                 <LineWave
@@ -80,7 +80,7 @@ const Response = ({ apiResponse, isLoading }) => {
               </div>
             ) : (
               <>
-                <div className="flex justify-between bg-white w-full">
+                <div className="flex justify-between w-full">
                   {/* Show this part in tabs - Body and Headers */}
                   <div className="px-2 flex items-center  py-1 gap-5">
                     <span
@@ -142,7 +142,6 @@ const Response = ({ apiResponse, isLoading }) => {
                     </div>
                     {getResponseHeaderElem(headers).map((e) => (
                       <div className="w-full flex">
-                        {console.log(e)}
                         <div className="w-1/2 border py-1.5 px-2 text-sm ">
                           {e.key}
                         </div>

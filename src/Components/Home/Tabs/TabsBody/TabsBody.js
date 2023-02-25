@@ -6,7 +6,7 @@ import { DataContext } from "../../../Context/DataProvider";
 import { checkParams } from "../../../Utils/CommonUtils";
 import Http from "../../../../Services/http";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
-import { Resizable } from "react-resizable-element";
+
 import { Scrollbars } from "react-custom-scrollbars";
 
 const TabsBody = () => {
@@ -64,18 +64,15 @@ const TabsBody = () => {
   return (
     <>
       <div className=" h-[92%] mx-1 mb-48">
-        <div className="h-[12%] w-full bg-white mt-2  shadow-sm ">
+        <div className="h-[12%] w-full bg-white shadow-sm ">
           <TopBar onSendClick={onSendClick} />
         </div>
 
-        <div className="w-full h-[88%] flex flex-col mt-2 justify-between ">
-          <Resizable
-            direction="bottom"
-            className="bg-white  overflow-y-scroll pt-1   scrollbar-hide h-full "
-          >
+        <div className="w-full h-[88%] flex flex-col justify-between ">
+         <div className="h-auto">
             <QuearyTabs />
-          </Resizable>
-          <div className="bg-white mt-2  overflow-y-scroll scrollbar-hide h-full ">
+         </div>
+          <div className="bg-white border-t  overflow-y-scroll scrollbar-hide h-full ">
             <Scrollbars className="w-full">
               <Response apiResponse={apiResponse} isLoading={isLoading} />
             </Scrollbars>
