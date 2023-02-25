@@ -5,8 +5,8 @@ const QueryForm = ({ data, setData }) => {
   
   const [rows, addRows] = useState([0]);
   return (
-    <div className="px-3  bg-white overflow-y-scroll scrollbar-hide  h-[159px] ">
-      <div className="overflow-x-auto relative  pt-3">
+    <div className="px-3  h-44">
+      <div className="overflow-x-auto relative  pt-3 pb-[2px]">
         <table className="w-full text-sm text-left text-gray-600 ">
           <thead className="text-xs border text-gray-600 uppercase bg-white ">
             <tr>

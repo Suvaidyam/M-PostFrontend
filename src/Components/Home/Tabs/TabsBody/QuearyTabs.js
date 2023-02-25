@@ -8,6 +8,7 @@ import QueryForm from "./QueryForm";
 import CenterTabs from "./CenterTabs";
 import { DataContext } from "../../../Context/DataProvider";
 import "./Tabs.css";
+import { Resizable } from "react-resizable-element";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -93,15 +94,20 @@ export default function QuearyTabs() {
             />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0}>
-          <QueryForm data={paramsData} setData={setParamsData} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <QueryForm data={headersData} setData={setHeadersData} />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <CenterTabs />
-        </TabPanel>
+        <Resizable direction="bottom" >
+          <div className="bg-white h-full overflow-hidden overflow-y-scroll">
+          <TabPanel value={value} index={0}>
+            <QueryForm data={paramsData} setData={setParamsData} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <QueryForm data={headersData} setData={setHeadersData} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <CenterTabs />
+          </TabPanel>
+          </div>
+        </Resizable>
+
       </Box>
     </div>
   );
