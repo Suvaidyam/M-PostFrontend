@@ -25,6 +25,7 @@ const MoreAction = ({collection}) => {
   };
 
   const postData = () => {
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
     Http({
       url: `${process.env.REACT_APP_BASEURL}/collection`,
       method: "post",
@@ -32,7 +33,7 @@ const MoreAction = ({collection}) => {
         name: "New Request",
         type: "request",
         parent: colId._id,
-        workspace_id:workSpaceId._id,
+        workspace_id:workSpace_Id,
         details: { method: "GET", url: "" },
       }
     })
