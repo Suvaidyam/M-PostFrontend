@@ -7,6 +7,7 @@ import { MdOutlineDarkMode } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { BiLogOutCircle } from "react-icons/bi";
+import { BsSearch } from "react-icons/bs";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import Profile from './Profile/Profile'
@@ -78,15 +79,20 @@ return () => {
     <>
      <div className="w-full h-16 shadow-md fixed bg-white z-50">
         <div className="w-full h-full  flex justify-between items-center px-4 max-w-[1720px] mx-auto">
-          <div className="flex items-center gap-8">
+          <div className="w-full h-full flex items-center gap-8">
             {/* Logo */}
-            <div ><img src={Vector} alt=""  className='w-12'/></div>
+            <div ><img src={Vector} alt=""  className='w-4/5'/></div>
             {/* navbar */}
             <Navbar {...{setTab,tab}}/>
           </div>
           <div className="flex gap-5 items-center">
             {/* search */}
-            <div className='cursor-pointer'><SearchMenu/></div>
+            <div className='cursor-pointer hidden lg:block'><SearchMenu/></div>
+           <div className="block lg:hidden">
+           <div className='cursor-pointer flex items-center justify-center w-8 h-8 border rounded-full'>
+              <BsSearch/>
+              </div>
+           </div>
             {/* dark mode */}
             <motion.div  whileTap={{ scale: 0.75 }}  className='cursor-pointer w-8 h-8 border-2 rounded-full flex justify-center items-center
             hover:border-blue-300 group'>

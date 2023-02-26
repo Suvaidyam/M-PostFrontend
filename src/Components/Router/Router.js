@@ -10,7 +10,6 @@ import ApiBody from "../Home/LeftBody/ApiBody/ApiBody";
 import EnvironmentBody from "../Home/LeftBody/EnvironmentBody/EnvironmentBody";
 import HistoryBody from "../Home/LeftBody/HistoryBody/HistoryBody";
 import SnackBar from "../Home/Tabs/TabsBody/SnackBar";
-import FrogetPassword from "../Login/ForgetPassword/ForgetPassword";
 
 const Router = () => {
   return (
