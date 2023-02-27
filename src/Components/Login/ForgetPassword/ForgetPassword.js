@@ -11,24 +11,102 @@ import { Link } from "react-router-dom";
 import { Stepper, Step, StepTitle } from "react-progress-stepper";
 import "./Forget.css";
 import OTPInput, { ResendOTP } from "otp-input-react";
+import http from "../../../Services/http";
+import { DataContext } from "../../Context/DataProvider";
+import { useContext } from "react";
 
 const FrogetPassword = ({ setOpenForgetPopUp }) => {
+  const {
+    setStatus,
+
+    setMsg,
+    setError,
+  } = useContext(DataContext);
 
   let [step, setstep] = useState(0);
   const [email, setEmail] = useState("");
   const [OTP, setOTP] = useState("");
+  const [password, setPassword] = useState("");
+
   const [vissiable, setvissiable] = useState(false);
-  const validate =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-const incrementStep=()=>{
-  email.match(validate)?
-  setstep(step+1):
-  setstep(step=0);
-  step===1 &&  OTP.length===4 ?
-  setstep(step+1):setstep(step=1)
-}
-const decrementStep=()=>{
-  setstep(step===0?step=0: step-1)
-}
+  const validate =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const incrementStep = () => {
+    step === 0 && FirstStep();
+    step === 1 && OTP.length === 4 && SecondStep();
+    step === 2 && ThirdStep();
+  };
+  const FirstStep = () => {
+    http({
+      method: "post",
+      url: `${process.env.REACT_APP_BASEURL}/auth/otp`,
+      data: {
+        email: email,
+      },
+    })
+      .then((res) => {
+        setstep(step + 1);
+
+        setMsg(res.data.message);
+        setStatus(res.status);
+        setError(true);
+      })
+      .catch((err) => {
+        setMsg(err.response.data.message);
+        setStatus(err.response.status);
+        setError(true);
+      });
+  };
+  const SecondStep = () => {
+    http({
+      method: "post",
+      url: `${process.env.REACT_APP_BASEURL}/auth/verifyotp`,
+      data: {
+        email: email,
+        otpCode: OTP,
+      },
+    })
+      .then((res) => {
+        if (res.data.message === "OTP verifyed") {
+          setstep(step + 1);
+        }
+
+        setMsg(res.data.message);
+        setStatus(res.status);
+        setError(true);
+      })
+      .catch((err) => {
+        setMsg(err.response.data.message);
+        setStatus(err.response.status);
+        setError(true);
+      });
+  };
+  const ThirdStep = () => {
+    http({
+      method: "post",
+      url: `${process.env.REACT_APP_BASEURL}/auth/forgetpassword`,
+      data: {
+        email: email,
+        password: password,
+      },
+    })
+      .then((res) => {
+        setstep(step + 1);
+        setMsg(res.data.message);
+        setStatus(res.status);
+        setError(true);
+      })
+      .catch((err) => {
+        setMsg(err.response.data.message);
+        setStatus(err.response.status);
+        setError(true);
+      });
+  };
+
+  const decrementStep = () => {
+    setstep(step === 0 ? (step = 0) : step - 1);
+  };
+
   return (
     <>
       <div className="w-full h-screen">
@@ -73,15 +151,24 @@ const decrementStep=()=>{
                         verifycation Otp
                       </p>
                       <div className="relative z-0 w-full mb-6 group">
-                        <input type="email"  name="email" id="email" className={`block py-1.5 w-full text-sm
+                        <input
+                          type="email"
+                          name="email"
+                          id="email"
+                          className={`block py-1.5 w-full text-sm
                        text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
                        dark:border-gray-600 focus:outline-none focus:ring-0
-                         peer ${email.match(validate)?'border-blue-600':'border-red-600'}`}
+                         peer ${
+                           email.match(validate)
+                             ? "border-blue-600"
+                             : "border-red-600"
+                         }`}
                           placeholder=" "
                           onChange={(e) => setEmail(e.target.value)}
                         />
-                         {email.match(validate) && 
-                          <MdOutlineDone className="absolute right-0 top-3 cursor-pointer text-green-600" /> }
+                        {email.match(validate) && (
+                          <MdOutlineDone className="absolute right-0 top-3 cursor-pointer text-green-600" />
+                        )}
                         <label
                           htmlFor="email"
                           className="font-medium absolute  text-gray-700 
@@ -147,29 +234,50 @@ const decrementStep=()=>{
                        text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
                        dark:border-gray-600 focus:outline-none focus:ring-0
                         focus:border-blue-600 peer"
-                          placeholder=" " />
-                        <label htmlFor="password" className="font-medium absolute  text-gray-700 
+                          placeholder=" "
+                          onChange={(e) => {
+                            setPassword(e.target.value);
+                          }}
+                        />
+                        <label
+                          htmlFor="password"
+                          className="font-medium absolute  text-gray-700 
                            duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] 
                            peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                           peer-focus:scale-75 peer-focus:-translate-y-6 text-sm">
-                          New Password </label>
+                           peer-focus:scale-75 peer-focus:-translate-y-6 text-sm"
+                        >
+                          New Password{" "}
+                        </label>
                         {vissiable === true ? (
-                          <AiOutlineEye className="absolute right-0 top-3 cursor-pointer" 
-                          onClick={() => setvissiable(!vissiable)} /> ) 
-                          : ( <AiOutlineEyeInvisible className="absolute right-0 top-3 cursor-pointer"
-                            onClick={() => setvissiable(!vissiable)} />
+                          <AiOutlineEye
+                            className="absolute right-0 top-3 cursor-pointer"
+                            onClick={() => setvissiable(!vissiable)}
+                          />
+                        ) : (
+                          <AiOutlineEyeInvisible
+                            className="absolute right-0 top-3 cursor-pointer"
+                            onClick={() => setvissiable(!vissiable)}
+                          />
                         )}
                       </div>
                       {/* confrom Password */}
                       <div className="relative z-0 w-full mb-6 group">
-                        <input type="password" name="confrompassword" id="confrompassword" className="block py-1.5 w-full text-sm
+                        <input
+                          type="password"
+                          name="confrompassword"
+                          id="confrompassword"
+                          className="block py-1.5 w-full text-sm
                        text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
                        dark:border-gray-600 focus:outline-none focus:ring-0  focus:border-blue-600 peer"
-                          placeholder=" " />
-                        <label htmlFor="confrompassword" className="font-medium absolute  text-gray-700 
+                          placeholder=" "
+                        />
+                        <label
+                          htmlFor="confrompassword"
+                          className="font-medium absolute  text-gray-700 
                       duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                        peer-focus:scale-75 peer-focus:-translate-y-6 text-sm" >
+                        peer-focus:scale-75 peer-focus:-translate-y-6 text-sm"
+                        >
                           Confrom Password
                         </label>
                       </div>
@@ -199,8 +307,11 @@ const decrementStep=()=>{
               </div>
               {step !== 3 && (
                 <div className="w-full h-full flex justify-between p-8">
-                  <button  onClick={incrementStep} className="bg-blue-500 w-full h-9 
-                 text-white " >
+                  <button
+                    onClick={incrementStep}
+                    className="bg-blue-500 w-full h-9 
+                 text-white "
+                  >
                     Next
                   </button>
                 </div>
