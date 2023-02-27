@@ -18,8 +18,8 @@ const EnvironmentBody = () => {
   const [loader, setLoader] = useState(true);
   const { setcolId, collEdit, changeAction,setchangeAction,setMsg,
     setError,workSpaceId,setStatus } = useContext(DataContext);
-  const global_variable = newEnviroment.filter(e => e.name === 'Globals')
-  const local_variable = newEnviroment.filter(e => e.name !== 'Globals')
+  const global_variable = newEnviroment?.filter(e => e.name === 'Globals')
+  const local_variable = newEnviroment?.filter(e => e.name !== 'Globals')
   let showEnv_id = useSelector((state) => state.OpenEnvReducer);
   const dispatch = useDispatch();
  
@@ -90,7 +90,7 @@ const EnvironmentBody = () => {
       <BodyHead {...{ postData, title: "Create environment" }} />
       {loader === true ? (
         <>
-          {newEnviroment.map((e) => (
+          {newEnviroment?.map((e) => (
             <CollectionLoader key={e._id} />
           ))}
         </>
@@ -99,7 +99,7 @@ const EnvironmentBody = () => {
           <div className="w-full relative">
             {/* global */}
             <div className=" w-full">
-                {global_variable.map((ce) => (<div key={ce._id}>
+                {global_variable?.map((ce) => (<div key={ce._id}>
                   <div className="w-full h-11 flex cursor-pointer items-center px-2" >
                     <div className="flex items-center gap-2 w-full h-11 border-b" onClick={() => handleRequest(ce)} >
                       <p className={`w-full text-xs font-medium pl-4 hover:bg-gray-200 h-8 flex items-center
@@ -111,7 +111,7 @@ const EnvironmentBody = () => {
             {/* local */}
             <Scrollbars className="w-full h-[85vh] min-h-[63vh]">
               <div className=" w-full pt-1">
-                {local_variable.map((ce) => (<div key={ce._id}>
+                {local_variable?.map((ce) => (<div key={ce._id}>
                   <div className={`w-full h-8  relative group flex cursor-pointer items-center hover:bg-gray-200
                    border-b py-1 px-2 ${ce._id === showEnv_id && 'bg-gray-300'}`} >
                     <div className="flex items-center gap-2 w-full h-8 " onClick={() => handleRequest(ce)} >

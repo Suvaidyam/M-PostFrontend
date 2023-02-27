@@ -30,7 +30,7 @@ const CollectionBody = () => {
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const [collection, setcollection] = useState([]);
-  let newarr = collection.filter((e) => e.parent == null);
+  let newarr = collection?.filter((e) => e.parent == null);
   const [arr, setArr] = useState(newarr);
 
   let tabs = useSelector((state) => state.TabsReducer);
@@ -123,7 +123,7 @@ const CollectionBody = () => {
           {/* collection */}
           {loader === true ? (
             <>
-              {newarr.map((e) => (
+              {newarr?.map((e) => (
                 <CollectionLoader key={e._id} />
               ))}
             </>
@@ -131,7 +131,7 @@ const CollectionBody = () => {
             <>
               {" "}
               <Scrollbars className="w-full h-[83vh] min-h-[71vh] scrollbar-hide overflow-y-scroll">
-                {newarr.map((e) => (
+                {newarr?.map((e) => (
                   <div key={e._id} className="border-b">
                     <div
                       className={`w-full h-8 ${e.open ? "bg-gray-200" : null}
@@ -168,7 +168,7 @@ const CollectionBody = () => {
                     {/* request */}
                     {e.toggle ? (
                       <div className=" w-full">
-                        {collection.map((ce) => (
+                        {collection?.map((ce) => (
                           <div key={ce._id}>
                             {e._id === ce.parent ? (
                               <div
