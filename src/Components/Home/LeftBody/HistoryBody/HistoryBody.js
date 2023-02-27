@@ -56,7 +56,7 @@ const HistoryBody = () => {
           </div>
           <>
             <Scrollbars className="w-full h-[83vh] min-h-[71vh] scrollbar-hide overflow-y-scroll ">
-              {History.map((e) => (
+              {History?.map((e) => (
                 <div key={e._id} className="border-b">
                   <div className={`w-full h-7 flex items-center relative px-2 cursor-pointer
                    hover:bg-gray-200 group`} >
@@ -70,7 +70,7 @@ const HistoryBody = () => {
                     </p>
                   </div>
                   <div className=" w-full">
-                    {History.map((ce) => (
+                    {History?.map((ce) => (
                       <div key={ce._id}>
                         {e.created_At === ce.created_At && (
                           <div className="w-full relative group flex cursor-pointer hover:bg-gray-200 
