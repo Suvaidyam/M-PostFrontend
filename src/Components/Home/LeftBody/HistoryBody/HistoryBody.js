@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchMenu from "../../../SearchMenu/SearchMenu";
 import { HiChevronRight } from 'react-icons/hi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { BsThreeDots } from 'react-icons/bs'
 import http from "../../../../Services/http";
 import Scrollbars from "react-custom-scrollbars";
+import { DataContext } from "../../../Context/DataProvider";
 
 const HistoryBody = () => {
 
-  const [History, setHistory] = useState([])
+  const [History, setHistory] = useState([]);
+  const {setStatus, setMsg, setError,} = useContext(DataContext);
+  // const TodayHistory = History?.filter(e => e.created_At === new Date())
+  // console.log(TodayHistory);
   const getData = () => {
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
     http({
@@ -16,9 +20,6 @@ const HistoryBody = () => {
       url: `${process.env.REACT_APP_BASEURL}/history/${workSpace_Id?._id}`,
     })
       .then((res) => {
-        // setTimeout(() => {
-        //   setLoader(false);
-        // }, 100);
         setHistory(res.data.history);
       })
       .catch((err) => {
@@ -29,12 +30,28 @@ const HistoryBody = () => {
     return () => {
       getData();
     };
-  }, []);
+  }, [ History]);
 
   // const toggle = (e) => {
   //   e.toggle = !e.toggle;
   //   setHistory([...History]);
   // };
+
+  // delete history Api 
+  const deleteHistory = (historyId)=>{
+    http({
+      method: "delete",
+      url: `${process.env.REACT_APP_BASEURL}/history/${historyId}`,
+    })
+      .then((res) => {
+        setMsg(res.data.message);
+        setStatus(res.status);
+        setError(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   const getDetails = (details) => {
     let method = details?.method ? details?.method.toUpperCase() : "NA";
@@ -64,14 +81,15 @@ const HistoryBody = () => {
                       <HiChevronRight className="cursor-pointer" />
                       <p className="text-sm">{e.created_At}</p>
                     </div>
-                    <p className=" absolute right-2 flex items-center gap-2" >
-                      <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block" />
+                    <p className=" absolute right-2 flex items-center gap-2">
+                      <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block" onClick={()=>deleteHistory(e._id)}/>
                       <BsThreeDots className="cursor-pointer hidden group-hover:block" />
                     </p>
                   </div>
                   <div className=" w-full">
                     {History?.map((ce) => (
                       <div key={ce._id}>
+                    
                         {e.created_At === ce.created_At && (
                           <div className="w-full relative group flex cursor-pointer hover:bg-gray-200 
                            py-1 px-2" >
@@ -82,7 +100,7 @@ const HistoryBody = () => {
                               <p className="text-xs font-normal truncate"> {ce.url} </p>
                             </div>
                             <p className=" absolute right-2 flex items-center gap-2" >
-                              <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block" />
+                              <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block"  onClick={()=>deleteHistory(e._id)} />
                               <BsThreeDots className="cursor-pointer hidden group-hover:block" />
                             </p>
                           </div>)}
