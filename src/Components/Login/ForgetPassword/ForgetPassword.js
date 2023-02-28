@@ -27,6 +27,7 @@ const FrogetPassword = ({ setOpenForgetPopUp }) => {
   const [email, setEmail] = useState("");
   const [OTP, setOTP] = useState("");
   const [password, setPassword] = useState("");
+  const [conformPassword, setConformPassword] = useState("");
 
   const [vissiable, setvissiable] = useState(false);
   const validate =
@@ -91,10 +92,12 @@ const FrogetPassword = ({ setOpenForgetPopUp }) => {
       },
     })
       .then((res) => {
+        if(password.match(conformPassword && password.length===conformPassword.length)){
         setstep(step + 1);
         setMsg(res.data.message);
         setStatus(res.status);
         setError(true);
+      }
       })
       .catch((err) => {
         setMsg(err.response.data.message);
@@ -270,7 +273,7 @@ const FrogetPassword = ({ setOpenForgetPopUp }) => {
                        text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
                        dark:border-gray-600 focus:outline-none focus:ring-0  focus:border-blue-600 peer"
                           placeholder=" "
-                        />
+                        onChange={(e)=>setConformPassword(e.target.value)}/>
                         <label
                           htmlFor="confrompassword"
                           className="font-medium absolute  text-gray-700 
@@ -280,6 +283,9 @@ const FrogetPassword = ({ setOpenForgetPopUp }) => {
                         >
                           Confrom Password
                         </label>
+                       {password.match(conformPassword) ? setMsg('Password Match'): setMsg('Not Match Password !')}
+                       {password.match(conformPassword) && setError(true)}
+                       {password.match(conformPassword) ? setStatus(200):setStatus(400)}
                       </div>
                     </div>
                   </>
