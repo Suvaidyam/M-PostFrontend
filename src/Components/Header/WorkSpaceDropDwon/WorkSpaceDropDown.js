@@ -21,7 +21,6 @@ const WorkSpaceDropDwon = () => {
     })
       .then((res) => {
         setworkspace(res.data.workSpace);
-        console.log(res.data.workSpace) 
         setTimeout(() => {
           setLoder(false)
         }, 1000);
@@ -50,13 +49,13 @@ const WorkSpaceDropDwon = () => {
           text-gray-600"></div>
           <p className="bg-gray-200 font-semibold p-2 text-xs w-28"></p>
           </>:<>
-          <button
+          <div
             className="bg-gray-200 px-4 py-1.5 rounded-md text-sm font-medium
           text-gray-600"
             // onClick={() => setopen(false)}
           >
             <WorkSpacePopup />
-          </button>
+          </div>
           <p className="text-gray-400 font-semibold text-xs">
             Recently visited
           </p>
@@ -66,10 +65,10 @@ const WorkSpaceDropDwon = () => {
           <Scrollbars>
             <div className="w-full h-full min-h-[290px] ">
               {workspace?.map((e) => (
-                <>
+                <div key={e._id}>
                 {Loder===true?
                 <div key={e._id}><CollectionLoader/></div>:
-                <p  key={e._id}
+                <p  
                   className={`text-xs flex items-center gap-2 cursor-pointer hover:bg-gray-200 py-1.5 px-2
                    ${workSpaceId._id===e._id && 'bg-gray-300'} group`} onClick={()=>{setWorkSpaceId(e); setTimeout(()=>{setworkSpaceopen(!workSpaceopen)},50)}}>
                   <BiGroup className="text-lg text-gray-500" />
@@ -77,7 +76,7 @@ const WorkSpaceDropDwon = () => {
                   text-gray-600"/>
                 </p>}
                  
-                </>
+                </div>
               ))}
             </div>
           </Scrollbars>
