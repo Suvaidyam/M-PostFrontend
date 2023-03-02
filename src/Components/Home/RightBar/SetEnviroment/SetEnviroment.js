@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Tabs } from "../../../../Redux/Action/Tabs";
 import http from "../../../../Services/http";
 import { EnvLoader } from "../../../Loader/Loader";
 import { Scrollbars } from 'react-custom-scrollbars';
+import { useContext } from "react";
+import { DataContext } from "../../../Context/DataProvider";
 
 const SetEnviroment = () => {
   const [newEnviroment, setNewEnviroment] = useState([]);
+     const {currentActiveEnv,tabsList,setTabsList,setCurrentActive}=useContext(DataContext)
   const global = newEnviroment.filter(e=>e.name==='Globals')
-  let showEnv_id = useSelector((state) => state.OpenEnvReducer);
-  const local = newEnviroment.filter(e=>e._id==showEnv_id)
-  console.log("locs",local)
+  const local = newEnviroment.filter(e=>e._id===currentActiveEnv)
   const [loader, setLoader] = useState(true);
 
-  let tabs = useSelector((state) => state.TabsReducer);
-  const dispatch = useDispatch();
   const newInvObj = {
     name: "New Environment",
   };
   const handleNewInv = () => {
-    let el = { ...newInvObj, _id: tabs.length };
-    el.name = el.name;
-    tabs.push(el);
-    dispatch(Tabs(tabs));
-    // dispatch(AddRequest(el._id));
+    let el = { ...newInvObj, _id: tabsList.length };
+    setTabsList([...tabsList, el]);
+            // dispatch(OpenEnv(e._id));
+            setCurrentActive(el._id);
   };
   const getData = () => {
     let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
@@ -108,7 +104,7 @@ const SetEnviroment = () => {
                       {e.name !== "Globals" ?  (
                         <>
                           {e.details.map((el) =>
-                            e._id === showEnv_id ? (
+                            e._id? (
                               <>
                                 <div
                                   key={el._id}

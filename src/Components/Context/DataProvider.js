@@ -18,6 +18,9 @@ const DataProvider = ({ children }) => {
   const [responseData, setResponseData] = useState([]);
   const [changeAction, setchangeAction] = useState('');
   const [url, setUrl] = useState('');
+  const [tabsList, setTabsList] = useState([]);
+  const [currentActive, setCurrentActive] = useState('');
+  const [currentActiveEnv, setCurrentActiveEnv] = useState('');
   // workspce id provide to filtter to all task
   const [workSpaceId, setWorkSpaceId] = useState({});
   const [workSpaceopen, setworkSpaceopen] = useState(false);
@@ -57,7 +60,13 @@ const DataProvider = ({ children }) => {
           setWorkSpaceId,
           workSpaceId,
           workSpaceopen,
-          setworkSpaceopen
+          setworkSpaceopen,
+          tabsList,
+          setTabsList,
+          currentActive,
+          setCurrentActive,
+          currentActiveEnv,
+           setCurrentActiveEnv
         }}
       >
         {children}

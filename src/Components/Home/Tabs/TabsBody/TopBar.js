@@ -64,11 +64,11 @@ const TopBar = ({ onSendClick }) => {
   };
 
   isEnv.map((e) => {
-    return (data.url = data.url.replace(`{{${e.variable}}}`, e.value));
+    return (data.url = data?.url?.replace(`{{${e.variable}}}`, e.value));
   });
   useEffect(() => {
     return () => {
-      setData({ ...data, url: data.url });
+      setData({ ...data, url: data?.url });
       getData();
     };
   }, []);
@@ -85,21 +85,21 @@ const TopBar = ({ onSendClick }) => {
               setData({ ...data, method: e.target.value });
             }}
           >
-            <option value="GET" selected={data.method.toUpperCase() === "GET"}>
+            <option value="GET" selected={data?.method?.toUpperCase() === "GET"}>
               GET
             </option>
             <option
               value="POST"
-              selected={data.method.toUpperCase() === "POST"}
+              selected={data?.method?.toUpperCase() === "POST"}
             >
               POST
             </option>
-            <option value="PUT" selected={data.method.toUpperCase() === "PUT"}>
+            <option value="PUT" selected={data?.method?.toUpperCase() === "PUT"}>
               PUT
             </option>
             <option
               value="DELETE"
-              selected={data.method.toUpperCase() === "DELETE"}
+              selected={data?.method?.toUpperCase() === "DELETE"}
             >
               DELETE
             </option>
@@ -120,7 +120,7 @@ const TopBar = ({ onSendClick }) => {
           />
 
           <div className="input-renderer px-2 ">
-            {data.url.split(REGEX).map((word, i) => {
+            {data?.url?.split(REGEX).map((word, i) => {
               if (word.match(REGEX) !== null) {
                 return (
                   <div key={i} className="text-[#1D4ED8] group z-50">
