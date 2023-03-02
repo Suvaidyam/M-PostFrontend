@@ -154,7 +154,7 @@ const Response = ({ apiResponse, isLoading }) => {
                 ) : null}
                 <div className="px-2   ">
                   {body === true ? (
-                    <div className="scrollbar-hide font-semibold  ">
+                    <div className=" font-semibold ">
                       <CodeMirror
                         height="auto"
                         value={

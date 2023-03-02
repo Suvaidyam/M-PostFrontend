@@ -15,19 +15,19 @@ const Home = () => {
     <>
       <div className="w-full h-screen ">
       <Header {...{setTab,tab}}/>
-       {tab==='workspace'&& <div className="w-full h-full overflow-hidden max-w-[1720px] mx-auto flex pt-[66px]">
+       {tab==='workspace'&& <div className="w-full h-[90vh] overflow-hidden max-w-[1830px] mx-auto flex">
           {/* left */}
-          <div className="w-[30%] min-w-[334px] h-full border-r-2 ">
+          <div className="w-[30%] min-w-[334px] h-[90vh] border-r-2">
             <MyWorkSpace />
-            <div className="flex h-full border-t ">
-              <div className="w-full  h-full border-r">
+            <div className="flex h-[82vh] border-t">
+              <div className="w-full  h-full border-r flex flex-col justify-end">
                 <LeftBar />
               </div>
             </div>
           </div>
           {/* light */}
-          <div className="w-[70%] bg-gray-50 h-full">
-            <div className="flex h-full">
+          <div className="w-[70%] bg-gray-50 h-[90vh]">
+            <div className="flex h-[90vh]">
               <div className="w-[94%] h-full">
                 <Tabs />
               </div>

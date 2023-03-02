@@ -3,12 +3,8 @@ import { IoIosClose } from "react-icons/io";
 import { RxDotFilled } from "react-icons/rx";
 import { BiCollection } from "react-icons/bi";
 import { AiOutlinePlus, AiOutlineAntDesign } from "react-icons/ai";
-// import { useDispatch, useSelector } from "react-redux";
-// import { AddRequest } from "../../../../Redux/Action/AddRequest";
-// import { Tabs } from "../../../../Redux/Action/Tabs";
 import { motion } from "framer-motion";
 import Http from "../../../../Services/http";
-// import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
 import { useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 
@@ -18,18 +14,15 @@ const TabsList = () => {
     workSpaceId,
     tabsList,
     setTabsList,
-    tabData,
     setTabData,
     currentActive,
     setCurrentActive,
+     setCurrentActiveEnv,
      currentActiveEnv,
-     setCurrentActiveEnv
   } = useContext(DataContext);
   const [newEnviroment, setNewEnviroment] = useState([]);
   const local_variable = newEnviroment?.filter((e) => e.name !== "Globals");
   const [recentTablength, setrecentTablength] = useState(0);
-  // let showEnv_id = useSelector((state) => state.OpenEnvReducer);
-  // let tabs = useSelector((state) => state.TabsReducer);
 
   const newReqObj = {
     name: "Untitled Request",
@@ -53,28 +46,21 @@ const TabsList = () => {
     setCurrentActive(el._id);
     setTabData(el);
     setrecentTablength(recentTablength + 1);
-    // tabs.push(el);
-    // dispatch(Tabs(tabs));
-    // console.log("tabs.length[handleNewTab]", tabsList.length, tabsList);
+    
   };
   const handleTabClose = (e) => {
     let index = tabsList.findIndex((f) => f._id === e._id);
     tabsList.splice(index, 1);
     setTabsList(tabsList);
-    // console.log("tabs.length[handleTabClose]", tabsList.length, tabsList);
     setTimeout(() => {
       if (tabsList.length) {
         setCurrentActive(tabsList[index ? index - 1 : 0]._id);
-        // setCurrentActive(tabsList[index ? index - 1 : 0]._id);
       } else {
         setCurrentActive(null);
       }
     }, 5);
-    // dispatch(Tabs(tabs));
   };
 
-  // const add = useSelector((state) => state.AddRequestReducer);
-  // const dispatch = useDispatch();
 
   const getDetails = (details) => {
     let method = details?.method ? details?.method.toUpperCase() : "NA";
@@ -110,8 +96,8 @@ const TabsList = () => {
 
   return (
     <>
-      <div className="w-full h-[7vh] bg-white flex">
-        <div className="w-[80%]  flex h-full border-b-2">
+      <div className="w-full h-[8vh] mt-0.5 bg-white flex">
+        <div className="w-[80%]  flex h-full border-b-2 overflow-x-scroll scrollbar-hide">
           {tabsList?.map((e) => (
             <div
               key={e._id}
@@ -161,7 +147,7 @@ const TabsList = () => {
         <div className="w-[20%] border-l border-b flex justify-center items-center gap-2 relative">
           <select
             className="w-full h-full outline-none text-sm pl-2"
-          //  onChange={(e) => dispatch(OpenEnv(e.target.value))}
+           onChange={(e) => setCurrentActiveEnv(e.target.value)}
           >
             <option value="null" className={`w-full text-sm`}>
               No Enviroment

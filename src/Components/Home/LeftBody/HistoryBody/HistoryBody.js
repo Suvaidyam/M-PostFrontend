@@ -30,7 +30,7 @@ const HistoryBody = () => {
     return () => {
       getData();
     };
-  }, [ History]);
+  }, [ ]);
 
   // const toggle = (e) => {
   //   e.toggle = !e.toggle;

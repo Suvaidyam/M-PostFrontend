@@ -77,8 +77,8 @@ return () => {
   }
   return (
     <>
-     <div className="w-full h-16 shadow-md fixed bg-white z-50">
-        <div className="w-full h-full  flex justify-between items-center px-4 max-w-[1720px] mx-auto">
+     <div className="w-full h-[10vh] min-h-[56px] shadow-md bg-white z-50">
+        <div className="w-full h-full  flex justify-between items-center px-4 max-w-[1830px] mx-auto">
           <div className="w-full h-full flex items-center gap-8">
             {/* Logo */}
             <div ><img src={Vector} alt=""  className='w-4/5'/></div>

@@ -3,17 +3,15 @@ import { AiOutlineSave } from "react-icons/ai";
 import AddRow from "../TabsBody/AddRow";
 import { DataContext } from "../../../Context/DataProvider";
 import http from "../../../../Services/http";
-import { useSelector } from "react-redux";
 
 const EnvironmentTab = () => {
-  const { SetEnviroment, enviroment ,setStatus, setMsg,setError,tabData} = useContext(DataContext);
+  const { SetEnviroment, enviroment ,setStatus, setMsg,setError,tabData,currentActive} = useContext(DataContext);
   const [rows, addRows] = useState([0]);
   const [effect, setEffect] = useState(false)
-  let _id = useSelector((state) => state.AddRequestReducer);
   const postData = () => {
     http({
       method: "put",
-      url: `${process.env.REACT_APP_BASEURL}/environment/${_id}`,
+      url: `${process.env.REACT_APP_BASEURL}/environment/${currentActive}`,
       data:{
         details:enviroment
       }
