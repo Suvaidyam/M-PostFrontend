@@ -46,3 +46,6 @@ export default async (option) => {
   // option.url = `${process.env.REACT_APP_BASEURL}/${option.url}`
   return axios(option);
 };
+
+
+
