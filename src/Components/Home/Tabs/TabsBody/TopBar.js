@@ -76,7 +76,7 @@ const TopBar = ({ onSendClick }) => {
   return (
     <>
   
-      <div className="flex pt-2.5  items-center  px-3 relative ">
+      <div className="w-full flex h-full  items-center  px-3 relative ">
         {/* dropdown */}
         <div className="   w-28 h-9 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
           <select
