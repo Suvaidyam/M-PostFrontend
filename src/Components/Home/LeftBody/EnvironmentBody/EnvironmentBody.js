@@ -6,12 +6,13 @@ import { IoCheckmarkDoneCircleOutline, IoCheckmarkDoneCircleSharp } from "react-
 import MoreAction from "../MoreAction/MoreAction";
 import { DataContext } from "../../../Context/DataProvider";
 import EditCollection from "../MoreAction/EditCollection";
+import { CollectionLoader } from "../../../Loader/Loader";
 // import { Scrollbars } from 'react-custom-scrollbars';
 
 const EnvironmentBody = () => {
     const [newEnviroment, setNewEnviroment] = useState([]);
     const [loader, setLoader] = useState(true);
-    const { setcolId, collEdit, changeAction, setchangeAction, setMsg, tabsList, setTabsList,
+    const { setcolId, collEdit, changeAction, setchangeAction, setMsg, tabsList, setTabsList,setTabData,
         setCurrentActive, setError, workSpaceId, setStatus,currentActiveEnv,setCurrentActiveEnv } = useContext(DataContext);
     const global_variable = newEnviroment?.filter(e => e.name === 'Globals')
     const local_variable = newEnviroment?.filter(e => e.name !== 'Globals')
@@ -65,6 +66,7 @@ const EnvironmentBody = () => {
     const handleRequest = (e) => {
         if (tabsList.findIndex((f) => f._id === e._id) < 0) {
             setTabsList([...tabsList, e]);
+            setTabData(e);
             setCurrentActive(e._id);
         }
     };
@@ -77,9 +79,9 @@ const EnvironmentBody = () => {
             <BodyHead {...{ postData, title: "Create environment" }} />
             {loader === true ? (
                 <>
-                    {/* {newEnviroment?.map((e) => (
+                    {newEnviroment?.map((e) => (
                         <CollectionLoader key={e._id} />
-                    ))} */}
+                    ))}
                 </>
             ) : (
                 <>
@@ -90,8 +92,7 @@ const EnvironmentBody = () => {
                                 <div className="w-full h-11 flex cursor-pointer items-center px-2" >
                                     <div className="flex items-center gap-2 w-full h-11 border-b" onClick={() => handleRequest(ce)} >
                                         <p className={`w-full text-xs font-medium pl-4 hover:bg-gray-200 h-8 flex items-center
-                      
-                      }`}> {ce.name}</p>
+                                        }`}> {ce.name}</p>
                                     </div>
                                 </div>
                             </div>))}

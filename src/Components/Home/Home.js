@@ -38,15 +38,9 @@ const Home = () => {
           </div>
         </div>}
         {/*=============== reports page=========== */}
-        {tab==='reports'&&
-        <>
-        <div className="pt-[66px]"><Reports/></div>
-        </>}
+        {tab==='reports'&& <Reports/> }
         {/*======== reports page ==========*/}
-        {tab==='explore'&&
-        <>
-        <div className="pt-[66px]"><Explore/></div>
-        </>}
+        {tab==='explore'&& <Explore/> }
       </div>
       
     </>

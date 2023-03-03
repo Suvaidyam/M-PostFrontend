@@ -134,22 +134,17 @@ const CollectionBody = () => {
                                         <div
                                             className={`w-full h-8 ${e.open === true ? "bg-gray-200" : null
                                                 }  flex items-center 
-                                  relative px-2 cursor-pointer hover:bg-gray-200 group`}
-                                            onClick={() => handleRequest(e)} >
-                                            <div
-                                                className="flex items-center gap-2 text-gray-700"
-                                                onClick={() => toggle(e)}
-                                            >
+                                  relative px-2 cursor-pointer hover:bg-gray-200 group`} >
+                                            <div className="flex items-center gap-2 text-gray-700" >
                                                 {e.toggle ? (
-                                                    <BiCaretDown className="cursor-pointer" />
+                                                    <BiCaretDown className="cursor-pointer" onClick={() => toggle(e)}/>
                                                 ) : (
-                                                    <BiCaretRight className="cursor-pointer" />
+                                                    <BiCaretRight className="cursor-pointer" onClick={() => toggle(e)} />
                                                 )}
                                                 <FcFolder className="text-xl" />{" "}
                                                 <p className="text-sm truncate">{e.name}</p>
                                             </div>
-                                            <p
-                                                className="hidden group-hover:block absolute right-2"
+                                            <p className="hidden group-hover:block absolute right-2"
                                                 onClick={() => setcolId(e)}
                                             >
                                                 {" "}

@@ -10,9 +10,9 @@ import { DataContext } from "../../../Context/DataProvider";
 const HistoryBody = () => {
 
   const [History, setHistory] = useState([]);
-  const {setStatus, setMsg, setError,} = useContext(DataContext);
+  const {setStatus, setMsg, setError,setTabData,setCurrentActive,setTabsList,tabsList} = useContext(DataContext);
   // const TodayHistory = History?.filter(e => e.created_At === new Date())
-  // console.log(TodayHistory);
+ 
   const getData = () => {
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
     http({
@@ -21,7 +21,6 @@ const HistoryBody = () => {
     })
       .then((res) => {
         setHistory(res.data.history);
-        console.log(res.data.history)
       })
       .catch((err) => {
         console.log(err);
@@ -66,6 +65,13 @@ const HistoryBody = () => {
     };
     return { method, color: colors[method.toUpperCase()] };
   };
+  const handleRequest = (e) => {
+    if (tabsList.findIndex((f) => f._id === e._id) < 0) {
+        setTabsList([...tabsList, e]);
+        setCurrentActive(e._id);
+        setTabData(e);
+    }
+};
   return (
     <>
       <div className="w-full h-full  ">
@@ -89,12 +95,11 @@ const HistoryBody = () => {
                     </p>
                   </div>
                   <div className=" w-full">
-                    {History?.map((ce) => (
+                    {[e.details]?.map((ce) => (
                       <div key={ce._id}>
-                    
-                        {e.created_At === ce.created_At && (
+                        {true && (
                           <div className="w-full relative group flex cursor-pointer hover:bg-gray-200 
-                           py-1 px-2" >
+                           py-1 px-2"  onClick={() => handleRequest(e)} >
                             <div className="flex items-center gap-2 w-full " >
                               <p className={`text-xs text-${getDetails(ce)?.color}-600 w-1/4 flex justify-end`}
                               > {getDetails(ce)?.method}
