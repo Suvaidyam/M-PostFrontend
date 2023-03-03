@@ -15,6 +15,7 @@ const TabsBody = () => {
 
   const [apiResponse, setApiResponse] = useState({});
   const [isLoading, setLoading] = useState(false);
+  // console.log("topBarData", topBarData)
 
   const onSendClick = async () => {
 
@@ -24,8 +25,8 @@ const TabsBody = () => {
       url: `${process.env.REACT_APP_BASEURL}/history`,
       data:{
         workspace_id:workSpace_Id,
-        url:topBarData.url,
-        method: topBarData.method
+        request_id:topBarData._id,
+        details: topBarData
       }
     })
       .then((res) => {
