@@ -22,12 +22,10 @@
     "react-icons": "^4.7.1",
     "react-loader-spinner": "^5.3.4",
     "react-progress-stepper": "^0.2.2",
-    "react-redux": "^8.0.5",
     "react-resizable-element": "^0.1.5",
     "react-responsive-modal": "^6.4.1",
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",
-    "redux": "^4.2.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "web-vitals": "^2.1.4"
   },

@@ -7,20 +7,7 @@ import { DataContext } from "../../Context/DataProvider";
 
 const Navbar = ({setTab,tab}) => {
   const {workSpaceopen, setworkSpaceopen}=useContext(DataContext)
-  // const [open, setopen] = useState(false);
-
-  // let menuRef = useRef();
-  // useEffect(() => {
-  //   let handler = (e) => {
-  //     if (!menuRef.current.contains(e.target)) {
-  //       setopen(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handler);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handler);
-  //   };
-  // });
+  
   return (
     <>
       <div className="flex gap-8 relative " 

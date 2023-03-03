@@ -19,7 +19,9 @@ const DataProvider = ({ children }) => {
   const [changeAction, setchangeAction] = useState('');
   const [url, setUrl] = useState('');
   const [tabsList, setTabsList] = useState([]);
+   // collection active tabs
   const [currentActive, setCurrentActive] = useState('');
+     // environment active tabs
   const [currentActiveEnv, setCurrentActiveEnv] = useState('');
   // workspce id provide to filtter to all task
   const [workSpaceId, setWorkSpaceId] = useState({});
@@ -29,44 +31,12 @@ const DataProvider = ({ children }) => {
     <>
       <DataContext.Provider
         value={{
-          setTopBarData,
-          topBarData,
-          tabData,
-          setTabData,
-          paramsData,
-          setParamsData,
-          headersData,
-          setHeadersData,
-          jsonText,
-          setJsonText,
-          collEdit,
-          setCollEdit,
-          colId,
-          setcolId,
-          setMsg,
-          Msg,
-          error,
-          setError,
-          status, 
-          setStatus,
-          responseData,
-          setResponseData,
-          SetEnviroment,
-          enviroment,
-          changeAction,
-          setchangeAction,
-          url, 
-          setUrl,
-          setWorkSpaceId,
-          workSpaceId,
-          workSpaceopen,
-          setworkSpaceopen,
-          tabsList,
-          setTabsList,
-          currentActive,
-          setCurrentActive,
-          currentActiveEnv,
-           setCurrentActiveEnv
+          setTopBarData, topBarData, tabData, setTabData,  paramsData, setParamsData,
+          headersData, setHeadersData, jsonText, setJsonText, collEdit, setCollEdit, 
+          colId, setcolId, setMsg, Msg, error, setError, status, setStatus, responseData,
+          setResponseData, SetEnviroment, enviroment, changeAction, setchangeAction, url, 
+          setUrl, setWorkSpaceId, workSpaceId, workSpaceopen,  setworkSpaceopen, tabsList,
+          setTabsList, currentActive, setCurrentActive, currentActiveEnv, setCurrentActiveEnv
         }}
       >
         {children}

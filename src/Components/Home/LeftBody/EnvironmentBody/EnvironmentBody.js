@@ -5,10 +5,8 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { IoCheckmarkDoneCircleOutline, IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import MoreAction from "../MoreAction/MoreAction";
 import { DataContext } from "../../../Context/DataProvider";
-// import { CollectionLoader } from "../../../Loader/Loader";
 import EditCollection from "../MoreAction/EditCollection";
 // import { Scrollbars } from 'react-custom-scrollbars';
-// import { OpenEnv } from "../../../../Redux/Action/OpenEnv";
 
 const EnvironmentBody = () => {
     const [newEnviroment, setNewEnviroment] = useState([]);
@@ -17,9 +15,6 @@ const EnvironmentBody = () => {
         setCurrentActive, setError, workSpaceId, setStatus,currentActiveEnv,setCurrentActiveEnv } = useContext(DataContext);
     const global_variable = newEnviroment?.filter(e => e.name === 'Globals')
     const local_variable = newEnviroment?.filter(e => e.name !== 'Globals')
-    // let showEnv_id = useSelector((state) => state.OpenEnvReducer);
-    // let tabs = useSelector((state) => state.TabsReducer);
-
 
     const postData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
@@ -70,7 +65,6 @@ const EnvironmentBody = () => {
     const handleRequest = (e) => {
         if (tabsList.findIndex((f) => f._id === e._id) < 0) {
             setTabsList([...tabsList, e]);
-            // dispatch(OpenEnv(e._id));
             setCurrentActive(e._id);
         }
     };

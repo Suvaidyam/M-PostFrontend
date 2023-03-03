@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { useSelector } from "react-redux";
 import TabsBody from "./TabsBody/TabsBody";
 import TabsList from "./TabsList/TabsList";
 import { DataContext } from "../../Context/DataProvider";
@@ -8,8 +7,6 @@ import EnvironmentTab from "./EnvironmentTab/EnvironmentTab";
 import { BallTriangle } from 'react-loader-spinner'
 
 const Tabs = () => {
-  // let tabs = useSelector((state) => state.TabsReducer);
-  // let add = useSelector((state) => state.AddRequestReducer);
   const [loader , setLoader] =useState(true)
   const { workSpaceId,currentActive, tabsList} = useContext(DataContext);
 
