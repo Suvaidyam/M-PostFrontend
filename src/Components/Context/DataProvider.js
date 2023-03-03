@@ -16,7 +16,7 @@ const DataProvider = ({ children }) => {
   const [error, setError] = useState(false);
   const [status, setStatus] = useState('200');
   const [responseData, setResponseData] = useState([]);
-  const [changeAction, setchangeAction] = useState('');
+  const [changeAction, setchangeAction] = useState(false);
   const [url, setUrl] = useState('');
   const [tabsList, setTabsList] = useState([]);
    // collection active tabs
