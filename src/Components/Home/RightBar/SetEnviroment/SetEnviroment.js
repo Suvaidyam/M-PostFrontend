@@ -32,7 +32,6 @@ const SetEnviroment = () => {
           setLoader(false);
         }, 1000);
         setNewEnviroment(res.data.environment);
-        console.log(res.data.environment)
       })
       .catch((err) => {
         console.log(err);
@@ -99,7 +98,6 @@ const SetEnviroment = () => {
               </div>
               <Scrollbars className="w-full h-[120px] min-h-[120px]" >
               {local.map((e) => (
-                  <>
                     <div key={e._id}>
                       {e.name !== "Globals" ?  (
                         <>
@@ -126,7 +124,7 @@ const SetEnviroment = () => {
                         </>
                       ):null}
                     </div>
-                  </>
+                 
                 ))}
               </Scrollbars>
             </div>
@@ -176,7 +174,6 @@ const SetEnviroment = () => {
               </div>
               <Scrollbars className="w-full h-[120px] min-h-[120px]" >
                 {global.map((e) => (
-                  <>
                     <div key={e._id}>
                       {e.name === "Globals" ? (
                         <>
@@ -199,7 +196,6 @@ const SetEnviroment = () => {
                         </>
                       ) : null}
                     </div>
-                  </>
                 ))}
               </Scrollbars>
             </div>
