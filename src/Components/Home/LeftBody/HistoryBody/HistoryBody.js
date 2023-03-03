@@ -21,6 +21,7 @@ const HistoryBody = () => {
     })
       .then((res) => {
         setHistory(res.data.history);
+        console.log(res.data.history)
       })
       .catch((err) => {
         console.log(err);
@@ -47,6 +48,7 @@ const HistoryBody = () => {
         setMsg(res.data.message);
         setStatus(res.status);
         setError(true);
+        
       })
       .catch((err) => {
         console.log(err);
