@@ -11,7 +11,6 @@ import { BsSearch } from "react-icons/bs";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import Profile from './Profile/Profile'
-import { useSelector } from 'react-redux'
 import { motion } from 'framer-motion';
 import { DataContext } from '../Context/DataProvider'
 
@@ -19,7 +18,6 @@ const Header = ({setTab,tab}) => {
   const {url , setMsg,setError } =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
 const [Profileurl, setProfileUrl] = useState(null)
-const items = useSelector((state) => state.ProfileReducer.url);
 
 
 
@@ -43,7 +41,6 @@ const getImg =()=>{
 useEffect(() => {
 return () => {
   getImg()
-  setProfileUrl(items)
 }
 },[url])
 
