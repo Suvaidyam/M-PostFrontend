@@ -4,7 +4,7 @@ import Http from "../../../../Services/http";
 import {GrFormClose} from 'react-icons/gr'
 
 const EditCollection = ({apiUrl}) => {
-  const {setCollEdit ,colId, setchangeAction ,setStatus, setMsg,setError} = useContext(DataContext);
+  const {setCollEdit ,colId, setchangeAction, changeAction ,setStatus, setMsg,setError} = useContext(DataContext);
   const [name, setname] = useState('')
   const PutData=()=>{
     Http({
@@ -19,7 +19,7 @@ const EditCollection = ({apiUrl}) => {
         setStatus(res.status);
         setError(true)
         setCollEdit(false)
-        setchangeAction("B")
+        setchangeAction(!changeAction)
         
       })
       .catch((err) => {

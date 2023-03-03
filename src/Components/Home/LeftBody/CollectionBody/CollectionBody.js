@@ -103,7 +103,7 @@ const CollectionBody = () => {
                 setMsg(res.data.message);
                 setStatus(res.status);
                 setError(true);
-                setchangeAction("E");
+                setchangeAction(!changeAction);
             })
             .catch((err) => {
                 setMsg(err.response.data.message);

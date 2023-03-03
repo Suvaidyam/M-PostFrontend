@@ -28,7 +28,7 @@ const EnvironmentBody = () => {
             }
         })
             .then((res) => {
-                // setchangeAction('A')
+                setchangeAction(!changeAction)
                 setMsg(res.data.message);
                 setStatus(res.status);
                 setError(true)

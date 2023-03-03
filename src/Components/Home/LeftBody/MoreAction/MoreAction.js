@@ -3,7 +3,7 @@ import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
 
 const MoreAction = ({collection}) => {
-  const {collEdit, setCollEdit,colId, setchangeAction , setStatus,
+  const {collEdit, setCollEdit,colId, setchangeAction , changeAction, setStatus,
     setMsg,setError,workSpaceId} = useContext(DataContext);
  
   const deleteData = () => {
@@ -15,7 +15,7 @@ const MoreAction = ({collection}) => {
         setMsg(res.data.message);
         setStatus(res.status);
         setError(true) 
-        setchangeAction("C")      
+        setchangeAction(!changeAction)      
       })
       .catch((err) => {
         setMsg(err.response.data.message);
@@ -34,11 +34,11 @@ const MoreAction = ({collection}) => {
         type: "request",
         parent: colId._id,
         workspace_id:workSpace_Id,
-        details: { method: "GET", url: "" },
+        details: { method: "get", url: "" },
       }
     })
       .then((res) => {
-        setchangeAction("D")
+        setchangeAction(!changeAction)
         setMsg(res.data.message);
         setStatus(res.status);
         setError(true)        
