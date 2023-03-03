@@ -125,7 +125,7 @@ const TabsList = () => {
                 </p>
                 <p className="flex items-center text-xs  h-full">{e.name}</p>
               </div>
-              <RxDotFilled className="text-2xl text-blue group-hover:hidden block" />
+              <RxDotFilled className="text-2xl text-blue-500 group-hover:hidden block" />
               <IoIosClose
                 className="text-2xl cursor-pointer hidden group-hover:block"
                 onClick={() => handleTabClose(e)}

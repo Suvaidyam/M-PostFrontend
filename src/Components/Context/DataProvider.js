@@ -21,9 +21,9 @@ const DataProvider = ({ children }) => {
   const [tabsList, setTabsList] = useState([]);
    // collection active tabs
   const [currentActive, setCurrentActive] = useState('');
-     // environment active tabs
+   // environment active tabs
   const [currentActiveEnv, setCurrentActiveEnv] = useState('');
-  // workspce id provide to filtter to all task
+   // workspce id provide to filtter to all task
   const [workSpaceId, setWorkSpaceId] = useState({});
   const [workSpaceopen, setworkSpaceopen] = useState(false);
 
