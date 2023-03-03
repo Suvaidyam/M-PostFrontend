@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
@@ -8,7 +8,12 @@ const BodyForm = () => {
 
   const [data, setData] = React.useState(tabData.details.body);
 
-  setJsonText(data);
+  useEffect(() => {
+    return () => {
+      setJsonText(data);
+    }
+  }, [data])
+  
   const handleChange = (newCode) => {
     try {
       newCode = JSON.parse(newCode);

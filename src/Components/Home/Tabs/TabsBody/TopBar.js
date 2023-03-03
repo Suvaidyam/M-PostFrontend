@@ -46,7 +46,6 @@ const TopBar = ({ onSendClick }) => {
         setError(true)
       });
   };
-  setTopBarData(data);
   const getData = () => {
     let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
     Http({
@@ -68,8 +67,10 @@ const TopBar = ({ onSendClick }) => {
   });
   useEffect(() => {
     return () => {
+      setTopBarData(data);
       setData({ ...data, url: data?.url });
       getData();
+
     };
   }, []);
 
