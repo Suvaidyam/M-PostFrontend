@@ -131,8 +131,7 @@ const CollectionBody = () => {
                             <div className="w-full h-[80vh] min-h-[70vh]  scrollbar-hide overflow-y-scroll">
                                 {newarr?.map((e) => (
                                     <div key={e._id} className="border-b">
-                                        <div
-                                            className={`w-full h-8 ${e.open === true ? "bg-gray-200" : null
+                                        <div className={` h-8 ${e.open === true ? "bg-gray-200" : null
                                                 }  flex items-center 
                                   relative px-2 cursor-pointer hover:bg-gray-200 group`} >
                                             <div className="flex items-center gap-2 text-gray-700" >

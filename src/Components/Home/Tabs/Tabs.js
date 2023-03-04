@@ -49,7 +49,7 @@ const Tabs = () => {
         />
         </div>
         </>:<>
-        <div className="w-full h-full flex flex-col justify-center items-center gap-7">
+        <div className="w-full h-full flex flex-col justify-center items-center gap-7 bg-white">
           <img className="w-36" src={logo} alt="" />
           <p className="text-sm bg-slate-200 rounded-sm px-5 font-medium py-2  text-gray-500 ">Create a new request</p>
           <div className="flex">
