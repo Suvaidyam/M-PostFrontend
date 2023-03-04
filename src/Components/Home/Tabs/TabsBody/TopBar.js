@@ -10,8 +10,8 @@ import VariableValue from "./VariableValue";
 
 const TopBar = ({ onSendClick }) => {
   const REGEX = /({{.*?}})/g;
-  const { jsonText, tabData, setTopBarData, headersData,setStatus,
-     paramsData,setMsg,setError } = useContext(DataContext);
+  const { jsonText, tabData, setTopBarData, headersData, setStatus,
+    paramsData, setMsg, setError } = useContext(DataContext);
   const [data, setData] = useState(tabData.details);
   const [open, setopen] = useState(false);
   const [isLoding, setIsLoding] = useState(false);
@@ -23,7 +23,7 @@ const TopBar = ({ onSendClick }) => {
       method: "put",
       data: {
         details: {
-          url: data.url,
+          url: data?.url,
           method: data.method.toLowerCase(),
           body: jsonText,
           headers: getHeadersAndParams(headersData),
@@ -76,7 +76,7 @@ const TopBar = ({ onSendClick }) => {
 
   return (
     <>
-  
+
       <div className="w-full flex h-full  items-center  px-3 relative ">
         {/* dropdown */}
         <div className="   w-28 h-9 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
@@ -85,22 +85,23 @@ const TopBar = ({ onSendClick }) => {
             onChange={(e) => {
               setData({ ...data, method: e.target.value });
             }}
+            defaultValue={data?.method.toUpperCase()}
           >
-            <option value="GET" selected={data?.method?.toUpperCase() === "GET"}>
+            <option value="GET" >
               GET
             </option>
             <option
               value="POST"
-              selected={data?.method?.toUpperCase() === "POST"}
+
             >
               POST
             </option>
-            <option value="PUT" selected={data?.method?.toUpperCase() === "PUT"}>
+            <option value="PUT" >
               PUT
             </option>
             <option
               value="DELETE"
-              selected={data?.method?.toUpperCase() === "DELETE"}
+
             >
               DELETE
             </option>
@@ -127,7 +128,7 @@ const TopBar = ({ onSendClick }) => {
                   <div key={i} className="text-[#1D4ED8] group z-50">
                     <span className='text-xs font-semibold cursor-pointer'>{word}</span>
                     {/* hover and show variable */}
-                    <div className="hidden group-hover:block"><VariableValue data={word}/></div>
+                    <div className="hidden group-hover:block"><VariableValue data={word} /></div>
                   </div>
                 );
               } else {
