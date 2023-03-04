@@ -34,7 +34,7 @@ const MoreAction = ({collection}) => {
         type: "request",
         parent: colId._id,
         workspace_id:workSpace_Id,
-        details: { method: "get", url: "" },
+        details: { method: "GET", url: "" },
       }
     })
       .then((res) => {

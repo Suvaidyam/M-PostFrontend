@@ -14,7 +14,7 @@ const Navbar = ({setTab,tab}) => {
       // ref={menuRef}
       >
         <Link
-          to="/workSpace/collection"
+          to="/workSpace"
           className="flex items-center gap-2"
          
         >

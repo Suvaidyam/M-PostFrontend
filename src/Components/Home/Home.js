@@ -12,7 +12,9 @@ import LeftBody from "./LeftBody/LeftBody";
 const Home = () => {
 
   const [tab, setTab] = useState('workspace');
-  const [currentNav, setcurrentNav] = useState('Collection');
+  const activeNav = localStorage.getItem("currentNav")
+  const [currentNav, setcurrentNav] = useState(activeNav? activeNav: "Collection");
+  localStorage.setItem("currentNav", currentNav)
   return (
     <>
       <div className="w-full h-screen ">
