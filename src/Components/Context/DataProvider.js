@@ -24,7 +24,7 @@ const DataProvider = ({ children }) => {
    // environment active tabs
   const [currentActiveEnv, setCurrentActiveEnv] = useState('');
    // workspce id provide to filtter to all task
-  const [workSpaceId, setWorkSpaceId] = useState({});
+  const [workSpaceId, setWorkSpaceId] = useState(JSON.parse(localStorage.getItem('workSpace')));
   const [workSpaceopen, setworkSpaceopen] = useState(false);
 
   return (
