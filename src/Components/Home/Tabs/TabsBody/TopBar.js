@@ -65,9 +65,9 @@ const TopBar = ({ onSendClick }) => {
   isEnv.map((e) => {
     return (data.url = data?.url?.replace(`{{${e.variable}}}`, e.value));
   });
+  setTopBarData(data);
   useEffect(() => {
     return () => {
-      setTopBarData(data);
       setData({ ...data, url: data?.url });
       getData();
 
