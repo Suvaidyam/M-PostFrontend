@@ -3,7 +3,7 @@ import { LineWave } from "react-loader-spinner";
 import ErrorScreen from "./ErrorScreen";
 import { useState, useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
-
+import { Scrollbars } from "react-custom-scrollbars";
 import "./Tabs.css";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
@@ -62,7 +62,7 @@ const Response = ({ apiResponse, isLoading }) => {
         <ErrorScreen />
       ) : (
         <>
-          <div className="w-full h-full bg-white border ">
+          <div className="w-full h-full bg-white border overflow-hidden">
             {isLoading ? (
               <div className="flex items-center justify-center  pt-12">
                 <LineWave
@@ -80,7 +80,8 @@ const Response = ({ apiResponse, isLoading }) => {
               </div>
             ) : (
               <>
-                <div className="flex justify-between w-full">
+                <div className="w-full h-full ">
+                <div className="flex justify-between w-full h-[10%]">
                   {/* Show this part in tabs - Body and Headers */}
                   <div className="px-2 flex items-center  py-1 gap-5">
                     <span
@@ -131,7 +132,7 @@ const Response = ({ apiResponse, isLoading }) => {
                   </div>
                 </div>
                 {header === true ? (
-                  <div className="w-full mt-1">
+                  <div className="w-full mt-1 h-[89%]">
                     <div className="w-full flex">
                       <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
                         Key
@@ -152,11 +153,13 @@ const Response = ({ apiResponse, isLoading }) => {
                     ))}
                   </div>
                 ) : null}
-                <div className="px-2   ">
+                <div className="px-2 h-[90%]">
                   {body === true ? (
-                    <div className=" font-semibold ">
+                      <Scrollbars className="h-full">
+                    <div className="h-full font-semibold ">
                       <CodeMirror
                         height="auto"
+                        className="pb-2"
                         value={
                           data.status === 500
                             ? data.data
@@ -166,7 +169,9 @@ const Response = ({ apiResponse, isLoading }) => {
                         extensions={[javascript({ jsx: true })]}
                       />
                     </div>
+                    </Scrollbars>
                   ) : null}
+                </div>
                 </div>
               </>
             )}

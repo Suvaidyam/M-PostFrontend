@@ -79,32 +79,15 @@ const TopBar = ({ onSendClick }) => {
 
       <div className="w-full flex h-full  items-center  px-3 relative ">
         {/* dropdown */}
-        <div className="   w-28 h-9 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
+        <div className="w-28 h-10 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
           <select
             className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none "
-            onChange={(e) => {
-              setData({ ...data, method: e.target.value });
-            }}
-            defaultValue={data?.method.toUpperCase()}
-          >
-            <option value="GET" >
-              GET
-            </option>
-            <option
-              value="POST"
-
-            >
-              POST
-            </option>
-            <option value="PUT" >
-              PUT
-            </option>
-            <option
-              value="DELETE"
-
-            >
-              DELETE
-            </option>
+            onChange={(e) => { setData({ ...data, method: e.target.value });  }}
+            defaultValue={data?.method.toUpperCase()} >
+            <option value="GET" > GET </option>
+            <option value="POST" > POST </option>
+            <option value="PUT" > PUT </option>
+            <option value="DELETE" > DELETE </option>
           </select>
         </div>
 
@@ -113,7 +96,7 @@ const TopBar = ({ onSendClick }) => {
           <input
             placeholder="Entet Request URL"
             type="url"
-            className="text-xs font-semibold px-2 h-9 w-full border-gray-300 border
+            className="text-xs font-semibold px-2 h-10 w-full border-gray-300 border
              bg-white focus:outline-none"
             onChange={(e) => {
               setData({ ...data, url: e.target.value });
@@ -138,9 +121,9 @@ const TopBar = ({ onSendClick }) => {
           </div>
         </div>
         {/* button */}
-        <div className="h-9">
+        <div className="h-10">
           <button
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-4 rounded-r-md "
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 text-sm px-4 rounded-r-md "
             onClick={onSendClick}
           >
             SEND

@@ -65,18 +65,16 @@ const TabsBody = () => {
   return (
     <>
       <div className=" h-[81.5vh] mx-1 ">
-        <div className="h-[8vh] w-full bg-white shadow-sm flex flex-col items-center">
+        <div className="h-[9vh] w-full bg-white shadow-sm flex flex-col items-center">
           <TopBar onSendClick={onSendClick} />
         </div>
 
-        <div className="w-full h-[73.5vh] flex flex-col justify-between ">
+        <div className="w-full h-[72vh] flex flex-col justify-between ">
          <div className="h-auto">
             <QuearyTabs />
          </div>
-          <div className="bg-white border-t  overflow-y-scroll scrollbar-hide h-full ">
-            <Scrollbars className="w-full">
+          <div className="bg-white border-t  h-full ">
               <Response apiResponse={apiResponse} isLoading={isLoading} />
-            </Scrollbars>
           </div>
         </div>
       </div>
