@@ -75,7 +75,7 @@ return () => {
   return (
     <>
      <div className="w-full h-[10vh] min-h-[56px] shadow-md bg-white z-50">
-        <div className="w-full h-full  flex justify-between items-center px-4 max-w-[1830px] mx-auto">
+        <div className="w-full h-full  flex justify-between items-center px-4 ">
           <div className="w-full h-full flex items-center gap-8">
             {/* Logo */}
             <div ><img src={Vector} alt=""  className='w-4/5'/></div>
@@ -84,7 +84,7 @@ return () => {
           </div>
           <div className="flex gap-5 items-center">
             {/* search */}
-            <div className='cursor-pointer hidden lg:block'><SearchMenu/></div>
+            <div className='cursor-pointer hidden lg:block min-w-[200px]'><SearchMenu/></div>
            <div className="block lg:hidden">
            <div className='cursor-pointer flex items-center justify-center w-8 h-8 border rounded-full'>
               <BsSearch/>

@@ -30,7 +30,7 @@ const LoginForm = ({openForgetPopUp,setOpenForgetPopUp}) => {
         sessionStorage.setItem("token", res.data.token);
         if (res.data.token) {
           setTimeout(() => {
-            navigate("/workSpace/collection");
+            navigate("/workSpace");
             setError(false)
           }, 2000);
           let token = res.data.token;
