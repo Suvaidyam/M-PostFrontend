@@ -55,6 +55,11 @@ const TabsList = () => {
     setTimeout(() => {
       if (tabsList.length) {
         setCurrentActive(tabsList[index ? index - 1 : 0]._id);
+        // close tabs set data active tabs
+        tabsList.map(e=>(
+          e._id===tabsList[index ? index - 1 : 0]._id &&
+          setTabData(e)
+        ))
       } else {
         setCurrentActive(null);
       }
