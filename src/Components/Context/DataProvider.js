@@ -25,7 +25,6 @@ const DataProvider = ({ children }) => {
 
    let abc = localStorage.getItem("currentActive")
    const [currentActive, setCurrentActive] = useState(abc?JSON.parse(abc):'');
-   console.log("abc",abc);
    localStorage.setItem("currentActive", JSON.stringify(currentActive))
    // environment active tabs
   const [currentActiveEnv, setCurrentActiveEnv] = useState('');

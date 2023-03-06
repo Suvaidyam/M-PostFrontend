@@ -4,15 +4,12 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 
 const BodyForm = () => {
-  const { tabData, setJsonText } = useContext(DataContext);
+  const { tabData, setJsonText,currentActive } = useContext(DataContext);
+  const locTabList = JSON.parse(localStorage.getItem('tabsList'))
+  const activeData = locTabList.filter(e=>e._id===currentActive)
+  const [data, setData] = React.useState(tabData?.details?.body || activeData[0]?.details?.body);
 
-  const [data, setData] = React.useState(tabData.details.body);
-
-  // useEffect(() => {
-  //   return () => {
-      setJsonText(data);
-  //   }
-  // }, [data])
+   setJsonText(data);
   
   const handleChange = (newCode) => {
     try {

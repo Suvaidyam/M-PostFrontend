@@ -10,9 +10,11 @@ import VariableValue from "./VariableValue";
 
 const TopBar = ({ onSendClick }) => {
   const REGEX = /({{.*?}})/g;
-  const { jsonText, tabData, setTopBarData, headersData, setStatus,
+  const { jsonText, tabData, setTopBarData, headersData, setStatus,currentActive,
     paramsData, setMsg, setError } = useContext(DataContext);
-  const [data, setData] = useState(tabData.details);
+    const locTabList = JSON.parse(localStorage.getItem('tabsList'))
+   const activeData = locTabList.filter(e=>e._id===currentActive)
+  const [data, setData] = useState(tabData?.details || activeData[0].details);
   const [open, setopen] = useState(false);
   const [isLoding, setIsLoding] = useState(false);
   const [isEnv, setIsEnv] = useState([]);
