@@ -8,11 +8,11 @@ const BodyForm = () => {
 
   const [data, setData] = React.useState(tabData.details.body);
 
-  useEffect(() => {
-    return () => {
+  // useEffect(() => {
+  //   return () => {
       setJsonText(data);
-    }
-  }, [data])
+  //   }
+  // }, [data])
   
   const handleChange = (newCode) => {
     try {

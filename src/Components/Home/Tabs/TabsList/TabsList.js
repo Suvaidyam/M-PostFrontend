@@ -145,8 +145,7 @@ const TabsList = () => {
         </div>
         {/* ===========environment selected ===========*/}
         <div className="w-[20%] border-l border-b flex justify-center items-center gap-2 relative">
-          <select
-            className="w-full h-full outline-none text-sm pl-2"
+          <select className="w-full h-full outline-none text-sm pl-2"
            onChange={(e) => setCurrentActiveEnv(e.target.value)}
           >
             <option value="null" className={`w-full text-sm`}>

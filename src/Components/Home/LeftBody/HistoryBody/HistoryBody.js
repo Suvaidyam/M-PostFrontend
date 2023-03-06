@@ -12,6 +12,7 @@ const HistoryBody = () => {
   const [History, setHistory] = useState([]);
   const {setStatus, setMsg, setError,setTabData,setCurrentActive,setTabsList,tabsList} = useContext(DataContext);
   // const TodayHistory = History?.filter(e => e.created_At === new Date())
+  console.log(History)
  
   const getData = () => {
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));

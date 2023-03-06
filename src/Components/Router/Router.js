@@ -5,10 +5,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from "./Protected/Protected";
 import Register from "../Register/Register";
 import DataProvider from "../Context/DataProvider";
-import CollectionBody from "../Home/LeftBody/CollectionBody/CollectionBody";
-import ApiBody from "../Home/LeftBody/ApiBody/ApiBody";
-import EnvironmentBody from "../Home/LeftBody/EnvironmentBody/EnvironmentBody";
-import HistoryBody from "../Home/LeftBody/HistoryBody/HistoryBody";
 import SnackBar from "../Home/Tabs/TabsBody/SnackBar";
 
 const Router = () => {
