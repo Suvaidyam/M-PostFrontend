@@ -22,7 +22,9 @@ const TabsList = () => {
   } = useContext(DataContext);
   const [newEnviroment, setNewEnviroment] = useState([]);
   const local_variable = newEnviroment?.filter((e) => e.name !== "Globals");
-  const [recentTablength, setrecentTablength] = useState(0);
+  let storeData = sessionStorage.getItem("recentTablength");
+  const [recentTablength, setrecentTablength] = useState(storeData?parseInt(storeData): 0);
+  sessionStorage.setItem("recentTablength",recentTablength)
 
   const newReqObj = {
     name: "Untitled Request",

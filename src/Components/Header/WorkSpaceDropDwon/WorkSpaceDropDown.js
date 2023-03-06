@@ -75,7 +75,7 @@ const WorkSpaceDropDwon = () => {
                 <div key={e._id}><CollectionLoader/></div>:
                 <p  
                   className={`text-xs flex items-center gap-2 cursor-pointer hover:bg-gray-200 py-1.5 px-2
-                   ${workSpaceId._id===e._id && 'bg-gray-300'} group`} onClick={()=>{handelSelectedWorkSpace(e)}}>
+                   ${workSpaceId?._id===e._id && 'bg-gray-300'} group`} onClick={()=>{handelSelectedWorkSpace(e)}}>
                   <BiGroup className="text-lg text-gray-500" />
                   {e.name}<MdDelete className="hidden group-hover:block ml-auto text-lg hover:text-red-600
                   text-gray-600"/>
