@@ -167,15 +167,11 @@ const CollectionBody = () => {
                                                     <div key={ce._id}>
                                                         {" "}
                                                         {e._id === ce.parent ? (
-                                                            <div className="w-full relative group flex cursor-pointer hover:bg-gray-200 py-1 px-2">
-                                                                <div
-                                                                    className="flex items-center gap-2 w-full "
-                                                                    onClick={() => handleRequest(ce)}
-                                                                >
-                                                                    <p
-                                                                        className={`text-xs text-${getDetails(ce?.details).color
-                                                                            }-600 w-[70px] min-w-[70px] flex justify-end`}
-                                                                    >
+                                                            <div className="w-full relative group flex cursor-pointer hover:bg-gray-200 py-1 px-2" 
+                                                            onClick={() => handleRequest(ce)}>
+                                                                <div className="flex items-center gap-2 w-full " >
+                                                                    <p className={`text-xs text-${getDetails(ce?.details).color
+                                                                            }-600 w-[70px] min-w-[70px] flex justify-end`} >
                                                                         {getDetails(ce?.details).method}
                                                                     </p>
                                                                     <p className="text-xs font-normal truncate">
