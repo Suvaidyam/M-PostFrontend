@@ -18,7 +18,9 @@ const DataProvider = ({ children }) => {
   const [responseData, setResponseData] = useState([]);
   const [changeAction, setchangeAction] = useState(false);
   const [url, setUrl] = useState('');
-  const [tabsList, setTabsList] = useState([]);
+  let activetabs = localStorage.getItem('tabsList')
+  const [tabsList, setTabsList] = useState(activetabs? JSON.parse(activetabs):[]);
+  localStorage.setItem("tabsList", JSON.stringify(tabsList))
    // collection active tabs
   const [currentActive, setCurrentActive] = useState('');
    // environment active tabs
@@ -28,7 +30,7 @@ const DataProvider = ({ children }) => {
   const [workSpaceopen, setworkSpaceopen] = useState(false);
 
   return (
-    <>
+    <div>
       <DataContext.Provider
         value={{
           setTopBarData, topBarData, tabData, setTabData,  paramsData, setParamsData,
@@ -41,8 +43,9 @@ const DataProvider = ({ children }) => {
       >
         {children}
       </DataContext.Provider>
-    </>
+    </div>
   );
 };
+
 
 export default DataProvider;
