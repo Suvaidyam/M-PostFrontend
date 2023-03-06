@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 import { useState } from "react";
 
 export const DataContext = createContext("");
@@ -22,7 +22,11 @@ const DataProvider = ({ children }) => {
   const [tabsList, setTabsList] = useState(activetabs? JSON.parse(activetabs):[]);
   localStorage.setItem("tabsList", JSON.stringify(tabsList))
    // collection active tabs
-  const [currentActive, setCurrentActive] = useState('');
+
+   let abc = localStorage.getItem("currentActive")
+   const [currentActive, setCurrentActive] = useState(abc?JSON.parse(abc):'');
+   console.log("abc",abc);
+   localStorage.setItem("currentActive", JSON.stringify(currentActive))
    // environment active tabs
   const [currentActiveEnv, setCurrentActiveEnv] = useState('');
    // workspce id provide to filtter to all task

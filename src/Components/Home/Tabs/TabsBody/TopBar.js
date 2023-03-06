@@ -83,7 +83,7 @@ const TopBar = ({ onSendClick }) => {
           <select
             className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none "
             onChange={(e) => { setData({ ...data, method: e.target.value });  }}
-            defaultValue={data?.method.toUpperCase()} >
+            defaultValue={data?.method?.toUpperCase()} >
             <option value="GET" > GET </option>
             <option value="POST" > POST </option>
             <option value="PUT" > PUT </option>
