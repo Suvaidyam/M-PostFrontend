@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
@@ -6,26 +6,25 @@ import { javascript } from "@codemirror/lang-javascript";
 const BodyForm = () => {
   const { tabData, setJsonText } = useContext(DataContext);
 
-  const [data, setData] = React.useState(tabData.details.body);
+  const data = tabData.details.body
 
   useEffect(() => {
     return () => {
       setJsonText(data);
     }
   }, [data])
-  
-  const handleChange = (newCode) => {
+
+  const handleChange = (e) => {
     try {
-      newCode = JSON.parse(newCode);
+      const newCode = JSON.parse(e);
       setJsonText(newCode);
-      setData(newCode);
-    } catch (error) {}
+    }
+    catch (error) { }
   };
 
   return (
     <div className=" mb-2 font-semibold  scrollbar-hide  bg-white  ">
       <CodeMirror
-        className=" "
         height="127px"
         value={JSON.stringify(data, 0, 3)}
         extensions={[javascript({ jsx: true })]}
