@@ -11,7 +11,7 @@ import VariableValue from "./VariableValue";
 const TopBar = ({ onSendClick }) => {
   const REGEX = /({{.*?}})/g;
   const { jsonText, tabData, setTopBarData, headersData, setStatus,currentActive,
-    paramsData, setMsg, setError } = useContext(DataContext);
+    paramsData, setMsg, setError , changeAction, setchangeAction} = useContext(DataContext);
     const locTabList = JSON.parse(localStorage.getItem('tabsList'))
    const activeData = locTabList.filter(e=>e._id===currentActive)
   const [data, setData] = useState(tabData?.details || activeData[0].details);
@@ -41,6 +41,8 @@ const TopBar = ({ onSendClick }) => {
         setTimeout(() => {
           setIsLoding(false);
         }, 1000);
+        setchangeAction(!changeAction)
+
       })
       .catch((err) => {
         setMsg(err.response.data.message);

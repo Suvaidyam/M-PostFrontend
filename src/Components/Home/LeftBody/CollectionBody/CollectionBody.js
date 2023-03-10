@@ -54,7 +54,7 @@ const CollectionBody = () => {
     useEffect(() => {
         return () => {
             getData();
-            // setchangeAction("F");
+            setchangeAction(!changeAction);
         };
     }, [changeAction, workSpaceId]);
 
