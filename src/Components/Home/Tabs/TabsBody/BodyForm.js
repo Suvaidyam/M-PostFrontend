@@ -7,18 +7,22 @@ const BodyForm = () => {
   const { tabData, setJsonText, currentActive } = useContext(DataContext);
   const locTabList = JSON.parse(localStorage.getItem('tabsList'))
   const activeData = locTabList.filter(e => e._id === currentActive)
-  const [data, setData] = React.useState(tabData?.details?.body || activeData[0]?.details?.body);
+  const [data, setData] = useState(tabData?.details?.body || activeData[0]?.details?.body);
 
   setJsonText(data);
-
-  const handleChange = (e) => {
-    try {
-      const newCode = JSON.parse(e);
-      setJsonText(newCode);
+  useEffect(() => {
+    return () => {
+      setJsonText(data);
     }
-    catch (error) { }
-  };
+  }, [data])
 
+  const handleChange = (newCode) => {
+    try {
+      newCode = JSON.parse(newCode);
+      setJsonText(newCode);
+      setData(newCode);
+    } catch (error) { }
+  };
   return (
     <div className=" mb-2 font-semibold  scrollbar-hide  bg-white  ">
       <CodeMirror
