@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 
 const BodyForm = () => {
-  const { tabData, setJsonText, currentActive } = useContext(DataContext);
-  const locTabList = JSON.parse(localStorage.getItem('tabsList'))
-  const activeData = locTabList.filter(e => e._id === currentActive)
-  const [data, setData] = useState(tabData?.details?.body || activeData[0]?.details?.body);
+  const { tabData, setJsonText } = useContext(DataContext);
+  const data = tabData?.details?.body
 
-  setJsonText(data);
+
   useEffect(() => {
     return () => {
       setJsonText(data);
@@ -18,14 +16,15 @@ const BodyForm = () => {
 
   const handleChange = (newCode) => {
     try {
-      newCode = JSON.parse(newCode);
-      setJsonText(newCode);
-      setData(newCode);
+      let newCodee = JSON.parse(newCode);
+      setJsonText(newCodee);
+      // setData(newCode);
     } catch (error) { }
   };
   return (
     <div className=" mb-2 font-semibold  scrollbar-hide  bg-white  ">
       <CodeMirror
+        className=" "
         height="127px"
         value={JSON.stringify(data, 0, 3)}
         extensions={[javascript({ jsx: true })]}
