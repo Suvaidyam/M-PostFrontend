@@ -74,7 +74,7 @@ return () => {
   }
   return (
     <>
-     <div className="w-full h-[10vh] min-h-[56px] shadow-md bg-white z-50">
+     <div className="w-full h-[10vh] min-h-[56px] border-b-[1.5px] shadow-sm bg-white z-50">
         <div className="w-full h-full  flex justify-between items-center px-4 ">
           <div className="w-full h-full flex items-center gap-8">
             {/* Logo */}

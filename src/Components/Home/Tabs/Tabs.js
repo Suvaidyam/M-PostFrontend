@@ -35,7 +35,7 @@ const Tabs = () => {
           </div>
         ))}
         {loader===true?
-        <div className="flex items-center justify-center h-full w-full absolute bg-gray-100 z-50 top-0">
+        <div className="flex items-center justify-center h-full w-full absolute bg-gray-50 bg-opacity-60 z-50 top-0">
         <BallTriangle
           height={100}
           width={100}
