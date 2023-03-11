@@ -5,8 +5,8 @@ import { useState, useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 import { Scrollbars } from "react-custom-scrollbars";
 import "./Tabs.css";
-import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
+
+import ReactJson from 'react-json-view'
 
 const Response = ({ apiResponse, isLoading }) => {
   const { setResponseData } = useContext(DataContext);
@@ -81,97 +81,93 @@ const Response = ({ apiResponse, isLoading }) => {
             ) : (
               <>
                 <div className="w-full h-full ">
-                <div className="flex justify-between w-full h-[10%]">
-                  {/* Show this part in tabs - Body and Headers */}
-                  <div className="px-2 flex items-center  py-1 gap-5">
-                    <span
-                      className={`text-sm font-medium cursor-pointer
+                  <div className="flex justify-between w-full h-[10%]">
+                    {/* Show this part in tabs - Body and Headers */}
+                    <div className="px-2 flex items-center  py-1 gap-5">
+                      <span
+                        className={`text-sm font-medium cursor-pointer
                      ${body === true ? "text-blue-600" : "text-gray-800 "}`}
-                      onClick={BodyTab}
-                    >
-                      Body
-                    </span>
-                    <span
-                      className={`text-sm font-medium cursor-pointer
+                        onClick={BodyTab}
+                      >
+                        Body
+                      </span>
+                      <span
+                        className={`text-sm font-medium cursor-pointer
                      ${header === true ? "text-blue-600" : "text-gray-800 "}`}
-                      onClick={HeaderTab}
-                    >
-                      Headers
-                    </span>
-                  </div>
-                  <div className="px-2 flex items-center gap-5">
-                    <span className="text-gray-800 text-sm font-medium">
-                      <AiOutlineGlobal />
-                    </span>
-                    <pre>
-                      <span className="text-gray-800 text-sm font-medium">
-                        <b>Status:</b>
-                        {getStatusElem(apiResponse)}
+                        onClick={HeaderTab}
+                      >
+                        Headers
                       </span>
-                      <span className="text-gray-800 text-sm font-medium">
-                        <b> Time:</b>
-                        <span className="text-orange-600 ">
-                          {apiResponse.resTime}ms
-                        </span>
-                      </span>
-                      <span className="text-gray-800 text-sm font-medium">
-                        <b> Size:</b>
-                        <span className="text-blue-600 ">
-                          {apiResponse.resSize}B
-                        </span>
-                      </span>
-                    </pre>
-                    <button
-                      className="text-gray-800 text-sm font-medium hover:text-blue-600"
-                      onClick={() => {
-                        setResponseData(data);
-                      }}
-                    >
-                      SaveResponse
-                    </button>
-                  </div>
-                </div>
-                {header === true ? (
-                  <div className="w-full mt-1 h-[89%]">
-                    <div className="w-full flex">
-                      <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
-                        Key
-                      </div>
-                      <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
-                        Value
-                      </div>
                     </div>
-                    {getResponseHeaderElem(headers).map((e) => (
+                    <div className="px-2 flex items-center gap-5">
+                      <span className="text-gray-800 text-sm font-medium">
+                        <AiOutlineGlobal />
+                      </span>
+                      <pre>
+                        <span className="text-gray-800 text-sm font-medium">
+                          <b>Status:</b>
+                          {getStatusElem(apiResponse)}
+                        </span>
+                        <span className="text-gray-800 text-sm font-medium">
+                          <b> Time:</b>
+                          <span className="text-orange-600 ">
+                            {apiResponse.resTime}ms
+                          </span>
+                        </span>
+                        <span className="text-gray-800 text-sm font-medium">
+                          <b> Size:</b>
+                          <span className="text-blue-600 ">
+                            {apiResponse.resSize}B
+                          </span>
+                        </span>
+                      </pre>
+                      <button
+                        className="text-gray-800 text-sm font-medium hover:text-blue-600"
+                        onClick={() => {
+                          setResponseData(data);
+                        }}
+                      >
+                        SaveResponse
+                      </button>
+                    </div>
+                  </div>
+                  {header === true ? (
+                    <div className="w-full mt-1 h-[89%]">
                       <div className="w-full flex">
-                        <div className="w-1/2 border py-1.5 px-2 text-sm ">
-                          {e.key}
+                        <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
+                          Key
                         </div>
-                        <div className="w-1/2 border py-1.5 px-2 text-sm ">
-                          {e.props.children[1]}
+                        <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
+                          Value
                         </div>
                       </div>
-                    ))}
-                  </div>
-                ) : null}
-                <div className="px-2 h-[90%]">
-                  {body === true ? (
-                      <Scrollbars className="h-full">
-                    <div className="h-full font-semibold ">
-                      <CodeMirror
-                        height="auto"
-                        className="pb-2"
-                        value={
-                          data.status === 500
-                            ? data.data
-                            : JSON.stringify(data, null, 3)
-                        }
-                        editable={false}
-                        extensions={[javascript({ jsx: true })]}
-                      />
+                      {getResponseHeaderElem(headers).map((e) => (
+                        <div className="w-full flex">
+                          <div className="w-1/2 border py-1.5 px-2 text-sm ">
+                            {e.key}
+                          </div>
+                          <div className="w-1/2 border py-1.5 px-2 text-sm ">
+                            {e.props.children[1]}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    </Scrollbars>
                   ) : null}
-                </div>
+                  <div className="px-2 h-[90%]">
+                    {body === true ? (
+                      <Scrollbars className="h-full">
+                        <div className="h-full break-all ">
+                          <ReactJson
+
+                            collapsed={true}
+                            src={{
+
+                              data
+                            }} />
+                        </div>
+                      </Scrollbars>
+                    ) : null}
+                  </div>
                 </div>
               </>
             )}
