@@ -159,7 +159,7 @@ const Response = ({ apiResponse, isLoading }) => {
                         <div className="h-full break-all ">
                           <ReactJson
 
-                            collapsed={true}
+
                             src={{
 
                               data
