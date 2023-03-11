@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import SearchMenu from "../../../SearchMenu/SearchMenu";
 import { HiChevronRight } from 'react-icons/hi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
+import { BiChevronDown } from 'react-icons/bi'
 import { BsThreeDots } from 'react-icons/bs'
 import http from "../../../../Services/http";
 import Scrollbars from "react-custom-scrollbars";
@@ -9,11 +10,17 @@ import { DataContext } from "../../../Context/DataProvider";
 
 const HistoryBody = () => {
 
+  const { setStatus, setMsg, setError, setTabData, setCurrentActive, setTabsList, tabsList, changeAction } = useContext(DataContext);
   const [History, setHistory] = useState([]);
-  const {setStatus, setMsg, setError,setTabData,setCurrentActive,setTabsList,tabsList} = useContext(DataContext);
   // const TodayHistory = History?.filter(e => e.created_At === new Date())
-  console.log(History)
- 
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const todyaDate = today.toLocaleDateString('en-IN', options).split('/').reverse().join('-');
+  const yesterdayDate = yesterday.toLocaleDateString('en-IN', options).split('/').reverse().join('-');
+
   const getData = () => {
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
     http({
@@ -27,19 +34,15 @@ const HistoryBody = () => {
         console.log(err);
       });
   };
-  useEffect(() => {
-    return () => {
-      getData();
-    };
-  }, [ ]);
 
-  // const toggle = (e) => {
-  //   e.toggle = !e.toggle;
-  //   setHistory([...History]);
-  // };
+
+  const toggle = (e) => {
+    e.toggle = !e.toggle;
+    setHistory([...History]);
+  };
 
   // delete history Api 
-  const deleteHistory = (historyId)=>{
+  const deleteHistory = (historyId) => {
     http({
       method: "delete",
       url: `${process.env.REACT_APP_BASEURL}/history/${historyId}`,
@@ -48,7 +51,7 @@ const HistoryBody = () => {
         setMsg(res.data.message);
         setStatus(res.status);
         setError(true);
-        
+
       })
       .catch((err) => {
         console.log(err);
@@ -66,19 +69,25 @@ const HistoryBody = () => {
     };
     return { method, color: colors[method.toUpperCase()] };
   };
-  const handleRequest = (e) => {
-    if (tabsList.findIndex((f) => f._id === e._id) < 0) {
-        setTabsList([...tabsList, e]);
-        setCurrentActive(e._id);
-        setTabData(e);
-    }
-};
+  const handleRequest = (ce) => {
+    if (tabsList.findIndex((f) => f._id === ce._id) < 0) {
+      setTabsList([...tabsList, ce]);
+      setCurrentActive(ce._id);
+      setTabData(ce);
+  }
+  };
+  useEffect(() => {
+    return () => {
+      getData();
+    };
+  }, []);
+
   return (
     <>
       <div className="w-full h-full  ">
         <div className="">
           <div className="p-3">
-          <SearchMenu />
+            <SearchMenu />
           </div>
           <>
             <Scrollbars className="w-full h-[83vh] min-h-[71vh] scrollbar-hide overflow-y-scroll ">
@@ -87,28 +96,31 @@ const HistoryBody = () => {
                   <div className={`w-full h-7 flex items-center relative px-2 cursor-pointer
                    hover:bg-gray-200 group`} >
                     <div className="flex items-center gap-2 text-gray-700" >
-                      <HiChevronRight className="cursor-pointer" />
-                      <p className="text-sm">{e.created_At}</p>
+                      {e.toggle ? <BiChevronDown className="cursor-pointer" onClick={()=>toggle(e)}/>
+                      :<HiChevronRight className="cursor-pointer" onClick={()=>toggle(e)}/>}
+                      
+                      <p className="text-sm">{e._id === todyaDate ? 'Today' : e._id===yesterdayDate?'Yesterday':e._id}</p>
                     </div>
                     <p className=" absolute right-2 flex items-center gap-2">
-                      <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block" onClick={()=>deleteHistory(e._id)}/>
+                      <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block" onClick={() => deleteHistory(e.created_At)} />
                       <BsThreeDots className="cursor-pointer hidden group-hover:block" />
                     </p>
                   </div>
                   <div className=" w-full">
-                    {[e.details]?.map((ce) => (
-                      <div key={ce._id}>
-                        {true && (
+                    {e.data?.map((ce) => (
+                      <div key={ce?._id}>
+                        {e.toggle && (
                           <div className="w-full relative group flex cursor-pointer hover:bg-gray-200 
-                           py-1 px-2"  onClick={() => handleRequest(e)} >
+                           py-1 px-2"  onClick={() => handleRequest(ce)} >
                             <div className="flex items-center gap-2 w-full " >
-                              <p className={`text-xs text-${getDetails(ce)?.color}-600 w-1/4 flex justify-end`}
-                              > {getDetails(ce)?.method}
+                              <p className={`text-xs text-${getDetails(ce.details)?.color}-600 w-1/4 flex justify-end`}
+                              > {getDetails(ce.details)?.method}
+                                {/* {console.log(ce)} */}
                               </p>
-                              <p className="text-xs font-normal truncate"> {ce.url} </p>
+                              <p className="text-xs font-normal truncate"> {ce?.details?.url} </p>
                             </div>
                             <p className=" absolute right-2 flex items-center gap-2" >
-                              <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block"  onClick={()=>deleteHistory(e._id)} />
+                              <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block" onClick={() => deleteHistory(ce.created_At)} />
                               <BsThreeDots className="cursor-pointer hidden group-hover:block" />
                             </p>
                           </div>)}
