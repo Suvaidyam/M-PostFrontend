@@ -100,7 +100,7 @@ const TabsList = () => {
       getData();
     };
   }, [changeAction, workSpaceId, tabsList]);
-
+console.log(tabsList)
   return (
     <>
       <div className="w-full h-[8vh] mt-0.5 bg-white flex">
@@ -116,7 +116,7 @@ const TabsList = () => {
                 w-44 min-w-44 px-1 h-full group cursor-pointer`}
               onClick={() => setCurrentActive(e._id)}
             >
-              <div className="flex items-center  w-44 min-w-44 h-full gap-2" onClick={() => setTabData(e)}>
+              <div className="flex items-center  w-[142px] min-w-44 h-full gap-2" onClick={() => setTabData(e)}>
                 <p
                   className={`text-xs text-${getDetails(e?.details).color}-600`}
                 >
@@ -130,7 +130,7 @@ const TabsList = () => {
                     <>{getDetails(e?.details).method}</>
                   )}
                 </p>
-                <p className="flex items-center text-xs  h-full">{e.name}</p>
+                <p className="flex items-center text-xs  h-full truncate">{e?.name || e.details.url}</p>
               </div>
               <RxDotFilled className="text-2xl text-blue-500 group-hover:hidden block" />
               <IoIosClose
