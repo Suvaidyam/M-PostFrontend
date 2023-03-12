@@ -20,6 +20,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
+    "react-json-view": "^1.21.3",
     "react-loader-spinner": "^5.3.4",
     "react-progress-stepper": "^0.2.2",
     "react-resizable-element": "^0.1.5",
