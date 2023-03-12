@@ -7,7 +7,7 @@ import ApiBody from "./ApiBody/ApiBody";
 const LeftBody = ({ currentNav }) => {
   return (
     <>
-      <div className="w-full h-full ">
+      <div className="w-[78%] h-full ">
         {currentNav === "Collection" && <CollectionBody />}
         {currentNav === "APIs" && <ApiBody />}
         {currentNav === "Enviroment" && <EnviromentBody />}

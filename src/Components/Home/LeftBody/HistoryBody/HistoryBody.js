@@ -10,9 +10,9 @@ import { DataContext } from "../../../Context/DataProvider";
 
 const HistoryBody = () => {
 
-  const { setStatus, setMsg, setError, setTabData, setCurrentActive, setTabsList, tabsList, changeAction } = useContext(DataContext);
+  const { setStatus, setMsg, setError, setTabData, setCurrentActive, setTabsList, tabsList, currentActive } = useContext(DataContext);
   const [History, setHistory] = useState([]);
-  // const TodayHistory = History?.filter(e => e.created_At === new Date())
+  // Date Format
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
@@ -20,7 +20,7 @@ const HistoryBody = () => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
   const todyaDate = today.toLocaleDateString('en-IN', options).split('/').reverse().join('-');
   const yesterdayDate = yesterday.toLocaleDateString('en-IN', options).split('/').reverse().join('-');
-
+// History get data store in history state
   const getData = () => {
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
     http({
@@ -95,7 +95,7 @@ const HistoryBody = () => {
               {History?.map((e) => (
                 <div key={e._id} className="border-b">
                   <div className={`w-full h-7 flex items-center justify-between relative px-2 cursor-pointer
-                   hover:bg-gray-200 group`} >
+                    hover:bg-blue-100 bg-opacity-60 group ${e.toggle ?'': 'bg-gray-200'}`} >
                     <div className="flex items-center gap-2 text-gray-700" onClick={()=>toggle(e)} >
                       {e.toggle ? <HiChevronRight className="cursor-pointer" />
                       :< BiChevronDown className="cursor-pointer" />}
@@ -103,25 +103,34 @@ const HistoryBody = () => {
                       <p className="text-sm">{e._id === todyaDate ? 'Today' : e._id===yesterdayDate?'Yesterday':e._id}</p>
                     </div>
                     <p className="flex items-center gap-2">
-                      <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block" onClick={() => deleteHistory(e.created_At)} />
+                      <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block text-red-600" onClick={() => deleteHistory(e.created_At)} />
                       <BsThreeDots className="cursor-pointer hidden group-hover:block" />
                     </p>
                   </div>
-                  <div className=" w-full">
+                  <div className=" w-full pt-1">
                     {e.data?.map((ce) => (
-                      <div key={ce?._id} className='w-full'>
+                      <div key={ce?._id} className='w-full group relative'>
+                        {/* tooltip  */}
+                        {/* <div className="w-full hidden group-hover:block absolute top-7 right-0 z-10 
+                        text-xs ">
+                          <p className="flex justify-center ">
+                            <span className="bg-black bg-opacity-80 py-1 rounded-sm font-medium text-white px-2">{ce?.details?.url}</span>
+                            </p> 
+                          </div> */}
                         {e.toggle ?'': (
-                          <div className="w-full h-6 relative group flex justify-between cursor-pointer hover:bg-gray-200 
-                           py-1 px-2"  onClick={() => handleRequest(ce)} >
-                            <div className="flex items-center gap-2 w-full group-hover:w-[85%]" >
-                              <p className={`text-xs text-${getDetails(ce.details)?.color}-600 w-1/4 min-w-[73px] flex justify-end`}
+                      
+                          <div className={`w-full h-6 relative group flex justify-between hover:bg-blue-200 bg-opacity-60 
+                          py-1 px-2 ${currentActive===ce._id?'bg-blue-200':''}`}   >
+                            <div className="flex items-center gap-2 w-full group-hover:w-[68%] cursor-pointer" onClick={() => handleRequest(ce)}>
+                              <p className={`text-xs text-${getDetails(ce.details)?.color}-600 w-1/4 min-w-[74px] flex justify-end`}
                               > {getDetails(ce.details)?.method}
-                                {/* {console.log(ce)} */}
                               </p>
                               <p className="text-xs font-normal truncate"> {ce?.details?.url} </p>
                             </div>
-                            <p className=" flex items-center gap-2 group-hover:w-[15%]" >
-                              <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block " onClick={() => deleteHistory(ce.created_At)} />
+                            <p className=" flex items-center gap-2 group-hover:w-[32%]" >
+                              <span className="hidden group-hover:block text-xs text-green-500">
+                                {ce.created_At}</span>
+                              <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block text-red-600" onClick={() => deleteHistory(ce.created_At)} />
                               <BsThreeDots className="cursor-pointer hidden group-hover:block " />
                             </p>
                           </div>)}
