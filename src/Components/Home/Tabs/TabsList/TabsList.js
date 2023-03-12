@@ -100,7 +100,6 @@ const TabsList = () => {
       getData();
     };
   }, [changeAction, workSpaceId, tabsList]);
-console.log(tabsList)
   return (
     <>
       <div className="w-full h-[8vh] mt-0.5 bg-white flex">
@@ -130,7 +129,7 @@ console.log(tabsList)
                     <>{getDetails(e?.details).method}</>
                   )}
                 </p>
-                <p className="flex items-center text-xs  h-full truncate">{e?.name || e.details.url}</p>
+                <p className="flex items-center text-xs  h-full truncate">{e?.name || e.details?.url}</p>
               </div>
               <RxDotFilled className="text-2xl text-blue-500 group-hover:hidden block" />
               <IoIosClose
