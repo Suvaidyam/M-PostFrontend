@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
+import { createTheme } from '@uiw/codemirror-themes';
+import { tags as t } from '@lezer/highlight';
 
 const BodyForm = () => {
   const { tabData, setJsonText, currentActive } = useContext(DataContext);
@@ -9,6 +11,15 @@ const BodyForm = () => {
   const activeData = locTabList.filter(e => e._id === currentActive)
   const data = tabData?.details?.body || activeData[0]?.details?.body;
 
+  const myTheme = createTheme({
+    theme: 'light',
+
+    styles: [
+
+      { tag: [t.string, t.special(t.brace)], color: '#CD4B16' },
+
+    ],
+  });
 
   useEffect(() => {
     return () => {
@@ -24,9 +35,9 @@ const BodyForm = () => {
     } catch (error) { }
   };
   return (
-    <div className=" mb-2 font-semibold  scrollbar-hide  bg-white  ">
+    <div className=" mb-2 font-mono  scrollbar-hide  bg-white  ">
       <CodeMirror
-        className=" "
+        theme={myTheme}
         height="127px"
         value={JSON.stringify(data, 0, 3)}
         extensions={[javascript({ jsx: true })]}

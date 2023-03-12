@@ -156,9 +156,13 @@ const Response = ({ apiResponse, isLoading }) => {
                   <div className="px-2 h-[90%]">
                     {body === true ? (
                       <Scrollbars className="h-full">
-                        <div className="h-full break-all ">
+                        <div className="h-full break-all  font-mono">
                           <ReactJson
 
+                            name={false}
+                            displayDataTypes={false}
+                            displayObjectSize={false}
+                            enableClipboard={false}
 
                             src={{
 
