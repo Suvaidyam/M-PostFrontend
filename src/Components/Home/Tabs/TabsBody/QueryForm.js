@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import AddRow from "./AddRow";
 
-const QueryForm = ({ data, setData }) => {
+const QueryForm = ({ data, setData, params }) => {
+  // console.log("params", params);
   
   const [rows, addRows] = useState([0]);
   return (
@@ -33,7 +34,7 @@ const QueryForm = ({ data, setData }) => {
                 data={data}
                 setData={setData}
                 {...{variable:'Key',value:'Value',description:'Description',type:'text',
-                variableN:'key',valueN:'value',descriptionN:'description'}}
+                variableN:'key',valueN:'value',descriptionN:'description', params}}
               />
             ))}
           </tbody>

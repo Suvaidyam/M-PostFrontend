@@ -3,6 +3,7 @@ import { useState } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 
 const AddRow = ({
+  params,
   addRows,
   rowId,
   data,
@@ -16,8 +17,7 @@ const AddRow = ({
   descriptionN,
   
 }) => {
-  const { tabData } = useContext(DataContext);
-  // const [query, setQuery] = useState(tabData.details);
+
 // console.log(query)
   const [checkCheckBox, setCheckCheckBox] = useState(false);
   const [hide, setHide] = useState(false);
@@ -109,7 +109,7 @@ const AddRow = ({
             placeholder={variable}
             name={variableN}
             onChange={onTextChenge}
-            // defaultValue={envirValue.key}
+            // defaultValue={query.key}
           />
         </th>
         <th className=" p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">

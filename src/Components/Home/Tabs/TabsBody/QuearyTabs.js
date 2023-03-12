@@ -12,7 +12,6 @@ import { Resizable } from "react-resizable-element";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -46,11 +45,23 @@ function a11yProps(index) {
 export default function QuearyTabs() {
   let activeQueryTab = sessionStorage.getItem("queryTab")
   const [value, setValue] = useState(activeQueryTab? parseInt(activeQueryTab): 0);
-  const { paramsData, setParamsData, headersData, setHeadersData, tabsList } =
+  const { paramsData, setParamsData, headersData, setHeadersData, tabsList ,tabData, currentActive  } =
     useContext(DataContext);
+    // console.log(paramsData);
+    const locTabList = JSON.parse(localStorage.getItem('tabsList'))
+    const activeData = locTabList.filter(e => e._id === currentActive)
+    const paramsBackendData = tabData?.details?.query || activeData[0].details.query;
+    const headersBackendData = tabData?.details?.headers || activeData[0].details.headers;
+
+    // let params = Object.entries(paramsBackendData).map(([key,value])=>({key,value}))
+    let params = ''
+    // console.log("params(query)",params);
+    // console.log("headers",headersBackendData);
+
   sessionStorage.setItem("queryTab", value);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    console.log(value);
   };
 
   return (
@@ -98,7 +109,9 @@ export default function QuearyTabs() {
         <Resizable direction="bottom" >
           <div className="bg-white h-full overflow-hidden overflow-y-scroll">
           <TabPanel value={value} index={0}>
-            <QueryForm data={paramsData} setData={setParamsData} />
+            <QueryForm data={paramsData} setData={setParamsData} 
+            // {...{params}} 
+            />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <QueryForm data={headersData} setData={setHeadersData} />
