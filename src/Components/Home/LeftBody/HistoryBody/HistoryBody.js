@@ -10,7 +10,8 @@ import { DataContext } from "../../../Context/DataProvider";
 
 const HistoryBody = () => {
 
-  const { setStatus, setMsg, setError, setTabData, setCurrentActive, setTabsList, tabsList, currentActive } = useContext(DataContext);
+  const { setStatus, setMsg, setError, setTabData, setCurrentActive, setTabsList, tabsList, currentActive ,
+    changeAction} = useContext(DataContext);
   const [History, setHistory] = useState([]);
   // Date Format
   const today = new Date();
@@ -81,7 +82,7 @@ const HistoryBody = () => {
     return () => {
       getData();
     };
-  }, []);
+  }, [changeAction]);
 
   return (
     <>
@@ -108,8 +109,9 @@ const HistoryBody = () => {
                     </p>
                   </div>
                   <div className=" w-full pt-1">
-                    {e.data?.map((ce) => (
+                    {e.data.reverse()?.map((ce) => (
                       <div key={ce?._id} className='w-full group relative'>
+                        {console.log(ce)}
                         {/* tooltip  */}
                         {/* <div className="w-full hidden group-hover:block absolute top-7 right-0 z-10 
                         text-xs ">
