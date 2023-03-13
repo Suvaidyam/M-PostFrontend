@@ -10,7 +10,7 @@ import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 import { Scrollbars } from "react-custom-scrollbars";
 
 const TabsBody = () => {
-  const { setMsg, setError, topBarData, paramsData, headersData, jsonText } =
+  const { setMsg, setError, topBarData, paramsData, headersData, jsonText,changeAction, setchangeAction } =
     useContext(DataContext);
 
   const [apiResponse, setApiResponse] = useState({});
@@ -31,6 +31,7 @@ const TabsBody = () => {
     })
       .then((res) => {
         console.log(res)
+        setchangeAction(!changeAction)
       })
       .catch((err) => {
         console.log(err);

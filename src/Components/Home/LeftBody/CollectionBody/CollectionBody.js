@@ -25,6 +25,7 @@ const CollectionBody = () => {
         tabsList,
         setTabsList,
         setCurrentActive,
+        currentActive,
         setTabData,
     } = useContext(DataContext);
     const [loader, setLoader] = useState(true);
@@ -123,7 +124,7 @@ const CollectionBody = () => {
                             {" "}
                             {newarr?.map(
                                 (e) =>
-                                   <CollectionLoader key={e._id} />
+                                    <CollectionLoader key={e._id} />
                             )}{" "}
                         </>
                     ) : (
@@ -131,73 +132,56 @@ const CollectionBody = () => {
                             <div className="w-full h-[80vh] min-h-[70vh]  scrollbar-hide overflow-y-scroll">
                                 {newarr?.map((e) => (
                                     <div key={e._id} className="border-b">
-                                        <div className={` h-8 ${e.open === true ? "bg-gray-200" : null
-                                                }  flex items-center 
-                                  relative px-2 cursor-pointer hover:bg-gray-200 group`} >
+                                        <div className={` h-8 ${e.open &&"bg-gray-200"
+                                            }  flex items-center 
+                                              relative px-2 cursor-pointer hover:bg-gray-200 group`} >
                                             <div className="flex items-center gap-2 text-gray-700" >
                                                 {e.toggle ? (
-                                                    <BiCaretDown className="cursor-pointer" onClick={() => toggle(e)}/>
+                                                    <BiCaretDown className="cursor-pointer" onClick={() => toggle(e)} />
                                                 ) : (
                                                     <BiCaretRight className="cursor-pointer" onClick={() => toggle(e)} />
                                                 )}
                                                 <FcFolder className="text-xl" />{" "}
                                                 <p className="text-sm truncate">{e.name}</p>
                                             </div>
-                                            <p className="hidden group-hover:block absolute right-2"
-                                                onClick={() => setcolId(e)}
-                                            >
-                                                {" "}
-                                                <BiDotsHorizontalRounded
-                                                    className="cursor-pointer"
-                                                    onClick={() => open(e)}
-                                                />
+                                            <p className="hidden group-hover:block absolute right-2" onClick={() => setcolId(e)} >
+                                                <BiDotsHorizontalRounded className="cursor-pointer" onClick={() => open(e)} />
                                                 {/* moreaction */}
-                                            </p>{" "}
+                                            </p>
                                             {e.open ? (
                                                 <div className="absolute z-50 right-3 top-9">
-                                                    <MoreAction {...{ collection: "collection" }} />{" "}
+                                                    <MoreAction {...{ collection: "collection" }} />
                                                 </div>
                                             ) : null}
                                         </div>
                                         {/* request */}
                                         {e.toggle ? (
                                             <div className=" w-full">
-                                                {" "}
                                                 {collection?.map((ce) => (
                                                     <div key={ce._id}>
-                                                        {" "}
                                                         {e._id === ce.parent ? (
-                                                            <div className="w-full relative group flex cursor-pointer hover:bg-gray-200 py-1 px-2" 
-                                                            onClick={() => handleRequest(ce)}>
-                                                                <div className="flex items-center gap-2 w-full " >
+                                                            <div className={`w-full relative group flex cursor-pointer hover:bg-gray-200 py-1 px-2 
+                                                            ${currentActive===ce._id && 'bg-gray-200'}`} >
+                                                                <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
                                                                     <p className={`text-xs text-${getDetails(ce?.details).color
-                                                                            }-600 w-[70px] min-w-[70px] flex justify-end`} >
+                                                                        }-600 w-[70px] min-w-[70px] flex justify-end`} >
                                                                         {getDetails(ce?.details).method}
                                                                     </p>
                                                                     <p className="text-xs font-normal truncate">
-                                                                        {" "}
-                                                                        {ce.name}{" "}
+                                                                        {ce.name}
                                                                     </p>
                                                                 </div>
-                                                                <p
-                                                                    className="hidden group-hover:block absolute right-2"
-                                                                    onClick={() => setcolId(ce)}
-                                                                >
-                                                                    <BiDotsHorizontalRounded
-                                                                        className="cursor-pointer"
-                                                                        onClick={() => openRequest(ce)}
-                                                                    />
+                                                                <p className="hidden group-hover:block absolute right-2"
+                                                                    onClick={() => setcolId(ce)} >
+                                                                    <BiDotsHorizontalRounded className="cursor-pointer" onClick={() => openRequest(ce)} />
                                                                 </p>
                                                                 {/* moreaction */}
                                                                 {ce.openRequest ? (
                                                                     <div className="absolute z-50 right-3 top-9">
                                                                         <MoreAction {...{ collection: "collection" }} />
-                                                                    </div>
-                                                                ) : null}
-                                                            </div>
-                                                        ) : null}
-                                                    </div>
-                                                ))}
+                                                                    </div>) : null}
+                                                            </div>) : null}
+                                                    </div>))}
                                             </div>
                                         ) : null}
                                     </div>
@@ -207,7 +191,7 @@ const CollectionBody = () => {
                     )}
                 </div>
                 {collEdit === true
-                    ?  <EditCollection {...{ apiUrl: "collection" }} />:
+                    ? <EditCollection {...{ apiUrl: "collection" }} /> :
                     null}
             </div>
         </>

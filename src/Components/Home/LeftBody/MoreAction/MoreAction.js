@@ -4,7 +4,8 @@ import { DataContext } from "../../../Context/DataProvider";
 
 const MoreAction = ({ collection }) => {
   const { collEdit, setCollEdit, colId, setchangeAction, changeAction, setStatus,
-    setMsg, setError, workSpaceId } = useContext(DataContext);
+    setMsg, setError } = useContext(DataContext);
+    console.log(colId)
 
   const deleteData = () => {
     Http({
@@ -49,25 +50,21 @@ const MoreAction = ({ collection }) => {
         setError(true)
       });
   };
-  const moreaction = [
-    { name: 'Share', onclick: '' },
-    { name: 'Rename', onclick: () => setCollEdit(!collEdit), htmlFor: "name" },
-    { name: 'Add folder', onclick: '' },
-    { name: 'Add request', onclick: postData },
-    { name: 'Delete', onclick: deleteData }
-  ]
   return (
     <>
       <div className="w-48 border bg-gray-100 drop-shadow-md rounded-md">
-        <ul className="flex flex-col justify-center w-full py-1 ">
-          {moreaction.map(e => (
-            <label key={e.name} htmlFor={e.htmlFor} className="px-4 py-1.5 hover:bg-white
-           cursor-pointer last:hover:bg-red-500 last:hover:text-white text-sm font-normal "
-              onClick={e.onclick} >
-              {e.name}
-            </label>
-          ))}
-        </ul>
+        <div className="flex flex-col justify-center w-full py-1">
+          <div className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal "
+          >Share</div>
+          <label className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal" 
+          onClick={()=>setCollEdit(!collEdit)}  htmlFor='name'>Rename</label>
+          {colId.parent===null && <><div className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal"
+          >Add folder</div>
+          <div className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal"
+           onClick={postData}>Add request</div></>}
+          <div className="w-full px-4 py-1.5 hover:bg-red-500 cursor-pointer text-sm font-normal hover:text-white"
+           onClick={deleteData}>Delete</div>
+        </div>
       </div>
     </>
   );
