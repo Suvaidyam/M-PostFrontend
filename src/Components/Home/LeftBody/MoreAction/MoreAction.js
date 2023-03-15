@@ -5,8 +5,7 @@ import { DataContext } from "../../../Context/DataProvider";
 const MoreAction = ({ collection }) => {
   const { collEdit, setCollEdit, colId, setchangeAction, changeAction, setStatus,
     setMsg, setError } = useContext(DataContext);
-    console.log(colId)
-
+    
   const deleteData = () => {
     Http({
       url: `${process.env.REACT_APP_BASEURL}/${collection}/${colId._id}`,
@@ -58,7 +57,7 @@ const MoreAction = ({ collection }) => {
           >Share</div>
           <label className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal" 
           onClick={()=>setCollEdit(!collEdit)}  htmlFor='name'>Rename</label>
-          {colId.parent===null && <><div className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal"
+          {colId.type==='folder' && <><div className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal"
           >Add folder</div>
           <div className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal"
            onClick={postData}>Add request</div></>}
