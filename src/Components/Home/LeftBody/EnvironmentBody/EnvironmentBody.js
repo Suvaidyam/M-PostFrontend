@@ -7,6 +7,7 @@ import MoreAction from "../MoreAction/MoreAction";
 import { DataContext } from "../../../Context/DataProvider";
 import EditCollection from "../MoreAction/EditCollection";
 import { CollectionLoader } from "../../../Loader/Loader";
+import { useRef } from "react";
 // import { Scrollbars } from 'react-custom-scrollbars';
 
 const EnvironmentBody = () => {
@@ -16,6 +17,23 @@ const EnvironmentBody = () => {
         setCurrentActive, setError, workSpaceId, setStatus,currentActiveEnv,setCurrentActiveEnv } = useContext(DataContext);
     const global_variable = newEnviroment?.filter(e => e.name === 'Globals')
     const local_variable = newEnviroment?.filter(e => e.name !== 'Globals')
+    const [isOpen, setIsOpen] = useState(false);
+   
+    //============ close popup======
+    const popupRef = useRef();
+
+    useEffect(() => {
+        const handleClickOutside = (event)=> {
+            if (popupRef.current && !popupRef.current.contains(event.target)) {
+                setIsOpen(false); 
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [popupRef]);
 
     const postData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
@@ -73,6 +91,7 @@ const EnvironmentBody = () => {
     const openRequest = (ce) => {
         ce.openRequest = !ce.openRequest;
         setNewEnviroment([...newEnviroment]);
+        setIsOpen(true)
     };
     return (
         <div className="w-full">
@@ -119,10 +138,10 @@ const EnvironmentBody = () => {
                                             <BiDotsHorizontalRounded className="cursor-pointer" onClick={() => openRequest(ce)} />
                                         </p>
                                         {/* moreaction */}
-                                        {ce.openRequest ? (
-                                            <div className="absolute z-50 right-3 top-9">
+                                        {ce.openRequest ? isOpen &&
+                                            <div className="absolute z-50 right-3 top-9" ref={popupRef}>
                                                 <MoreAction {...{ collection: 'environment' }} />
-                                            </div>) : null}
+                                            </div> : null}
                                     </div>
                                 </div>))}
                             </div>

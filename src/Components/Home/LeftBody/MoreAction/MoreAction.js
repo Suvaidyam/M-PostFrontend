@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Http from "../../../../Services/http";
 import { DataContext } from "../../../Context/DataProvider";
 
-const MoreAction = ({ collection }) => {
+const MoreAction = ({ collection ,setIsOpen}) => {
   const { collEdit, setCollEdit, colId, setchangeAction, changeAction, setStatus,
     setMsg, setError } = useContext(DataContext);
     
@@ -16,6 +16,7 @@ const MoreAction = ({ collection }) => {
         setStatus(res.status);
         setError(true)
         setchangeAction(!changeAction)
+        setIsOpen(false)
       })
       .catch((err) => {
         setMsg(err.response.data.message);
@@ -42,6 +43,7 @@ const MoreAction = ({ collection }) => {
         setMsg(res.data.message);
         setStatus(res.status);
         setError(true)
+        setIsOpen(false)
       })
       .catch((err) => {
         setMsg(err.response.data.message);
@@ -54,11 +56,11 @@ const MoreAction = ({ collection }) => {
       <div className="w-48 border bg-gray-100 drop-shadow-md rounded-md">
         <div className="flex flex-col justify-center w-full py-1">
           <div className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal "
-          >Share</div>
+         onClick={()=>setIsOpen(false)} >Share</div>
           <label className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal" 
           onClick={()=>setCollEdit(!collEdit)}  htmlFor='name'>Rename</label>
           {colId.type==='folder' && <><div className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal"
-          >Add folder</div>
+         onClick={()=>setIsOpen(false)} >Add folder</div>
           <div className="w-full px-4 py-1.5 hover:bg-white cursor-pointer text-sm font-normal"
            onClick={postData}>Add request</div></>}
           <div className="w-full px-4 py-1.5 hover:bg-red-500 cursor-pointer text-sm font-normal hover:text-white"
