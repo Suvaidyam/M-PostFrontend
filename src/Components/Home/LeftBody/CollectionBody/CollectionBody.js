@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { FcFolder } from "react-icons/fc";
 import {
     BiCaretRight,
@@ -32,6 +32,27 @@ const CollectionBody = () => {
     const [collection, setcollection] = useState([]);
     let newarr = collection?.filter((e) => e.parent == null);
     const [arr, setArr] = useState(newarr);
+    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenRe, setIsOpenRe] = useState(false);
+   
+    //============ close popup======
+    const popupRef = useRef();
+
+    useEffect(() => {
+        const handleClickOutside = (event)=> {
+            if (popupRef.current && !popupRef.current.contains(event.target)) {
+                setIsOpen(false);
+                setIsOpenRe(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [popupRef]);
+
+    //============ get collection======
 
     const getData = () => {
         setLoader(true);
@@ -66,10 +87,12 @@ const CollectionBody = () => {
     const open = (e) => {
         e.open = !e.open;
         setArr([...arr]);
+        setIsOpen(true)
     };
     const openRequest = (ce) => {
         ce.openRequest = !ce.openRequest;
         setArr([...arr]);
+        setIsOpenRe(true)
     };
     const handleRequest = (e) => {
         if (tabsList.findIndex((f) => f._id === e._id) < 0) {
@@ -132,7 +155,7 @@ const CollectionBody = () => {
                             <div className="w-full h-[80vh] min-h-[70vh]  scrollbar-hide overflow-y-scroll">
                                 {newarr?.map((e) => (
                                     <div key={e._id} className="border-b">
-                                        <div className={` h-8 ${e.open &&"bg-gray-200"
+                                        <div className={` h-8 ${e.open && "bg-gray-200"
                                             }  flex items-center 
                                               relative px-2 cursor-pointer hover:bg-gray-200 group`} >
                                             <div className="flex items-center gap-2 text-gray-700" >
@@ -148,11 +171,9 @@ const CollectionBody = () => {
                                                 <BiDotsHorizontalRounded className="cursor-pointer" onClick={() => open(e)} />
                                                 {/* moreaction */}
                                             </p>
-                                            {e.open ? (
-                                                <div className="absolute z-50 right-3 top-9">
-                                                    <MoreAction {...{ collection: "collection" }} />
-                                                </div>
-                                            ) : null}
+                                            {e.open ? isOpen && <div ref={popupRef} className="absolute z-50 right-3 top-9">
+                                                <MoreAction {...{ collection: "collection",setIsOpen }} />
+                                            </div> : null}
                                         </div>
                                         {/* request */}
                                         {e.toggle ? (
@@ -161,7 +182,7 @@ const CollectionBody = () => {
                                                     <div key={ce._id}>
                                                         {e._id === ce.parent ? (
                                                             <div className={`w-full relative group flex cursor-pointer hover:bg-gray-200 py-1 px-2 
-                                                            ${currentActive===ce._id && 'bg-gray-200'}`} >
+                                                            ${currentActive === ce._id && 'bg-gray-200'}`} >
                                                                 <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
                                                                     <p className={`text-xs text-${getDetails(ce?.details).color
                                                                         }-600 w-[70px] min-w-[70px] flex justify-end`} >
@@ -176,10 +197,9 @@ const CollectionBody = () => {
                                                                     <BiDotsHorizontalRounded className="cursor-pointer" onClick={() => openRequest(ce)} />
                                                                 </p>
                                                                 {/* moreaction */}
-                                                                {ce.openRequest ? (
-                                                                    <div className="absolute z-50 right-3 top-9">
-                                                                        <MoreAction {...{ collection: "collection" }} />
-                                                                    </div>) : null}
+                                                                {ce.openRequest ? isOpenRe && <div ref={popupRef} className="absolute z-50 right-3 top-9">
+                                                                    <MoreAction {...{ collection: "collection" ,setIsOpen}} />
+                                                                </div> : null}
                                                             </div>) : null}
                                                     </div>))}
                                             </div>

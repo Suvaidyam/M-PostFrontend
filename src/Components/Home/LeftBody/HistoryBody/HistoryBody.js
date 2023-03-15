@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import SearchMenu from "../../../SearchMenu/SearchMenu";
 import { HiChevronRight } from 'react-icons/hi'
-import { RiDeleteBin6Line } from 'react-icons/ri'
+import { MdDelete } from 'react-icons/md'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsThreeDots } from 'react-icons/bs'
 import http from "../../../../Services/http";
 import Scrollbars from "react-custom-scrollbars";
 import { DataContext } from "../../../Context/DataProvider";
 import EditCollection from "../MoreAction/EditCollection";
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 const HistoryBody = () => {
 
   const { setStatus, setMsg, setError, setTabData, setCurrentActive, setTabsList, tabsList, currentActive,
-    changeAction ,collEdit,setchangeAction} = useContext(DataContext);
+    changeAction, collEdit, setchangeAction } = useContext(DataContext);
   const [History, setHistory] = useState([]);
   // Date Format
   const today = new Date();
@@ -109,8 +111,13 @@ const HistoryBody = () => {
 
                       <p className="text-sm">{e._id === todyaDate ? 'Today' : e._id === yesterdayDate ? 'Yesterday' : e._id}</p>
                     </div>
-                    <p className="flex items-center gap-2">
-                      <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block text-red-600" onClick={() => deleteHistory(e.created_At)} />
+                    <p className="flex items-center">
+                      <Tooltip title="Delete" arrow>
+                        <IconButton>
+                          <MdDelete className="cursor-pointer hidden group-hover:block
+                                 text-red-600 text-[16px]"  />
+                        </IconButton>
+                      </Tooltip>
                       <BsThreeDots className="cursor-pointer hidden group-hover:block" />
                     </p>
                   </div>
@@ -129,16 +136,21 @@ const HistoryBody = () => {
                           <div className={`w-full h-6 relative group flex justify-between hover:bg-blue-200 bg-opacity-60 
                           py-1 px-2 ${currentActive === ce._id ? 'bg-blue-200' : ''}`}   >
                             <div className="flex items-center gap-2 w-full group-hover:w-[77%] cursor-pointer" onClick={() => handleRequest(ce)}>
-                              <p className={`text-xs text-${getDetails(ce.details)?.color}-600 w-1/4 min-w-[74px] flex justify-end`}
+                              <div className={`text-xs text-${getDetails(ce.details)?.color}-600 w-1/4 min-w-[74px] flex justify-end`}
                               > {getDetails(ce.details)?.method}
-                              </p>
+                              </div>
                               <p className="text-xs font-normal truncate"> {ce?.details?.url} </p>
                             </div>
-                            <p className=" flex items-center gap-2 group-hover:w-[23%]" >
+                            <div className=" flex items-center group-hover:w-[23%]" >
                               <span className="hidden group-hover:block text-xs text-green-500">
                                 {ce.created_At}</span>
-                              <RiDeleteBin6Line className="cursor-pointer hidden group-hover:block text-red-600" onClick={() => deleteHistory(ce)} />
-                            </p>
+                              <Tooltip title="Delete" arrow>
+                                <IconButton>
+                                  <MdDelete className="cursor-pointer hidden group-hover:block
+                                 text-red-600 text-[16px]" onClick={() => deleteHistory(ce)} />
+                                </IconButton>
+                              </Tooltip>
+                            </div>
                           </div>)}
                       </div>
                     ))}

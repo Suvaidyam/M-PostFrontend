@@ -6,7 +6,7 @@ const LeftBar = ({ currentNav, setcurrentNav }) => {
   return (
     <>
       <div className="w-[22%] flex h-full">
-        <div className=" w-full min-w-[90px] px-1 flex flex-col h-full border-r-[1.5px] gap-1 ">
+        <div className=" w-full min-w-[89px] px-1 flex flex-col h-full border-r-[1.5px] gap-1 ">
           <div className={`w-full  flex flex-col items-center justify-center rounded  mt-1 py-3 text-xs gap-1
           cursor-pointer hover:bg-blue-200  transition-opacity hover:text-blue-600 ${currentNav === 'Collection' &&
             ' bg-[#E8EEFF] transition-opacity text-blue-500'}`} onClick={() => setcurrentNav('Collection')} >
