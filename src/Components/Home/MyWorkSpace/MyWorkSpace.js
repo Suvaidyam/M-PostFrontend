@@ -19,7 +19,7 @@ const MyWorkSpace = () => {
   return (
     <>
       <div className="w-full h-[8vh] flex justify-between items-center px-3">
-        <div className="text-sm font-medium truncate">
+        <div className="text-sm font-medium truncate text-gray-600">
           {workSpaceName ? (
             <>{workSpaceName}</>
           ) : (

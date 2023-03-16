@@ -6,8 +6,8 @@ const VariableValue = ({data}) => {
     
     return (
         <>
-            <div className="max-w-48 absolute top-7 bg-gray-100 drop-shadow-md p-3 rounded-md">
-                <div className="w-full h-full bg-gray-100">
+            <div className=" ">
+                <div className="w-full h-full">
                     {data.length===1?<>
                         <p className="text-black font-semibold flex items-center gap-2">
                         <BiCodeBlock className="text-xl text-blue-600" />url</p>
