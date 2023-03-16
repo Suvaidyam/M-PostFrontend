@@ -117,7 +117,7 @@ const TabsList = () => {
             >
               <div className="flex items-center  w-[142px] min-w-44 h-full gap-2" onClick={() => setTabData(e)}>
                 <p
-                  className={`text-xs text-${getDetails(e?.details).color}-600`}
+                  className={`text-[11px] font-semibold text-${getDetails(e?.details).color}-600`}
                 >
                   {getDetails(e?.details).method === "NA" ? (
                     e.type === "folder" ? (
@@ -129,7 +129,7 @@ const TabsList = () => {
                     <>{getDetails(e?.details).method}</>
                   )}
                 </p>
-                <p className="flex items-center text-xs  h-full truncate">{e?.name || e.details?.url}</p>
+                <p className="flex items-center text-xs text-gray-600 h-full truncate">{e?.name || e.details?.url}</p>
               </div>
               <RxDotFilled className="text-2xl text-blue-500 group-hover:hidden block" />
               <IoIosClose
@@ -144,7 +144,7 @@ const TabsList = () => {
             className="h-full flex items-center ml-1"
           >
             <AiOutlinePlus
-              className="cursor-pointer hover:bg-slate-200 w-8 h-8 p-2 rounded-md"
+              className="cursor-pointer hover:bg-slate-200 w-8 h-8 p-2 rounded-md text-gray-600"
               onClick={handleNewTab}
             />
           </motion.div>

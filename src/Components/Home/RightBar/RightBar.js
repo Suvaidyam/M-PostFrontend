@@ -33,7 +33,7 @@ const RightBar = () => {
               className="hover:bg-blue-200 w-8 h-8 flex justify-center items-center 
                              rounded-md cursor-pointer group"
             >
-              <BsCode className=" group-hover:text-blue-600" />
+              <BsCode className=" group-hover:text-blue-600 text-gray-600" />
             </motion.div>
           </div>
           <div className="flex flex-col gap-0.5">
@@ -41,23 +41,23 @@ const RightBar = () => {
               className="hover:bg-blue-200 w-8 h-8 flex justify-center items-center 
                              rounded-md cursor-pointer group"
             >
-              <BsCaretRight className=" group-hover:text-blue-600" />
+              <BsCaretRight className=" group-hover:text-blue-600 text-gray-600" />
             </div>
-            <p className="text-[10px] w-full flex justify-center">Runner</p>
+            <p className="text-[10px] w-full flex justify-center font-medium text-gray-600">Runner</p>
             <div
               className="hover:bg-blue-200 w-8 h-8 flex justify-center items-center 
                              rounded-md cursor-pointer group"
             >
-              <FiTrash2 className=" group-hover:text-blue-600" />
+              <FiTrash2 className=" group-hover:text-blue-600 text-gray-600" />
             </div>
-            <p className="text-[10px] w-full flex justify-center">Trash</p>
+            <p className="text-[10px] w-full flex justify-center font-medium text-gray-600">Trash</p>
             <div
               className="hover:bg-blue-200 w-8 h-8 flex justify-center items-center 
                              rounded-md cursor-pointer group"
             >
-              <BiHelpCircle className=" group-hover:text-blue-600" />
+              <BiHelpCircle className=" group-hover:text-blue-600 text-gray-600" />
             </div>
-            <p className="text-[10px] w-full flex justify-center">Help</p>
+            <p className="text-[10px] w-full flex justify-center font-medium text-gray-600">Help</p>
           </div>
         </div>
       </div>

@@ -22,7 +22,7 @@ const ModelBox = ({ set }) => {
                              }`}
         onClick={onOpenModal}
       >
-        <AiOutlineEye />
+        <AiOutlineEye className=" text-gray-600"/>
       </button>
       <Modal open={open} onClose={onCloseModal} center>
         <SetEnviroment />

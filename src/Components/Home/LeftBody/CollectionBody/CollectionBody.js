@@ -160,15 +160,15 @@ const CollectionBody = () => {
                                               relative px-2 cursor-pointer hover:bg-gray-200 group`} >
                                             <div className="flex items-center gap-2 text-gray-700" >
                                                 {e.toggle ? (
-                                                    <BiCaretDown className="cursor-pointer" onClick={() => toggle(e)} />
+                                                    <BiCaretDown className="cursor-pointer text-gray-500" onClick={() => toggle(e)} />
                                                 ) : (
-                                                    <BiCaretRight className="cursor-pointer" onClick={() => toggle(e)} />
+                                                    <BiCaretRight className="cursor-pointer text-gray-500" onClick={() => toggle(e)} />
                                                 )}
                                                 <FcFolder className="text-xl" />{" "}
                                                 <p className="text-sm truncate">{e.name}</p>
                                             </div>
                                             <p className="hidden group-hover:block absolute right-2" onClick={() => setcolId(e)} >
-                                                <BiDotsHorizontalRounded className="cursor-pointer" onClick={() => open(e)} />
+                                                <BiDotsHorizontalRounded className="cursor-pointer text-gray-600" onClick={() => open(e)} />
                                                 {/* moreaction */}
                                             </p>
                                             {e.open ? isOpen && <div ref={popupRef} className="absolute z-50 right-3 top-9">
@@ -184,11 +184,11 @@ const CollectionBody = () => {
                                                             <div className={`w-full relative group flex cursor-pointer hover:bg-gray-200 py-1 px-2 
                                                             ${currentActive === ce._id && 'bg-gray-200'}`} >
                                                                 <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
-                                                                    <p className={`text-xs text-${getDetails(ce?.details).color
+                                                                    <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
                                                                         }-600 w-[70px] min-w-[70px] flex justify-end`} >
                                                                         {getDetails(ce?.details).method}
                                                                     </p>
-                                                                    <p className="text-xs font-normal truncate">
+                                                                    <p className="text-xs text-gray-600 font-normal truncate">
                                                                         {ce.name}
                                                                     </p>
                                                                 </div>

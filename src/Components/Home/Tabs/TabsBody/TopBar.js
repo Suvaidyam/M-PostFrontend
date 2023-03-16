@@ -7,13 +7,15 @@ import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 import NewRequest from "./NewRequest";
 import "./inde.css";
 import VariableValue from "./VariableValue";
+import Tooltip from '@mui/material/Tooltip';
+import Zoom from '@mui/material/Zoom';
 
 const TopBar = ({ onSendClick }) => {
   const REGEX = /({{.*?}})/g;
-  const { jsonText, tabData, setTopBarData, headersData, setStatus,currentActive,
-    paramsData, setMsg, setError , changeAction, setchangeAction} = useContext(DataContext);
-    const locTabList = JSON.parse(localStorage.getItem('tabsList'))
-   const activeData = locTabList.filter(e=>e._id===currentActive)
+  const { jsonText, tabData, setTopBarData, headersData, setStatus, currentActive,
+    paramsData, setMsg, setError, changeAction, setchangeAction } = useContext(DataContext);
+  const locTabList = JSON.parse(localStorage.getItem('tabsList'))
+  const activeData = locTabList.filter(e => e._id === currentActive)
   const [data, setData] = useState(tabData?.details || activeData[0].details);
   const [open, setopen] = useState(false);
   const [isLoding, setIsLoding] = useState(false);
@@ -85,8 +87,8 @@ const TopBar = ({ onSendClick }) => {
         {/* dropdown */}
         <div className="w-28 h-10 border-gray-300 border  rounded-l-md bg-white  b  focus:outline-none">
           <select
-            className="bg-white font-medium rounded-l-md text-gray-700  px-4 h-8 focus:outline-none border-none "
-            onChange={(e) => { setData({ ...data, method: e.target.value.toLowerCase() });  }}
+            className="bg-white font-medium rounded-l-md text-gray-600  px-4 h-8 focus:outline-none border-none "
+            onChange={(e) => { setData({ ...data, method: e.target.value.toLowerCase() }); }}
             defaultValue={data?.method?.toUpperCase()} >
             <option value="GET" > GET </option>
             <option value="POST" > POST </option>
@@ -112,11 +114,16 @@ const TopBar = ({ onSendClick }) => {
             {data?.url?.split(REGEX).map((word, i) => {
               if (word.match(REGEX) !== null) {
                 return (
-                  <div key={i} className="text-[#1D4ED8] group z-50">
-                    <span className='text-xs font-semibold cursor-pointer'>{word}</span>
-                    {/* hover and show variable */}
-                    <div className="hidden group-hover:block"><VariableValue data={word} /></div>
-                  </div>
+                  <Tooltip TransitionComponent={Zoom}  title={<VariableValue data={word} />} placement="bottom-start">
+                     <div key={i} className="text-[#1D4ED8] group z-50">
+                     <span className='text-xs font-semibold cursor-pointer'>{word}</span>
+                   </div>
+                  </Tooltip>
+                  // <div key={i} className="text-[#1D4ED8] group z-50">
+                  //   <span className='text-xs font-semibold cursor-pointer'>{word}</span>
+                  //   {/* hover and show variable */}
+                  //   <div className="hidden group-hover:block"><VariableValue data={word} /></div>
+                  // </div>
                 );
               } else {
                 return <span key={i} className='text-xs font-semibold '>{word}</span>;

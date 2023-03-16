@@ -23,7 +23,7 @@ const BodyHead = ({ postData, title }) => {
             <motion.div whileTap={{ scale: 0.75 }}>
               <Tooltip title={title} arrow>
                 <IconButton>
-                  <IoAddSharp className="text-2xl cursor-pointer rounded-sm" onClick={postData} />
+                  <IoAddSharp className="text-xl cursor-pointer rounded-sm" onClick={postData} />
                 </IconButton>
               </Tooltip>
             </motion.div>
