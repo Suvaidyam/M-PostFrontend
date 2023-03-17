@@ -67,8 +67,7 @@ const NewRequest = ({setopen,details}) => {
       }, []);
   return (
     <>
-        <div className="w-full h-full absolute z-50">
-           <div className="w-[450px] h-[280px] bg-white rounded-md shadow-lg px-10 py-6">
+           <div className="w-[450px] h-[230px]">
            <div className="w-full flex justify-end"><GrFormClose className='cursor-pointer'
             onClick={()=>setopen(false)}/></div>
             <div className="flex flex-col gap-2">
@@ -88,7 +87,6 @@ const NewRequest = ({setopen,details}) => {
             onClick={Save}>Save</button>
             </div>
            </div>
-        </div>
     </>
   )
 }

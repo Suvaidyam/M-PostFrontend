@@ -9,6 +9,8 @@ import "./inde.css";
 import VariableValue from "./VariableValue";
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
 
 const TopBar = ({ onSendClick }) => {
   const REGEX = /({{.*?}})/g;
@@ -20,6 +22,8 @@ const TopBar = ({ onSendClick }) => {
   const [open, setopen] = useState(false);
   const [isLoding, setIsLoding] = useState(false);
   const [isEnv, setIsEnv] = useState([]);
+
+  const handleClose = () => setopen(!open);
 
   const Save = () => {
     Http({
@@ -114,10 +118,10 @@ const TopBar = ({ onSendClick }) => {
             {data?.url?.split(REGEX).map((word, i) => {
               if (word.match(REGEX) !== null) {
                 return (
-                  <Tooltip TransitionComponent={Zoom}  title={<VariableValue data={word} />} placement="bottom-start">
-                     <div key={i} className="text-[#1D4ED8] group z-50">
-                     <span className='text-xs font-semibold cursor-pointer'>{word}</span>
-                   </div>
+                  <Tooltip TransitionComponent={Zoom} title={<VariableValue data={word} />} placement="bottom-start">
+                    <div key={i} className="text-[#1D4ED8] group z-50">
+                      <span className='text-xs font-semibold cursor-pointer'>{word}</span>
+                    </div>
                   </Tooltip>
                   // <div key={i} className="text-[#1D4ED8] group z-50">
                   //   <span className='text-xs font-semibold cursor-pointer'>{word}</span>
@@ -151,7 +155,7 @@ const TopBar = ({ onSendClick }) => {
               ) : (
                 <AiOutlineSave
                   className=" cursor-pointer"
-                  onClick={tabData.parent ? Save : () => setopen(true)}
+                  onClick={tabData.parent ? Save : () => setopen(!open)}
                 />
               )}
             </li>
@@ -160,7 +164,14 @@ const TopBar = ({ onSendClick }) => {
             </li>
           </ul>
         </div>
-        {open === true ? <NewRequest setopen={setopen} details={data} /> : null}
+        {/* new request save */}
+        {open === true &&
+          <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description" >
+            <DialogContent><NewRequest setopen={setopen} details={data} />
+            </DialogContent>
+          </Dialog>}
+
       </div>
     </>
   );
