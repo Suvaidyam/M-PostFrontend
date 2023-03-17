@@ -17,33 +17,6 @@ import { DataContext } from '../Context/DataProvider'
 const Header = ({setTab,tab}) => {
   const {url , setMsg,setError } =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
-const [Profileurl, setProfileUrl] = useState(null)
-
-
-
-let token = sessionStorage.getItem('token')
-    let headers = {
-      token
-    }
-const paylode=sessionStorage.getItem('paylode')
-    const{_id} =JSON.parse(paylode) 
-
-const getImg =()=>{
-  axios.get(`${process.env.REACT_APP_BASEURL}/${_id}`,
-  {
-    headers
-  }).then((res) => {
-    setProfileUrl(res.data.user.url)
-  }).catch((error) => {
-    console.log(error)
-  })
-}
-useEffect(() => {
-return () => {
-  getImg()
-}
-},[url])
-
   const navigate = useNavigate();
   const signout = async () => {
     let token = sessionStorage.getItem('token')
