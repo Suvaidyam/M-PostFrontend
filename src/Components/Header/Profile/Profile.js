@@ -88,7 +88,7 @@ const Profile = ({setOpenProfile}) => {
                 <h1 className='text-xl flex font-medium'>Change your profile picture</h1>
                 <div className='flex justify-between w-full'>
                   <div className="w-32 h-32 border-2 border-blue-400 rounded-full cursor-pointer flex justify-center items-center">
-                    {isLoading===false?<img className='w-[126px] h-[125px] rounded-full object-cover' src={url?`http://localhost:4000/`+url:Avatar} alt="" />
+                    {isLoading===false?<img className='w-[126px] h-[125px] rounded-full object-cover' src={url?`${process.env.REACT_APP_BASEURL}/`+url:Avatar} alt="" />
                     :<Puff
                     height="80"
                     width="80"
