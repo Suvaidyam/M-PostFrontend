@@ -50,8 +50,8 @@ export default function QuearyTabs() {
     // console.log(paramsData);
     const locTabList = JSON.parse(localStorage.getItem('tabsList'))
     const activeData = locTabList.filter(e => e._id === currentActive)
-    const paramsBackendData = tabData?.details?.query || activeData[0].details.query;
-    const headersBackendData = tabData?.details?.headers || activeData[0].details.headers;
+    const paramsBackendData = tabData?.details?.query || activeData[0]?.details?.query;
+    const headersBackendData = tabData?.details?.headers || activeData[0]?.details?.headers;
 
     // let params = Object.entries(paramsBackendData).map(([key,value])=>({key,value}))
     let params = ''

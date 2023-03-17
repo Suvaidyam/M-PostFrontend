@@ -29,7 +29,7 @@ const paylode=sessionStorage.getItem('paylode')
     const{_id} =JSON.parse(paylode) 
 
 const getImg =()=>{
-  axios.get(`http://localhost:4000/employee/${_id}`,
+  axios.get(`${process.env.REACT_APP_BASEURL}/${_id}`,
   {
     headers
   }).then((res) => {
@@ -48,7 +48,7 @@ return () => {
   const signout = async () => {
     let token = sessionStorage.getItem('token')
     if (token) {
-      axios.post(`http://localhost:4000/auth/logout`, {},
+      axios.post(`${process.env.REACT_APP_BASEURL}/auth/logout`, {},
         {
           headers: {
             "token": ` ${token}`
@@ -104,7 +104,7 @@ return () => {
            {/* Profile */}
            <div className="w-12 h-12 border-2 border-blue-500 rounded-full cursor-pointer 
            relative flex flex-col items-center group">
-            <img className='w-12 h-12 border-2 rounded-full object-cover' src={Profileurl ? 'http://localhost:4000/' + Profileurl : Avatar} alt="" />
+            <img className='w-12 h-12 border-2 rounded-full object-cover' src={Profileurl ? `${process.env.REACT_APP_BASEURL}/` + Profileurl : Avatar} alt="" />
            <div className="w-44 shadow-xl absolute  top-10 right-0
            hidden group-hover:block rounded-md z-50" >
             <p className='p-1.5'></p>

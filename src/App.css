@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .active {
-    color: #2563EB;
-    
-    
+    color: #2563EB;  
 }
-
+::-webkit-scrollbar {
+    display: none;
+  }
