@@ -18,6 +18,8 @@ const Header = ({setTab,tab}) => {
   const {url , setMsg,setError } =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
 
+
+
   const navigate = useNavigate();
   const signout = async () => {
     let token = sessionStorage.getItem('token')
@@ -32,14 +34,14 @@ const [openProfile, setOpenProfile] = useState(false)
           console.log(res);
           setMsg(res.data.message);
           setError(true);
-          // localStorage.clear('workSpace')
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('paylode');
           setTimeout(() => {
             setError(false)
             navigate("/");
           }, 1000);
         })
         .catch((err) => console.log(err))
-      sessionStorage.removeItem('token')
     } else {
       console.log("token require")
     }
