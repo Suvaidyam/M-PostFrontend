@@ -18,8 +18,11 @@ const Header = ({setTab,tab}) => {
   const {url , setMsg,setError } =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 79748a7 (remove profile APIS)
   const navigate = useNavigate();
   const signout = async () => {
     let token = sessionStorage.getItem('token')
