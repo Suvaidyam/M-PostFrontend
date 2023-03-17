@@ -17,32 +17,6 @@ import { DataContext } from '../Context/DataProvider'
 const Header = ({setTab,tab}) => {
   const {url , setMsg,setError } =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
-const [Profileurl, setProfileUrl] = useState(null)
-
-
-
-let token = sessionStorage.getItem('token')
-    let headers = {
-      token
-    }
-const paylode=sessionStorage.getItem('paylode')
-    const{_id} =JSON.parse(paylode) 
-
-const getImg =()=>{
-  axios.get(`${process.env.REACT_APP_BASEURL}/${_id}`,
-  {
-    headers
-  }).then((res) => {
-    setProfileUrl(res.data.user.url)
-  }).catch((error) => {
-    console.log(error)
-  })
-}
-useEffect(() => {
-return () => {
-  getImg()
-}
-},[url])
 
   const navigate = useNavigate();
   const signout = async () => {
@@ -104,7 +78,7 @@ return () => {
            {/* Profile */}
            <div className="w-12 h-12 border-2 border-blue-500 rounded-full cursor-pointer 
            relative flex flex-col items-center group">
-            <img className='w-12 h-12 border-2 rounded-full object-cover' src={Profileurl ? `${process.env.REACT_APP_BASEURL}/` + Profileurl : Avatar} alt="" />
+            <img className='w-12 h-12 border-2 rounded-full object-cover' src={url ? `${process.env.REACT_APP_BASEURL}/` + url : Avatar} alt="" />
            <div className="w-44 shadow-xl absolute  top-10 right-0
            hidden group-hover:block rounded-md z-50" >
             <p className='p-1.5'></p>
