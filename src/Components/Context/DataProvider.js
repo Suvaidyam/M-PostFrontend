@@ -17,7 +17,7 @@ const DataProvider = ({ children }) => {
   const [status, setStatus] = useState('200');
   const [responseData, setResponseData] = useState([]);
   const [changeAction, setchangeAction] = useState(false);
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState(img?.url);
   let activetabs = localStorage.getItem('tabsList')
   const [tabsList, setTabsList] = useState(activetabs? JSON.parse(activetabs):[]);
   localStorage.setItem("tabsList", JSON.stringify(tabsList))
