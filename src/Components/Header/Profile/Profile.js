@@ -11,6 +11,7 @@ const Profile = ({setOpenProfile}) => {
     const [file, setfile] = useState(null)
     const {url, setUrl,setMsg,setError,setStatus} =useContext(DataContext)
     const [isLoading, setLoading] = useState(false);
+    const [picAction , setpicAction] = useState(true)
     const paylode=sessionStorage.getItem('paylode')
     const{_id} =JSON.parse(paylode) 
 
@@ -26,12 +27,13 @@ const Profile = ({setOpenProfile}) => {
       setMsg(res.data.message)
       setStatus(res.status)
       setError(true)
-        setUrl(null)
+      setpicAction(!picAction)
       }).catch((error) => {
         setMsg(error.response.data.message)
         setStatus(error.response.status)
         setError(true)
-      })
+      });
+      
     }
     const getImg =()=>{
       Http({
@@ -56,7 +58,7 @@ const Profile = ({setOpenProfile}) => {
         method: "delete",
         url: `${process.env.REACT_APP_BASEURL}/employee/deletePhoto`,
       }).then((res) => {
-        setUrl(res.data.user.url)
+        setpicAction(!picAction)
         setMsg(res.data.message)
         setStatus(res.status)
       setError(true)
@@ -72,13 +74,14 @@ const Profile = ({setOpenProfile}) => {
           setTimeout(() => {
             setLoading(false);
           }, 1000);
-      })
+      });
+      
     }
     useEffect(() => {
       return () => {
         getImg()
       }
-    }, [url])
+    }, [picAction])
     
   return (
     <>
