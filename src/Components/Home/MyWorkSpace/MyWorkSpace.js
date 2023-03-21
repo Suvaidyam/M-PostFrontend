@@ -18,7 +18,7 @@ const MyWorkSpace = () => {
   }, [workSpaceId]);
   return (
     <>
-      <div className="w-full h-[8vh] flex justify-between items-center px-3">
+      <div className="w-full h-[7vh] flex justify-between items-center px-3">
         <div className="text-sm font-medium truncate text-gray-600">
           {workSpaceName ? (
             <>{workSpaceName}</>

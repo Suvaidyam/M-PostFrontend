@@ -102,7 +102,7 @@ const TabsList = () => {
   }, [changeAction, workSpaceId, tabsList]);
   return (
     <>
-      <div className="w-full h-[8vh] mt-0.5 bg-white flex">
+      <div className="w-full h-[7vh] mt-0.5 bg-white flex">
         <div className="w-[80%]  flex h-full border-b overflow-x-scroll scrollbar-hide">
           {tabsList?.map((e) => (
             <div

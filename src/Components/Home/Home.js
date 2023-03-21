@@ -23,7 +23,7 @@ const Home = () => {
           {/* left */}
           <div className="w-[30%] min-w-[400px] h-[90vh] border-r-2">
             <MyWorkSpace />
-            <div className="w-full flex h-[82vh] border-t">
+            <div className="w-full flex h-[83vh] border-t">
               <div className="w-full  h-full flex">
                 <LeftBar {...{currentNav, setcurrentNav}}/>
                 <LeftBody {...{currentNav, setcurrentNav}}/>

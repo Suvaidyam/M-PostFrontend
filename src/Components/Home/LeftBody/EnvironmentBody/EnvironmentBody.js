@@ -120,8 +120,8 @@ const EnvironmentBody = () => {
                         <div className="w-full h-[85vh] min-h-[63vh]">
                             <div className=" w-full pt-1">
                                 {local_variable?.map((ce) => (<div key={ce._id}>
-                                    <div className={`w-full h-8  relative group flex cursor-pointer items-center hover:bg-gray-200
-                                    ${ce._id===currentActiveEnv&&'bg-gray-300'}
+                                    <div className={`w-full h-8  relative group flex cursor-pointer items-center 
+                                    ${ce._id===currentActiveEnv ? 'bg-gray-300':'hover:bg-gray-200'}
                                  border-b py-1 px-2 `} >
                                         <div className="flex items-center gap-2 w-full h-8 " onClick={() => handleRequest(ce)} >
                                             <p className="text-xs font-normal pl-4"> {ce.name}</p>

@@ -65,12 +65,12 @@ const TabsBody = () => {
 
   return (
     <>
-      <div className=" h-[81.5vh] mx-1 ">
+      <div className=" h-[82.5vh] mx-1 ">
         <div className="h-[9vh] w-full bg-white shadow-sm flex flex-col items-center">
           <TopBar onSendClick={onSendClick} />
         </div>
 
-        <div className="w-full h-[72vh] flex flex-col justify-between ">
+        <div className="w-full h-[73vh] flex flex-col justify-between ">
          <div className="h-auto">
             <QuearyTabs />
          </div>
