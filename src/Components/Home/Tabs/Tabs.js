@@ -8,7 +8,37 @@ import { BallTriangle } from 'react-loader-spinner'
 
 const Tabs = () => {
   const [loader , setLoader] =useState(true)
-  const { workSpaceId,currentActive, tabsList} = useContext(DataContext);
+  const { workSpaceId,currentActive, tabsList,setTabsList,setCurrentActive,
+    setTabData} = useContext(DataContext);
+
+  let storeData = sessionStorage.getItem("recentTablength");
+  const [recentTablength, setrecentTablength] = useState(storeData?parseInt(storeData): 0);
+  sessionStorage.setItem("recentTablength",recentTablength)
+  
+  const newReqObj = {
+    name: "Untitled Request",
+    type: "request",
+    parent: null,
+    details: {
+      url: "",
+      method: "GET",
+      headers: {},
+      body: {},
+      query: {},
+    },
+  };
+
+  // const tabsList = [newReqObj, newReqObj];
+
+  const handleNewTab = () => {
+    let el = { ...newReqObj, _id: recentTablength };
+    el.name = el.name;
+    setTabsList([...tabsList, el]);
+    setCurrentActive(el._id);
+    setTabData(el);
+    setrecentTablength(recentTablength + 1);
+    
+  };
 
   useEffect(()=>{
     let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
@@ -52,7 +82,8 @@ const Tabs = () => {
           <img className="w-36" src={logo} alt="" />
           <p className="text-sm bg-slate-200 rounded-sm px-5 font-medium py-2  text-gray-500 ">Create a new request</p>
           <div className="flex">
-            <button className="border border-gray-500 text-xs font-semibold rounded-sm text-gray-500 px-1">GET</button>
+            <button className="border border-gray-500 text-xs font-semibold rounded-sm text-gray-500 
+            px-1" onClick={handleNewTab}>GET</button>
           </div>
         </div> }
         

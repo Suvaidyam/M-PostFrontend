@@ -76,12 +76,12 @@ const LoginForm = ({openForgetPopUp,setOpenForgetPopUp}) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           {open === true ? (
-            <AiOutlineEye
+            <AiOutlineEyeInvisible
               className="absolute bottom-2 cursor-pointer right-2 text-xl"
               onClick={() => setOpen(!open)}
             />
           ) : (
-            <AiOutlineEyeInvisible
+            <AiOutlineEye
               className="absolute bottom-2 cursor-pointer right-2 text-xl"
               onClick={() => setOpen(!open)}
             />

@@ -181,8 +181,8 @@ const CollectionBody = () => {
                                                 {collection?.map((ce) => (
                                                     <div key={ce._id}>
                                                         {e._id === ce.parent ? (
-                                                            <div className={`w-full relative group flex cursor-pointer hover:bg-gray-200 py-1 px-2 
-                                                            ${currentActive === ce._id && 'bg-gray-200'}`} >
+                                                            <div className={`w-full relative group flex cursor-pointer py-1 px-2 
+                                                            ${currentActive === ce._id ? 'bg-gray-300':' hover:bg-gray-200'}`} >
                                                                 <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
                                                                     <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
                                                                         }-600 w-[70px] min-w-[70px] flex justify-end`} >
