@@ -13,112 +13,105 @@ const AddRow = ({
   description,
   type,
   variableN,
-  valueN ,
+  valueN,
   descriptionN,
-  
+
 }) => {
 
-// console.log(query)
-  const [checkCheckBox, setCheckCheckBox] = useState(false);
-  const [hide, setHide] = useState(false);
 
-  // checkBok
-  const checkBox = (e) => {
-    let result = data.filter((entry) => entry.id === Number(rowId))[0];
-    if (!checkCheckBox) {
-      setCheckCheckBox(true);
-      result = { ...result, id: rowId, check: true };
+  const [checkCheckbox, setCheckCheckbox] = useState(false);
+
+  const handleChange = (e) => {
+    let result = data.filter(entry => entry.id === Number(e.target.name))[0];
+    if (!checkCheckbox) {
+      setCheckCheckbox(true);
+      // addRows(oldArr => [...oldArr, rowId]);
+      result = { ...result, id: rowId, check: true }
     } else {
-      setCheckCheckBox(false);
-      result = { ...result, id: rowId, check: false };
+      setCheckCheckbox(false);
+      result = { ...result, id: rowId, check: false }
     }
 
-    let index = data.findIndex((value) => value.id === Number(rowId));
+    let index = data.findIndex((value) => value.id === Number(e.target.name));
     if (index === -1) {
-      setData((oldArr) => [...oldArr, result]);
+      setData(oldArr => [...oldArr, result]);
     } else {
       const newArray = Object.assign([...data], {
-        [index]: result,
+        [index]: result
       });
-      setData(newArray);
+      setData(newArray)
     }
-  };
+  }
 
-  // input text
-  const onTextChenge = (e) => {
-    let result = data.filter((entry) => entry.id === rowId)[0];
-    result = {
-      ...result,
-      id: rowId,
-      [e.target.name]: e.target.value,
-      check: checkCheckBox,
-    };
-    // console.log("row", result);
-    setHide(true);
+
+  const onTextChange = (e) => {
+
+    let result = data.filter(entry => entry.id === rowId)[0];
+    result = { ...result, id: rowId, [e.target.name]: e.target.value }
+    if (!checkCheckbox) {
+      setCheckCheckbox(true);
+      addRows(oldArr => [...oldArr, rowId]);
+      result = { ...result, id: rowId, check: true }
+    }
 
     let index = data.findIndex((value) => value.id === rowId);
 
     if (index === -1) {
-      setData((oldArr) => [...oldArr, result]);
+      setData(oldArr => [...oldArr, result]);
     } else {
       const newArray = Object.assign([...data], {
-        [index]: result,
+        [index]: result
       });
-      setData(newArray);
+      setData(newArray)
     }
+  }
 
-    // row add onchange
-    if (data.length === rowId) {
-      setCheckCheckBox(true);
-      addRows((oldArr) => [...oldArr, rowId]);
-      result = { ...result, id: rowId, check: true };
-    } else {
-      result = { ...result, id: rowId, check: false };
-    }
-  };
 
   return (
     <>
       <tr className="bg-white border  w-full">
         <td className=" w-4   px-4">
           <div className="flex items-center ">
-            {hide === true ? (
-              <>
-                {" "}
-                <input
-                  checked={checkCheckBox}
-                  id="checkbox-table-search-1"
-                  type="checkbox"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
-                  onClick={checkBox}
-                  name={rowId}
-                />
-              </>
-            ) : (
-              <></>
-            )}
+
+            <>
+              <input
+                checked={checkCheckbox}
+                id="checkbox-table-search-1"
+                type="checkbox"
+                className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
+                name={rowId}
+                onChange={(e) => handleChange(e)}
+              />
+
+
+
+            </>
+
+
           </div>
         </td>
         <th
           scope="row"
           className=" p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white"
+
         >
           <input
-            type="text"
+            type={type}
             className="w-full px-6 border py-0.5 focus:outline-none "
-            placeholder={variable}
+            onChange={(e) => onTextChange(e)}
             name={variableN}
-            onChange={onTextChenge}
-            // defaultValue={query.key}
+            placeholder={variable}
+
           />
         </th>
         <th className=" p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
           <input
-            name={valueN}
             type={type}
             className="w-full px-6 border py-0.5 focus:outline-none "
+            onChange={(e) => onTextChange(e)}
+            name={valueN}
             placeholder={value}
-            onChange={onTextChenge}
+
           />
         </th>
         <th
@@ -127,10 +120,11 @@ const AddRow = ({
         >
           <input
             type={type}
-            name={descriptionN}
             className="w-full px-4 border py-0.5  focus:outline-none "
+            onChange={(e) => onTextChange(e)}
+            name={descriptionN}
             placeholder={description}
-            onChange={onTextChenge}
+
           />
         </th>
       </tr>
