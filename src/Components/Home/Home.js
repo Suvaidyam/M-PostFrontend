@@ -43,9 +43,9 @@ const Home = () => {
           </div>
         </div>}
        {/* ===========reports page render============ */}
-       {tab === "reports" && <>reports</>}
+       {tab === "reports" && <Reports/>}
         {/* ===========reports page render============ */}
-        {tab === "explore" && <>explore</>}
+        {tab === "explore" && <Explore/>}
       </div>
       
     </>

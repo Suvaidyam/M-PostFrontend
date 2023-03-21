@@ -22,8 +22,8 @@ const BodyHead = ({ postData, title }) => {
           <div className='group relative'>
             <motion.div whileTap={{ scale: 0.75 }}>
               <Tooltip title={title} arrow>
-                <IconButton>
-                  <IoAddSharp className="text-xl cursor-pointer rounded-sm" onClick={postData} />
+                <IconButton onClick={postData} >
+                  <IoAddSharp className="text-xl cursor-pointer rounded-sm" />
                 </IconButton>
               </Tooltip>
             </motion.div>

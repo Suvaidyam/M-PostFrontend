@@ -7,8 +7,6 @@ import { checkParams } from "../../../Utils/CommonUtils";
 import Http from "../../../../Services/http";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 
-import { Scrollbars } from "react-custom-scrollbars";
-
 const TabsBody = () => {
   const { setMsg, setError, topBarData, paramsData, headersData, jsonText,changeAction, setchangeAction } =
     useContext(DataContext);
@@ -30,8 +28,7 @@ const TabsBody = () => {
       }
     })
       .then((res) => {
-        console.log(res)
-        // setchangeAction(!changeAction)
+        setchangeAction(!changeAction)
       })
       .catch((err) => {
         console.log(err);
@@ -49,11 +46,9 @@ const TabsBody = () => {
       query: getHeadersAndParams(paramsData),
     })
       .then((res) => {
-        // console.log("res", res);
         setApiResponse(res);
       })
       .catch((err) => {
-        // console.log("Error", err);
         setApiResponse(err.response);
       });
 

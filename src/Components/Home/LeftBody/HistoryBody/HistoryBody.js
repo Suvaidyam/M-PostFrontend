@@ -139,7 +139,6 @@ const HistoryBody = () => {
                               <div className={`text-[11px] text-${getDetails(ce.details)?.color}-600 w-1/4 min-w-[74px] 
                               flex justify-end font-semibold`}  > {getDetails(ce.details)?.method}
                               </div>
-                              {/* <p className="text-xs font-normal truncate"> {ce?.details?.url} </p> */}
                               <Tooltip title={ce?.details?.url} placement="top" disableInteractive>
                                <p className="text-[13px] font-normal text-gray-500 truncate"> {ce?.details?.url} </p>
                               </Tooltip>
@@ -150,9 +149,9 @@ const HistoryBody = () => {
                                   <span className=" text-[14px] text-green-600">
                                     {ce.created_At}</span>
                                   <Tooltip title="Delete" arrow>
-                                    <IconButton>
+                                    <IconButton onClick={() => deleteHistory(ce)}>
                                       <MdDelete className="cursor-pointer hidden group-hover:block
-                                      text-red-500 text-xl" onClick={() => deleteHistory(ce)} />
+                                      text-red-500 text-xl"  />
                                     </IconButton>
                                   </Tooltip>
                                 </div>
