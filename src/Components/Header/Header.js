@@ -13,9 +13,10 @@ import { useNavigate } from 'react-router-dom'
 import Profile from './Profile/Profile'
 import { motion } from 'framer-motion';
 import { DataContext } from '../Context/DataProvider'
+import http from '../../Services/http'
 
 const Header = ({setTab,tab}) => {
-  const {url , setMsg,setError } =useContext(DataContext)
+  const {url , setUrl, setMsg,setError } =useContext(DataContext)
 const [openProfile, setOpenProfile] = useState(false)
   const navigate = useNavigate();
   const signout = async () => {
@@ -42,9 +43,22 @@ const [openProfile, setOpenProfile] = useState(false)
     } else {
       console.log("token require")
     }
-  
-  
-  }
+  };
+  const getImg =()=>{
+    const paylode=sessionStorage.getItem('paylode')
+    const{_id} =JSON.parse(paylode) 
+    http({
+        method: "get",
+        url: `${process.env.REACT_APP_BASEURL}/employee/${_id}`,
+      }).then((res) => {
+        setUrl(res.data.user.url)
+      }).catch((error) => {
+        console.log(error)
+      })
+  };
+  useEffect(() => {
+    getImg()
+  }, [])
   return (
     <>
      <div className="w-full h-[10vh] min-h-[56px] border-b-[1.5px] shadow-sm bg-white z-50">
