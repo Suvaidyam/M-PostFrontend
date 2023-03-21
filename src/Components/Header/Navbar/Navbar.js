@@ -6,11 +6,7 @@ import { useContext } from "react";
 import { DataContext } from "../../Context/DataProvider";
 
 const Navbar = ({setTab,tab}) => {
-  const {workSpaceopen, setworkSpaceopen, setUrl}=useContext(DataContext)
-  const img = JSON.parse(sessionStorage.getItem('paylode'));
-  if(img){
-    setUrl(img?.url)
-  }
+  const {workSpaceopen, setworkSpaceopen, }=useContext(DataContext)
   return (
     <>
       <div className="flex gap-8 relative " 
