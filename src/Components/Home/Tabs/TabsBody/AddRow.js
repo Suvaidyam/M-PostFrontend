@@ -18,8 +18,9 @@ const AddRow = ({
 
 }) => {
 
-
+  // console.log(params[0].key)
   const [checkCheckbox, setCheckCheckbox] = useState(false);
+  const [checkRadio, setCheckRadio] = useState(false);
 
   const handleChange = (e) => {
     let result = data.filter(entry => entry.id === Number(e.target.name))[0];
@@ -50,9 +51,14 @@ const AddRow = ({
     result = { ...result, id: rowId, [e.target.name]: e.target.value }
     if (!checkCheckbox) {
       setCheckCheckbox(true);
+      setCheckRadio(true)
       addRows(oldArr => [...oldArr, rowId]);
       result = { ...result, id: rowId, check: true }
+    } else {
+
     }
+
+
 
     let index = data.findIndex((value) => value.id === rowId);
 
@@ -67,26 +73,23 @@ const AddRow = ({
   }
 
 
+
+
   return (
     <>
       <tr className="bg-white border  w-full">
         <td className=" w-4   px-4">
           <div className="flex items-center ">
-
-            <>
-              <input
+            {
+              checkRadio === true ? <input
                 checked={checkCheckbox}
                 id="checkbox-table-search-1"
                 type="checkbox"
                 className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
                 name={rowId}
                 onChange={(e) => handleChange(e)}
-              />
-
-
-
-            </>
-
+              /> : <></>
+            }
 
           </div>
         </td>
@@ -101,6 +104,7 @@ const AddRow = ({
             onChange={(e) => onTextChange(e)}
             name={variableN}
             placeholder={variable}
+          // defaultValue={}
 
           />
         </th>
