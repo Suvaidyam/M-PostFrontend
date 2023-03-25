@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 const HistoryBody = () => {
 
   const { setStatus, setMsg, setError, setTabData, setCurrentActive, setTabsList, tabsList, currentActive,
-    changeAction, collEdit, setchangeAction } = useContext(DataContext);
+  collEdit, historyRender, sethistoryRender } = useContext(DataContext);
   const [History, setHistory] = useState([]);
   // Date Format
   const today = new Date();
@@ -44,10 +44,10 @@ const HistoryBody = () => {
     e.toggle = !e.toggle;
     setHistory([...History]);
   };
-  const toggleAction = (ce) => {
-    ce.toggleAction = !ce.toggleAction;
-    setHistory([...History]);
-  };
+  // const toggleAction = (ce) => {
+  //   ce.toggleAction = !ce.toggleAction;
+  //   setHistory([...History]);
+  // };
 
   // delete history Api 
   const deleteHistory = (ce) => {
@@ -59,8 +59,7 @@ const HistoryBody = () => {
         setMsg(res.data.message);
         setStatus(res.status);
         setError(true);
-        setchangeAction(!changeAction)
-
+        sethistoryRender(!historyRender);
       })
       .catch((err) => {
         console.log(err);
@@ -90,7 +89,7 @@ const HistoryBody = () => {
     return () => {
       getData();
     };
-  }, [changeAction]);
+  }, [historyRender]);
 
   return (
     <>

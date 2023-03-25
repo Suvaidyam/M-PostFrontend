@@ -21,16 +21,16 @@ const DataProvider = ({ children }) => {
   let activetabs = localStorage.getItem('tabsList')
   const [tabsList, setTabsList] = useState(activetabs? JSON.parse(activetabs):[]);
   localStorage.setItem("tabsList", JSON.stringify(tabsList))
-   // collection active tabs
-
-   let abc = localStorage.getItem("currentActive")
-   const [currentActive, setCurrentActive] = useState(abc?JSON.parse(abc):'');
-   localStorage.setItem("currentActive", JSON.stringify(currentActive))
-   // environment active tabs
+  // collection active tabs
+  let abc = localStorage.getItem("currentActive")
+  const [currentActive, setCurrentActive] = useState(abc?JSON.parse(abc):'');
+  localStorage.setItem("currentActive", JSON.stringify(currentActive))
+  // environment active tabs
   const [currentActiveEnv, setCurrentActiveEnv] = useState('');
-   // workspce id provide to filtter to all task
+  // workspce id provide to filtter to all task
   const [workSpaceId, setWorkSpaceId] = useState(JSON.parse(localStorage.getItem('workSpace')));
   const [workSpaceopen, setworkSpaceopen] = useState(false);
+  const [historyRender, sethistoryRender] = useState(false);
 
   return (
     <div>
@@ -41,7 +41,8 @@ const DataProvider = ({ children }) => {
           colId, setcolId, setMsg, Msg, error, setError, status, setStatus, responseData,
           setResponseData, SetEnviroment, enviroment, changeAction, setchangeAction, url, 
           setUrl, setWorkSpaceId, workSpaceId, workSpaceopen,  setworkSpaceopen, tabsList,
-          setTabsList, currentActive, setCurrentActive, currentActiveEnv, setCurrentActiveEnv
+          setTabsList, currentActive, setCurrentActive, currentActiveEnv, setCurrentActiveEnv,
+          historyRender, sethistoryRender
         }}
       >
         {children}
