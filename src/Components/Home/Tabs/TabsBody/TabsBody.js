@@ -8,7 +8,7 @@ import Http from "../../../../Services/http";
 import { getHeadersAndParams } from "../../../Utils/CommonUtils";
 
 const TabsBody = () => {
-  const { setMsg, setError, topBarData, paramsData, headersData, jsonText,changeAction, setchangeAction } =
+  const { setMsg, setError, topBarData, paramsData, headersData, jsonText,historyRender, sethistoryRender } =
     useContext(DataContext);
 
   const [apiResponse, setApiResponse] = useState({});
@@ -28,7 +28,7 @@ const TabsBody = () => {
       }
     })
       .then((res) => {
-        setchangeAction(!changeAction)
+        sethistoryRender(!historyRender);
       })
       .catch((err) => {
         console.log(err);
