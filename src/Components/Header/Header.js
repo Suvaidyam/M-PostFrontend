@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState } from 'react'
 import Vector from '../../Assets/Vector.png'
 import Avatar from '../../Assets/avatar.png'
+import Avatar_f from '../../Assets/avatar-f.jpg'
 import SearchMenu from '../SearchMenu/SearchMenu'
 import Navbar from './Navbar/Navbar'
 import { MdOutlineDarkMode } from "react-icons/md";
@@ -51,7 +52,7 @@ const [openProfile, setOpenProfile] = useState(false)
         method: "get",
         url: `${process.env.REACT_APP_BASEURL}/employee/${_id}`,
       }).then((res) => {
-        setUrl(res.data.user.url)
+        setUrl(res.data.user)
       }).catch((error) => {
         console.log(error)
       })
@@ -91,7 +92,8 @@ const [openProfile, setOpenProfile] = useState(false)
            {/* Profile */}
            <div className="w-12 h-12 border-2 border-blue-500 rounded-full cursor-pointer 
            relative flex flex-col items-center group">
-            <img className='w-12 h-12 border-2 rounded-full object-cover' src={url ? `${process.env.REACT_APP_BASEURL}/` + url : Avatar} alt="" />
+            <img className='w-12 h-12 border-2 rounded-full object-cover'
+             src={url.url ? `${process.env.REACT_APP_BASEURL}/` + url.url : url.gender==='male' ? Avatar:Avatar_f} alt="" />
            <div className="w-44 shadow-xl absolute  top-10 right-0
            hidden group-hover:block rounded-md z-50" >
             <p className='p-1.5'></p>
