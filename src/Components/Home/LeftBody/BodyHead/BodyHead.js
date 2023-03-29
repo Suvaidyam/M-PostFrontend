@@ -5,11 +5,6 @@ import { motion } from "framer-motion";
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
-
 const BodyHead = ({ postData, title }) => {
 
   return (

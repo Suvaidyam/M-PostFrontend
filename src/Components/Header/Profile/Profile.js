@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Avatar from '../../../Assets/avatar.png'
+import Avatar_f from '../../../Assets/avatar-f.jpg'
 import {TbUpload} from 'react-icons/tb'
 import {HiOutlineTrash} from 'react-icons/hi'
 import { Puff } from  'react-loader-spinner'
@@ -40,7 +41,7 @@ const Profile = ({setOpenProfile}) => {
           method: "get",
           url: `${process.env.REACT_APP_BASEURL}/employee/${_id}`,
         }).then((res) => {
-          setUrl(res.data.user.url)
+          setUrl(res.data.user)
           setLoading(true);
           setTimeout(() => {
           setLoading(false);
@@ -91,7 +92,8 @@ const Profile = ({setOpenProfile}) => {
                 <h1 className='text-xl flex font-medium'>Change your profile picture</h1>
                 <div className='flex justify-between w-full'>
                   <div className="w-32 h-32 border-2 border-blue-400 rounded-full cursor-pointer flex justify-center items-center">
-                    {isLoading===false?<img className='w-[126px] h-[125px] rounded-full object-cover' src={url?`${process.env.REACT_APP_BASEURL}/`+url:Avatar} alt="" />
+                    {isLoading===false?<img className='w-[126px] h-[125px] rounded-full object-cover' 
+                    src={url.url?`${process.env.REACT_APP_BASEURL}/`+url.url: url.gender==='male' ? Avatar:Avatar_f} alt="" />
                     :<Puff
                     height="80"
                     width="80"
