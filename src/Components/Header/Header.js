@@ -93,7 +93,7 @@ const [openProfile, setOpenProfile] = useState(false)
            <div className="w-12 h-12 border-2 border-blue-500 rounded-full cursor-pointer 
            relative flex flex-col items-center group">
             <img className='w-12 h-12 border-2 rounded-full object-cover'
-             src={url.url ? `${process.env.REACT_APP_BASEURL}/` + url.url : url.gender==='male' ? Avatar:Avatar_f} alt="" />
+             src={url?.url ? `${process.env.REACT_APP_BASEURL}/` + url?.url : url?.gender==='male' ? Avatar:Avatar_f} alt="" />
            <div className="w-44 shadow-xl absolute  top-10 right-0
            hidden group-hover:block rounded-md z-50" >
             <p className='p-1.5'></p>
