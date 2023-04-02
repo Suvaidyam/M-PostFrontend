@@ -13,7 +13,7 @@ const MyWorkSpace = () => {
   useEffect(() => {
     setworkSpaceName("");
     setTimeout(() => {
-      setworkSpaceName(workSpace_Id.name);
+      setworkSpaceName(workSpace_Id?.name);
     }, 600);
   }, [workSpaceId]);
   return (

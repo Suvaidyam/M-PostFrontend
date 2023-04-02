@@ -6,21 +6,24 @@ import { useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 
 const SetEnviroment = () => {
+
   const [newEnviroment, setNewEnviroment] = useState([]);
-     const {currentActiveEnv,tabsList,setTabsList,setCurrentActive}=useContext(DataContext)
-  const global = newEnviroment.filter(e=>e.name==='Globals')
-  const local = newEnviroment.filter(e=>e._id===currentActiveEnv)
+  const { currentActiveEnv, tabsList, setTabsList, setCurrentActive } = useContext(DataContext)
+  const global = newEnviroment.filter(e => e.name === 'Globals')
+  const local = newEnviroment.filter(e => e._id === currentActiveEnv)
   const [loader, setLoader] = useState(true);
 
   const newInvObj = {
     name: "New Environment",
   };
+
   const handleNewInv = () => {
     let el = { ...newInvObj, _id: tabsList.length };
     setTabsList([...tabsList, el]);
-            // dispatch(OpenEnv(e._id));
-            setCurrentActive(el._id);
+    // dispatch(OpenEnv(e._id));
+    setCurrentActive(el._id);
   };
+
   const getData = () => {
     let workSpace_Id = JSON.parse(localStorage.getItem('workSpace'));
     http({
@@ -35,15 +38,15 @@ const SetEnviroment = () => {
       })
       .catch((err) => {
         console.log(err);
+        setLoader(false);
+
       });
   };
 
   useEffect(() => {
-    return () => {
-      getData();
-    };
+    return () => getData();
   }, []);
-  
+    
   return (
     <>
       <div

@@ -31,9 +31,7 @@ const WorkSpaceDropDwon = () => {
   };
 
   useEffect(() => {
-    return () => {
       getData();
-    };
   }, []);
 
   const handelSelectedWorkSpace = (e) =>{
