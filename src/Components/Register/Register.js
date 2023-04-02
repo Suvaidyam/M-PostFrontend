@@ -26,6 +26,32 @@ const Register = () => {
   //  New User Register API
   const navigate = useNavigate();
   const Register = () => {
+    console.log(email);
+    if(name.length == '0'){
+      setMsg("Please Enter Your Name");
+      setStatus(400);
+      setError(true);
+    }else if(email.length == "0"){
+      setMsg("Please Enter Your Email");
+      setStatus(400);
+      setError(true);
+
+    }else if(gender.length == "0"){
+      setMsg("Please Select Your Gender");
+      setStatus(400);
+      setError(true);
+
+    }else if(password.length == "0"){
+      setMsg("Please Enter Your Password");
+      setStatus(400);
+      setError(true);
+
+    }else if(password !== confirmPassword){
+      setMsg("Opps! Password Not Matched");
+      setStatus(400);
+      setError(true);
+
+    }else{
     // newUserDeteils  is store all user details of new register user
     let newUserDeteils = { name, email, password, gender };
     // Http is service used for calling api
@@ -46,10 +72,11 @@ const Register = () => {
         }
       })
       .catch((err) => {
-        setMsg(err.response.data.message);
-        setStatus(err.response.status);
+        setMsg(err?.response.data?.message);
+        setStatus(err?.response?.status);
         setError(true);
       });
+    }
   };
   return (
     <>
