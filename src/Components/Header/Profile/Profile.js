@@ -93,7 +93,7 @@ const Profile = ({setOpenProfile}) => {
                 <div className='flex justify-between w-full'>
                   <div className="w-32 h-32 border-2 border-blue-400 rounded-full cursor-pointer flex justify-center items-center">
                     {isLoading===false?<img className='w-[126px] h-[125px] rounded-full object-cover' 
-                    src={url.url?`${process.env.REACT_APP_BASEURL}/`+url.url: url.gender==='male' ? Avatar:Avatar_f} alt="" />
+                    src={url.url?`${process.env.REACT_APP_BASEURL}/`+url?.url: url?.gender==='male' ? Avatar:Avatar_f} alt="Profile Image" />
                     :<Puff
                     height="80"
                     width="80"
