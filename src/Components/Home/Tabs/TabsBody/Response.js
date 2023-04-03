@@ -164,10 +164,8 @@ const Response = ({ apiResponse, isLoading }) => {
                             displayObjectSize={false}
                             enableClipboard={false}
 
-                            src={{
-
-                              data
-                            }} />
+                            src={
+                              data} />
                         </div>
                       </Scrollbars>
                     ) : null}
