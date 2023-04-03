@@ -61,7 +61,7 @@ export default function QuearyTabs() {
   sessionStorage.setItem("queryTab", value);
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(value);
+    // console.log(value);
   };
 
   return (

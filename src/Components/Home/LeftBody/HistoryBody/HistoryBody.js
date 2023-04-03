@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 const HistoryBody = () => {
 
   const { setStatus, setMsg, setError, setTabData, setCurrentActive, setTabsList, tabsList, currentActive,
-  collEdit, historyRender, sethistoryRender } = useContext(DataContext);
+  collEdit, historyRender, sethistoryRender , setchangeAction, changeAction} = useContext(DataContext);
   const [History, setHistory] = useState([]);
   // Date Format
   const today = new Date();
@@ -88,8 +88,9 @@ const HistoryBody = () => {
   useEffect(() => {
     return () => {
       getData();
+      setchangeAction(!changeAction);
     };
-  }, [historyRender]);
+  }, [changeAction, historyRender]);
 
   return (
     <>
