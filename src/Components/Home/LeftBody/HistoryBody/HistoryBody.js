@@ -90,11 +90,7 @@ const HistoryBody = () => {
       getData();
       setchangeAction(!changeAction);
     };
-  }, [changeAction, historyRender]);
-  // add this useEffect due to production error handling
-  useEffect(()=>{
-    setchangeAction(!changeAction);
-},[])
+  }, [historyRender]);
 
   return (
     <>
