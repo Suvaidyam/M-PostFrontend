@@ -49,17 +49,7 @@ const TabsBody = () => {
         setApiResponse(res);
       })
       .catch((err) => {
-    
-        if(err?.response?.data){
-          setApiResponse(err.response);
-        }else{
-          let res ={
-              data:{
-                error: "!OPPS Api parth not found, please check your URL Or Try again",
-              }
-            }
-            setApiResponse(res);
-        }
+        setApiResponse(err.response);
       });
 
     setLoading(true);

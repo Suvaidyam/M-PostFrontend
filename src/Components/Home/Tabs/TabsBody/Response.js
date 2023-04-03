@@ -5,6 +5,7 @@ import { useState, useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
 import { Scrollbars } from "react-custom-scrollbars";
 import "./Tabs.css";
+import ApiError from "./ApiError";
 
 import ReactJson from 'react-json-view'
 
@@ -23,7 +24,7 @@ const Response = ({ apiResponse, isLoading }) => {
     setHeader(true);
   };
   // console.log("apiResponse", apiResponse);
-  let { data, headers } = apiResponse; // ? apiResponse : {};
+  // let {headers } = apiResponse; // ? apiResponse : {};
 
   const getStatusElem = (res) => {
     if (res) {
@@ -39,14 +40,14 @@ const Response = ({ apiResponse, isLoading }) => {
       return <span className="text-red-600">NA</span>;
     }
   };
-  const getResponseHeaderElem = (headers) => {
+  const getResponseHeaderElem = (apiResponse) => {
     let arr = [];
-    if (headers) {
-      for (let k in headers) {
+    if (apiResponse?.headers) {
+      for (let k in apiResponse?.headers) {
         arr.push(
           <span key={k} className="text-gray-800 text-sm font-medium">
             <b>{k}:</b>
-            {headers[k]}
+            {apiResponse?.headers[k]}
           </span>
         );
       }
@@ -58,8 +59,9 @@ const Response = ({ apiResponse, isLoading }) => {
   // console.log(data);
   return (
     <>
-      {data === undefined ? (
+      {apiResponse?.data === undefined ? (
         <ErrorScreen />
+        // <>lsahk</>
       ) : (
         <>
           <div className="w-full h-full bg-white border overflow-hidden">
@@ -124,7 +126,7 @@ const Response = ({ apiResponse, isLoading }) => {
                       <button
                         className="text-gray-800 text-sm font-medium hover:text-blue-600"
                         onClick={() => {
-                          setResponseData(data);
+                          setResponseData(apiResponse?.data);
                         }}
                       >
                         SaveResponse
@@ -141,7 +143,7 @@ const Response = ({ apiResponse, isLoading }) => {
                           Value
                         </div>
                       </div>
-                      {getResponseHeaderElem(headers).map((e) => (
+                      {getResponseHeaderElem(apiResponse?.headers).map((e) => (
                         <div className="w-full flex">
                           <div className="w-1/2 border py-1.5 px-2 text-sm ">
                             {e.key}
@@ -165,7 +167,7 @@ const Response = ({ apiResponse, isLoading }) => {
                             enableClipboard={false}
 
                             src={
-                              data} />
+                              apiResponse?.data} />
                         </div>
                       </Scrollbars>
                     ) : null}

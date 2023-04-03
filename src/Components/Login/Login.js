@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Log_bg from "../../Assets/login-Bg.png";
 import Logo from "../../Assets/Vector.png";
 import google from "../../Assets/google.png";
 import github from "../../Assets/github.png";
 import SOS from "../../Assets/SOS.png";
 import LoginForm from "./LoginForm";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import FrogetPassword from "./ForgetPassword/ForgetPassword";
 import { useState } from "react";
 const Login = () => {
   const [openForgetPopUp, setOpenForgetPopUp] = useState(false);
+  const navigate = useNavigate();
+  const checkUserLogin = ()=>{
+    let userLogin = sessionStorage.getItem('token');
+  if(userLogin){
+    console.log("login");
+    navigate("/workSpace");
+  }else{
+    console.log("not logged in");
+    navigate("/");
+  };
+  }
+  
+  useEffect(()=>{
+    checkUserLogin()
+  },[])
   return (
     <>
       <div className="w-full h-screen ">
