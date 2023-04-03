@@ -82,6 +82,10 @@ const EnvironmentBody = () => {
             setchangeAction(!changeAction);
         };
     }, [changeAction, workSpaceId]);
+      // add this useEffect due to production error handling
+    useEffect(()=>{
+        setchangeAction(!changeAction);
+    },[])
     const handleRequest = (e) => {
         if (tabsList.findIndex((f) => f._id === e._id) < 0) {
             setTabsList([...tabsList, e]);
