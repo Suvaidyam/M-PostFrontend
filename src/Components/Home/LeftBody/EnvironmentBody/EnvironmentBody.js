@@ -79,6 +79,7 @@ const EnvironmentBody = () => {
     useEffect(() => {
         return () => {
             getData();
+            setchangeAction(!changeAction);
         };
     }, [changeAction, workSpaceId]);
     const handleRequest = (e) => {

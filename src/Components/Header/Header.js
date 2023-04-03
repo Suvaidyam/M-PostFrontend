@@ -30,8 +30,7 @@ const [openProfile, setOpenProfile] = useState(false)
           }
         })
         .then((res) => {
-          console.log(res);
-          setMsg(res.data.message);
+          setMsg(res?.data?.message);
           setError(true);
           sessionStorage.removeItem('token');
           sessionStorage.removeItem('paylode');
@@ -52,7 +51,7 @@ const [openProfile, setOpenProfile] = useState(false)
         method: "get",
         url: `${process.env.REACT_APP_BASEURL}/employee/${_id}`,
       }).then((res) => {
-        setUrl(res.data.user)
+        setUrl(res?.data?.user)
       }).catch((error) => {
         console.log(error)
       })

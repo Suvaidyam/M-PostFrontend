@@ -10,6 +10,7 @@ const NewRequest = ({setopen,details}) => {
       setError,setchangeAction, changeAction} = useContext(DataContext);
      const [data, setData] = useState(tabData.details);
      const [collection, setcollection] = useState([])
+     const [test, settest] = useState(true)
 
    const newColl = collection.filter(e=>e.parent===null)
     const getData = () => {
@@ -19,7 +20,7 @@ const NewRequest = ({setopen,details}) => {
           url: `${process.env.REACT_APP_BASEURL}/collection/${workSpace_Id?._id}`,
         })
           .then((res) => {
-            setcollection( res.data.collection);
+            setcollection( res?.data?.collection);
           })
           .catch((err) => {
             console.log(err);
@@ -32,13 +33,13 @@ const NewRequest = ({setopen,details}) => {
           method: "post",
           url: `${process.env.REACT_APP_BASEURL}/collection`,
           data:{
-            name:data.name,
-            parent:data.parent,
+            name:data?.name,
+            parent:data?.parent,
             type:'request',
-            workspace_id:workSpace_Id._id,
+            workspace_id:workSpace_Id?._id,
             details:{
               url:details.url,
-              method:details.method.toLowerCase(),
+              method:details?.method?.toLowerCase(),
               body:jsonText,
               headers:getHeadersAndParams(headersData),
               query:getHeadersAndParams(paramsData)
@@ -46,15 +47,15 @@ const NewRequest = ({setopen,details}) => {
           }
         })
           .then((res) => {
-            setMsg( res.data.message);
-            setStatus( res.status);
+            setMsg( res?.data.message);
+            setStatus( res?.status);
             setError(true)
             setopen(false)
             setchangeAction(!changeAction)
           })
           .catch((err) => {
-            setMsg( err.response.data.message);
-            setStatus( err.response.status);
+            setMsg( err?.response?.data?.message);
+            setStatus( err?.response?.status);
             setError(true)
           });
        
@@ -64,7 +65,10 @@ const NewRequest = ({setopen,details}) => {
         return () => {
           getData();
         };
-      }, []);
+      }, [test]);
+      useEffect(()=>{
+        settest(!test)
+      },[])
   return (
     <>
            <div className="w-[450px] h-[230px]">
