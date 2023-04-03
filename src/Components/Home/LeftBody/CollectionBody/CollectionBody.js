@@ -79,7 +79,9 @@ const CollectionBody = () => {
             setchangeAction(!changeAction);
         };
     }, [changeAction, workSpaceId]);
-
+    useEffect(()=>{
+        setchangeAction(!changeAction);
+    },[])
     const toggle = (e) => {
         e.toggle = !e.toggle;
         setArr([...arr]);
