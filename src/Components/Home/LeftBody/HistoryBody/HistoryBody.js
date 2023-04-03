@@ -91,6 +91,10 @@ const HistoryBody = () => {
       setchangeAction(!changeAction);
     };
   }, [changeAction, historyRender]);
+  // add this useEffect due to production error handling
+  useEffect(()=>{
+    setchangeAction(!changeAction);
+},[])
 
   return (
     <>

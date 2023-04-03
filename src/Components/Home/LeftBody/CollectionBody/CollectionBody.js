@@ -79,6 +79,7 @@ const CollectionBody = () => {
             setchangeAction(!changeAction);
         };
     }, [changeAction, workSpaceId]);
+      // add this useEffect due to production error handling
     useEffect(()=>{
         setchangeAction(!changeAction);
     },[])
