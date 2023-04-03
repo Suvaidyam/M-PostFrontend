@@ -90,7 +90,7 @@ const HistoryBody = () => {
       getData();
       setchangeAction(!changeAction);
     };
-  }, [historyRender]);
+  }, [changeAction, historyRender]);
 
   return (
     <>
