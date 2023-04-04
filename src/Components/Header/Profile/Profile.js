@@ -79,9 +79,7 @@ const Profile = ({setOpenProfile}) => {
       
     }
     useEffect(() => {
-      return () => {
         getImg()
-      }
     }, [picAction])
     
   return (

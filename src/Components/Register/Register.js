@@ -27,26 +27,26 @@ const Register = () => {
   const navigate = useNavigate();
   const Register = () => {
     console.log(email);
-    if(name.length == '0'){
+    if(name.length === 0){
       setMsg("Please Enter Your Name");
       setStatus(400);
       setError(true);
-    }else if(email.length == "0"){
+    }else if(email.length === 0){
       setMsg("Please Enter Your Email");
       setStatus(400);
       setError(true);
 
-    }else if(gender.length == "0"){
+    }else if(gender.length === 0){
       setMsg("Please Select Your Gender");
       setStatus(400);
       setError(true);
 
-    }else if(password.length == "0"){
+    }else if(password.length === 0){
       setMsg("Please Enter Your Password");
       setStatus(400);
       setError(true);
 
-    }else if(password !== confirmPassword){
+    }else if(password !==  confirmPassword){
       setMsg("Opps! Password Not Matched");
       setStatus(400);
       setError(true);
