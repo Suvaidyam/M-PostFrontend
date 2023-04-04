@@ -57,20 +57,25 @@ const CollectionBody = () => {
     const getData = () => {
         setLoader(true);
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
-
-        Http({
-            method: "get",
-            url: `${process.env.REACT_APP_BASEURL}/collection/${workSpace_Id?._id}`,
-        })
-            .then((res) => {
-                setTimeout(() => {
-                    setLoader(false);
-                }, 100);
-                setcollection(res.data.collection);
+        if(workSpace_Id){
+            Http({
+                method: "get",
+                url: `${process.env.REACT_APP_BASEURL}/collection/${workSpace_Id?._id}`,
             })
-            .catch((err) => {
-                console.log(err);
-            });
+                .then((res) => {
+                    setTimeout(() => {
+                        setLoader(false);
+                    }, 100);
+                    setcollection(res.data.collection);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }else{
+            console.log("workspace Id NOT Found, Please select a workspace");
+        }
+
+        
     };
 
     useEffect(() => {

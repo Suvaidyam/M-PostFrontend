@@ -44,7 +44,7 @@ const SetEnviroment = () => {
   };
 
   useEffect(() => {
-    return () => getData();
+    getData();
   }, []);
     
   return (

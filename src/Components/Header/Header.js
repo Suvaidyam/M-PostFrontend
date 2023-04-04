@@ -45,9 +45,10 @@ const [openProfile, setOpenProfile] = useState(false)
     }
   };
   const getImg =()=>{
-    const paylode=sessionStorage.getItem('paylode')
-    const{_id} =JSON.parse(paylode) 
-    http({
+    const paylode=sessionStorage.getItem('paylode');
+    if(paylode){
+      const{_id} =JSON.parse(paylode);
+      http({
         method: "get",
         url: `${process.env.REACT_APP_BASEURL}/employee/${_id}`,
       }).then((res) => {
@@ -55,6 +56,8 @@ const [openProfile, setOpenProfile] = useState(false)
       }).catch((error) => {
         console.log(error)
       })
+    }
+    
   };
   useEffect(() => {
     getImg()

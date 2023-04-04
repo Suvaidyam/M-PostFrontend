@@ -14,7 +14,12 @@ const Home = () => {
   const [tab, setTab] = useState('workspace');
   const activeNav = localStorage.getItem("currentNav")
   const [currentNav, setcurrentNav] = useState(activeNav? activeNav: "Collection");
-  localStorage.setItem("currentNav", currentNav)
+  localStorage.setItem("currentNav", currentNav);
+  // Disable right-click context menu
+document.addEventListener('contextmenu', function(event) {
+  event.preventDefault();
+});
+
   return (
     <>
       <div className="w-full h-screen ">
