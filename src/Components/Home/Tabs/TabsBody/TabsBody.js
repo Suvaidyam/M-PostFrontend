@@ -17,26 +17,31 @@ const TabsBody = () => {
 
   const onSendClick = async () => {
 
-    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
-    Http({
-      method: "post",
-      url: `${process.env.REACT_APP_BASEURL}/history`,
-      data:{
-        workspace_id:workSpace_Id,
-        request_id:topBarData._id,
-        details: topBarData
-      }
-    })
-      .then((res) => {
-        sethistoryRender(!historyRender);
+    if(topBarData.url === 0){
+      let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
+      Http({
+        method: "post",
+        url: `${process.env.REACT_APP_BASEURL}/history`,
+        data:{
+          workspace_id:workSpace_Id,
+          request_id:topBarData._id,
+          details: topBarData
+        }
       })
-      .catch((err) => {
-        console.log(err);
-      });
-    if (!checkParams(topBarData, paramsData, headersData, jsonText, setMsg)) {
-      setError(true);
-      return false;
+        .then((res) => {
+          sethistoryRender(!historyRender);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      if (!checkParams(topBarData, paramsData, headersData, jsonText, setMsg)) {
+        setError(true);
+        return false;
+      }
+    }else{
+      console.log('URL Messing')
     }
+    
 
     Http({
       url: topBarData.url,
