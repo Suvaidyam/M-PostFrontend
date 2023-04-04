@@ -15,7 +15,8 @@ const Router = () => {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/workSpace" element={<Protected Component={Home} />}/>
+            <Route path="*" element={<Login />} />
+            <Route path="/workSpace" element={<Protected Component={Home} />} />
           </Routes>
           <SnackBar />
         </DataProvider>
