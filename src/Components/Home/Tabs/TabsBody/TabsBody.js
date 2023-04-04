@@ -16,8 +16,7 @@ const TabsBody = () => {
   // console.log("topBarData", topBarData)
 
   const onSendClick = async () => {
-
-    if(topBarData.url === 0){
+    if(topBarData?.url?.length != 0){
       let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
       Http({
         method: "post",
@@ -39,7 +38,7 @@ const TabsBody = () => {
         return false;
       }
     }else{
-      console.log('URL Messing')
+      console.log("URL is missing");
     }
     
 
