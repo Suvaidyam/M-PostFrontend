@@ -24,11 +24,10 @@ const Response = ({ apiResponse, isLoading }) => {
     setHeader(true);
   };
   // console.log("apiResponse", apiResponse);
-  // let {headers } = apiResponse; // ? apiResponse : {};
+  let headers  = apiResponse?.headers; // ? apiResponse : {};
 
   const getStatusElem = (res) => {
     if (res) {
-      // console.log(typeof res.status, res.status);
       if (res.status < 300) {
         return <span className="text-green-600">{res.status}</span>;
       } else if (res.status >= 300 && res.status < 500) {
@@ -40,14 +39,14 @@ const Response = ({ apiResponse, isLoading }) => {
       return <span className="text-red-600">NA</span>;
     }
   };
-  const getResponseHeaderElem = (apiResponse) => {
+  const getResponseHeaderElem = (headers) => {
     let arr = [];
-    if (apiResponse?.headers) {
-      for (let k in apiResponse?.headers) {
+    if (headers) {
+      for (let k in headers) {
         arr.push(
           <span key={k} className="text-gray-800 text-sm font-medium">
             <b>{k}:</b>
-            {apiResponse?.headers[k]}
+            {headers[k]}
           </span>
         );
       }
@@ -83,10 +82,11 @@ const Response = ({ apiResponse, isLoading }) => {
             ) : (
               <>
                 <div className="w-full h-full ">
-                  <div className="flex justify-between w-full h-[10%]">
+                  <div className="flex justify-between w-full h-[10%] min-h-[30px]">
                     {/* Show this part in tabs - Body and Headers */}
-                    <div className="px-2 flex items-center  py-1 gap-5">
-                      <span
+                     {apiResponse.status===404?<h1 className="font-semibold text-gray-600 px-2">Response</h1>:
+                    <><div className="px-2 flex items-center  py-1 gap-5">
+                     <span
                         className={`text-sm font-medium cursor-pointer
                      ${body === true ? "text-blue-600" : "text-gray-800 "}`}
                         onClick={BodyTab}
@@ -132,6 +132,7 @@ const Response = ({ apiResponse, isLoading }) => {
                         SaveResponse
                       </button>
                     </div>
+                      </>}
                   </div>
                   {header === true ? (
                     <div className="w-full mt-1 h-[89%]">
@@ -143,7 +144,7 @@ const Response = ({ apiResponse, isLoading }) => {
                           Value
                         </div>
                       </div>
-                      {getResponseHeaderElem(apiResponse?.headers).map((e) => (
+                      {getResponseHeaderElem(headers).map((e) => (
                         <div className="w-full flex">
                           <div className="w-1/2 border py-1.5 px-2 text-sm ">
                             {e.key}
@@ -159,15 +160,14 @@ const Response = ({ apiResponse, isLoading }) => {
                     {body === true ? (
                       <Scrollbars className="h-full">
                         <div className="h-full break-all  font-mono">
-                          <ReactJson
-
+                          {apiResponse.status===404?
+                            <ApiError/>
+                            :<ReactJson 
                             name={false}
                             displayDataTypes={false}
                             displayObjectSize={false}
-                            enableClipboard={false}
-
-                            src={
-                              apiResponse?.data} />
+                            enableClipboard={false} 
+                            src={apiResponse?.data} />}
                         </div>
                       </Scrollbars>
                     ) : null}
