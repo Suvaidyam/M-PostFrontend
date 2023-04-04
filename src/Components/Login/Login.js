@@ -14,17 +14,16 @@ const Login = () => {
   const checkUserLogin = ()=>{
     let userLogin = sessionStorage.getItem('token');
   if(userLogin){
-    console.log("login");
     navigate("/workSpace");
   }else{
-    console.log("not logged in");
     navigate("/");
   };
   }
   
   useEffect(()=>{
     checkUserLogin()
-  },[])
+  },[]);
+  
   return (
     <>
       <div className="w-full h-screen ">
