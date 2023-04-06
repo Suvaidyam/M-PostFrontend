@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -45,6 +45,9 @@ function a11yProps(index) {
 export default function QuearyTabs() {
   let activeQueryTab = sessionStorage.getItem("queryTab")
   const [value, setValue] = useState(activeQueryTab? parseInt(activeQueryTab): 0);
+  useEffect(()=>{
+    sessionStorage.setItem("queryTab", value);
+  },[value])
   const { paramsData, setParamsData, headersData, setHeadersData, tabsList ,tabData, currentActive  } =
     useContext(DataContext);
     // console.log(paramsData);
@@ -58,8 +61,8 @@ export default function QuearyTabs() {
     // console.log("params(query)",params);
     // console.log("headers",headersBackendData);
 
-  sessionStorage.setItem("queryTab", value);
-  const handleChange = (event, newValue) => {
+    const handleChange = (event, newValue) => {
+    sessionStorage.setItem("queryTab", newValue);
     setValue(newValue);
     // console.log(value);
   };
