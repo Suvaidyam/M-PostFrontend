@@ -11,7 +11,7 @@ const TabsBody = () => {
   const { setMsg, setError, topBarData, paramsData, headersData, jsonText,historyRender, sethistoryRender } =
     useContext(DataContext);
 
-  const [apiResponse, setApiResponse] = useState({});
+  const [apiResponse, setApiResponse] = useState({status:"100"});
   const [isLoading, setLoading] = useState(false);
   // console.log("topBarData", topBarData)
 
@@ -33,12 +33,11 @@ const TabsBody = () => {
         .catch((err) => {
           console.log(err);
         });
+    }else{
       if (!checkParams(topBarData, paramsData, headersData, jsonText, setMsg)) {
         setError(true);
         return false;
       }
-    }else{
-      console.log("URL is missing");
     }
     
 
