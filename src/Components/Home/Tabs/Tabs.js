@@ -12,7 +12,7 @@ const Tabs = () => {
     setTabData} = useContext(DataContext);
 
   let storeData = sessionStorage.getItem("recentTablength");
-  const [recentTablength, setrecentTablength] = useState(storeData?parseInt(storeData): 0);
+  const [recentTablength, setrecentTablength] = useState(storeData?parseInt(storeData): 2);
   sessionStorage.setItem("recentTablength",recentTablength)
   
   const newReqObj = {
