@@ -15,6 +15,10 @@ const Response = ({ apiResponse, isLoading }) => {
   const [body, setBody] = useState(true);
   const [header, setHeader] = useState(false);
 
+  const errorData = {
+    error: apiResponse?.data
+  }
+
   const BodyTab = () => {
     setBody(true);
     setHeader(false);
@@ -60,8 +64,44 @@ const Response = ({ apiResponse, isLoading }) => {
   return (
     <>
       {apiResponse?.data === undefined ? (
-        <ErrorScreen />
+        apiResponse?.status === "100" ?
+          <div>
+            {isLoading ? (<div className="flex items-center justify-center  pt-12">
+              <LineWave
+                height="100"
+                width="100"
+                color="#4fa94d"
+                ariaLabel="line-wave"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                firstLineColor="#2563EB"
+                middleLineColor="#2563EB"
+                lastLineColor="#2563EB"
+              />
+            </div>) : <ErrorScreen />}
+
+          </div>
+          : <div>
+            {isLoading ? (<div className="flex items-center justify-center  pt-12">
+              <LineWave
+                height="100"
+                width="100"
+                color="#4fa94d"
+                ariaLabel="line-wave"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                firstLineColor="#2563EB"
+                middleLineColor="#2563EB"
+                lastLineColor="#2563EB"
+              />
+            </div>) : <ApiError />}
+
+          </div>
+
       ) : (
+
         <>
           <div className="w-full h-full bg-white border overflow-hidden">
             {isLoading ? (
@@ -158,13 +198,19 @@ const Response = ({ apiResponse, isLoading }) => {
                     {body === true ? (
                       <Scrollbars className="h-full">
                         <div className="h-full break-all  font-mono">
-                          <ReactJson
+                          {/* {console.log(typeof(apiResponse?.data))} */}
+                          {typeof (apiResponse?.data) == 'object' ? <ReactJson
                             name={false}
                             displayDataTypes={false}
                             displayObjectSize={false}
                             enableClipboard={false}
-                            src={
-                            apiResponse?.data} />
+                            src={apiResponse?.data} /> : <ReactJson
+                            name={false}
+                            displayDataTypes={false}
+                            displayObjectSize={false}
+                            enableClipboard={false}
+                            src={errorData} />}
+
                         </div>
                       </Scrollbars>
                     ) : null}
