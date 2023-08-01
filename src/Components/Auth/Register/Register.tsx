@@ -24,7 +24,7 @@ const Register: FC<RegisterProps> = () => {
                     </div>
 
                     {/* right side */}
-                    <div className='md:w-[60%] h-full flex flex-col gap-1 block w-full overflow-hidden px-16'>
+                    <div className='md:w-[60%] h-full flex flex-col gap-1 w-full overflow-hidden px-16'>
                         <div className=' w-full flex justify-between mt-4'>
                             <img src={Vetor} alt="" className='w-10' />
                             <div className='text-sm'>
