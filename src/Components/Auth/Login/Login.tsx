@@ -1,7 +1,9 @@
 import type { FC } from 'react';
 import Logo from '..//..//Assets//login-Bg.png'
 import Vetor from '..//..//Assets//Vector.png'
-
+import google from '..//..//Assets//google.png'
+import github from '..//..//Assets//github.png'
+import sos from '..//..//Assets//SOS.png'
 interface LoginProps { }
 
 const Login: FC<LoginProps> = () => {
@@ -72,11 +74,31 @@ const Login: FC<LoginProps> = () => {
                                     // className={`${check === false ? "bg-blue-600" : "bg-blue-200"}
                                     //   py-2 text-white text-sm px-10 rounded-sm`}
                                     // onClick={save}
-                                    className='bg-blue-400'
+                                    className='bg-blue-400 py-2 px-8'
                                 >
                                     LOGIN
                                 </button>
                             </div>
+                            <div className="w-full relative border-b-2 flex justify-center mt-5">
+                                <p className="absolute -top-3.5 bg-white px-2 text-sm font-medium">
+                                    or login using
+                                </p>
+                            </div>
+                            <div className='w-full flex justify-center gap-2 mt-10'>
+                                <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
+                                    <img src={google} alt="" />
+                                </div>
+                                <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
+                                    <img src={github} alt="" />
+                                </div>
+                                <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
+                                    <img src={sos} alt="" />
+                                </div>
+
+
+                            </div>
+
+
 
                         </div>
                     </div>
