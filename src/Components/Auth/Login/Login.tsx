@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { useState, useContext, type FC } from 'react';
 import Logo from '..//..//Assets//login-Bg.png'
 import Vetor from '..//..//Assets//Vector.png'
 import google from '..//..//Assets//google.png'
@@ -10,11 +10,13 @@ import {
     AiOutlineEyeInvisible,
 } from "react-icons/ai";
 import ForgetPassword from '../ForgetPassword/ForgetPassword';
+import { MyContext } from '../../../Context/Context';
 interface LoginProps { }
 
 const Login: FC<LoginProps> = () => {
     const [open, setOpen] = useState<boolean>(false);
-    const[forgetPasswordPopup,setforgetPasswordPopup]=useState(false);
+    const { forgetPasswordPopup,setForgetPasswordPopup}:any = useContext(MyContext)
+    // const[forgetPasswordPopup,setforgetPasswordPopup]=useState(false);
     return (
         <>
             <div className='w-full h-screen'>
@@ -95,7 +97,9 @@ const Login: FC<LoginProps> = () => {
                                 >
                                     Forget Password?
                                 </Link> */}
-                                 <p onClick={()=>setforgetPasswordPopup(true)} className="text-sm text-blue-600 cursor-pointer">Forget Password?</p>
+                                 <p 
+                                 onClick={()=>setForgetPasswordPopup(true)} 
+                                 className="text-sm text-blue-600 cursor-pointer">Forget Password?</p>
                                  {forgetPasswordPopup && <ForgetPassword/>}
                                     
                             </div>
@@ -110,8 +114,8 @@ const Login: FC<LoginProps> = () => {
                                     LOGIN
                                 </button>
                             </div>
-                            <div className="w-full relative border-b-2 flex justify-center">
-                                <p className="absolute -top-3.5 bg-white px-2 text-sm font-medium">
+                            <div className="w-full relative border-b-2 flex justify-center -z-30 ">
+                                <p className="absolute -top-3.5 bg-white px-2 text-sm font-medium -z-30">
                                     or login using
                                 </p>
                             </div>
