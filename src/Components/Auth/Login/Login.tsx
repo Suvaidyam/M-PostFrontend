@@ -1,25 +1,36 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
 import Logo from '..//..//Assets//login-Bg.png'
 import Vetor from '..//..//Assets//Vector.png'
 import google from '..//..//Assets//google.png'
 import github from '..//..//Assets//github.png'
 import sos from '..//..//Assets//SOS.png'
+import { Link } from 'react-router-dom'
+import {
+    AiOutlineEye,
+    AiOutlineEyeInvisible,
+} from "react-icons/ai";
+import ForgetPassword from '../ForgetPassword/ForgetPassword';
 interface LoginProps { }
 
 const Login: FC<LoginProps> = () => {
+    const [open, setOpen] = useState<boolean>(false);
+    const[forgetPasswordPopup,setforgetPasswordPopup]=useState(false);
     return (
         <>
             <div className='w-full h-screen'>
                 <div className='w-full h-full md:flex'>
                     {/* left */}
-                    <div className='md:w-[60%] h-full block px-16 py-12 '>
+                    <div className='md:w-[60%] h-full flex flex-col justify-center gap-4 px-16'>
                         <div className=' w-full flex justify-between'>
                             <img src={Vetor} alt="" className='w-10' />
                             <div className='text-sm'>
-                                New user ? Sign Up
+                                New user ?
+                                <Link to='/register' className='text-blue-600'>
+                                    Sign Up
+                                </Link>
                             </div>
                         </div>
-                        <div className="w-full flex flex-col gap-2 mt-6">
+                        <div className="w-full flex flex-col gap-2">
                             <h1 className="text-3xl font-medium">Welcome Back</h1>
                             <p className="text-xs font-medium">
                                 Pleace enter following information to continue
@@ -38,7 +49,7 @@ const Login: FC<LoginProps> = () => {
                                 // onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1 relative">
                                 <label htmlFor="email" className="font-medium">
                                     Email or Usename
                                 </label>
@@ -49,6 +60,19 @@ const Login: FC<LoginProps> = () => {
                                     placeholder="Enter Email or Username"
                                 // onChange={(e) => setEmail(e.target.value)}
                                 />
+
+                                {open === true ? (
+                                    <AiOutlineEyeInvisible
+                                        className="absolute top-9 cursor-pointer right-2 text-xl"
+                                        onClick={() => setOpen(!open)}
+                                    />
+                                ) : (
+                                    <AiOutlineEye
+                                        className="absolute top-9 cursor-pointer right-2 text-xl"
+                                        onClick={() => setOpen(!open)}
+                                    />
+                                )}
+
                             </div>
                             <div className="flex justify-between">
                                 <div className="flex items-center gap-1">
@@ -64,9 +88,16 @@ const Login: FC<LoginProps> = () => {
                                         <span className="text-red-500">terms & conditions</span>
                                     </label>
                                 </div>
-                                {/* <Link className="text-sm text-blue-600" onClick={() => setOpenForgetPopUp(!openForgetPopUp)}>
+                                {/* <Link 
+                                // className="text-sm text-blue-600" onClick={() => setOpenForgetPopUp(!openForgetPopUp)}
+                                to='/forgetpassword'
+                                className='text-blue-500 text-sm'
+                                >
                                     Forget Password?
                                 </Link> */}
+                                 <p onClick={()=>setforgetPasswordPopup(true)} className="text-sm text-blue-600 cursor-pointer">Forget Password?</p>
+                                 {forgetPasswordPopup && <ForgetPassword/>}
+                                    
                             </div>
                             <div className="w-full flex justify-end">
                                 <button
@@ -74,17 +105,17 @@ const Login: FC<LoginProps> = () => {
                                     // className={`${check === false ? "bg-blue-600" : "bg-blue-200"}
                                     //   py-2 text-white text-sm px-10 rounded-sm`}
                                     // onClick={save}
-                                    className='bg-blue-400 py-2 px-8'
+                                    className='bg-blue-200 py-2 px-8'
                                 >
                                     LOGIN
                                 </button>
                             </div>
-                            <div className="w-full relative border-b-2 flex justify-center mt-5">
+                            <div className="w-full relative border-b-2 flex justify-center">
                                 <p className="absolute -top-3.5 bg-white px-2 text-sm font-medium">
                                     or login using
                                 </p>
                             </div>
-                            <div className='w-full flex justify-center gap-2 mt-10'>
+                            <div className='w-full flex justify-center gap-2'>
                                 <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
                                     <img src={google} alt="" />
                                 </div>
