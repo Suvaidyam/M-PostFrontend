@@ -5,6 +5,7 @@ import google from '..//..//Assets//google.png'
 import github from '..//..//Assets//github.png'
 import sos from '..//..//Assets//SOS.png'
 import { Link } from 'react-router-dom'
+import {Formik} from 'formik'
 import {
     AiOutlineEye,
     AiOutlineEyeInvisible,
@@ -41,7 +42,9 @@ const Login: FC<LoginProps> = () => {
                                 Pleace enter following information to continue
                             </p>
                         </div>
-                        <div className='mt-10 flex gap-5 flex-col'>
+                            <Formik>
+
+                            <div className='mt-10 flex gap-5 flex-col'>
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="email" className="font-medium">
                                     Email or Usename
@@ -127,6 +130,7 @@ const Login: FC<LoginProps> = () => {
                                 </div>
                             </div>
                         </div>
+                            </Formik>
                     </div>
                     {/* left end */}
 
