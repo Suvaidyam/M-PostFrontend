@@ -42,7 +42,7 @@ const Register: FC<RegisterProps> = () => {
                             </p>
                         </div>
                         {/* form */}
-                        <div className="w-full h-full overflow-hidden overflow-y-scroll flex flex-col gap-5">
+                        <div className="w-full h-full  overflow-hidden overflow-y-scroll  flex flex-col gap-5">
                             <div className="flex  flex-col gap-1">
                                 <label htmlFor="name" className="font-medium">
                                     Name

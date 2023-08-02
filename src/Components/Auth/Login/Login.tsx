@@ -15,6 +15,9 @@ interface LoginProps { }
 
 const Login: FC<LoginProps> = () => {
     const [open, setOpen] = useState<boolean>(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [check, setCheck] = useState(true);
     const { forgetPasswordPopup,setForgetPasswordPopup}:any = useContext(MyContext)
     // const[forgetPasswordPopup,setforgetPasswordPopup]=useState(false);
     return (
@@ -48,19 +51,19 @@ const Login: FC<LoginProps> = () => {
                                     id="email"
                                     className="border-2 outline-none w-full py-1 px-2"
                                     placeholder="Enter Email or Username"
-                                // onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                             <div className="flex flex-col gap-1 relative">
                                 <label htmlFor="email" className="font-medium">
-                                    Email or Usename
+                                    Password
                                 </label>
                                 <input
-                                    type="text"
-                                    id="email"
+                                    type={open === true ? "text" : "password"}
+                                    id="password"
                                     className="border-2 outline-none w-full py-1 px-2"
                                     placeholder="Enter Email or Username"
-                                // onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setPassword(e.target.value)}
                                 />
 
                                 {open === true ? (
@@ -83,20 +86,13 @@ const Login: FC<LoginProps> = () => {
                                         id="check"
                                         className="border-2 outline-none"
                                         placeholder="Enter Password"
-                                    // onClick={() => setCheck(!check)}
+                                    onClick={() => setCheck(!check)}
                                     />
                                     <label htmlFor="check" className="text-sm cursor-pointer">
                                         I agree with{" "}
                                         <span className="text-red-500">terms & conditions</span>
                                     </label>
                                 </div>
-                                {/* <Link 
-                                // className="text-sm text-blue-600" onClick={() => setOpenForgetPopUp(!openForgetPopUp)}
-                                to='/forgetpassword'
-                                className='text-blue-500 text-sm'
-                                >
-                                    Forget Password?
-                                </Link> */}
                                  <p 
                                  onClick={()=>setForgetPasswordPopup(true)} 
                                  className="text-sm text-blue-600 cursor-pointer">Forget Password?</p>
@@ -105,11 +101,11 @@ const Login: FC<LoginProps> = () => {
                             </div>
                             <div className="w-full flex justify-end">
                                 <button
-                                    // disabled={check}
-                                    // className={`${check === false ? "bg-blue-600" : "bg-blue-200"}
-                                    //   py-2 text-white text-sm px-10 rounded-sm`}
+                                    disabled={check}
+                                    className={`${check === false ? "bg-blue-600" : "bg-blue-200"}
+                                      py-2 text-white text-sm px-10 rounded-sm`}
                                     // onClick={save}
-                                    className='bg-blue-200 py-2 px-8'
+                                    // className='bg-blue-200 py-2 px-8'
                                 >
                                     LOGIN
                                 </button>
@@ -129,12 +125,7 @@ const Login: FC<LoginProps> = () => {
                                 <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
                                     <img src={sos} alt="" />
                                 </div>
-
-
                             </div>
-
-
-
                         </div>
                     </div>
                     {/* left end */}
