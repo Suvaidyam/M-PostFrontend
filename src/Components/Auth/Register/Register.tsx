@@ -20,6 +20,8 @@ const Register: FC<RegisterProps> = () => {
                     <div className='w-[40%] h-full bg-blue-700 hidden md:block overflow-hidden'>
                         <p className="text-white text-xl text-center">
                             Collect all your APIs in one place
+                            
+                            
                         </p>
                         <img className="w-full object-cover" src={Logo} alt="" />
                     </div>
