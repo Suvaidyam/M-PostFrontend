@@ -1,11 +1,13 @@
 import { useState, useContext, type FC } from 'react';
+import axios from 'axios';
 import Logo from '..//..//Assets//login-Bg.png'
 import Vetor from '..//..//Assets//Vector.png'
 import google from '..//..//Assets//google.png'
 import github from '..//..//Assets//github.png'
 import sos from '..//..//Assets//SOS.png'
 import { Link } from 'react-router-dom'
-import {Formik} from 'formik'
+import {Formik,Form, Field} from 'formik'
+import * as Yup from 'yup';
 import {
     AiOutlineEye,
     AiOutlineEyeInvisible,
@@ -13,14 +15,42 @@ import {
 import ForgetPassword from '../ForgetPassword/ForgetPassword';
 import { MyContext } from '../../../Context/Context';
 interface LoginProps { }
+interface IFormValue{
+    email:string,
+    password:string,
+}
 
 const Login: FC<LoginProps> = () => {
     const [open, setOpen] = useState<boolean>(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
     const [check, setCheck] = useState(true);
     const { forgetPasswordPopup,setForgetPasswordPopup}:any = useContext(MyContext)
-    // const[forgetPasswordPopup,setforgetPasswordPopup]=useState(false);
+    const url = `http://localhost:4000/auth/login`;
+    const initialValues:IFormValue = {
+        email: '',
+        password: ''
+      }
+
+      const validationSchema = Yup.object().shape({
+        email: Yup.string().email('Invalid email').required('Email is required'),
+        password: Yup.string().required('Password is required')
+      })
+
+      const handleLogin = (values:IFormValue)=>{
+        
+        axios.post(url, values)
+          .then((response:any) => {
+           console.log(response)
+           
+           
+           window.location.href = '/register';
+          
+          })
+          .catch((error) => {
+            console.log("Error occurred:", error);
+          });
+      } 
     return (
         <>
             <div className='w-full h-screen'>
@@ -42,31 +72,38 @@ const Login: FC<LoginProps> = () => {
                                 Pleace enter following information to continue
                             </p>
                         </div>
-                            <Formik>
+                            <div>
+                            <Formik
+                             initialValues={initialValues}
+                             onSubmit={handleLogin}
+                             validationSchema={validationSchema}
+                            >
 
-                            <div className='mt-10 flex gap-5 flex-col'>
+                            <Form className='mt-10 flex gap-5 flex-col'>
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="email" className="font-medium">
                                     Email or Usename
                                 </label>
-                                <input
+                                <Field
                                     type="text"
                                     id="email"
+                                    name="email"
                                     className="border-2 outline-none w-full py-1 px-2"
                                     placeholder="Enter Email or Username"
-                                onChange={(e) => setEmail(e.target.value)}
+                                // onChange={() => setEmail(e.target.value)}
                                 />
                             </div>
                             <div className="flex flex-col gap-1 relative">
                                 <label htmlFor="email" className="font-medium">
                                     Password
                                 </label>
-                                <input
+                                <Field
                                     type={open === true ? "text" : "password"}
                                     id="password"
+                                    name="password"
                                     className="border-2 outline-none w-full py-1 px-2"
                                     placeholder="Enter Email or Username"
-                                onChange={(e) => setPassword(e.target.value)}
+                                // onChange={() => setPassword(e.target.value)}
                                 />
 
                                 {open === true ? (
@@ -104,6 +141,7 @@ const Login: FC<LoginProps> = () => {
                             </div>
                             <div className="w-full flex justify-end">
                                 <button
+                                type='submit'
                                     disabled={check}
                                     className={`${check === false ? "bg-blue-600" : "bg-blue-200"}
                                       py-2 text-white text-sm px-10 rounded-sm`}
@@ -129,8 +167,9 @@ const Login: FC<LoginProps> = () => {
                                     <img src={sos} alt="" />
                                 </div>
                             </div>
-                        </div>
+                        </Form>
                             </Formik>
+                            </div>
                     </div>
                     {/* left end */}
 
