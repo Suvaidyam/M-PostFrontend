@@ -18,9 +18,9 @@ const Navbar: FC<NavbarProps> = () => {
 
         <>
             <div className='w-full h-full'>
-                <div className='w-full h-16  border flex justify-between items-center px-4 relative'>
+                <div className='w-full h-full  border flex justify-between items-center px-4 relative'>
                     <div className='flex gap-7 max-[550px]:gap-4 max-[400px]:gap-2 max-[400px]:text-sm items-center text-gray-600'>
-                        <img className='h-12 max-[400px]:h-8' src={Vector} alt="" />
+                        <img className='h-11 max-[400px]:h-8' src={Vector} alt="" />
                         <NavLink to={"/workspace"}><p className='flex items-center gap-1'>
                             <span className='ml-5 max-[550px]:ml-2 '>Workspace</span>
                             <span><GoTriangleDown className='text-lg text-black' /></span></p>
@@ -34,26 +34,20 @@ const Navbar: FC<NavbarProps> = () => {
                             <input className='w-48 border-2 py-2 rounded-sm outline-none bg-gray-100 pl-2 pr-5 text-xs text-gray-600' type="text" placeholder='Search..' />
                             <FiSearch className='absolute right-1  top-3' />
                         </div>
-
                         <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center'><HiOutlineMoon className='hover:text-blue-500' />
                         </div>
-
                         <div className='w-8 h-8 rounded-[50%] cursor-pointer border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center relative'> <BiBell className='hover:text-blue-500' /><p className='absolute h-2 w-2 bg-red-600 rounded-full top-1 right-2'></p>
                         </div>
-
                         <div className='w-12 h-12 rounded-[50%] bg-slate-100 border-[2px] p-[2px] border-blue-500 cursor-pointer'>
                             <img src={avatar} alt="" />
                         </div>
-
                         <button className='bg-blue-600 py-1 px-4 text-white'>SHARE</button>
-
                     </div>
 
                     <FaBars className='hidden max-[950px]:block' onClick={() => setNavbarToggle(!navbarToggle)} />
                 </div>
                 {navbarToggle &&
-
-                    <div className=' shadow-md shadow-gray-200 absolute right-2 max-[550px]:right-0 top-16 rounded w-72 max-[550px]:w-full h-auto  flex flex-col gap-5 p-5 max-[550px]:p-10 font-semibold text-gray-800'>
+                    <div className='bg-white shadow-md shadow-gray-200 absolute right-2 max-[550px]:right-0 top-16 rounded w-72 max-[550px]:w-full h-auto flex flex-col gap-5 p-5 max-[550px]:p-10 font-semibold text-gray-800'>
 
                         <div className='flex items-center gap-5 cursor-pointer'>
                             <div className='w-8 h-8 rounded-[50%] bg-slate-100 border-[2px] p-[2px] border-blue-500 cursor-pointer'>
@@ -74,8 +68,6 @@ const Navbar: FC<NavbarProps> = () => {
                             <p>Notification</p>
                         </div>
 
-
-
                         <div className='flex items-center gap-5 cursor-pointer'>
                             <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 hover:text-blue-500  flex items-center justify-center'><BsFillShareFill className='text-sm' />
                             </div>
@@ -86,10 +78,7 @@ const Navbar: FC<NavbarProps> = () => {
                             <input className='w-full border-2 py-2 rounded-sm outline-none bg-gray-100 pl-2 pr-5 text-xs text-gray-600' type="text" placeholder='Search..' />
                             <FiSearch className='absolute right-1  top-3' />
                         </div>
-
                     </div>}
-
-
             </div>
         </>
     );
