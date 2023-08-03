@@ -2,23 +2,26 @@ import type { FC } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from '../Auth/Login/Login';
 import Register from '../Auth/Register/Register';
-import ForgetPassword from '../Auth/ForgetPassword/ForgetPassword';
+import DataProvider from '..//..//Context//Context'
+import MainWorkspace from '..//MainWorkspace//MainWorkspace';
 
-interface RouterProps {}
+interface RouterProps { }
 
 const Router: FC<RouterProps> = () => {
     return (
 
         <>
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<Login/>}/>
-                <Route path='/register' element={<Register/>}/>
-                <Route path='*' element={<Login/>}/>
-                {/* <Route path='/forgetpassword' element={<ForgetPassword/>}/> */}
-            </Routes>
-        </BrowserRouter>
-        
+            <BrowserRouter>
+                <DataProvider >
+                    <Routes>
+                        <Route path='/' element={<Login />} />
+                        <Route path='/register' element={<Register />} />
+                        <Route path='*' element={<Login />} />
+                        <Route path='/mainworkspace' element={<MainWorkspace/>}/>
+                    </Routes>
+                </DataProvider>
+            </BrowserRouter>
+
         </>
     );
 }

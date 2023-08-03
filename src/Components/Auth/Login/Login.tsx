@@ -44,7 +44,7 @@ const Login: FC<LoginProps> = () => {
            console.log(response)
            
            
-           window.location.href = '/register';
+           window.location.href = '/mainworkspace';
           
           })
           .catch((error) => {
