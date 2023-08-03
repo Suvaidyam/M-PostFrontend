@@ -8,14 +8,14 @@ const MainWorkspace: FC<MainWorkspaceProps> = () => {
     return (
 
         <>
-       
         <div className='w-screen h-screen'>
-        <div>
+        <div className='w-full h-full'>
              <Navbar/>
         </div>
-        <div>
+        
+        {/* <div>
             <Outlet/>
-        </div>
+        </div> */}
 
         </div>
         </>
