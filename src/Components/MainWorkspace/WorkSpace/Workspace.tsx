@@ -5,8 +5,8 @@ interface WorkspaceProps {}
 const Workspace: FC<WorkspaceProps> = () => {
     return (
     <>
-        <div className='w-full h-[89.5vh] bg-blue-500'>
-dgdfgsdfgd
+        <div className='w-full h-[91vh] bg-blue-500'>
+
         </div>
     </>
     
