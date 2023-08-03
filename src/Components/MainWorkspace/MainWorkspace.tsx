@@ -1,4 +1,6 @@
 import type { FC } from 'react';
+import Navbar from './Navbar/Navbar';
+import { Outlet } from 'react-router-dom';
 
 interface MainWorkspaceProps {}
 
@@ -6,7 +8,16 @@ const MainWorkspace: FC<MainWorkspaceProps> = () => {
     return (
 
         <>
-        Hello world
+       
+        <div className='w-screen h-screen'>
+        <div>
+             <Navbar/>
+        </div>
+        <div>
+            <Outlet/>
+        </div>
+
+        </div>
         </>
     );
 }
