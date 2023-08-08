@@ -26,17 +26,16 @@ const Login: FC<LoginProps> = () => {
     // const [password, setPassword] = useState("");
     const [check, setCheck] = useState(true);
     const { forgetPasswordPopup,setForgetPasswordPopup}:any = useContext(MyContext)
-    const url = `http://localhost:4000/auth/login`;
+    const url = `${process.env.REACT_APP_API_URL}/auth/login`;
     const initialValues:IFormValue = {
         email: '',
         password: ''
       }
-
       const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email').required('Email is required'),
         password: Yup.string().required('Password is required')
       })
-
+    //   console.log(process.env.REACT_APP_API_URL)
       const handleLogin = (values:IFormValue)=>{
         
         axios.post(url, values)

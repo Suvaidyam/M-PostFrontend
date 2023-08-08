@@ -25,8 +25,8 @@ const Navbar: FC<NavbarProps> = () => {
                             <span className='ml-5 max-[550px]:ml-2 '>Workspace</span>
                             <span><GoTriangleDown className='text-lg text-black' /></span></p>
                         </NavLink>
-                        <NavLink to="/reports"><span>Reports</span></NavLink>
-                        <NavLink to="/explore"><span>Explore</span></NavLink>
+                        <NavLink to="/workSpace/reports"><span>Reports</span></NavLink>
+                        <NavLink to="/workSpace/explore"><span>Explore</span></NavLink>
                     </div>
 
                     <div className='flex items-center gap-5 max-[950px]:hidden'>
