@@ -8,3 +8,6 @@
 .active{
     color: rgb(22, 22, 241);
 }
+::-webkit-scrollbar {
+    display: none;
+  }
