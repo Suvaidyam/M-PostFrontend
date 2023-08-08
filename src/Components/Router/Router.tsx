@@ -12,18 +12,17 @@ interface RouterProps { }
 
 const Router: FC<RouterProps> = () => {
     return (
-
         <>
             <BrowserRouter>
                 <DataProvider >
                     <Routes>
-                        <Route path='/login' element={<Login />} />
+                        <Route path='/' element={<Login />} />
                         <Route path='/register' element={<Register />} />
                         <Route path='*' element={<Login />} />
-                        <Route path='/' element={<MainWorkspace />}>
-                            <Route path='/workspace' element={<Workspace />} />
-                            <Route path='/reports' element={<Reports />} />
-                            <Route path='/explore' element={<Explore />} />
+                        <Route path='/workspace' element={<MainWorkspace />}>
+                            <Route index element={<Workspace />} />
+                            <Route path='reports' element={<Reports />} />
+                            <Route path='explore' element={<Explore />} />
                         </Route>
                     </Routes>
                 </DataProvider>
