@@ -64,8 +64,8 @@ const Register: FC<RegisterProps> = () => {
             <div className='w-full h-screen'>
                 <div className='w-full h-full md:flex'>
                     {/* left side  */}
-                    <div className='w-[40%] h-full bg-blue-700 hidden md:block overflow-hidden'>
-                        <p className="text-white text-xl text-center">
+                    <div className='w-[40%] pt-12 h-full bg-blue-700 hidden md:block overflow-hidden'>
+                        <p className="text-white text-sm text-center">
                             Collect all your APIs in one place
 
 
@@ -79,8 +79,8 @@ const Register: FC<RegisterProps> = () => {
                             <img src={Vetor} alt="" className='w-10' />
                             <div className='text-sm'>
                                 Already Have An Account ?
-                                <Link to='/' className='text-blue-600'>
-                                    Sign In
+                                <Link to='/' className='text-blue-600 mx-1'>
+                                     LogIn
                                 </Link>
                             </div>
                         </div>

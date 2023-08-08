@@ -60,7 +60,7 @@ const Login: FC<LoginProps> = () => {
                             <img src={Vetor} alt="" className='w-10' />
                             <div className='text-sm'>
                                 New user ?
-                                <Link to='/register' className='text-blue-600'>
+                                <Link to='/register' className='text-blue-600 mx-1'>
                                     Sign Up
                                 </Link>
                             </div>
@@ -173,7 +173,7 @@ const Login: FC<LoginProps> = () => {
                     {/* left end */}
 
                     {/* right */}
-                    <div className='w-[40%] h-full  bg-blue-600 hidden md:block'>
+                    <div className='w-[40%] pt-7 h-full  bg-blue-600 hidden md:block'>
                         <p className="text-white text-xl text-center">
                             Collect all your APIs <br /> in one place
                         </p>
