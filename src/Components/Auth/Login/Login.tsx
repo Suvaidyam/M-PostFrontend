@@ -1,5 +1,4 @@
 import { useState, useContext, type FC } from 'react';
-import axios from 'axios';
 import Logo from '..//..//Assets//login-Bg.png'
 import Vetor from '..//..//Assets//Vector.png'
 import google from '..//..//Assets//google.png'
@@ -8,6 +7,7 @@ import sos from '..//..//Assets//SOS.png'
 import { Link } from 'react-router-dom'
 import {Formik,Form, Field} from 'formik'
 import * as Yup from 'yup';
+import {login} from '../../Apis/Login'
 import {
     AiOutlineEye,
     AiOutlineEyeInvisible,
@@ -19,36 +19,21 @@ interface IFormValue{
     email:string,
     password:string,
 }
-
 const Login: FC<LoginProps> = () => {
     const [open, setOpen] = useState<boolean>(false);
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
     const [check, setCheck] = useState(true);
     const { forgetPasswordPopup,setForgetPasswordPopup}:any = useContext(MyContext)
-    const url = `${process.env.REACT_APP_API_URL}/auth/login`;
     const initialValues:IFormValue = {
         email: '',
         password: ''
       }
+      
       const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email').required('Email is required'),
         password: Yup.string().required('Password is required')
       })
-    //   console.log(process.env.REACT_APP_API_URL)
       const handleLogin = (values:IFormValue)=>{
-        
-        axios.post(url, values)
-          .then((response:any) => {
-           console.log(response)
-           
-           
-           window.location.href = '/mainworkspace';
-          
-          })
-          .catch((error) => {
-            console.log("Error occurred:", error);
-          });
+        login(values)
       } 
     return (
         <>
