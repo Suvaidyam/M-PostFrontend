@@ -4,37 +4,47 @@ import Vetor from '..//..//Assets//Vector.png'
 import google from '..//..//Assets//google.png'
 import github from '..//..//Assets//github.png'
 import sos from '..//..//Assets//SOS.png'
-import { Link } from 'react-router-dom'
-import {Formik,Form, Field} from 'formik'
+import { Link, useNavigate } from 'react-router-dom'
+import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup';
-import {login} from '../../Apis/Login'
 import {
     AiOutlineEye,
     AiOutlineEyeInvisible,
 } from "react-icons/ai";
 import ForgetPassword from '../ForgetPassword/ForgetPassword';
 import { MyContext } from '../../../Context/Context';
+import axios from 'axios';
 interface LoginProps { }
-interface IFormValue{
-    email:string,
-    password:string,
+interface IFormValue {
+    email: string,
+    password: string,
 }
-const Login: FC<LoginProps> = () => {
+const Login: FC<LoginProps> = (data: {}) => {
     const [open, setOpen] = useState<boolean>(false);
     const [check, setCheck] = useState(true);
-    const { forgetPasswordPopup,setForgetPasswordPopup}:any = useContext(MyContext)
-    const initialValues:IFormValue = {
+    const { forgetPasswordPopup, setForgetPasswordPopup }: any = useContext(MyContext)
+    const initialValues: IFormValue = {
         email: '',
         password: ''
-      }
-      
-      const validationSchema = Yup.object().shape({
+    }
+
+    const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email').required('Email is required'),
         password: Yup.string().required('Password is required')
-      })
-      const handleLogin = (values:IFormValue)=>{
-        login(values)
-      } 
+    })
+
+    const navigate = useNavigate();
+
+    const handleLogin = (values: IFormValue) => {
+        axios.post(`http://localhost:4000/auth/login`, values)
+            .then((response: any) => {
+                console.log(response)
+                navigate('/workspace')
+            })
+            .catch((error) => {
+                console.log("Error occurred:", error);
+            });
+    }
     return (
         <>
             <div className='w-full h-screen'>
@@ -53,107 +63,106 @@ const Login: FC<LoginProps> = () => {
                         <div className="w-full flex flex-col gap-2">
                             <h1 className="text-3xl font-medium">Welcome Back</h1>
                             <p className="text-xs font-medium">
-                                Pleace enter following information to continue
+                                Please enter following information to continue
                             </p>
                         </div>
-                            <div>
+                        <div>
                             <Formik
-                             initialValues={initialValues}
-                             onSubmit={handleLogin}
-                             validationSchema={validationSchema}
+                                initialValues={initialValues}
+                                onSubmit={handleLogin}
+                                validationSchema={validationSchema}
                             >
+                                <Form className='mt-10 flex gap-5 flex-col'>
+                                    <div className="flex flex-col gap-1">
+                                        <label htmlFor="email" className="font-medium">
+                                            Email or Username
+                                        </label>
+                                        <Field
+                                            type="text"
+                                            id="email"
+                                            name="email"
+                                            className="border-2 outline-none w-full py-1 px-2"
+                                            placeholder="Enter Email or Username"
+                                        // onChange={() => setEmail(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-1 relative">
+                                        <label htmlFor="email" className="font-medium">
+                                            Password
+                                        </label>
+                                        <Field
+                                            type={open === true ? "text" : "password"}
+                                            id="password"
+                                            name="password"
+                                            className="border-2 outline-none w-full py-1 px-2"
+                                            placeholder="Enter Email or Username"
+                                        // onChange={() => setPassword(e.target.value)}
+                                        />
 
-                            <Form className='mt-10 flex gap-5 flex-col'>
-                            <div className="flex flex-col gap-1">
-                                <label htmlFor="email" className="font-medium">
-                                    Email or Usename
-                                </label>
-                                <Field
-                                    type="text"
-                                    id="email"
-                                    name="email"
-                                    className="border-2 outline-none w-full py-1 px-2"
-                                    placeholder="Enter Email or Username"
-                                // onChange={() => setEmail(e.target.value)}
-                                />
-                            </div>
-                            <div className="flex flex-col gap-1 relative">
-                                <label htmlFor="email" className="font-medium">
-                                    Password
-                                </label>
-                                <Field
-                                    type={open === true ? "text" : "password"}
-                                    id="password"
-                                    name="password"
-                                    className="border-2 outline-none w-full py-1 px-2"
-                                    placeholder="Enter Email or Username"
-                                // onChange={() => setPassword(e.target.value)}
-                                />
+                                        {open === true ? (
+                                            <AiOutlineEyeInvisible
+                                                className="absolute top-9 cursor-pointer right-2 text-xl"
+                                                onClick={() => setOpen(!open)}
+                                            />
+                                        ) : (
+                                            <AiOutlineEye
+                                                className="absolute top-9 cursor-pointer right-2 text-xl"
+                                                onClick={() => setOpen(!open)}
+                                            />
+                                        )}
 
-                                {open === true ? (
-                                    <AiOutlineEyeInvisible
-                                        className="absolute top-9 cursor-pointer right-2 text-xl"
-                                        onClick={() => setOpen(!open)}
-                                    />
-                                ) : (
-                                    <AiOutlineEye
-                                        className="absolute top-9 cursor-pointer right-2 text-xl"
-                                        onClick={() => setOpen(!open)}
-                                    />
-                                )}
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <div className="flex items-center gap-1">
+                                            <input
+                                                type="checkbox"
+                                                id="check"
+                                                className="border-2 outline-none"
+                                                placeholder="Enter Password"
+                                                onClick={() => setCheck(!check)}
+                                            />
+                                            <label htmlFor="check" className="text-sm cursor-pointer">
+                                                I agree with{" "}
+                                                <span className="text-red-500">terms & conditions</span>
+                                            </label>
+                                        </div>
+                                        <p
+                                            onClick={() => setForgetPasswordPopup(true)}
+                                            className="text-sm text-blue-600 cursor-pointer">Forget Password?</p>
+                                        {forgetPasswordPopup && <ForgetPassword />}
 
-                            </div>
-                            <div className="flex justify-between">
-                                <div className="flex items-center gap-1">
-                                    <input
-                                        type="checkbox"
-                                        id="check"
-                                        className="border-2 outline-none"
-                                        placeholder="Enter Password"
-                                    onClick={() => setCheck(!check)}
-                                    />
-                                    <label htmlFor="check" className="text-sm cursor-pointer">
-                                        I agree with{" "}
-                                        <span className="text-red-500">terms & conditions</span>
-                                    </label>
-                                </div>
-                                 <p 
-                                 onClick={()=>setForgetPasswordPopup(true)} 
-                                 className="text-sm text-blue-600 cursor-pointer">Forget Password?</p>
-                                 {forgetPasswordPopup && <ForgetPassword/>}
-                                    
-                            </div>
-                            <div className="w-full flex justify-end">
-                                <button
-                                type='submit'
-                                    disabled={check}
-                                    className={`${check === false ? "bg-blue-600" : "bg-blue-200"}
+                                    </div>
+                                    <div className="w-full flex justify-end">
+                                        <button
+                                            type='submit'
+                                            disabled={check}
+                                            className={`${check === false ? "bg-blue-600" : "bg-blue-200"}
                                       py-2 text-white text-sm px-10 rounded-sm`}
-                                    // onClick={save}
-                                    // className='bg-blue-200 py-2 px-8'
-                                >
-                                    LOGIN
-                                </button>
-                            </div>
-                            <div className="w-full relative border-b-2 flex justify-center -z-30 ">
-                                <p className="absolute -top-3.5 bg-white px-2 text-sm font-medium -z-30">
-                                    or login using
-                                </p>
-                            </div>
-                            <div className='w-full flex justify-center gap-2'>
-                                <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
-                                    <img src={google} alt="" />
-                                </div>
-                                <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
-                                    <img src={github} alt="" />
-                                </div>
-                                <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
-                                    <img src={sos} alt="" />
-                                </div>
-                            </div>
-                        </Form>
+                                        // onClick={save}
+                                        // className='bg-blue-200 py-2 px-8'
+                                        >
+                                            LOGIN
+                                        </button>
+                                    </div>
+                                    <div className="w-full relative border-b-2 flex justify-center -z-30 ">
+                                        <p className="absolute -top-3.5 bg-white px-2 text-sm font-medium -z-30">
+                                            or login using
+                                        </p>
+                                    </div>
+                                    <div className='w-full flex justify-center gap-2'>
+                                        <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
+                                            <img src={google} alt="" />
+                                        </div>
+                                        <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
+                                            <img src={github} alt="" />
+                                        </div>
+                                        <div className="w-10 h-10 border flex justify-center items-center p-2 cursor-pointer rounded-full">
+                                            <img src={sos} alt="" />
+                                        </div>
+                                    </div>
+                                </Form>
                             </Formik>
-                            </div>
+                        </div>
                     </div>
                     {/* left end */}
 
