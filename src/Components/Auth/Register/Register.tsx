@@ -4,10 +4,11 @@ import Vetor from '..//..//Assets//Vector.png'
 import google from '..//..//Assets//google.png'
 import github from '..//..//Assets//github.png'
 import sos from '..//..//Assets//SOS.png'
-import { Link } from 'react-router-dom'
-import { ErrorMessage, Field, Formik ,Form} from 'formik';
+import { Link, useNavigate } from 'react-router-dom'
+import { ErrorMessage, Field, Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface RegisterProps { }
 interface IFormValue {
@@ -24,6 +25,7 @@ interface IFormValue {
 const Register: FC<RegisterProps> = () => {
     const [check, setCheck] = useState(true);
     const url = `http://localhost:4000/auth/register`;
+    const nevigate = useNavigate()
     const initialValues: IFormValue = {
         name: "",
         email: "",
@@ -53,9 +55,16 @@ const Register: FC<RegisterProps> = () => {
         axios.post(url, values)
             .then((response) => {
                 console.log(response);
+                if (response.status === 200) {
+                    toast.success('Register successfully')
+                    nevigate('/')
+
+                }
             })
             .catch((error) => {
                 console.log("Error occurred:", error);
+                toast.error('User already exits')
+
             });
     }
 
@@ -80,7 +89,7 @@ const Register: FC<RegisterProps> = () => {
                             <div className='text-sm'>
                                 Already Have An Account ?
                                 <Link to='/' className='text-blue-600 mx-1'>
-                                     LogIn
+                                    LogIn
                                 </Link>
                             </div>
                         </div>
@@ -112,9 +121,9 @@ const Register: FC<RegisterProps> = () => {
                                             />
                                             <span className="text-red-500 text-sm"><ErrorMessage name="name" /></span>
                                         </div>
-                                       
-                                       
-                                        
+
+
+
                                         <div className="flex flex-col gap-1">
                                             <label htmlFor="email" className="font-medium">
                                                 Email
@@ -190,7 +199,7 @@ const Register: FC<RegisterProps> = () => {
                                     </div>
                                     <div className="w-full flex justify-end">
                                         <button
-                                        type='submit'
+                                            type='submit'
                                             disabled={check}
                                             className={`${check === false ? "bg-blue-600 " : "bg-blue-200"}
                                      py-2 text-white text-sm px-10 rounded-sm`}

@@ -5,7 +5,7 @@ import google from '..//..//Assets//google.png'
 import github from '..//..//Assets//github.png'
 import sos from '..//..//Assets//SOS.png'
 import { Link, useNavigate } from 'react-router-dom'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 import {
     AiOutlineEye,
@@ -14,6 +14,7 @@ import {
 import ForgetPassword from '../ForgetPassword/ForgetPassword';
 import { MyContext } from '../../../Context/Context';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 interface LoginProps { }
 interface IFormValue {
     email: string,
@@ -39,10 +40,17 @@ const Login: FC<LoginProps> = (data: {}) => {
         axios.post(`http://localhost:4000/auth/login`, values)
             .then((response: any) => {
                 console.log(response)
-                navigate('/workspace')
+                if (response.status === 200) {
+                    toast.success('Login successfully')
+                    sessionStorage.setItem('token', response.data.token)
+                    navigate('/workspace')
+
+                }
             })
             .catch((error) => {
                 console.log("Error occurred:", error);
+                toast.error('Invalid user')
+
             });
     }
     return (
@@ -85,6 +93,7 @@ const Login: FC<LoginProps> = (data: {}) => {
                                             placeholder="Enter Email or Username"
                                         // onChange={() => setEmail(e.target.value)}
                                         />
+                                        <span className='text-red-400 font-semibold text-[12px]'><ErrorMessage name='email' /></span>
                                     </div>
                                     <div className="flex flex-col gap-1 relative">
                                         <label htmlFor="email" className="font-medium">
@@ -98,7 +107,7 @@ const Login: FC<LoginProps> = (data: {}) => {
                                             placeholder="Enter Email or Username"
                                         // onChange={() => setPassword(e.target.value)}
                                         />
-
+                                        <span className='text-red-400 font-semibold text-[12px]'><ErrorMessage name='password' /></span>
                                         {open === true ? (
                                             <AiOutlineEyeInvisible
                                                 className="absolute top-9 cursor-pointer right-2 text-xl"
