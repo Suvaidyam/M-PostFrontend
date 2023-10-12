@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import Vector from '..//..//Assets//Vector.png'
 import { FiSearch } from 'react-icons/fi'
 import { HiOutlineMoon } from 'react-icons/hi'
@@ -8,12 +8,18 @@ import { NavLink } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa'
 import { GoTriangleDown } from 'react-icons/go'
 import { BsFillShareFill } from 'react-icons/bs'
-
+import { MyContext } from '../../../Context/Context';
 
 interface NavbarProps { }
 
 const Navbar: FC<NavbarProps> = () => {
     const [navbarToggle, setNavbarToggle] = useState(false)
+    const { darkToggle, setDakToggle } = useContext(MyContext)
+    console.log(darkToggle)
+    const DarkMOdeToggle = () => {
+        setDakToggle(!darkToggle)
+        console.log(darkToggle)
+    }
     return (
 
         <>
@@ -34,7 +40,7 @@ const Navbar: FC<NavbarProps> = () => {
                             <input className='w-48 border-2 py-2 rounded-sm outline-none bg-gray-100 pl-2 pr-5 text-xs text-gray-600' type="text" placeholder='Search..' />
                             <FiSearch className='absolute right-1  top-3' />
                         </div>
-                        <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center'><HiOutlineMoon className='hover:text-blue-500' />
+                        <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center'><HiOutlineMoon onClick={DarkMOdeToggle} className='hover:text-blue-500' />
                         </div>
                         <div className='w-8 h-8 rounded-[50%] cursor-pointer border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center relative'> <BiBell className='hover:text-blue-500' /><p className='absolute h-2 w-2 bg-red-600 rounded-full top-1 right-2'></p>
                         </div>

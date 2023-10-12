@@ -3,7 +3,7 @@ import Navbar from '../Common/Navbar/Navbar'
 
 const Mainworkspace = () => {
   return (
-    <div><Navbar/></div>
+    <div>jhj</div>
   )
 }
 

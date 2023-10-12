@@ -26,20 +26,20 @@ const WorkPage: FC<WorkPageProps> = () => {
                         </div>
                     </div>
                     <div className='w-full h-full flex'>
-                        <div className="w-24 min-w-24 h- bg-red-400 border-r flex justify-center">
-                            <div className='w-full'>
+                        <div className="w-24 min-w-24 h- bg-red-400 border-r">
+                            <div className='w-full flex  flex-col  items-center' >
                                 <div className='pb-5 text-2xl  cursor-pointer' onClick={toggle}>
                                     <RxHamburgerMenu />
                                 </div>
-                                <div className='pb-5 text-2xl cursor-pointer'>
+                                <div className='pb-5 text-2xl cursor-pointer flex  flex-col  items-center'>
                                     <div><MdOutlineCollectionsBookmark /></div>
-                                    <div><p className='text-xs '>Collection</p></div>
+                                    <div><p className='text-xs'>Collection</p></div>
                                 </div>
-                                <div className='pb-5 text-2xl cursor-pointer'>
+                                <div className='pb-5 text-2xl cursor-pointer flex  flex-col  items-center'>
                                     <div><BiCodeBlock /></div>
                                     <div><p className='text-xs'>Environment</p></div>
                                 </div>
-                                <div className='pb-5 text-2xl cursor-pointer'>
+                                <div className='pb-5 text-2xl cursor-pointer  flex flex-col  items-center'>
                                     <div><MdHistory /></div>
                                     <div><p className='text-xs'>History</p></div>
                                 </div>
