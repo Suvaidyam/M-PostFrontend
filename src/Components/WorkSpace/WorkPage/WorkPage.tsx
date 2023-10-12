@@ -7,6 +7,7 @@ import { MdHistory, MdOutlineCollectionsBookmark } from 'react-icons/md';
 import { PiDownloadSimpleBold } from 'react-icons/pi';
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { MyContext } from '../../../Context/Context';
+import WorkspaceBody from '../WorkspaceBody/WorkspaceBody';
 
 interface WorkPageProps { }
 
@@ -83,7 +84,7 @@ const WorkPage: FC<WorkPageProps> = () => {
                         </div>
                     </div>
                 </div>
-                <div className={`h-full duration-1000  ${darkToggle === true ? "bg-black text-white" : "bg-blue-500"} ${slide === true ? 'w-[95%]' : 'w-[75%]'}`}>dd</div>
+                <div className={`h-full duration-1000   ${slide === true ? 'w-[95%]' : 'w-[75%]'}`}><WorkspaceBody/></div>
             </div>
         </>
     );
