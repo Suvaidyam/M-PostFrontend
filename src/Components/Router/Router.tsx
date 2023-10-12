@@ -27,6 +27,8 @@ const Router: FC<RouterProps> = () => {
                             <Route path='explore' element={<Explore />} />
                         </Route> */}
                         <Route path='/workspace' element={<Protected Component={<WorkSpace />} />} />
+                        <Route path='/reports' element={<Reports />} />
+                        <Route path='/explore' element={<Explore />} />
                     </Routes>
                 </DataProvider>
             </BrowserRouter>
