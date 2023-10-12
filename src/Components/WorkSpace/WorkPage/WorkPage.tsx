@@ -1,14 +1,17 @@
-import { useState, type FC } from 'react';
+import { useState, type FC, useContext } from 'react';
 import { BiCodeBlock } from 'react-icons/bi';
 import { HiOutlinePlus } from 'react-icons/hi';
 import { MdHistory, MdOutlineCollectionsBookmark } from 'react-icons/md';
 import { PiDownloadSimpleBold } from 'react-icons/pi';
 import { RxHamburgerMenu } from 'react-icons/rx'
+import { MyContext } from '../../../Context/Context';
 
 interface WorkPageProps { }
 
 const WorkPage: FC<WorkPageProps> = () => {
     const [change, setChange] = useState(false);
+    const { darkToggle } = useContext(MyContext)
+
     const toggle = () => {
         console.log(change);
         setChange(!change)
@@ -50,7 +53,7 @@ const WorkPage: FC<WorkPageProps> = () => {
                         </div>
                     </div>
                 </div>
-                <div className={`h-full duration-1000 bg-blue-500 ${change === true ? 'w-[95%]' : 'w-[75%]'}`}></div>
+                <div className={`h-full duration-1000  ${darkToggle === true ? "bg-black text-white" : "bg-blue-500"} ${change === true ? 'w-[95%]' : 'w-[75%]'}`}>dd</div>
             </div>
         </>
     );
