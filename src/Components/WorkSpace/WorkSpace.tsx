@@ -6,12 +6,12 @@ import { MyContext } from '../../Context/Context';
 interface WorkSpaceProps { }
 
 const WorkSpace: FC<WorkSpaceProps> = () => {
-    const { darkToggle, setDakToggle } = useContext(MyContext)
+    const { darkToggle } = useContext(MyContext)
 
     return (
         <>
-            <div className="w-full h-screen bg-orange-500">
-                <div className='w-full h-fit'><Navbar/></div>
+            <div className={`w-full h-screen ${darkToggle === true ? "bg-black text-white" : "bg-white"}`}>
+                <div className='w-full h-fit'><Navbar /></div>
                 <div className='w-full h-fit'><WorkPage /></div>
             </div>
         </>
