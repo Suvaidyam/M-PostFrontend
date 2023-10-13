@@ -6,11 +6,10 @@ import { MyContext } from '../../../Context/Context';
 interface LeftBarProps { }
 
 const LeftBar: FC<LeftBarProps> = () => {
-    const { slide, setSlide, currentNav, setcurrentNav } = useContext(MyContext);
-    console.log(currentNav)
-    const toggle = () => {
-        setSlide(!slide)
-    }
+    const { currentNav, setcurrentNav } = useContext(MyContext);
+    // const toggle = () => {
+    //     setSlide(!slide)
+    // }
     return (
         <>
             <div className="w-24 min-w-24">

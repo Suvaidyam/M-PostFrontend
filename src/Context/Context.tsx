@@ -1,4 +1,4 @@
-import React, { useState, createContext, FC } from 'react';
+import React, { useState, FC } from 'react';
 
 interface ContextValue {
     forgetPasswordPopup: boolean;
@@ -11,9 +11,16 @@ interface ContextValue {
     setSlide: React.Dispatch<React.SetStateAction<boolean>>;
     currentNav: any;
     setcurrentNav: any;
+    collection: any;
+    setCollection: any;
 }
 interface ContextProps {
     children: React.ReactNode;
+}
+
+interface Item {
+    created_by: string;
+    id: number;
 }
 export const MyContext = React.createContext<ContextValue>({} as ContextValue);
 
@@ -24,6 +31,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [slide, setSlide] = useState(false);
     const activeNav = localStorage.getItem("currentNav")
     const [currentNav, setcurrentNav] = useState(activeNav ? activeNav : "Collection");
+    const [collection, setCollection] = useState<Item[]>([]);
 
 
     const contextValue: ContextValue | null = {
@@ -36,7 +44,9 @@ const Context: FC<ContextProps> = ({ children }) => {
         slide,
         setSlide,
         currentNav,
-        setcurrentNav
+        setcurrentNav,
+        collection,
+        setCollection
     };
 
     return (
