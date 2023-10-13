@@ -3,6 +3,9 @@ import { AiOutlineSave } from 'react-icons/ai';
 import { BsThreeDots } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa';
 import QueryForm from './QueryForm';
+import QueryTab from './QueryTab';
+import CenterTabs from './CenterTabs';
+import ErrorScreen from './ErrorScreen';
 
 interface TabsProps { }
 
@@ -69,8 +72,12 @@ const Tabs: FC<TabsProps> = () => {
                     {/* new request save */}
 
                 </div>
-                <QueryForm />
-
+                <div className='pt-5'>
+                    <QueryTab />
+                    <QueryForm />
+                    {/* <CenterTabs/> */}
+                    <ErrorScreen/>
+                </div>
             </div>
 
         </>
