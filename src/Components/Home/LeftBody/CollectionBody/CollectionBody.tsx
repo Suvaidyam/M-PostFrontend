@@ -1,13 +1,13 @@
-import { useContext, type FC } from 'react';
+import { useContext, type FC, useEffect } from 'react';
 import { AiFillFolder } from 'react-icons/ai';
-import { FiSearch } from 'react-icons/fi';
-import { HiOutlinePlus } from 'react-icons/hi';
 import { MyContext } from '../../../../Context/Context';
 
 interface CollectionBodyProps { }
 
 const CollectionBody: FC<CollectionBodyProps> = () => {
     const { slide } = useContext(MyContext);
+   
+
     return (
         <>
             <div className={`w-full h-full ${slide === true ? 'hidden' : 'block'}`}>
