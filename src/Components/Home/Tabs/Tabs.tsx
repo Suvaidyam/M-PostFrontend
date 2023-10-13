@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { AiOutlineSave } from 'react-icons/ai';
 import { BsThreeDots } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa';
+import QueryForm from './QueryForm';
 
 interface TabsProps { }
 
@@ -17,12 +18,12 @@ const Tabs: FC<TabsProps> = () => {
                         </div>
                     </div>
                     <div className='border-l'>
-                        <div className=" border-gray-300 border  rounded-l-md bg-white  focus:outline-none">
+                        <div className=" border-gray-300   rounded-l-md bg-white  focus:outline-none">
                             <select
                                 className="bg-white font-medium rounded-l-md text-gray-600  px-4 h-8 focus:outline-none border-none "
                             >
-                                <option value="GET" > No Enviroment </option>
-                                <option value="POST" > No Enviroment </option>
+                                <option value="" > No Enviroment </option>
+                                <option value="" > No Enviroment </option>
                             </select>
                         </div>
                     </div>
@@ -67,8 +68,8 @@ const Tabs: FC<TabsProps> = () => {
                     </div>
                     {/* new request save */}
 
-
                 </div>
+                <QueryForm />
 
             </div>
 
