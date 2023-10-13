@@ -15,15 +15,14 @@ interface NavbarProps { }
 const Navbar: FC<NavbarProps> = () => {
     const [navbarToggle, setNavbarToggle] = useState(false)
     const { darkToggle, setDakToggle } = useContext(MyContext)
-    console.log(darkToggle)
     const DarkMOdeToggle = () => {
         setDakToggle(!darkToggle)
-        console.log(darkToggle)
+        // console.log(darkToggle)
     }
     return (
 
         <>
-            <div className='w-full h-20 fixed top-0 bg-white'>
+            <div className={`w-full h-20 fixed top-0 bg-white ${darkToggle === true ? 'bg-slate-700 text-white' : ''}`}>
                 <div className='w-full  h-20  border flex justify-between items-center px-4 relative'>
                     <div className='flex gap-7 max-[550px]:gap-4 max-[400px]:gap-2 max-[400px]:text-sm items-center text-gray-600'>
                         <img className='h-11 max-[400px]:h-8' src={Vector} alt="" />
@@ -53,7 +52,7 @@ const Navbar: FC<NavbarProps> = () => {
                     <FaBars className='hidden max-[950px]:block cursor-pointer' onClick={() => setNavbarToggle(!navbarToggle)} />
                 </div>
                 {navbarToggle &&
-                    <div className='bg-white shadow-md shadow-gray-200 absolute right-2 max-[550px]:right-0 top-16 rounded w-72 max-[550px]:w-full h-auto flex flex-col gap-5 p-5 max-[550px]:p-10 font-semibold text-gray-800'>
+                    <div className='bg-white shadow-md z-[600] shadow-gray-200 absolute right-2 max-[550px]:right-0 top-16 rounded w-72 max-[550px]:w-full h-auto flex flex-col gap-5 p-5 max-[550px]:p-10 font-semibold text-gray-800'>
 
                         <div className='flex items-center gap-5 cursor-pointer'>
                             <div className='w-8 h-8 rounded-[50%] bg-slate-100 border-[2px] p-[2px] border-blue-500 cursor-pointer'>
@@ -63,7 +62,7 @@ const Navbar: FC<NavbarProps> = () => {
                         </div>
 
                         <div className='flex items-center gap-5 cursor-pointer'>
-                            <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 hover:text-blue-500 flex items-center justify-center'><HiOutlineMoon className='' />
+                            <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 hover:text-blue-500 flex items-center justify-center'><HiOutlineMoon onClick={DarkMOdeToggle} className='' />
                             </div>
                             <p>Dark Mode</p>
                         </div>

@@ -1,19 +1,21 @@
-import type { FC } from 'react';
+import { useContext, type FC } from 'react';
 import Navbar from '../Common/Navbar/Navbar';
 import MyWorkSpace from './MyWorkSpace/MyWorkSpace';
 import LeftBar from './LeftBar/LeftBar';
 import LeftBody from './LeftBody/LeftBody';
 import RightBar from './RightBar/RightBar';
 import Tabs from './Tabs/Tabs';
+import { MyContext } from '../../Context/Context';
 
 interface HomeProps { }
 
 const Home: FC<HomeProps> = () => {
+    const { darkToggle } = useContext(MyContext);
     return (
         <>
-            <div className="w-full h-screen ">
+            <div className={`w-full h-screen ${darkToggle === true ? 'bg-slate-950 text-white opacity-80' : ''} fixed`}>
                 <Navbar />
-                <div className='w-full h-full fixed pt-20 flex'>
+                <div className='w-full h-full pt-20 flex'>
                     {/* ======= Left Body ========= */}
                     <div className='w-[25%] h-full border-r block'>
                         <div className='w-full h-16 border-b'>
