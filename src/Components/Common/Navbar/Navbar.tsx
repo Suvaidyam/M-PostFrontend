@@ -23,8 +23,8 @@ const Navbar: FC<NavbarProps> = () => {
     return (
 
         <>
-            <div className='w-full h-full'>
-                <div className='w-full h-20  border flex justify-between items-center px-4 relative'>
+            <div className='w-full h-20 fixed top-0 bg-white'>
+                <div className='w-full  h-20  border flex justify-between items-center px-4 relative'>
                     <div className='flex gap-7 max-[550px]:gap-4 max-[400px]:gap-2 max-[400px]:text-sm items-center text-gray-600'>
                         <img className='h-11 max-[400px]:h-8' src={Vector} alt="" />
                         <NavLink to={"/workspace"}><p className='flex items-center gap-1'>

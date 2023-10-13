@@ -1,57 +1,35 @@
-import { useState, type FC, useContext } from 'react';
+import { type FC, useContext } from 'react';
 import { AiFillFolder } from 'react-icons/ai';
-import { BiCodeBlock } from 'react-icons/bi';
 import { FiSearch } from 'react-icons/fi';
 import { HiOutlinePlus } from 'react-icons/hi';
-import { MdHistory, MdOutlineCollectionsBookmark } from 'react-icons/md';
 import { PiDownloadSimpleBold } from 'react-icons/pi';
-import { RxHamburgerMenu } from 'react-icons/rx'
 import { MyContext } from '../../../Context/Context';
 import WorkspaceBody from '../WorkspaceBody/WorkspaceBody';
+import LeftBar from '../../Home/LeftBar/LeftBar';
 
 interface WorkPageProps { }
 
 const WorkPage: FC<WorkPageProps> = () => {
-    const [slide, setSlide] = useState(false);
-    const { darkToggle } = useContext(MyContext)
-
-    const toggle = () => {
-        console.log(slide);
-        setSlide(!slide)
-    }
+    const { slide } = useContext(MyContext);
     return (
         <>
             <div className='w-full h-screen flex'>
                 <div className={`h-full duration-1000 border-r ${slide === true ? 'w-[5%]' : 'w-[25%]'}`}>
                     {/* Top */}
                     <div className='w-full h-16 flex justify-between items-center px-2  border-b'>
-                        <p className='truncate text-lg pl-5'>My Workspace</p>
+                        <p className='truncate text-lg'>My Workspace</p>
                         <div className='flex justify-between items-center gap-3'>
                             <div className='w-8 h-8 bg-yellow-200 flex items-center justify-center rounded-full'><HiOutlinePlus className='cursor-pointer' /></div>
                             <div className='w-8 h-8 bg-yellow-200 flex items-center justify-center rounded-full'><PiDownloadSimpleBold className='cursor-pointer' /></div>
                         </div>
                     </div>
                     <div className='w-full h-full flex'>
-                        <div className="w-24 min-w-24 h-  border-r">
-                            <div className='w-full flex  flex-col mt-5 items-center' >
-                                <div className='pb-5 text-2xl cursor-pointer'>
-                                    <RxHamburgerMenu onClick={toggle}/>
-                                </div>
-                                <div className='pb-5 text-2xl cursor-pointer flex  flex-col  items-center'>
-                                    <div><MdOutlineCollectionsBookmark /></div>
-                                    <div><p className='text-xs'>Collection</p></div>
-                                </div>
-                                <div className='pb-5 text-2xl cursor-pointer flex  flex-col  items-center'>
-                                    <div><BiCodeBlock /></div>
-                                    <div><p className='text-xs'>Environment</p></div>
-                                </div>
-                                <div className='pb-5 text-2xl cursor-pointer  flex flex-col  items-center'>
-                                    <div><MdHistory /></div>
-                                    <div><p className='text-xs'>History</p></div>
-                                </div>
-                            </div>
+                        <div>
+                            {/* ======= Left Nav ======== */}
+                            <LeftBar/>
                         </div>
-                        <div className='w-full'>
+                        {/* <div className='w-full '> */}
+                        <div className={`w-full h-full ${slide === true ? 'hidden' : 'block'}`}>
                             {/* Search Bar */}
                             <div className='relative flex items-center gap-1'>
                                 <input className='w-[87%] border-2 m-2 py-2 pl-2 pr-5 rounded-sm outline-none bg-gray-100 text-xs text-gray-600' type="text" placeholder='Search..' />
@@ -84,7 +62,7 @@ const WorkPage: FC<WorkPageProps> = () => {
                         </div>
                     </div>
                 </div>
-                <div className={`h-full duration-1000   ${slide === true ? 'w-[95%]' : 'w-[75%]'}`}><WorkspaceBody/></div>
+                <div className={`h-full duration-1000   ${slide === true ? 'w-[95%]' : 'w-[75%]'}`}><WorkspaceBody /></div>
             </div>
         </>
     );

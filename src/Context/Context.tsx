@@ -7,15 +7,19 @@ interface ContextValue {
     setWorkspaceLefttoggle: React.Dispatch<React.SetStateAction<boolean>>;
     darkToggle:boolean;
     setDakToggle:React.Dispatch<React.SetStateAction<boolean>>;
+    slide:boolean;
+    setSlide:React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface ContextProps {
     children: React.ReactNode;
 }
 export const MyContext = React.createContext<ContextValue>({} as ContextValue);
+
 const Context: FC<ContextProps> = ({ children }) => {
     const [forgetPasswordPopup, setForgetPasswordPopup] = useState(false);
     const [workspaceLefttoggle, setWorkspaceLefttoggle] = useState(true);
-    const [darkToggle, setDakToggle] = useState(false)
+    const [darkToggle, setDakToggle] = useState(false);
+    const [slide, setSlide] = useState(false);
 
 
     const contextValue: ContextValue | null = {
@@ -24,7 +28,9 @@ const Context: FC<ContextProps> = ({ children }) => {
         workspaceLefttoggle,
         setWorkspaceLefttoggle,
         darkToggle,
-        setDakToggle
+        setDakToggle,
+        slide,
+        setSlide
     };
 
     return (
