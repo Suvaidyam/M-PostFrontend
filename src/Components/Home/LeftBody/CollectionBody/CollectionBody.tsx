@@ -1,39 +1,56 @@
-import { useContext, type FC, useEffect } from 'react';
-import { AiFillFolder } from 'react-icons/ai';
+import { useContext, type FC, useEffect, useState } from 'react';
+import { FcFolder } from 'react-icons/fc';
+import { BiCaretRight, BiCaretDown, BiDotsHorizontalRounded } from "react-icons/bi";
 import { MyContext } from '../../../../Context/Context';
+import MoreAction from '../MoreAction/MoreAction';
 
 interface CollectionBodyProps { }
 
 const CollectionBody: FC<CollectionBodyProps> = () => {
-    const { slide } = useContext(MyContext);
-   
-
+    const { slide, collection } = useContext(MyContext);
+    const [toggleFolder, setToggleFolder] = useState<boolean>(false)
+    const [toggleOption, setToggleOption] = useState<boolean>(false)
+    const [activeFolder, setActiveFolder] = useState<string>('')
+    const [activeOption, setActiveOption] = useState<string>('')
+    console.log(collection)
+    const ClickFolder = (id: string) => {
+        setToggleFolder(!toggleFolder);
+        setActiveFolder(id);
+    };
+    const ClickOption = (id: string) => {
+        setToggleOption(!toggleOption);
+        setActiveOption(id);
+    };
     return (
         <>
-            <div className={`w-full h-full ${slide === true ? 'hidden' : 'block'}`}>
-                <details>
-                    <summary className='border py-2 cursor-pointer flex h-12 pl-2'>
-                        <div>
-                            <div className='flex items-center gap-3'><AiFillFolder className='text-xl' /> New Collection</div>
-                            <div><p className='text-xs text-blue-600 pl-8 -mt-1'>36 item</p></div>
-                        </div>
-                    </summary>
-                    <div className=''>
-                        <p className='border p-2'>Epcot is a theme park at Walt Disney World Resort featuring exciting attractions, international pavilions, award-winning fireworks and seasonal special events.</p>
-                    </div>
-                </details>
-                <details>
-                    <summary className='border py-2 cursor-pointer flex h-12 pl-2'>
-                        <div>
-                            <div className='flex items-center gap-3'><AiFillFolder className='text-xl' /> New Collection</div>
-                            <div><p className='text-xs text-blue-600 pl-8 -mt-1'>36 item</p></div>
-                        </div>
-                    </summary>
-                    <div className=''>
-                        <p className='border p-2'>Epcot is a theme park at Walt Disney World Resort featuring exciting attractions, international pavilions, award-winning fireworks and seasonal special events.</p>
-                    </div>
-                </details>
-            </div>
+
+            <div className=''>
+
+                {collection.map((item: any) => (
+                    <>
+                        <div key={item._id} className='flex relative group justify-between border h-9 items-center cursor-pointer'>
+                            <div className='flex'>
+                                <div onClick={() => ClickFolder(item._id)} className='w-10 h-full flex items-center justify-center text-lg'>
+                                    {(toggleFolder === true && item._id === activeFolder) ? <BiCaretDown /> : < BiCaretRight />}
+                                </div>
+                                <div className='text-xl pr-2'>
+                                    <FcFolder />
+                                </div>
+                                <div className='text-sm'>
+                                    {item.name}
+                                </div>
+                            </div>
+                            <p onClick={() => ClickOption(item._id)} className="hidden group-hover:block bg-blue-600 absolute right-2">
+                                <BiDotsHorizontalRounded className="cursor-pointer text-lg" />
+                            </p>
+                            <div className="absolute z-50 right-3 top-6">
+                                {(toggleOption === true && item._id === activeOption) && <MoreAction />}
+                            </div>
+                        </div >
+                    </>
+                ))}
+            </div >
+
         </>
     );
 }

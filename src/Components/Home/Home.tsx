@@ -10,22 +10,22 @@ import { MyContext } from '../../Context/Context';
 interface HomeProps { }
 
 const Home: FC<HomeProps> = () => {
-    const { darkToggle } = useContext(MyContext);
+    const { darkToggle, slide } = useContext(MyContext);
     return (
         <>
             <div className={`w-full h-screen ${darkToggle === true ? 'bg-slate-950 text-white opacity-80' : ''} fixed`}>
                 <Navbar />
                 <div className='w-full h-full pt-20 flex'>
                     {/* ======= Left Body ========= */}
-                    <div className='w-[25%] h-full border-r block'>
-                        <div className='w-full h-16 border-b'>
+                    <div className='w-[25%] h-full  border-r '>
+                        <div className='w-full h-16  border-b'>
                             <MyWorkSpace />
                         </div>
                         <div className='w-full h-full flex'>
                             <div className='w-[30%] border-r'>
                                 <LeftBar />
                             </div>
-                            <div className='w-full'>
+                            <div className='w-full overflow-y-scroll pb-[66px]'>
                                 <LeftBody />
                             </div>
                         </div>

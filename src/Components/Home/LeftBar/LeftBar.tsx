@@ -2,20 +2,24 @@ import { useContext, type FC } from 'react';
 import { BiCodeBlock, BiCollapse } from 'react-icons/bi';
 import { MdHistory, MdOutlineCollectionsBookmark } from 'react-icons/md';
 import { MyContext } from '../../../Context/Context';
+import { Slide } from 'react-toastify';
+import { RxHamburgerMenu } from 'react-icons/rx'
 
 interface LeftBarProps { }
 
 const LeftBar: FC<LeftBarProps> = () => {
-    const { currentNav, setcurrentNav } = useContext(MyContext);
-    // const toggle = () => {
-    //     setSlide(!slide)
-    // }
+
+    const { currentNav, slide, setSlide, setcurrentNav } = useContext(MyContext);
+    const toggle = () => {
+        setSlide(!slide)
+    }
     return (
         <>
             <div className="w-24 min-w-24">
                 <div className='w-24 flex  flex-col items-center px-1' >
-                    {/* <div className='pb-5 text-2xl cursor-pointer'>
-                        <RxHamburgerMenu onClick={toggle} />
+
+                    {/* <div onClick={toggle} className={`py-3 my-1 rounded w-full hover:bg-blue-100 duration-500 text-2xl cursor-pointer flex  flex-col  items-center ${slide === true ? 'transition-opacity text-blue-500' : 'text-gray-600 hover:bg-blue-100  transition-opacity hover:text-blue-400'}`}>
+                        <div><RxHamburgerMenu /></div>
                     </div> */}
                     <div className={`py-3 my-1 rounded w-full hover:bg-blue-100 duration-500 text-2xl cursor-pointer flex  flex-col  items-center ${currentNav === 'Collection' ? ' bg-[#E8EEFF] transition-opacity text-blue-500' : 'text-gray-600 hover:bg-blue-100  transition-opacity hover:text-blue-400'}`} onClick={() => setcurrentNav('Collection')}>
                         <div><MdOutlineCollectionsBookmark /></div>
