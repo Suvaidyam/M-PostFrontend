@@ -13,6 +13,8 @@ interface ContextValue {
     setcurrentNav: any;
     collection: any;
     setCollection: any;
+    currentTab: string;
+    setcurrentTab: React.Dispatch<React.SetStateAction<string>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -32,7 +34,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const activeNav = localStorage.getItem("currentNav")
     const [currentNav, setcurrentNav] = useState(activeNav ? activeNav : "Collection");
     const [collection, setCollection] = useState<Item[]>([]);
-
+    const [currentTab, setcurrentTab] = useState('Params')
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -46,7 +48,9 @@ const Context: FC<ContextProps> = ({ children }) => {
         currentNav,
         setcurrentNav,
         collection,
-        setCollection
+        setCollection,
+        currentTab,
+        setcurrentTab
     };
 
     return (
