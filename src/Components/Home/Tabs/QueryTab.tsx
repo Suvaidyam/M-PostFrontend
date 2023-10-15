@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 // import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -7,10 +7,12 @@ import Box from "@mui/material/Box";
 // import QueryForm from "./QueryForm";
 // import "./Tabs.css";
 import type { FC } from 'react';
+import { MyContext } from '../../../Context/Context';
 
 interface QueryTabProps { }
 
 const QueryTab: FC<QueryTabProps> = () => {
+    const { setcurrentTab } = useContext(MyContext)
     return (
 
         <Box sx={{ width: "100%" }}>
@@ -22,6 +24,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                     aria-label="basic tabs example"
                 >
                     <Tab
+                        onClick={() => setcurrentTab("Params")}
                         sx={{
                             height: "32px",
                             minHeight: "32px",
@@ -32,6 +35,8 @@ const QueryTab: FC<QueryTabProps> = () => {
                     // {...a11yProps(0)}
                     />
                     <Tab
+                        onClick={() => setcurrentTab("Headers")}
+
                         sx={{
                             height: "32px",
                             minHeight: "32px",
@@ -42,6 +47,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                     // {...a11yProps(1)}
                     />
                     <Tab
+                        onClick={() => setcurrentTab("Body")}
                         sx={{
                             height: "32px",
                             minHeight: "32px",
