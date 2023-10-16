@@ -9,8 +9,18 @@ function CenterTabs({ }: Props) {
   const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     console.log(event.target.value);
     setSelected(event.target.value);
+  };
+  const initialData = {
+    name: 'sujeet',
+    email: 'sujeet@gmail.com',
+    password: 'Sky@123',
+  };
 
+  const [data, setData] = useState(initialData);
 
+  const handleEdit = (edit: any) => {
+    // Update the data with the changes made using react-json-view
+    setData(edit.updated_src);
   };
   return (
     <>
@@ -58,11 +68,15 @@ function CenterTabs({ }: Props) {
         {selected === "json" ? (
           <div className='w-full'>
             <ReactJson
+              src={data}
               name={false}
               displayDataTypes={false}
               displayObjectSize={false}
               enableClipboard={false}
-              src={{ name: 'sujeet', email: "sujeet@gmail.com" }}
+              onEdit={handleEdit}
+              onDelete={handleEdit}
+              onAdd={handleEdit}
+              // theme="apathy:inverted"
             />
           </div>
         ) : (

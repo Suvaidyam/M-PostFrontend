@@ -4,15 +4,20 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 // import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-// import QueryForm from "./QueryForm";
+import QueryForm from "./QueryForm";
 // import "./Tabs.css";
 import type { FC } from 'react';
-import { MyContext } from '../../../Context/Context';
+import { MyContext } from '../../../../Context/Context';
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
+import CenterTabs from './CenterTabs';
+import { Resizable } from "react-resizable-element";
 
 interface QueryTabProps { }
 
 const QueryTab: FC<QueryTabProps> = () => {
     const { setcurrentTab } = useContext(MyContext)
+  
     return (
 
         <Box sx={{ width: "100%" }}>
@@ -60,7 +65,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                 </Tabs>
             </Box>
         </Box>
-
+       
 
     );
 }
