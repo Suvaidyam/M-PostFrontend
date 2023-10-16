@@ -40,7 +40,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                     {item.name}
                                 </div>
                             </div>
-                            <p onClick={() => ClickOption(item._id)} className="hidden group-hover:block bg-blue-600 absolute right-2">
+                            <p onClick={() => ClickOption(item._id)} className="hidden group-hover:block absolute right-2">
                                 <BiDotsHorizontalRounded className="cursor-pointer text-lg" />
                             </p>
                             <div className="absolute z-50 right-3 top-6">
