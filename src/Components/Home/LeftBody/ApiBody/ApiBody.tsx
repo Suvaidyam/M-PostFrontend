@@ -1,11 +1,13 @@
 import type { FC } from 'react';
 
-interface ApiBodyProps {}
+interface ApiBodyProps { }
 
 const ApiBody: FC<ApiBodyProps> = () => {
     return (
         <>
-            ApiBody
+            <div className='w-full h-full flex items-center justify-center'>
+                ApiBody
+            </div>
         </>
     );
 }

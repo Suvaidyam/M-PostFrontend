@@ -10,7 +10,7 @@ interface ContextValue {
     slide: boolean;
     setSlide: React.Dispatch<React.SetStateAction<boolean>>;
     currentNav: any;
-    setcurrentNav: any;
+    setCurrentNav: any;
     collection: any;
     setCollection: any;
     currentTab: string;
@@ -32,7 +32,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [darkToggle, setDakToggle] = useState(false);
     const [slide, setSlide] = useState(false);
     const activeNav = localStorage.getItem("currentNav")
-    const [currentNav, setcurrentNav] = useState(activeNav ? activeNav : "Collection");
+    const [currentNav, setCurrentNav] = useState(activeNav ? activeNav : "Collection");
     const [collection, setCollection] = useState<Item[]>([]);
     const [currentTab, setcurrentTab] = useState('Params')
 
@@ -46,7 +46,7 @@ const Context: FC<ContextProps> = ({ children }) => {
         slide,
         setSlide,
         currentNav,
-        setcurrentNav,
+        setCurrentNav,
         collection,
         setCollection,
         currentTab,

@@ -1,11 +1,13 @@
 import type { FC } from 'react';
 
-interface HistoryBodyProps {}
+interface HistoryBodyProps { }
 
 const HistoryBody: FC<HistoryBodyProps> = () => {
     return (
         <>
-            HistoryBody
+            <div className='w-full h-full flex items-center justify-center'>
+                HistoryBody
+            </div>
         </>
     );
 }
