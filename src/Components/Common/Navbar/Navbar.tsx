@@ -9,16 +9,21 @@ import { FaBars } from 'react-icons/fa'
 import { GoTriangleDown } from 'react-icons/go'
 import { BsFillShareFill } from 'react-icons/bs'
 import { MyContext } from '../../../Context/Context';
+import WorkSpaceDropDown from '../WorkSpaceDropDown/WorkSpaceDropDown';
 
 interface NavbarProps { }
 
 const Navbar: FC<NavbarProps> = () => {
-    const [navbarToggle, setNavbarToggle] = useState(false)
-    const { darkToggle, setDakToggle } = useContext(MyContext)
+    const [navbarToggle, setNavbarToggle] = useState(false);
+    const [dropdownToggle, setDropdownToggle] = useState(false);
+    const { darkToggle, setDakToggle } = useContext(MyContext);
     const DarkMOdeToggle = () => {
         setDakToggle(!darkToggle)
-        // console.log(darkToggle)
-    }
+    };
+    const ClickDropdown = () => {
+        setDropdownToggle(!dropdownToggle);
+        console.log(dropdownToggle)
+    };
     return (
 
         <>
@@ -26,9 +31,9 @@ const Navbar: FC<NavbarProps> = () => {
                 <div className='w-full  h-20  border flex justify-between items-center px-4 relative'>
                     <div className='flex gap-7 max-[550px]:gap-4 max-[400px]:gap-2 max-[400px]:text-sm items-center text-gray-600'>
                         <img className='h-11 max-[400px]:h-8' src={Vector} alt="" />
-                        <NavLink to={"/workspace"}><p className='flex items-center gap-1'>
+                        <NavLink className='flex items-center gap-1' to={"/workspace"}>
                             <span className='ml-5 max-[550px]:ml-2 '>Workspace</span>
-                            <span><GoTriangleDown className='text-lg text-black' /></span></p>
+                            <WorkSpaceDropDown />
                         </NavLink>
                         <NavLink to="/reports"><span>Reports</span></NavLink>
                         <NavLink to="/explore"><span>Explore</span></NavLink>
