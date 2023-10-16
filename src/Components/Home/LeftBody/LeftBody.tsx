@@ -12,11 +12,11 @@ const LeftBody: FC<LeftBodyProps> = () => {
     const { currentNav } = useContext(MyContext);
     return (
         <>
-            <BodyHead/>
-            {currentNav === "Collection" && <CollectionBody />}
-            {currentNav === "APIs" && <ApiBody />}
-            {currentNav === "Environment" && <EnvironmentBody />}
-            {currentNav === "History" && <HistoryBody />}
+                <BodyHead />
+                {currentNav === "Collection" && <CollectionBody />}
+                {currentNav === "APIs" && <ApiBody />}
+                {currentNav === "Environment" && <EnvironmentBody />}
+                {currentNav === "History" && <HistoryBody />}
         </>
     );
 }

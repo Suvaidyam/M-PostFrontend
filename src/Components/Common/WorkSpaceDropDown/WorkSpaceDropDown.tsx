@@ -1,19 +1,19 @@
 import type { FC } from 'react';
-import { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import classNames from 'classnames';
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import classNames from 'classnames'
 import { GoTriangleDown } from 'react-icons/go';
-import { BiDotsHorizontalRounded } from 'react-icons/bi';
 
-interface MoreActionProps { }
+interface WorkSpaceDropDownProps { }
 
-const MoreAction: FC<MoreActionProps> = () => {
+const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     return (
         <>
             <Menu as="div" className="relative inline-block text-left z-50">
                 <div>
                     <Menu.Button className="flex items-center h-full">
-                        <span><BiDotsHorizontalRounded className='text-lg text-black' /></span>
+                        <span><GoTriangleDown className='text-lg text-black' /></span>
                     </Menu.Button>
                 </div>
 
@@ -26,18 +26,18 @@ const MoreAction: FC<MoreActionProps> = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute right-0 mt-2 w-56 z-50 origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute -left-[85px] mt-2 w-56 z-50 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
                             <Menu.Item>
                                 {({ active }) => (
                                     <a
                                         href="#"
                                         className={classNames(
-                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
-                                        Share
+                                        Account settings
                                     </a>
                                 )}
                             </Menu.Item>
@@ -46,11 +46,11 @@ const MoreAction: FC<MoreActionProps> = () => {
                                     <a
                                         href="#"
                                         className={classNames(
-                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
-                                        Rename
+                                        Support
                                     </a>
                                 )}
                             </Menu.Item>
@@ -59,41 +59,15 @@ const MoreAction: FC<MoreActionProps> = () => {
                                     <a
                                         href="#"
                                         className={classNames(
-                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
-                                        Add folder
+                                        License
                                     </a>
                                 )}
                             </Menu.Item>
                             <Menu.Item>
-                                {({ active }) => (
-                                    <a
-                                        href="#"
-                                        className={classNames(
-                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Add request
-                                    </a>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <a
-                                        href="#"
-                                        className={classNames(
-                                            active ? 'bg-red-500 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Delete
-                                    </a>
-                                )}
-                            </Menu.Item>
-                            {/* <Menu.Item>
                                 {({ active }) => (
                                     <button
                                         type="submit"
@@ -102,16 +76,16 @@ const MoreAction: FC<MoreActionProps> = () => {
                                             'block w-full px-4 py-2 text-left text-sm'
                                         )}
                                     >
-                                        Add request
+                                        Sign out
                                     </button>
                                 )}
-                            </Menu.Item> */}
+                            </Menu.Item>
                         </div>
                     </Menu.Items>
                 </Transition>
             </Menu>
         </>
     );
-}
+};
 
-export default MoreAction;
+export default WorkSpaceDropDown;
