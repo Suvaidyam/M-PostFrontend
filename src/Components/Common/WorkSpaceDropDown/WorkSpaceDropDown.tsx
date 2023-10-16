@@ -1,13 +1,15 @@
 import type { FC } from 'react';
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames'
 import { GoTriangleDown } from 'react-icons/go';
+import CreateWorkSpace from '../CreateWorkSpace/CreateWorkSpace';
 
 interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
+    const [openModel, setOpenModel] = useState<boolean>(false);
     return (
         <>
             <Menu as="div" className="relative inline-block text-left z-50">
@@ -16,7 +18,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                         <span><GoTriangleDown className='text-lg text-black' /></span>
                     </Menu.Button>
                 </div>
-
                 <Transition
                     as={Fragment}
                     enter="transition ease-out duration-100"
@@ -26,64 +27,40 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute -left-[85px] mt-2 w-56 z-50 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute -left-[85px] mt-2 px-2 w-56 z-[500] origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
                             <Menu.Item>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <div
+                                        onClick={() => setOpenModel(true)}
+                                        // href="#"
                                         className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            active ? 'bg-gray-300 text-gray-900' : 'bg-gray-300 text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
-                                        Account settings
-                                    </a>
+                                        Create WorkSpace
+                                    </div>
                                 )}
                             </Menu.Item>
+                            <p className='text-xs text-gray-400 pt-2 font-semibold'>Recently visited</p>
                             <Menu.Item>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <div
                                         className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
-                                        Support
-                                    </a>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <a
-                                        href="#"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        License
-                                    </a>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        type="submit"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block w-full px-4 py-2 text-left text-sm'
-                                        )}
-                                    >
-                                        Sign out
-                                    </button>
+                                        My Workspace
+                                    </div>
                                 )}
                             </Menu.Item>
                         </div>
                     </Menu.Items>
                 </Transition>
             </Menu>
+            {openModel === true ? <CreateWorkSpace open={openModel} setOpen={setOpenModel} /> : null}
         </>
     );
 };
