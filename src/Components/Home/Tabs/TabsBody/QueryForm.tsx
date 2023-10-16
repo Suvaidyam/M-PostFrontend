@@ -1,9 +1,11 @@
 import { useContext, type FC } from 'react';
-import { MyContext } from '../../../Context/Context';
+import { MyContext } from '../../../../Context/Context';
 import CenterTabs from './CenterTabs';
 import ReactJson from 'react-json-view';
 
-interface QueryFormProps { }
+interface QueryFormProps {
+    
+ }
 
 const QueryForm: FC<QueryFormProps> = () => {
     const { currentTab } = useContext(MyContext)

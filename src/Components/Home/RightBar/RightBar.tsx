@@ -1,15 +1,18 @@
-import type { FC } from 'react';
+import { useContext, type FC } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 import { BiHelpCircle } from 'react-icons/bi';
 import { BsCaretRight, BsCode } from 'react-icons/bs';
 import { FiTrash2 } from 'react-icons/fi';
+import { MyContext } from '../../../Context/Context';
 
 interface RightBarProps { }
 
 const RightBar: FC<RightBarProps> = () => {
+    const { darkToggle } = useContext(MyContext);
+
     return (
         <>
-            <div className=" flex border-l-[1.5px] flex-col items-center justify-center gap-5 h-full bg-white py-1.5 relative">
+            <div className={`flex border-l-[1.5px] flex-col items-center justify-center gap-5 h-full bg-white py-1.5 relative ${darkToggle === true ? 'bg-slate-800 text-white opacity-80' : ''}`}>
                 <div className="flex flex-col justify-between h-full ">
                     <div>
                         <div className="cursor-pointer flex justify-center items-center mt-2 gap-1">

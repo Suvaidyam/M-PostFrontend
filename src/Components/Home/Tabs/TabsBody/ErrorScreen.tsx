@@ -1,5 +1,5 @@
 import React from 'react'
-import error from "../../Assets/error.png";
+import error from "../../../Assets/error.png";
 
 type Props = {}
 
