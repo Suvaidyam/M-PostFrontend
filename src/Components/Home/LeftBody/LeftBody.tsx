@@ -15,7 +15,7 @@ const LeftBody: FC<LeftBodyProps> = () => {
             <BodyHead/>
             {currentNav === "Collection" && <CollectionBody />}
             {currentNav === "APIs" && <ApiBody />}
-            {currentNav === "Enviroment" && <EnvironmentBody />}
+            {currentNav === "Environment" && <EnvironmentBody />}
             {currentNav === "History" && <HistoryBody />}
         </>
     );

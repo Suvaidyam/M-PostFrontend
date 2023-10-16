@@ -1,11 +1,13 @@
 import type { FC } from 'react';
 
-interface EnvironmentBodyProps {}
+interface EnvironmentBodyProps { }
 
 const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
     return (
         <>
-            EnvironmentBody
+            <div className='w-full h-full flex items-center justify-center'>
+                EnvironmentBody
+            </div>
         </>
     );
 }

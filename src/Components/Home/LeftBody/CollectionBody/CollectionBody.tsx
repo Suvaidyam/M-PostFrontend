@@ -12,7 +12,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [toggleOption, setToggleOption] = useState<boolean>(false)
     const [activeFolder, setActiveFolder] = useState<string>('')
     const [activeOption, setActiveOption] = useState<string>('')
-    console.log(collection)
+
     const ClickFolder = (id: string) => {
         setToggleFolder(!toggleFolder);
         setActiveFolder(id);
