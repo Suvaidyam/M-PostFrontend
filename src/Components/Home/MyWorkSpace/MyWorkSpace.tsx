@@ -11,9 +11,6 @@ const MyWorkSpace: FC<MyWorkSpaceProps> = () => {
         <>
             <div className='w-full h-16 flex justify-between items-center px-2  border-b'>
                 <div>
-                    {/* {workSpaceId.map((e: any) => (
-                        <p key={e.id} className='truncate text-lg'>{e.name}</p>
-                    ))} */}
                     {workSpaceId.name}
                 </div>
                 <div className='flex justify-between items-center gap-3'>

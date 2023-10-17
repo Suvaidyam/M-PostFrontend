@@ -1,13 +1,33 @@
 import type { FC } from 'react';
-import { Fragment } from 'react';
+import { Fragment} from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import { GoTriangleDown } from 'react-icons/go';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
+import axios from 'axios';
 
-interface MoreActionProps { }
+interface MoreActionProps {
+    optionId: any
+}
 
-const MoreAction: FC<MoreActionProps> = () => {
+const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
+
+    const config = {
+        headers: {
+            'token': sessionStorage.getItem("token")
+        }
+    };
+
+    const url = `${process.env.REACT_APP_BASEURL}/collection/${optionId}`;
+    const handleDelete = () => {
+        axios.delete(url, config)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    };    
+
     return (
         <>
             <Menu as="div" className="relative inline-block text-left z-50">
@@ -30,82 +50,65 @@ const MoreAction: FC<MoreActionProps> = () => {
                         <div className="py-1">
                             <Menu.Item>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <div
                                         className={classNames(
                                             active ? 'bg-white text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
                                         Share
-                                    </a>
+                                    </div>
                                 )}
                             </Menu.Item>
                             <Menu.Item>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <div
                                         className={classNames(
                                             active ? 'bg-white text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
                                         Rename
-                                    </a>
+                                    </div>
                                 )}
                             </Menu.Item>
                             <Menu.Item>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <div
                                         className={classNames(
                                             active ? 'bg-white text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
                                         Add folder
-                                    </a>
+                                    </div>
                                 )}
                             </Menu.Item>
                             <Menu.Item>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <div
                                         className={classNames(
                                             active ? 'bg-white text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
                                         Add request
-                                    </a>
+                                    </div>
                                 )}
                             </Menu.Item>
                             <Menu.Item>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <div
+                                        onClick={handleDelete}
                                         className={classNames(
                                             active ? 'bg-red-500 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
                                         Delete
-                                    </a>
+                                    </div>
                                 )}
                             </Menu.Item>
-                            {/* <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        type="submit"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block w-full px-4 py-2 text-left text-sm'
-                                        )}
-                                    >
-                                        Add request
-                                    </button>
-                                )}
-                            </Menu.Item> */}
                         </div>
                     </Menu.Items>
                 </Transition>
