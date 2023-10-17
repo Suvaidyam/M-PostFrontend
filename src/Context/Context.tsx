@@ -25,8 +25,12 @@ interface ContextValue {
     setJsonText: React.Dispatch<React.SetStateAction<any>>
     currentActive: any
     setCurrentActive: React.Dispatch<React.SetStateAction<any>>
-    tabsList:any
-    setTabsList:React.Dispatch<React.SetStateAction<any>>
+    tabsList: any
+    setTabsList: React.Dispatch<React.SetStateAction<any>>
+    workSpaceId: any
+    setWorkSpaceId: React.Dispatch<React.SetStateAction<any>>
+    workSpaceOpen: any
+    setWorkSpaceOpen: React.Dispatch<React.SetStateAction<any>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -52,12 +56,20 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [tabData, setTabData] = useState([]);
     const [jsonText, setJsonText] = useState("");
     let activetabs = localStorage.getItem('tabsList')
-    const [tabsList, setTabsList] = useState(activetabs? JSON.parse(activetabs):[]);
+    const [tabsList, setTabsList] = useState(activetabs ? JSON.parse(activetabs) : []);
     localStorage.setItem("tabsList", JSON.stringify(tabsList))
-      // collection active tabs
+    // collection active tabs
     let abc = localStorage.getItem("currentActive")
     const [currentActive, setCurrentActive] = useState(abc ? JSON.parse(abc) : '');
-    localStorage.setItem("currentActive", JSON.stringify(currentActive))
+    localStorage.setItem("currentActive", JSON.stringify(currentActive));
+
+    const storedWorkSpace = localStorage.getItem('workSpace');
+    const initialWorkSpaceId = storedWorkSpace ? JSON.parse(storedWorkSpace) : '';
+
+    const [workSpaceId, setWorkSpaceId] = useState(initialWorkSpaceId);
+    const [workSpaceOpen, setWorkSpaceOpen] = useState(false);
+
+
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -85,8 +97,11 @@ const Context: FC<ContextProps> = ({ children }) => {
         currentActive,
         setCurrentActive,
         tabsList,
-        setTabsList
-
+        setTabsList,
+        workSpaceId,
+        setWorkSpaceId,
+        workSpaceOpen,
+        setWorkSpaceOpen
     };
 
     return (

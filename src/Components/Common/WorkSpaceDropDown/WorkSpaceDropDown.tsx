@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames'
@@ -7,27 +7,30 @@ import { GoTriangleDown } from 'react-icons/go';
 import CreateWorkSpace from '../CreateWorkSpace/CreateWorkSpace';
 import axios from 'axios';
 import { BiGroup } from 'react-icons/bi';
+import { IoIosArrowRoundForward } from 'react-icons/io';
+import { MyContext } from '../../../Context/Context';
 
 interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [workspace, setWorkspace] = useState([]);
-    const [Lader, setLader] = useState(true);
+    const [Loader, setLoader] = useState(true)
+    const { workSpaceId, setWorkSpaceId, workSpaceOpen, setWorkSpaceOpen } = useContext(MyContext);
 
     const config = {
         headers: {
             'token': sessionStorage.getItem("token")
         }
     };
-
-
     const getData = () => {
         const url = `${process.env.REACT_APP_BASEURL}/workspace`;
         axios.get(url, config)
             .then(res => {
-                // console.log(res.data.workSpace)
                 setWorkspace(res.data.workSpace);
+                // setTimeout(() => {
+                //     setLoader(false)
+                // }, 1000);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -36,6 +39,11 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     useEffect(() => {
         getData();
     }, []);
+    const handelSelectedWorkSpace = (e: any) => {
+        localStorage.setItem("workSpace", JSON.stringify(e));
+        setWorkSpaceId(e);
+        // setTimeout(()=>{setWorkSpaceOpen(!workSpaceOpen)},50);
+    }
     return (
         <>
 
@@ -75,6 +83,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                 <Menu.Item key={workData._id}>
                                     {({ active }) => (
                                         <div
+                                            onClick={() => handelSelectedWorkSpace(workData)}
                                             className={classNames(
                                                 active ? 'bg-white text-gray-900' : 'text-gray-700',
                                                 'h-9 flex mt-1 pl-2 items-center text-sm'
@@ -89,6 +98,10 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                 </Menu.Item>
                             ))}
                         </div>
+                        <p
+                            className="w-full  text-xs text-gray-400 hover:text-blue-500 cursor-pointer py-1.5 border-t flex items-center">
+                            View all Workspace <IoIosArrowRoundForward className="mt-1" />
+                        </p>
                     </Menu.Items>
                 </Transition>
             </Menu>
