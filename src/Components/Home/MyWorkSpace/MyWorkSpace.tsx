@@ -7,7 +7,6 @@ interface MyWorkSpaceProps { }
 
 const MyWorkSpace: FC<MyWorkSpaceProps> = () => {
     const { workSpaceId } = useContext(MyContext);
-    console.log(workSpaceId)
     return (
         <>
             <div className='w-full h-16 flex justify-between items-center px-2  border-b'>
