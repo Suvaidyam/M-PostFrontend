@@ -11,12 +11,12 @@ interface BodyHeadProps { }
 
 const BodyHead: FC<BodyHeadProps> = () => {
     const workSpace = JSON.parse(localStorage.getItem("workSpace") ?? '[]');
-    const { collection, setCollection } = useContext(MyContext);
+    const { collection, setCollection, loader, setLoader } = useContext(MyContext);
     const config = {
         headers: {
             'token': sessionStorage.getItem("token")
         },
-        params:{
+        params: {
             workspace_id: workSpace?._id,
         }
     };
@@ -31,7 +31,7 @@ const BodyHead: FC<BodyHeadProps> = () => {
             });
     };
 
-    
+
     // console.log(workSpace)
     const data = {
         type: "folder",
@@ -41,6 +41,7 @@ const BodyHead: FC<BodyHeadProps> = () => {
     const postData = () => {
         axios.post(url, data, config)
             .then((res: any) => {
+                setLoader(!loader);
                 toast.success(res.data.message);
             })
             .catch((err) => {
@@ -50,7 +51,7 @@ const BodyHead: FC<BodyHeadProps> = () => {
 
     useEffect(() => {
         GetData();
-    }, []);
+    }, [loader]);
     return (
         <>
             <div className='relative  flex items-center '>

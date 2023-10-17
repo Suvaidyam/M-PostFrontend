@@ -1,15 +1,17 @@
 import type { FC } from 'react';
-import { Fragment} from 'react';
+import { Fragment, useContext} from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import axios from 'axios';
+import { MyContext } from '../../../../Context/Context';
 
 interface MoreActionProps {
     optionId: any
 }
 
 const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
+    const { loader, setLoader } = useContext(MyContext);
 
     const config = {
         headers: {
@@ -22,6 +24,7 @@ const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
         axios.delete(url, config)
             .then(response => {
                 console.log(response);
+                setLoader(!loader);
             })
             .catch(error => {
                 console.error('Error:', error);
