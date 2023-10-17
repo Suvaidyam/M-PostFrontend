@@ -1,27 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ReactJson from 'react-json-view';
+import QueryForm from './QueryForm';
+import { MyContext } from '../../../../Context/Context';
+import BodyFrom from './BodyForm';
 
 type Props = {}
 
 function CenterTabs({ }: Props) {
   const [selected, setSelected] = useState("json");
+  const { setcurrentTab, paramsData, setParamsData, headersData, setHeadersData } = useContext(MyContext)
 
   const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     console.log(event.target.value);
     setSelected(event.target.value);
   };
-  const initialData = {
-    name: 'sujeet',
-    email: 'sujeet@gmail.com',
-    password: 'Sky@123',
-  };
 
-  const [data, setData] = useState(initialData);
-
-  const handleEdit = (edit: any) => {
-    // Update the data with the changes made using react-json-view
-    setData(edit.updated_src);
-  };
   return (
     <>
       <div className='w-full h-44'>
@@ -65,30 +58,19 @@ function CenterTabs({ }: Props) {
             json
           </label>
         </div>
-        {selected === "json" ? (
-          <div className='w-full'>
-            <ReactJson
-              src={data}
-              name={false}
-              displayDataTypes={false}
-              displayObjectSize={false}
-              enableClipboard={false}
-              onEdit={handleEdit}
-              onDelete={handleEdit}
-              onAdd={handleEdit}
-              // theme="apathy:inverted"
-            />
-          </div>
-        ) : (
-          <></>
-        )}
         {selected === "form-data" ? (
-          'Form Data'
+          <QueryForm data={paramsData} setData={setParamsData} params={undefined} />
         ) : (
           <></>
         )}
-
+        {selected === "x-www-form-urlencoded" ? (
+          <QueryForm data={headersData} setData={setHeadersData} params={undefined} />
+        ) : (
+          <></>
+        )}
+        {selected === "json" ? <BodyFrom /> : <></>}
       </div>
+
     </>
   )
 }

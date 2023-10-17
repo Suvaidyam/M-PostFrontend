@@ -2,7 +2,6 @@ import type { FC } from 'react';
 import { AiOutlineSave } from 'react-icons/ai';
 import { BsThreeDots } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa';
-import QueryForm from './TabsBody/QueryForm';
 import QueryTab from './TabsBody/QueryTab';
 import ErrorScreen from './TabsBody/ErrorScreen';
 
@@ -73,8 +72,7 @@ const Tabs: FC<TabsProps> = () => {
                 </div>
                 <div className='pt-5 px-3'>
                     <QueryTab />
-                    <QueryForm />
-                    <ErrorScreen/>
+                    <ErrorScreen />
                 </div>
             </div>
 
