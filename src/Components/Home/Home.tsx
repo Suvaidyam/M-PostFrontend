@@ -22,10 +22,10 @@ const Home: FC<HomeProps> = () => {
                             <MyWorkSpace />
                         </div>
                         <div className='w-full h-full flex'>
-                            <div className='w-[30%] -z-50 border-r'>
+                            <div className='w-[30%] z-0 border-r'>
                                 <LeftBar />
                             </div>
-                            <div className='w-full -z-50 overflow-y-scroll pb-[66px]'>
+                            <div className='w-full z-0 overflow-y-scroll pb-[66px]'>
                                 <LeftBody />
                             </div>
                         </div>
