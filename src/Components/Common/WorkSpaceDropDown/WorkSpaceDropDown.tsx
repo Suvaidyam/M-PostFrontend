@@ -15,8 +15,7 @@ interface WorkSpaceDropDownProps { }
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [workspace, setWorkspace] = useState([]);
-    const [Loader, setLoader] = useState(true)
-    const { workSpaceId, setWorkSpaceId, workSpaceOpen, setWorkSpaceOpen } = useContext(MyContext);
+    const { workSpaceId, setWorkSpaceId, workSpaceOpen, setWorkSpaceOpen, loader, setLoader } = useContext(MyContext);
 
     const config = {
         headers: {
@@ -28,9 +27,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
         axios.get(url, config)
             .then(res => {
                 setWorkspace(res.data.workSpace);
-                // setTimeout(() => {
-                //     setLoader(false)
-                // }, 1000);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -39,10 +35,10 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     useEffect(() => {
         getData();
     }, []);
+
     const handelSelectedWorkSpace = (e: any) => {
         localStorage.setItem("workSpace", JSON.stringify(e));
         setWorkSpaceId(e);
-        // setTimeout(()=>{setWorkSpaceOpen(!workSpaceOpen)},50);
     }
     return (
         <>
