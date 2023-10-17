@@ -21,6 +21,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
         setToggleOption(!toggleOption);
         setActiveOption(id);
     };
+
     return (
         <>
             {collection.map((item: any) => (
@@ -36,13 +37,8 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                             {item.name}
                         </div>
                     </div>
-                    <p onClick={() => ClickOption(item._id)} className="hidden group-hover:block absolute right-2">
-                        {/* <BiDotsHorizontalRounded className="cursor-pointer text-lg" /> */}
-                        <MoreAction />
-                    </p>
-                    <div className="absolute z-50 right-3 top-6">
-
-                        {/* {(toggleOption === true && item._id === activeOption) && <MoreAction />} */}
+                    <div onClick={() => ClickOption(item._id)} className="hidden group-hover:block absolute right-2">
+                        <MoreAction optionId={activeOption} />
                     </div>
                 </div >
             ))}

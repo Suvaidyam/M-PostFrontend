@@ -41,21 +41,12 @@ const BodyHead: FC<BodyHeadProps> = () => {
     const postData = () => {
         axios.post(url, data, config)
             .then((res: any) => {
-                toast.success(res.data.message)
-                // setMsg(res.data.message);
-                // setStatus(res.status);
-                // setError(true);
-                // setchangeAction(!changeAction);
+                toast.success(res.data.message);
             })
             .catch((err) => {
                 console.log(err)
-                // setMsg(err.response.data.message);
-                // setStatus(err.response.status);
-                // setError(true);
             });
     };
-
-
 
     useEffect(() => {
         GetData();
@@ -77,6 +68,5 @@ const BodyHead: FC<BodyHeadProps> = () => {
         </>
     );
 }
-// onClick={postData}
 
 export default BodyHead;
