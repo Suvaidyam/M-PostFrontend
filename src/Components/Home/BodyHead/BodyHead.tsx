@@ -31,7 +31,7 @@ const BodyHead: FC<BodyHeadProps> = () => {
     }, []);
     return (
         <>
-            <div className='relative flex items-center '>
+            <div className='relative  flex items-center '>
                 <SearchBar />
                 <div className='group relative'>
                     <motion.div whileTap={{ scale: 0.75 }}>

@@ -1,18 +1,45 @@
 import type { FC } from 'react';
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames'
 import { GoTriangleDown } from 'react-icons/go';
 import CreateWorkSpace from '../CreateWorkSpace/CreateWorkSpace';
+import axios from 'axios';
+import { BiGroup } from 'react-icons/bi';
 
 interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
+    const [workspace, setWorkspace] = useState([]);
+    const [Lader, setLader] = useState(true);
+
+    const config = {
+        headers: {
+            'token': sessionStorage.getItem("token")
+        }
+    };
+
+
+    const getData = () => {
+        const url = `${process.env.REACT_APP_BASEURL}/workspace`;
+        axios.get(url, config)
+            .then(res => {
+                // console.log(res.data.workSpace)
+                setWorkspace(res.data.workSpace);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    };
+    useEffect(() => {
+        getData();
+    }, []);
     return (
         <>
-            <Menu as="div" className="relative inline-block text-left z-50">
+
+            <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button className="flex items-center h-full">
                         <span><GoTriangleDown className='text-lg text-black' /></span>
@@ -27,7 +54,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute -left-[85px] mt-2 px-2 w-56 z-[500] origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute -left-[85px] mt-2 px-2 w-56 z-[600] origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
                             <Menu.Item>
                                 {({ active }) => (
@@ -44,18 +71,23 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                 )}
                             </Menu.Item>
                             <p className='text-xs text-gray-400 pt-2 font-semibold'>Recently visited</p>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <div
-                                        className={classNames(
-                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        My Workspace
-                                    </div>
-                                )}
-                            </Menu.Item>
+                            {workspace.map((workData: any) => (
+                                <Menu.Item key={workData._id}>
+                                    {({ active }) => (
+                                        <div
+                                            className={classNames(
+                                                active ? 'bg-white text-gray-900' : 'text-gray-700',
+                                                'h-9 flex mt-1 pl-2 items-center text-sm'
+                                            )}
+                                        >
+                                            <div className="flex gap-3 items-center">
+                                                <BiGroup className='text-lg text-gray-700' />
+                                                {workData.name}
+                                            </div>
+                                        </div>
+                                    )}
+                                </Menu.Item>
+                            ))}
                         </div>
                     </Menu.Items>
                 </Transition>
