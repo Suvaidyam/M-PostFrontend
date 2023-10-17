@@ -63,10 +63,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [currentActive, setCurrentActive] = useState(abc ? JSON.parse(abc) : '');
     localStorage.setItem("currentActive", JSON.stringify(currentActive));
 
-    const storedWorkSpace = localStorage.getItem('workSpace');
-    const initialWorkSpaceId = storedWorkSpace ? JSON.parse(storedWorkSpace) : '';
-
-    const [workSpaceId, setWorkSpaceId] = useState(initialWorkSpaceId);
+    const [workSpaceId, setWorkSpaceId] = useState(JSON.parse(localStorage.getItem('workSpace') ?? '[]'));
     const [workSpaceOpen, setWorkSpaceOpen] = useState(false);
 
 
