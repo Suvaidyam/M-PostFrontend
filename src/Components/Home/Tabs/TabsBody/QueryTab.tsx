@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-// import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-// import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import QueryForm from "./QueryForm";
-// import "./Tabs.css";
+import "../../../Home/Tabs/Tabs.css";
 import type { FC } from 'react';
 import { MyContext } from '../../../../Context/Context';
 import Typography from "@mui/material/Typography";
@@ -47,64 +45,23 @@ function a11yProps(index: number) {
 }
 
 const QueryTab: FC<QueryTabProps> = () => {
-    const { setcurrentTab, paramsData, setParamsData, headersData, setHeadersData } = useContext(MyContext)
+    const { setcurrentTab, paramsData, setParamsData, headersData, setHeadersData, currentActive, tabData } = useContext(MyContext)
     let activeQueryTab = sessionStorage.getItem("queryTab")
-    const [value, setValue] = useState(activeQueryTab? parseInt(activeQueryTab): 0);
-    useEffect(()=>{
-      sessionStorage.setItem("queryTab", value as any);
-    },[value])
-    const handleChange = (event:any, newValue:any) => {
+    const [value, setValue] = useState(activeQueryTab ? parseInt(activeQueryTab) : 0);
+    useEffect(() => {
+        sessionStorage.setItem("queryTab", value as any);
+    }, [value])
+    const locTabList: any = JSON.parse(localStorage.getItem('tabsList') as any)
+    const activeData = locTabList.filter((e: any) => e._id === currentActive)
+    const paramsBackendData = tabData?.details?.query || activeData[0]?.details?.query;
+    const headersBackendData = tabData?.details?.headers || activeData[0]?.details?.headers;
+
+    const handleChange = (event: any, newValue: any) => {
         sessionStorage.setItem("queryTab", newValue);
         setValue(newValue);
         // console.log(value);
-      };
+    };
     return (
-
-        // <Box sx={{ width: "100%" }}>
-        //     <Box sx={{ height: "32px", minHeight: "32px", color: "#2563EB" }}>
-        //         <Tabs
-        //             sx={{ height: "32px", minHeight: "32px", color: "#2563EB" }}
-        //             // value={value}
-        //             // onChange={handleChange}
-        //             aria-label="basic tabs example"
-        //         >
-        //             <Tab
-        //                 onClick={() => setcurrentTab("Params")}
-        //                 sx={{
-        //                     height: "32px",
-        //                     minHeight: "32px",
-        //                     textTransform: "capitalize",
-        //                     color: "#000000",
-        //                 }}
-        //                 label="Params"
-        //             // {...a11yProps(0)}
-        //             />
-        //             <Tab
-        //                 onClick={() => setcurrentTab("Headers")}
-
-        //                 sx={{
-        //                     height: "32px",
-        //                     minHeight: "32px",
-        //                     textTransform: "capitalize",
-        //                     color: "#000000",
-        //                 }}
-        //                 label="Headers"
-        //             // {...a11yProps(1)}
-        //             />
-        //             <Tab
-        //                 onClick={() => setcurrentTab("Body")}
-        //                 sx={{
-        //                     height: "32px",
-        //                     minHeight: "32px",
-        //                     textTransform: "capitalize",
-        //                     color: "#000000",
-        //                 }}
-        //                 label="Body"
-        //             // {...a11yProps(2)}
-        //             />
-        //         </Tabs>
-        //     </Box>
-        // </Box>
         <div className=" w-full h-full">
             <Box sx={{ width: "100%" }}>
                 <Box sx={{ height: "32px", minHeight: "32px", color: "#2563EB" }}>
@@ -160,8 +117,8 @@ const QueryTab: FC<QueryTabProps> = () => {
                         </TabPanel>
                     </div>
                 </Resizable>
-
             </Box>
+
         </div>
 
 

@@ -21,12 +21,31 @@ interface ContextValue {
     setHeadersData: React.Dispatch<React.SetStateAction<any>>
     tabData: any
     setTabData: React.Dispatch<React.SetStateAction<any>>
+    enviroment: any
+    SetEnviroment: React.Dispatch<React.SetStateAction<any>>
     jsonText: any
     setJsonText: React.Dispatch<React.SetStateAction<any>>
     currentActive: any
     setCurrentActive: React.Dispatch<React.SetStateAction<any>>
-    tabsList:any
-    setTabsList:React.Dispatch<React.SetStateAction<any>>
+    tabsList: any
+    setTabsList: React.Dispatch<React.SetStateAction<any>>
+    Msg: any
+    setMsg: React.Dispatch<React.SetStateAction<any>>
+    error: any
+    setError: React.Dispatch<React.SetStateAction<any>>
+    status: any
+    setStatus: React.Dispatch<React.SetStateAction<any>>
+    responseData: any
+    setResponseData: React.Dispatch<React.SetStateAction<any>>
+    changeAction: any
+    setchangeAction: React.Dispatch<React.SetStateAction<any>>
+    topBarData: any
+    setTopBarData: React.Dispatch<React.SetStateAction<any>>
+    currentActiveEnv: any
+    setCurrentActiveEnv: React.Dispatch<React.SetStateAction<any>>
+    workSpaceId:any
+    setWorkSpaceId: React.Dispatch<React.SetStateAction<any>>
+
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -49,16 +68,26 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [currentTab, setcurrentTab] = useState('Params')
     const [paramsData, setParamsData] = useState([]);
     const [headersData, setHeadersData] = useState([]);
+    const [enviroment, SetEnviroment] = useState([]);
     const [tabData, setTabData] = useState([]);
     const [jsonText, setJsonText] = useState("");
     let activetabs = localStorage.getItem('tabsList')
-    const [tabsList, setTabsList] = useState(activetabs? JSON.parse(activetabs):[]);
+    const [tabsList, setTabsList] = useState(activetabs ? JSON.parse(activetabs) : []);
     localStorage.setItem("tabsList", JSON.stringify(tabsList))
-      // collection active tabs
+    // collection active tabs
     let abc = localStorage.getItem("currentActive")
     const [currentActive, setCurrentActive] = useState(abc ? JSON.parse(abc) : '');
     localStorage.setItem("currentActive", JSON.stringify(currentActive))
-
+    const [Msg, setMsg] = useState("");
+    const [error, setError] = useState(false);
+    const [status, setStatus] = useState('200');
+    const [responseData, setResponseData] = useState([]);
+    const [changeAction, setchangeAction] = useState(false);
+    const [topBarData, setTopBarData] = useState("");
+    // environment active tabs
+    const [currentActiveEnv, setCurrentActiveEnv] = useState('');
+    // workspce id provide to filtter to all task
+    const [workSpaceId, setWorkSpaceId] = useState(JSON.parse(localStorage.getItem('workSpace') as any));
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
         setForgetPasswordPopup,
@@ -85,8 +114,25 @@ const Context: FC<ContextProps> = ({ children }) => {
         currentActive,
         setCurrentActive,
         tabsList,
-        setTabsList
-
+        setTabsList,
+        Msg,
+        setMsg,
+        error,
+        setError,
+        status,
+        setStatus,
+        responseData,
+        setResponseData,
+        changeAction,
+        setchangeAction,
+        topBarData,
+        setTopBarData,
+        enviroment,
+        SetEnviroment,
+        currentActiveEnv, 
+        setCurrentActiveEnv,
+        workSpaceId, 
+        setWorkSpaceId
     };
 
     return (
