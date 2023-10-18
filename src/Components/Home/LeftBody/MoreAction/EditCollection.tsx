@@ -1,10 +1,12 @@
 import type { FC, SetStateAction } from 'react';
-import { Fragment, useContext, useRef, useState } from 'react'
+import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { AiOutlineClose } from 'react-icons/ai';
 import axios from 'axios';
 import { MyContext } from '../../../../Context/Context';
 import { toast } from 'react-toastify';
+import { resolve } from 'dns/promises';
+import http from '../../../../Service/http';
 
 interface EditCollectionProps {
     open: boolean
@@ -12,26 +14,46 @@ interface EditCollectionProps {
 }
 
 const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
-    const { loader, setLoader } = useContext(MyContext);
+    const { activeOption } = useContext(MyContext);
+    const [name, setName] = useState('');
+
     const cancelButtonRef = useRef(null)
+
+    // const PutData=()=>{
+    //     http({
+    //       url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
+    //       method: "put",
+    //       data: {
+    //         name:name
+    //       },
+    //     })
+    //       .then((res) => {
+    //         console.log(resolve)
+            
+    //       })
+    //       .catch((err) => {
+    //         console.log(err)
+    //       });
+    //   };
+
     const config = {
         headers: { 'token': sessionStorage.getItem("token") }
     };
-    const url = `${process.env.REACT_APP_BASEURL}/collection`;
+    const url = `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`;
     const data = {
-        data: { name: '' }
+        data: { name: name }
     }
     const PutData = () => {
         axios.put(url, data, config)
             .then((res: any) => {
                 console.log(res)
-                setLoader(!loader);
                 toast.success(res.data.message);
+                setOpen(false)
             })
             .catch((err) => {
                 console.log(err)
             });
-    }
+    };
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -64,7 +86,10 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
                                         <div className="w-full flex justify-end"><AiOutlineClose onClick={() => setOpen(false)} className='cursor-pointer' /></div>
                                         <div className='text-start'><label htmlFor="name">Name</label></div>
                                         <div className='w-full'>
-                                            <input type="text" className='w-full outline-none border-[2px] py-1' name="name" id="name" />
+                                            <input type="text"
+                                                onChange={(e) => setName(e.target.value)}
+                                                defaultValue={activeOption.name}
+                                                className='w-full outline-none border-[2px] py-1 pl-2' name="name" id="name" />
                                         </div>
                                         <button onClick={PutData} className='w-full border mt-5 py-1 text-white bg-blue-500'>Update</button>
                                     </div>
