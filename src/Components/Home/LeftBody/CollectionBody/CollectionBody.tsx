@@ -7,17 +7,16 @@ import MoreAction from '../MoreAction/MoreAction';
 interface CollectionBodyProps { }
 
 const CollectionBody: FC<CollectionBodyProps> = () => {
-    const { slide, collection } = useContext(MyContext);
+    const { collection ,setActiveOption} = useContext(MyContext);
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
-    const [activeOption, setActiveOption] = useState<string>('');
-    console.log(collection)
+
     const ClickFolder = (id: string) => {
         setToggleFolder(!toggleFolder);
         setActiveFolder(id);
     };
-    const ClickOption = (id: string) => {
-        setActiveOption(id);
+    const ClickOption = (item: string) => {
+        setActiveOption(item);
     };
 
     return (
@@ -35,8 +34,8 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                             {item.name}
                         </div>
                     </div>
-                    <div onClick={() => ClickOption(item._id)} className="hidden group-hover:block absolute right-2">
-                        <MoreAction optionId={activeOption} />
+                    <div onClick={() => ClickOption(item)} className="hidden group-hover:block absolute right-2">
+                        <MoreAction />
                     </div>
                 </div >
             ))}

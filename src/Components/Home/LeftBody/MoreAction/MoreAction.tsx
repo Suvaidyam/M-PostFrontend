@@ -8,13 +8,12 @@ import { MyContext } from '../../../../Context/Context';
 import EditCollection from './EditCollection';
 
 interface MoreActionProps {
-    optionId: any
+
 }
 
-const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
-    const { loader, setLoader } = useContext(MyContext);
+const MoreAction: FC<MoreActionProps> = () => {
+    const { loader, setLoader, activeOption } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
-    console.log(optionId)
 
     const config = {
         headers: {
@@ -22,11 +21,10 @@ const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
         }
     };
 
-    const url = `${process.env.REACT_APP_BASEURL}/collection/${optionId}`;
+    const url = `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`;
     const handleDelete = () => {
         axios.delete(url, config)
             .then(response => {
-                console.log(response);
                 setLoader(!loader);
             })
             .catch(error => {
