@@ -110,14 +110,9 @@ export default function TabList({ }: Props) {
                     {tabsList?.map((e: { _id: any; details?: any; type?: any; name?: any; }) => (
                         <div
                             key={e._id}
-                            className={`flex items-center justify-between
-              ${e._id === currentActive
-                                    ? "border-b-2 border-b-blue-500 border-r duration-300"
-                                    : "border-r"
-                                }
-                w-44 min-w-44 px-1 h-full group cursor-pointer`}
-                            onClick={() => setCurrentActive(e._id)}
-                        >
+                            className={`flex items-center justify-between${e._id === currentActive
+                                ? "border-b-2 border-b-blue-500 border-r duration-300" : "border-r"}  w-44 min-w-44 px-1 h-full group cursor-pointer`}
+                            onClick={() => setCurrentActive(e._id)}  >
                             <div className="flex items-center  w-[142px] min-w-44 h-full gap-2" onClick={() => setTabData(e)}>
                                 <p
                                     className={`text-[11px] font-semibold text-${getDetails(e?.details).color}-600`}
@@ -160,7 +155,7 @@ export default function TabList({ }: Props) {
                         <option value="null" className={`w-full text-sm`}>
                             No Enviroment
                         </option>
-                        {local_variable?.map((e:any) => (
+                        {local_variable?.map((e: any) => (
                             <option
                                 selected={e._id === currentActiveEnv}
                                 key={e._id}

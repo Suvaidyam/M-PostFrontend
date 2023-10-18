@@ -8,6 +8,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import VariableValue from './VariableValue';
 import NewRequest from './NewRequest';
+import { getHeadersAndParams } from '../../../Utils/CommonUtlis';
+import Http from "../../../../Service/http";
+
 type Props = {
     onSendClick: any
 }
@@ -23,11 +26,39 @@ function TopBar({ onSendClick }: Props) {
     const [open, setopen] = useState(false);
     const [isLoding, setIsLoding] = useState(false);
     const [isEnv, setIsEnv] = useState([]);
-
     const handleClose = () => setopen(!open);
 
     const Save = () => {
-    }
+        Http({
+            url: `http://localhost:4000/collection/${tabData._id}`,
+            method: "put",
+            data: {
+                details: {
+                    url: data?.url,
+                    method: data.method.toLowerCase(),
+                    body: jsonText,
+                    headers: getHeadersAndParams(headersData),
+                    query: getHeadersAndParams(paramsData),
+                },
+            },
+        })
+            .then((res: any) => {
+                setMsg("Save Successfully");
+                setStatus(res.status);
+                setError(true)
+                setIsLoding(true);
+                setTimeout(() => {
+                    setIsLoding(false);
+                }, 1000);
+                setchangeAction(!changeAction)
+            })
+            .catch((err: any) => {
+                setMsg(err.response.data.message);
+                setStatus(err.response.status);
+                setError(true)
+            });
+    };
+
     return (
         <>
             <div className="w-full flex h-full  items-center  px-3 relative ">
@@ -49,14 +80,12 @@ function TopBar({ onSendClick }: Props) {
                     <input
                         placeholder="Enter Request URL"
                         type="url"
-                        className="text-xs font-semibold px-2 h-11 w-full border-gray-300 border
-             bg-white focus:outline-none"
+                        className="text-xs font-semibold px-2 h-11 w-full border-gray-300 border bg-white focus:outline-none"
                         onChange={(e) => {
                             setData({ ...data, url: e.target.value });
                         }}
                         defaultValue={data?.url || ""}
                     />
-
                     <div className="input-renderer px-2 ">
                         {data?.url?.split(REGEX).map((word: any, i: any) => {
                             if (word.match(REGEX) !== null) {
@@ -73,7 +102,7 @@ function TopBar({ onSendClick }: Props) {
                                     // </div>
                                 );
                             } else {
-                                return <span key={i} className='text-xs font-semibold '>{word}</span>;
+                                return <span key={i} className='text-xs font-semibold '>{}</span>;
                             }
                         })}
                     </div>
@@ -114,9 +143,9 @@ function TopBar({ onSendClick }: Props) {
                         <DialogContent><NewRequest setopen={setopen} details={data} />
                         </DialogContent>
                     </Dialog>}
-
             </div>
         </>
     )
 }
 export default TopBar
+
