@@ -1,10 +1,11 @@
 import type { FC } from 'react';
-import { Fragment, useContext} from 'react';
+import { Fragment, useState, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import axios from 'axios';
 import { MyContext } from '../../../../Context/Context';
+import EditCollection from './EditCollection';
 
 interface MoreActionProps {
     optionId: any
@@ -12,6 +13,8 @@ interface MoreActionProps {
 
 const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
     const { loader, setLoader } = useContext(MyContext);
+    const [openModel, setOpenModel] = useState<boolean>(false);
+    console.log(optionId)
 
     const config = {
         headers: {
@@ -29,14 +32,14 @@ const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
             .catch(error => {
                 console.error('Error:', error);
             });
-    };    
+    };
 
     return (
         <>
-            <Menu as="div" className="relative inline-block text-left z-50">
+            <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button className="flex items-center h-full">
-                        <span><BiDotsHorizontalRounded className='text-lg text-black' /></span>
+                        <span><BiDotsHorizontalRounded className='text-lg text-black mt-2' /></span>
                     </Menu.Button>
                 </div>
 
@@ -66,12 +69,14 @@ const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <div
+                                        onClick={() => setOpenModel(true)}
                                         className={classNames(
                                             active ? 'bg-white text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
                                         Rename
+                                        {/* <div><EditCollection /></div> */}
                                     </div>
                                 )}
                             </Menu.Item>
@@ -116,6 +121,7 @@ const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
                     </Menu.Items>
                 </Transition>
             </Menu>
+            {openModel === true ? <EditCollection open={openModel} setOpen={setOpenModel} /> : null}
         </>
     );
 }
