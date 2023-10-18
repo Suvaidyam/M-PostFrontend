@@ -131,15 +131,13 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                         {/* Show this part in tabs - Body and Headers */}
                                         <div className="px-2 flex items-center  py-1 gap-5">
                                             <span
-                                                className={`text-sm font-medium cursor-pointer
-                     ${body === true ? "text-blue-600" : "text-gray-800 "}`}
+                                                className={`text-sm font-medium cursor-pointer  ${body === true ? "text-blue-600" : "text-gray-800 "}`}
                                                 onClick={BodyTab}
                                             >
                                                 Body
                                             </span>
                                             <span
-                                                className={`text-sm font-medium cursor-pointer
-                     ${header === true ? "text-blue-600" : "text-gray-800 "}`}
+                                                className={`text-sm font-medium cursor-pointer  ${header === true ? "text-blue-600" : "text-gray-800 "}`}
                                                 onClick={HeaderTab}
                                             >
                                                 Headers

@@ -2,7 +2,7 @@ import { MyContext } from '../../../../Context/Context';
 import React, { useContext, useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import AddRow from "../TabsBody/AddRow";
-// import http from "../../../../Services/http";
+import http from "../../../../Service/http";
 type Props = {}
 
 function EnvironmentTab({ }: Props) {
@@ -10,6 +10,27 @@ function EnvironmentTab({ }: Props) {
     const [rows, addRows] = useState([0]);
     const [effect, setEffect] = useState(false)
     const postData = () => {
+        http({
+            method: "put",
+            url: `http://localhost:4000/environment/${currentActive}`,
+            data: {
+                details: enviroment
+            }
+        })
+            .then((res) => {
+                setMsg('Save Successfully')
+                setStatus(res.status)
+                setError(true)
+                setEffect(true)
+                setTimeout(() => {
+                    setEffect(false)
+                }, 1000)
+            })
+            .catch((err) => {
+                setMsg(err.response.data.message)
+                setStatus(err.response.status)
+                setError(true)
+            });
     }
     return (
         <>
@@ -20,8 +41,7 @@ function EnvironmentTab({ }: Props) {
                     </div>
                     <div className=" flex items-center justify-center">
                         <div className="">
-                            <button className="flex justify-start items-center text-lg rounded px-4 py-2
-               hover:bg-gray-200" onClick={postData}>
+                            <button className="flex justify-start items-center text-lg rounded px-4 py-2 hover:bg-gray-200" onClick={postData}>
                                 <AiOutlineSave />
                                 <span className="ml-0.5 text-sm font-semibold">{effect === true ? <>...</> : <>save</>}</span>
                             </button>

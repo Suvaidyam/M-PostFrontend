@@ -20,6 +20,7 @@ const BodyHead: FC<BodyHeadProps> = () => {
             workspace_id: workSpace?._id,
         }
     };
+    console.log(config.headers)
     const url = `${process.env.REACT_APP_BASEURL}/collection`;
     const GetData = () => {
         axios.get(url, config)

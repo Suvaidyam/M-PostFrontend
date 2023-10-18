@@ -4,7 +4,7 @@ import { RxDotFilled } from "react-icons/rx";
 import { BiCollection } from "react-icons/bi";
 import { AiOutlinePlus, AiOutlineAntDesign } from "react-icons/ai";
 import { motion } from "framer-motion";
-// import Http from "../../../../Services/http";
+import Http from "../../../../Service/http";
 import { useContext } from "react";
 import { MyContext } from "../../../../Context/Context";
 // import { DataContext } from "../../../Context/DataProvider";
@@ -85,17 +85,17 @@ export default function TabList({ }: Props) {
     };
 
     const getData = () => {
-        // let workSpace_Id = JSON.parse(localStorage.getItem("workSpace"));
-        // Http({
-        //   method: "get",
-        //   url: `http://localhost:4000/environment/${workSpace_Id?._id}`,
-        // })
-        //   .then((res) => {
-        //     setNewEnviroment(res.data.environment);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
+        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") as string);
+        Http({
+          method: "get",
+          url: `http://localhost:4000/environment/${workSpace_Id?._id}`,
+        })
+          .then((res) => {
+            setNewEnviroment(res.data.environment);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     };
 
     useEffect(() => {

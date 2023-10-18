@@ -14,7 +14,7 @@ function TabsBody({ }: Props) {
   const [isLoading, setLoading] = useState(false);
   const onSendClick = async () => {
     if (topBarData?.url?.length != 0) {
-      let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") as any);
+      let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") as string);
       Http({
         method: "post",
         url: `http://localhost:4000/history`,
