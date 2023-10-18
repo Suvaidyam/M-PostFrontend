@@ -86,12 +86,10 @@ const Tabs: FC<TabsProps> = () => {
                         <img className="w-36" src={logo} alt="" />
                         <p className="text-sm bg-slate-200 rounded-sm px-5 font-medium py-2  text-gray-500 ">Create a new request</p>
                         <div className="flex">
-                            <button className="border border-blue-500 text-[11px] font-bold rounded-sm text-green-700 
-            px-2" onClick={handleNewTab}>GET</button>
+                            <button className="border border-blue-500 bg-green-100 text-[12px] font-bold rounded-sm text-green-700 
+                              px-4" onClick={handleNewTab}>GET</button>
                         </div>
                     </div>}
-
-
             </div>
 
         </>

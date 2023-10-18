@@ -55,11 +55,13 @@ const Register: FC<RegisterProps> = () => {
         axios.post(url, values)
             .then((response) => {
                 console.log(response);
-                if (response.status === 200) {
-                    toast.success('Register successfully')
-                    nevigate('/')
+                setTimeout(() => {
+                    if (response.status === 200) {
+                        nevigate('/')
+                    }
+                }, 2000);
+                toast.success('Register successfully')
 
-                }
             })
             .catch((error) => {
                 console.log("Error occurred:", error);

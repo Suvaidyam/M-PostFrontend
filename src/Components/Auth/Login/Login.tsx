@@ -40,12 +40,14 @@ const Login: FC<LoginProps> = (data: {}) => {
         axios.post(`http://localhost:4000/auth/login`, values)
             .then((response: any) => {
                 console.log(response)
-                if (response.status === 200) {
-                    toast.success('Login successfully')
-                    sessionStorage.setItem('token', response.data.token)
-                    navigate('/workspace')
+                setTimeout(() => {
+                    if (response.status === 200) {
+                        sessionStorage.setItem('token', response.data.token)
+                        navigate('/workspace')
+                    }
+                }, 2000);
+                toast.success('Login successfully')
 
-                }
             })
             .catch((error) => {
                 console.log("Error occurred:", error);

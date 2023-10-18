@@ -49,7 +49,8 @@ interface ContextValue {
     setWorkSpaceId: React.Dispatch<React.SetStateAction<any>>
     loader: boolean
     setLoader: React.Dispatch<React.SetStateAction<boolean>>
-
+    historyRender:boolean
+    sethistoryRender:React.Dispatch<React.SetStateAction<boolean>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -96,6 +97,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     // workspce id provide to filtter to all task
     const [workSpaceId, setWorkSpaceId] = useState(JSON.parse(localStorage.getItem('workSpace') as any));
     const [loader, setLoader] = useState(false);
+    const [historyRender, sethistoryRender] = useState(false);
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -145,7 +147,9 @@ const Context: FC<ContextProps> = ({ children }) => {
         currentActiveEnv,
         setCurrentActiveEnv,
         loader,
-        setLoader
+        setLoader,
+        historyRender,
+        sethistoryRender
     };
 
     return (
