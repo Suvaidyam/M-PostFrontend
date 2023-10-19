@@ -8,11 +8,11 @@ import { tags as t } from '@lezer/highlight';
 interface BodyFromProps { }
 
 const BodyFrom: FC<BodyFromProps> = () => {
-    const { tabData, setJsonText, currentActive } = useContext(MyContext);
-    const locTabList = JSON.parse(localStorage.getItem('tabsList') as any)
+    const { tabData, setJsonText,jsonText, currentActive } = useContext(MyContext);
+    const locTabList = JSON.parse(localStorage.getItem('tabsList') as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const data = tabData?.details?.body || activeData[0]?.details?.body;
-
+    // console.log(jsonText)
     //   const myTheme = createTheme({
     //     theme: 'light',
 
@@ -27,7 +27,7 @@ const BodyFrom: FC<BodyFromProps> = () => {
         return () => {
             setJsonText(data);
         }
-    }, [data])
+    }, [])
 
     const handleChange = (newCode: string) => {
         try {
@@ -36,17 +36,14 @@ const BodyFrom: FC<BodyFromProps> = () => {
             // setData(newCode);
         } catch (error) { }
     };
-    function javascript(arg0: { jsx: boolean; }) {
-        throw new Error('Function not implemented.');
-    }
-
+   
     return (
         <div className=" mb-2 font-mono  scrollbar-hide  bg-white  ">
             <CodeMirror
                 // theme={myTheme}
                 height="127px"
-                // value={JSON.stringify(data, 0, 3)} 
-                // extensions={[javascript({ jsx: true })] as any}
+                value={JSON.stringify(data, null, 3 )} 
+                extensions={[javascript({ jsx: true })] as any}
                 onChange={handleChange}
             />
         </div>

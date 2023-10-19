@@ -7,9 +7,8 @@ import BodyFrom from './BodyForm';
 type Props = {}
 
 function CenterTabs({ }: Props) {
-  const [selected, setSelected] = useState("json");
   const { setcurrentTab, paramsData, setParamsData, headersData, setHeadersData } = useContext(MyContext)
-
+  const [selected, setSelected] = useState("json");
   const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     console.log(event.target.value);
     setSelected(event.target.value);
