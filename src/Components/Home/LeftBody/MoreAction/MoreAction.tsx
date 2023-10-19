@@ -3,10 +3,10 @@ import { Fragment, useState, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
-import axios from 'axios';
 import { MyContext } from '../../../../Context/Context';
 import EditCollection from './EditCollection';
 import http from '../../../../Service/http';
+import { toast } from 'react-toastify';
 
 interface MoreActionProps {
 
@@ -15,7 +15,33 @@ interface MoreActionProps {
 const MoreAction: FC<MoreActionProps> = () => {
     const { loader, setLoader, activeOption } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
-    
+    // const [addRequestCollection, setAddRequestCollection] = useState<any>([]);
+
+    // Add Request 
+    const postData = () => {
+        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection`,
+            method: "post",
+            data: {
+                name: "New Request",
+                type: "request",
+                parent: activeOption?._id,
+                workspace_id: workSpace_Id,
+                details: { method: "get", url: "" },
+            }
+        })
+            .then((res) => {
+                console.log(res)
+                setLoader(!loader);
+                toast.success(res.data.message);
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    };
+
+    // Delete Data 
     const deleteData = () => {
         http({
             url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
@@ -24,6 +50,7 @@ const MoreAction: FC<MoreActionProps> = () => {
             .then((res) => {
                 console.log(res)
                 setLoader(!loader);
+                toast.success(res.data.message);
             })
             .catch((err) => {
                 console.error('Error:', err);
@@ -32,7 +59,7 @@ const MoreAction: FC<MoreActionProps> = () => {
 
     return (
         <>
-            <Menu as="div" className="relative inline-block text-left">
+            <Menu as="div" className="relative z-50 inline-block text-left">
                 <div>
                     <Menu.Button className="flex items-center h-full">
                         <span><BiDotsHorizontalRounded className='text-lg text-black mt-2' /></span>
@@ -91,6 +118,7 @@ const MoreAction: FC<MoreActionProps> = () => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <div
+                                        onClick={postData}
                                         className={classNames(
                                             active ? 'bg-white text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'

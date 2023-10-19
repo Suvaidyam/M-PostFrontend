@@ -1,11 +1,9 @@
 import type { FC, SetStateAction } from 'react';
-import { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import { Fragment, useContext, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { AiOutlineClose } from 'react-icons/ai';
-import axios from 'axios';
 import { MyContext } from '../../../../Context/Context';
 import { toast } from 'react-toastify';
-import { resolve } from 'dns/promises';
 import http from '../../../../Service/http';
 
 interface EditCollectionProps {
@@ -14,7 +12,7 @@ interface EditCollectionProps {
 }
 
 const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
-    const { activeOption } = useContext(MyContext);
+    const { loader, setLoader, activeOption } = useContext(MyContext);
     const [name, setName] = useState('');
     const cancelButtonRef = useRef(null);
 
@@ -27,14 +25,16 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
             },
         })
             .then((res) => {
-                console.log(res)
                 toast.success(res.data.message);
+                setLoader(!loader)
                 setOpen(false)
             })
             .catch((err) => {
                 console.log(err)
             });
     };
+
+    // use
 
     return (
         <>
@@ -67,14 +67,14 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
                                     <div className="w-full">
                                         <div className="w-full flex justify-end"><AiOutlineClose onClick={() => setOpen(false)} className='cursor-pointer' /></div>
                                         {/* <form> */}
-                                            <div className='text-start'><label htmlFor="name">Name</label></div>
-                                            <div className='w-full'>
-                                                <input type="text"
-                                                    onChange={(e) => setName(e.target.value)}
-                                                    defaultValue={activeOption.name}
-                                                    className='w-full outline-none border-[2px] py-1 pl-2' name="name" id="name" />
-                                            </div>
-                                            <button onClick={PutData} className='w-full border mt-5 py-1 text-white bg-blue-500'>Update</button>
+                                        <div className='text-start'><label htmlFor="name">Name</label></div>
+                                        <div className='w-full'>
+                                            <input type="text"
+                                                onChange={(e) => setName(e.target.value)}
+                                                defaultValue={activeOption.name}
+                                                className='w-full outline-none border-[2px] py-1 pl-2' name="name" id="name" />
+                                        </div>
+                                        <button onClick={PutData} className='w-full border mt-5 py-1 text-white bg-blue-500'>Update</button>
                                         {/* </form> */}
                                     </div>
                                 </Dialog.Panel>
