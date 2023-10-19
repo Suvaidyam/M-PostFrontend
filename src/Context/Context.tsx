@@ -49,8 +49,10 @@ interface ContextValue {
     setWorkSpaceId: React.Dispatch<React.SetStateAction<any>>
     loader: boolean
     setLoader: React.Dispatch<React.SetStateAction<boolean>>
-    historyRender:boolean
-    sethistoryRender:React.Dispatch<React.SetStateAction<boolean>>
+    historyRender: boolean
+    sethistoryRender: React.Dispatch<React.SetStateAction<boolean>>
+    activeOption: any
+    setActiveOption: React.Dispatch<React.SetStateAction<any>>, 
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -98,6 +100,8 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [workSpaceId, setWorkSpaceId] = useState(JSON.parse(localStorage.getItem('workSpace') as any));
     const [loader, setLoader] = useState(false);
     const [historyRender, sethistoryRender] = useState(false);
+    // Set Active option Data 
+    const [activeOption, setActiveOption] = useState<string>('');
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -149,7 +153,9 @@ const Context: FC<ContextProps> = ({ children }) => {
         loader,
         setLoader,
         historyRender,
-        sethistoryRender
+        sethistoryRender,
+        activeOption,
+        setActiveOption
     };
 
     return (

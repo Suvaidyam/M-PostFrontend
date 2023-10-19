@@ -45,7 +45,7 @@ const Tabs: FC<TabsProps> = () => {
     };
 
     useEffect(() => {
-        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as any);
+        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as string);
         setLoader(true)
         if (!workSpace_Id) {
             setLoader(true)

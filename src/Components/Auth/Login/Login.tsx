@@ -46,8 +46,7 @@ const Login: FC<LoginProps> = (data: {}) => {
                         navigate('/workspace')
                     }
                 }, 2000);
-                toast.success('Login successfully')
-
+                toast.success(response.data.message)
             })
             .catch((error) => {
                 console.log("Error occurred:", error);

@@ -4,7 +4,7 @@ import TopBar from './TopBar'
 import Response from './Response'
 import { MyContext } from '../../../../Context/Context'
 import { checkParams, getHeadersAndParams } from '../../../Utils/CommonUtlis'
-import Http from "../../../../Service/http";
+import http from "../../../../Service/http";
 type Props = {}
 
 function TabsBody({ }: Props) {
@@ -12,10 +12,13 @@ function TabsBody({ }: Props) {
     useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: "100" });
   const [isLoading, setLoading] = useState(false);
+  // console.log(topBarData)
+
   const onSendClick = async () => {
-    if (topBarData?.url?.length != 0) {
-      let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") as string);
-      Http({
+    if (topBarData?.url?.length !== 0) {
+      let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+      // console.log(workSpace_Id._id)
+      http({
         method: "post",
         url: `http://localhost:4000/history`,
         data: {
@@ -37,7 +40,7 @@ function TabsBody({ }: Props) {
       }
     }
 
-    Http({
+    http({
       url: topBarData.url,
       method: topBarData.method,
       data: jsonText,

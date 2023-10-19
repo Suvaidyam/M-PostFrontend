@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MyContext } from '../../../../Context/Context';
 import { AiOutlineSave } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
@@ -9,7 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import VariableValue from './VariableValue';
 import NewRequest from './NewRequest';
 import { getHeadersAndParams } from '../../../Utils/CommonUtlis';
-import Http from "../../../../Service/http";
+import http from "../../../../Service/http";
 
 type Props = {
     onSendClick: any
@@ -20,7 +20,7 @@ function TopBar({ onSendClick }: Props) {
     const REGEX = /({{.*?}})/g;
     const { jsonText, tabData, setTopBarData, headersData, setStatus, currentActive,
         paramsData, setMsg, setError, changeAction, setchangeAction } = useContext(MyContext);
-    const locTabList = JSON.parse(localStorage.getItem('tabsList') as any)
+    const locTabList = JSON.parse(localStorage.getItem('tabsList') as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const [data, setData] = useState(tabData?.details || activeData[0].details);
     const [open, setopen] = useState(false);
@@ -29,35 +29,61 @@ function TopBar({ onSendClick }: Props) {
     const handleClose = () => setopen(!open);
 
     const Save = () => {
-        Http({
-            url: `http://localhost:4000/collection/${tabData._id}`,
-            method: "put",
-            data: {
-                details: {
-                    url: data?.url,
-                    method: data.method.toLowerCase(),
-                    body: jsonText,
-                    headers: getHeadersAndParams(headersData),
-                    query: getHeadersAndParams(paramsData),
-                },
-            },
+        // http({
+        //     url: `http://localhost:4000/collection/${tabData._id}`,
+        //     method: "put",
+        //     data: {
+        //         details: {
+        //             url: data?.url,
+        //             method: data.method.toLowerCase(),
+        //             body: jsonText,
+        //             headers: getHeadersAndParams(headersData),
+        //             query: getHeadersAndParams(paramsData),
+        //         },
+        //     },
+        // })
+        //     .then((res: any) => {
+        //         setMsg("Save Successfully");
+        //         setStatus(res.status);
+        //         setError(true)
+        //         setIsLoding(true);
+        //         setTimeout(() => {
+        //             setIsLoding(false);
+        //         }, 1000);
+        //         setchangeAction(!changeAction)
+        //     })
+        //     .catch((err: any) => {
+        //         setMsg(err.response.data.message);
+        //         setStatus(err.response.status);
+        //         setError(true)
+        //     });
+    };
+    const getData = () => {
+        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as string);
+        http({
+            method: "get",
+            url: `http://localhost:4000/environment/${workSpace_Id?._id}`,
         })
-            .then((res: any) => {
-                setMsg("Save Successfully");
-                setStatus(res.status);
-                setError(true)
-                setIsLoding(true);
-                setTimeout(() => {
-                    setIsLoding(false);
-                }, 1000);
-                setchangeAction(!changeAction)
+            .then((res) => {
+                res.data.environment.map((e: any) =>
+                    e.details.map((el: any) => setIsEnv((env) => [...env, el] as any))
+                );
             })
-            .catch((err: any) => {
-                setMsg(err.response.data.message);
-                setStatus(err.response.status);
-                setError(true)
+            .catch((err) => {
+                console.log(err);
             });
     };
+    // isEnv.map((e: any) => {
+    //     return (data.url = data?.url?.replace(`{{${e.variable}}}`, e.value));
+    // });
+    setTopBarData(data);
+    // useEffect(() => {
+    //     return () => {
+    //         setData({ ...data, url: data?.url });
+    //         getData();
+
+    //     };
+    // }, []);
 
     return (
         <>
@@ -102,7 +128,7 @@ function TopBar({ onSendClick }: Props) {
                                     // </div>
                                 );
                             } else {
-                                return <span key={i} className='text-xs font-semibold '>{}</span>;
+                                return <span key={i} className='text-xs font-semibold '>{ }</span>;
                             }
                         })}
                     </div>
@@ -110,9 +136,7 @@ function TopBar({ onSendClick }: Props) {
                 {/* button */}
                 <div>
                     <button
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 text-sm px-4 rounded-r-md "
-                        onClick={onSendClick}
-                    >
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 text-sm px-4 rounded-r-md " onClick={onSendClick}>
                         SEND
                     </button>
                 </div>

@@ -3,40 +3,63 @@ import { Fragment, useState, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
-import axios from 'axios';
 import { MyContext } from '../../../../Context/Context';
 import EditCollection from './EditCollection';
+import http from '../../../../Service/http';
+import { toast } from 'react-toastify';
 
 interface MoreActionProps {
-    optionId: any
+
 }
 
-const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
-    const { loader, setLoader } = useContext(MyContext);
+const MoreAction: FC<MoreActionProps> = () => {
+    const { loader, setLoader, activeOption } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
-    console.log(optionId)
+    // const [addRequestCollection, setAddRequestCollection] = useState<any>([]);
 
-    const config = {
-        headers: {
-            'token': sessionStorage.getItem("token")
-        }
+    // Add Request 
+    const postData = () => {
+        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection`,
+            method: "post",
+            data: {
+                name: "New Request",
+                type: "request",
+                parent: activeOption?._id,
+                workspace_id: workSpace_Id,
+                details: { method: "get", url: "" },
+            }
+        })
+            .then((res) => {
+                console.log(res)
+                setLoader(!loader);
+                toast.success(res.data.message);
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     };
 
-    const url = `${process.env.REACT_APP_BASEURL}/collection/${optionId}`;
-    const handleDelete = () => {
-        axios.delete(url, config)
-            .then(response => {
-                console.log(response);
+    // Delete Data 
+    const deleteData = () => {
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
+            method: "delete",
+        })
+            .then((res) => {
+                console.log(res)
                 setLoader(!loader);
+                toast.success(res.data.message);
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .catch((err) => {
+                console.error('Error:', err);
             });
     };
 
     return (
         <>
-            <Menu as="div" className="relative inline-block text-left">
+            <Menu as="div" className="relative z-50 inline-block text-left">
                 <div>
                     <Menu.Button className="flex items-center h-full">
                         <span><BiDotsHorizontalRounded className='text-lg text-black mt-2' /></span>
@@ -95,6 +118,7 @@ const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <div
+                                        onClick={postData}
                                         className={classNames(
                                             active ? 'bg-white text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
@@ -107,7 +131,7 @@ const MoreAction: FC<MoreActionProps> = ({ optionId }) => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <div
-                                        onClick={handleDelete}
+                                        onClick={deleteData}
                                         className={classNames(
                                             active ? 'bg-red-500 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
