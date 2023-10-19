@@ -6,6 +6,7 @@ import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import axios from 'axios';
 import { MyContext } from '../../../../Context/Context';
 import EditCollection from './EditCollection';
+import http from '../../../../Service/http';
 
 interface MoreActionProps {
 
@@ -14,21 +15,18 @@ interface MoreActionProps {
 const MoreAction: FC<MoreActionProps> = () => {
     const { loader, setLoader, activeOption } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
-
-    const config = {
-        headers: {
-            'token': sessionStorage.getItem("token")
-        }
-    };
-
-    const url = `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`;
-    const handleDelete = () => {
-        axios.delete(url, config)
-            .then(response => {
+    
+    const deleteData = () => {
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
+            method: "delete",
+        })
+            .then((res) => {
+                console.log(res)
                 setLoader(!loader);
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .catch((err) => {
+                console.error('Error:', err);
             });
     };
 
@@ -105,7 +103,7 @@ const MoreAction: FC<MoreActionProps> = () => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <div
-                                        onClick={handleDelete}
+                                        onClick={deleteData}
                                         className={classNames(
                                             active ? 'bg-red-500 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
