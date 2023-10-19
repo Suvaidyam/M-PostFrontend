@@ -4,25 +4,15 @@ import { motion } from "framer-motion";
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import SearchBar from '../SearchBar/SearchBar';
-import axios from 'axios';
 import { MyContext } from '../../../Context/Context';
 import { toast } from 'react-toastify';
 import http from '../../../Service/http';
 interface BodyHeadProps { }
 
 const BodyHead: FC<BodyHeadProps> = () => {
-    const workSpace = JSON.parse(localStorage.getItem("workSpace") ?? '[]');
     const { setCollection, loader, setLoader } = useContext(MyContext);
-    const config = {
-        headers: {
-            'token': sessionStorage.getItem("token")
-        },
-        params: {
-            workspace_id: workSpace?._id,
-        }
-    };
 
-    const url = `${process.env.REACT_APP_BASEURL}/collection`;
+    // Find Collection Data
     const getData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
         if (workSpace_Id) {
@@ -39,19 +29,21 @@ const BodyHead: FC<BodyHeadProps> = () => {
         } else {
             console.log("workspace Id NOT Found, Please select a workspace");
         }
-
-
     };
 
-
-    const data = {
-        type: "folder",
-        name: "New Collection",
-        workspace_id: workSpace?._id,
-    }
+    // Create Collection
     const postData = () => {
-        axios.post(url, data, config)
-            .then((res: any) => {
+        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection`,
+            method: "post",
+            data: {
+                type: "folder",
+                name: "New Collection",
+                workspace_id: workSpace_Id._id,
+            },
+        })
+            .then((res) => {
                 setLoader(!loader);
                 toast.success(res.data.message);
             })

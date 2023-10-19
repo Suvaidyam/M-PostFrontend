@@ -16,36 +16,17 @@ interface EditCollectionProps {
 const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
     const { activeOption } = useContext(MyContext);
     const [name, setName] = useState('');
+    const cancelButtonRef = useRef(null);
 
-    const cancelButtonRef = useRef(null)
-
-    // const PutData=()=>{
-    //     http({
-    //       url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
-    //       method: "put",
-    //       data: {
-    //         name:name
-    //       },
-    //     })
-    //       .then((res) => {
-    //         console.log(resolve)
-            
-    //       })
-    //       .catch((err) => {
-    //         console.log(err)
-    //       });
-    //   };
-
-    const config = {
-        headers: { 'token': sessionStorage.getItem("token") }
-    };
-    const url = `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`;
-    const data = {
-        data: { name: name }
-    }
     const PutData = () => {
-        axios.put(url, data, config)
-            .then((res: any) => {
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
+            method: "put",
+            data: {
+                name: name
+            },
+        })
+            .then((res) => {
                 console.log(res)
                 toast.success(res.data.message);
                 setOpen(false)
@@ -54,6 +35,7 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
                 console.log(err)
             });
     };
+
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -84,14 +66,16 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
                                 <Dialog.Panel className="bg-white w-[400px] p-5 rounded flex justify-center items-center">
                                     <div className="w-full">
                                         <div className="w-full flex justify-end"><AiOutlineClose onClick={() => setOpen(false)} className='cursor-pointer' /></div>
-                                        <div className='text-start'><label htmlFor="name">Name</label></div>
-                                        <div className='w-full'>
-                                            <input type="text"
-                                                onChange={(e) => setName(e.target.value)}
-                                                defaultValue={activeOption.name}
-                                                className='w-full outline-none border-[2px] py-1 pl-2' name="name" id="name" />
-                                        </div>
-                                        <button onClick={PutData} className='w-full border mt-5 py-1 text-white bg-blue-500'>Update</button>
+                                        {/* <form> */}
+                                            <div className='text-start'><label htmlFor="name">Name</label></div>
+                                            <div className='w-full'>
+                                                <input type="text"
+                                                    onChange={(e) => setName(e.target.value)}
+                                                    defaultValue={activeOption.name}
+                                                    className='w-full outline-none border-[2px] py-1 pl-2' name="name" id="name" />
+                                            </div>
+                                            <button onClick={PutData} className='w-full border mt-5 py-1 text-white bg-blue-500'>Update</button>
+                                        {/* </form> */}
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
