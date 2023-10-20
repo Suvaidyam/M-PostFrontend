@@ -106,11 +106,11 @@ const QueryTab: FC<QueryTabProps> = () => {
                 <Resizable direction="bottom" >
                     <div className="bg-white h-full overflow-hidden overflow-y-scroll">
                         <TabPanel value={value} index={0}>
-                            <QueryForm data={paramsData} setData={setParamsData} params={undefined}                            // {...{params}} 
+                            <QueryForm data={paramsData} setData={setParamsData} params={null}                            // {...{params}} 
                             />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            <QueryForm data={headersData} setData={setHeadersData} params={undefined} />
+                            <QueryForm data={headersData} setData={setHeadersData} params={null} />
                         </TabPanel>
                         <TabPanel value={value} index={2}>
                             <CenterTabs />

@@ -87,7 +87,6 @@ const Context: FC<ContextProps> = ({ children }) => {
     localStorage.setItem("currentActive", JSON.stringify(currentActive));
 
     const [workSpaceOpen, setWorkSpaceOpen] = useState(false);
-    localStorage.setItem("currentActive", JSON.stringify(currentActive))
     const [Msg, setMsg] = useState<any>("");
     const [error, setError] = useState(false);
     const [status, setStatus] = useState('200');

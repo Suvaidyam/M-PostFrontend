@@ -12,7 +12,7 @@ const BodyFrom: FC<BodyFromProps> = () => {
     const locTabList = JSON.parse(localStorage.getItem('tabsList') as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const data = tabData?.details?.body || activeData[0]?.details?.body;
-    // console.log(jsonText)
+    console.log(locTabList)
     //   const myTheme = createTheme({
     //     theme: 'light',
 
@@ -42,7 +42,7 @@ const BodyFrom: FC<BodyFromProps> = () => {
             <CodeMirror
                 // theme={myTheme}
                 height="127px"
-                value={JSON.stringify(data, null, 3 )} 
+                value={JSON.stringify(data, 0 as any, 3 )} 
                 extensions={[javascript({ jsx: true })] as any}
                 onChange={handleChange}
             />

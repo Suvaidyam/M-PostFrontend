@@ -8,11 +8,10 @@ import http from "../../../../Service/http";
 type Props = {}
 
 function TabsBody({ }: Props) {
-  const { setMsg, setError, topBarData, paramsData, headersData, jsonText, historyRender, sethistoryRender } =
-    useContext(MyContext);
+  const { setMsg, setError, topBarData, paramsData, headersData, jsonText, historyRender, sethistoryRender } = useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: "100" });
   const [isLoading, setLoading] = useState(false);
-  // console.log(topBarData)
+  console.log(topBarData)
 
   const onSendClick = async () => {
     if (topBarData?.url?.length !== 0) {
@@ -22,7 +21,7 @@ function TabsBody({ }: Props) {
         method: "post",
         url: `http://localhost:4000/history`,
         data: {
-          workspace_id: workSpace_Id,
+          workspace_id: workSpace_Id._id,
           request_id: topBarData._id,
           details: topBarData
         }
@@ -49,6 +48,7 @@ function TabsBody({ }: Props) {
     })
       .then((res: any) => {
         setApiResponse(res);
+        // console.log(res)
       })
       .catch((err: { response: React.SetStateAction<{ status: string }> }) => {
         setApiResponse(err.response);
