@@ -104,9 +104,7 @@ export default function AddRow({
                 </td>
                 <th
                     scope="row"
-                    className=" p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white"
-
-                >
+                    className=" p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white">
                     <input
                         type={type}
                         className="w-full px-6 border py-0.5 focus:outline-none "

@@ -21,14 +21,12 @@ export default function TabList({ }: Props) {
         currentActive,
         setCurrentActive,
         setCurrentActiveEnv,
-        currentActiveEnv,
-    } = useContext(MyContext);
+        currentActiveEnv} = useContext(MyContext);
     const [newEnviroment, setNewEnviroment] = useState([]);
     const local_variable = newEnviroment?.filter((e: any) => e.name !== "Globals");
     let storeData = sessionStorage.getItem("recentTablength");
     const [recentTablength, setrecentTablength] = useState(storeData ? parseInt(storeData) : 0);
     sessionStorage.setItem("recentTablength", recentTablength as any)
-
     const newReqObj = {
         name: "Untitled Request",
         type: "request",
@@ -54,14 +52,14 @@ export default function TabList({ }: Props) {
 
     };
     const handleTabClose = (e: { _id: any; }) => {
-        let index = tabsList.findIndex((f: { _id: any; }) => f._id === e._id);
+        let index = tabsList.findIndex((f:any) => f._id === e._id);
         tabsList.splice(index, 1);
         setTabsList(tabsList);
         setTimeout(() => {
             if (tabsList.length) {
                 setCurrentActive(tabsList[index ? index - 1 : 0]._id);
                 // close tabs set data active tabs
-                tabsList.map((e: { _id: any; }) => (
+                tabsList.map((e:any) => (
                     e._id === tabsList[index ? index - 1 : 0]._id &&
                     setTabData(e)
                 ))
