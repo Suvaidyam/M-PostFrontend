@@ -12,7 +12,7 @@ const RequestAction: FC<RequestActionProps> = () => {
             <Menu as="div" className="relative inline-block text-left pr-2">
                 <div>
                     <Menu.Button className="flex items-center h-full">
-                        <span><BiDotsHorizontalRounded className='text-lg text-black mt-2' /></span>
+                        <span><BiDotsHorizontalRounded className='text-lg text-black' /></span>
                     </Menu.Button>
                 </div>
 
@@ -25,7 +25,7 @@ const RequestAction: FC<RequestActionProps> = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute right-0 mt-2 w-56 z-50 origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0  w-56 z-50 origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
                             <Menu.Item>
                                 {({ active }) => (
