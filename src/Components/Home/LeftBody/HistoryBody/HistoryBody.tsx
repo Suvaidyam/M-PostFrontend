@@ -32,7 +32,7 @@ interface IOptions {
 
 const HistoryBody: FC<HistoryBodyProps> = () => {
     const [history, setHistory] = useState([]);
-    const { loader, setLoader, tabsList, setTabsList, tabData, setTabData } = useContext(MyContext);
+    const { loader, setLoader, tabsList, setTabsList, setTabData, currentActive, setCurrentActive } = useContext(MyContext);
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
@@ -91,7 +91,7 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
         if (tabsList.findIndex((f: { _id: any; }) => f._id === ce._id) < 0) {
             setTabsList([...tabsList, ce]);
             ce.type = "request"
-            // setCurrentActive(ce._id);
+            setCurrentActive(ce._id);
             setTabData(ce);
         }
     };
@@ -128,7 +128,7 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
                                     {e.toggle ? (
                                         ''
                                     ) : (
-                                        <div className={`w-full h-7 relative group flex justify-between  bg-opacity-60 py-1 px-2 ${e._id === ce._id ? 'bg-gray-300' : 'hover:bg-gray-100'}`}>
+                                        <div className={`w-full h-7 relative group flex justify-between  bg-opacity-60 py-1 px-2 ${currentActive._id === ce._id ? 'bg-gray-300' : 'hover:bg-gray-100'}`}>
                                             <div className="flex items-center gap-2 w-full group-hover:w-[73%] cursor-pointer"
                                                 onClick={() => handleRequest(ce)}
                                             >
