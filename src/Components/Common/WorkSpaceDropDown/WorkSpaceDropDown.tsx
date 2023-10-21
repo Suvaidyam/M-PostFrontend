@@ -31,11 +31,10 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                 console.error('Error:', error);
             });
     };
-    useEffect(() => {    
-      return () => {
+    useEffect(() => {
         getData()
-      }
-    })
+    }, [])
+    
     
 
     const handelSelectedWorkSpace = (e: any) => {
