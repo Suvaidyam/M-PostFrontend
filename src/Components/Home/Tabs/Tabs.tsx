@@ -13,7 +13,7 @@ interface TabsProps { }
 const Tabs: FC<TabsProps> = () => {
     const [loader, setLoader] = useState(true)
     const { workSpaceId, currentActive, tabsList, setTabsList, setCurrentActive,
-        setTabData ,tabData} = useContext(MyContext);
+        setTabData } = useContext(MyContext);
 
     let storeData = sessionStorage.getItem("recentTablength");
     const [recentTablength, setrecentTablength] = useState(storeData ? parseInt(storeData) : 2);

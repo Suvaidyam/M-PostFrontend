@@ -19,7 +19,7 @@ type Props = {
 function TopBar({ onSendClick }: Props) {
     const REGEX = /({{.*?}})/g;
     const { jsonText, tabData, setTopBarData, headersData, setStatus, currentActive, paramsData, setMsg, setError, changeAction, setchangeAction } = useContext(MyContext);
-    const locTabList = JSON.parse(localStorage.getItem("tabsList") as any)
+    const locTabList = JSON.parse(localStorage.getItem("tabsList") as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const [data, setData] = useState(tabData?.details || activeData[0].details);
     const [open, setopen] = useState(false);
@@ -27,34 +27,34 @@ function TopBar({ onSendClick }: Props) {
     const [isEnv, setIsEnv] = useState([]);
     const handleClose = () => setopen(!open);
     const Save = () => {
-        // http({
-        //     url: `http://localhost:4000/collection/${tabData._id}`,
-        //     method: "put",
-        //     data: {
-        //         details: {
-        //             url: data?.url,
-        //             method: data.method.toLowerCase(),
-        //             body: jsonText,
-        //             headers: getHeadersAndParams(headersData),
-        //             query: getHeadersAndParams(paramsData),
-        //         },
-        //     },
-        // })
-        //     .then((res: any) => {
-        //         setMsg("Save Successfully");
-        //         setStatus(res.status);
-        //         setError(true)
-        //         setIsLoding(true);
-        //         setTimeout(() => {
-        //             setIsLoding(false);
-        //         }, 1000);
-        //         setchangeAction(!changeAction)
-        //     })
-        //     .catch((err: any) => {
-        //         setMsg(err.response.data.message);
-        //         setStatus(err.response.status);
-        //         setError(true)
-        //     });
+        http({
+            url: `http://localhost:4000/collection/${tabData._id}`,
+            method: "put",
+            data: {
+                details: {
+                    url: data?.url,
+                    method: data.method.toLowerCase(),
+                    body: jsonText,
+                    headers: getHeadersAndParams(headersData),
+                    query: getHeadersAndParams(paramsData),
+                },
+            },
+        })
+            .then((res: any) => {
+                setMsg("Save Successfully");
+                setStatus(res.status);
+                setError(true)
+                setIsLoding(true);
+                setTimeout(() => {
+                    setIsLoding(false);
+                }, 1000);
+                setchangeAction(!changeAction)
+            })
+            .catch((err: any) => {
+                setMsg(err.response.data.message);
+                setStatus(err.response.status);
+                setError(true)
+            });
     };
     const getData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as string);
@@ -63,6 +63,7 @@ function TopBar({ onSendClick }: Props) {
             url: `http://localhost:4000/environment/${workSpace_Id?._id}`,
         })
             .then((res) => {
+                console.log(res)
                 res.data.environment.map((e: any) =>
                     e.details.map((el: any) => setIsEnv((env) => [...env, el] as any))
                 );
