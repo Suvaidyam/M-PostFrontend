@@ -36,6 +36,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     };
     const ClickOption = (item: string) => {
         setActiveOption(item);
+        console.log(item)
     };
 
     // Color 
@@ -102,11 +103,13 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             setTabData(e);
         }
     };
-    const ViewDocumentation = (e: { _id: any; }) => {
-        if (tabsList.findIndex((f: { _id: any; }) => f._id === e._id) < 0) {
-            setTabsList([...tabsList, e]);
-            setCurrentActive(e._id);
-            setTabData(e);
+    const ViewDocumentation = () => {
+        if (tabsList.findIndex((activeOption: any) => activeOption._id === FilterCollection._id) < 0) {
+            setTabsList([...tabsList, activeOption]);
+            setCurrentActive(activeOption._id);
+            //  Set Active option Data
+            setTabData(activeOption);
+            console.log(activeOption)
         }
     };
     const openRequest = (ce: any) => {
@@ -136,7 +139,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                             </div>
                         </div>
                         <div onClick={() => ClickOption(e)} className="hidden group-hover:block absolute right-2">
-                            <MoreAction />
+                            <MoreAction ViewDocumentation={ViewDocumentation} />
                             {/* <MoreAction toggleFolder={toggleFolder} /> */}
                         </div>
                     </div>

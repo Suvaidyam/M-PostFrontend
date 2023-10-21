@@ -9,10 +9,10 @@ import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
 
 interface MoreActionProps {
-    // toggleFolder: any
+    ViewDocumentation: any
 }
 
-const MoreAction: FC<MoreActionProps> = () => {
+const MoreAction: FC<MoreActionProps> = ({ViewDocumentation}) => {
     // const MoreAction: FC<MoreActionProps> = ({ toggleFolder }) => {
     const { loader, setLoader, activeOption, tabsList, setTabsList, setCurrentActive, setTabData } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
@@ -40,8 +40,6 @@ const MoreAction: FC<MoreActionProps> = () => {
                 console.log(err)
             });
     };
-
-    // Delete Data 
     const deleteData = () => {
         http({
             url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
@@ -56,9 +54,6 @@ const MoreAction: FC<MoreActionProps> = () => {
                 console.error('Error:', err);
             });
     };
-    
-
-
     return (
         <>
             <Menu as="div" className="relative z-50 inline-block text-left">
@@ -87,6 +82,7 @@ const MoreAction: FC<MoreActionProps> = () => {
                             </Menu.Item>
                             <Menu.Item>
                                 <div
+                                    onClick={ViewDocumentation}
                                     className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                     View Documentation
                                 </div>

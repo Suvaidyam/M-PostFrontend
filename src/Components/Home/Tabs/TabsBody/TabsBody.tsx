@@ -11,7 +11,7 @@ function TabsBody({ }: Props) {
   const { setMsg, setError, topBarData, paramsData, headersData, jsonText, historyRender, sethistoryRender } = useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: "100" });
   const [isLoading, setLoading] = useState(false);
-  // console.log(topBarData)
+  
 
   const onSendClick = async () => {
     if (topBarData?.url?.length !== 0) {
@@ -64,7 +64,6 @@ function TabsBody({ }: Props) {
         <div className="h-[9vh] w-full bg-white shadow-sm flex flex-col items-center">
           <TopBar onSendClick={onSendClick} />
         </div>
-
         <div className="w-full h-[73vh] flex flex-col justify-between ">
           <div className="h-auto">
             <QueryTab />
