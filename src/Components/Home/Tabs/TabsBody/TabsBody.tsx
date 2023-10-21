@@ -11,7 +11,7 @@ function TabsBody({ }: Props) {
   const { setMsg, setError, topBarData, paramsData, headersData, jsonText, historyRender, sethistoryRender } = useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: "100" });
   const [isLoading, setLoading] = useState(false);
-  console.log(topBarData)
+  // console.log(topBarData)
 
   const onSendClick = async () => {
     if (topBarData?.url?.length !== 0) {
