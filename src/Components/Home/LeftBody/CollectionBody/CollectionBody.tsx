@@ -1,6 +1,6 @@
 import { useContext, useEffect, type FC, useState } from 'react';
 import { FcFolder } from 'react-icons/fc';
-import { BiCaretRight, BiCaretDown, BiDotsHorizontalRounded } from "react-icons/bi";
+import { BiCaretRight, BiCaretDown} from "react-icons/bi";
 import { MyContext } from '../../../../Context/Context';
 import MoreAction from '../MoreAction/MoreAction';
 import RequestAction from '../MoreAction/RequestAction/RequestAction';
@@ -23,8 +23,12 @@ interface Colors {
 }
 
 const CollectionBody: FC<CollectionBodyProps> = () => {
-    const { collection, setActiveOption, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, currentActive } = useContext(MyContext);
-    const newArray = collection?.filter((e: any) => e.parent == null);
+    const { collection, setActiveOption, workSpaceId, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, currentActive } = useContext(MyContext);
+    console.log(workSpaceId)
+    console.log(collection)
+    const FilterCollection = collection?.filter((e: any) => e.workspace_id === workSpaceId._id);
+    console.log("Filter Collection",FilterCollection)
+    const newArray = FilterCollection?.filter((e: any) => e.parent === null);
     const [array, setArray] = useState(newArray)
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
@@ -137,7 +141,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                 <div key={ce._id}>
                                     {e._id === ce.parent ? (
                                         <div className={`w-full relative group flex cursor-pointer py-1 px-2 
-                                                        ${currentActive === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
+                                                        ${e._id === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
                                             <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
                                                 <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
                                                     }-600 w-[70px] min-w-[70px] flex justify-end`} >
