@@ -37,7 +37,6 @@ const Tabs: FC<TabsProps> = () => {
     const handleNewTab = () => {
         let el = { ...newReqObj, _id: recentTablength };
         el.name = el.name;
-        console.log(el)
         setTabsList([...tabsList, el]);
         setCurrentActive(el._id);
         setTabData(el);
