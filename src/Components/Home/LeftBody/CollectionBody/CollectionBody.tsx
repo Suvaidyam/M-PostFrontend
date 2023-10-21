@@ -1,6 +1,6 @@
 import { useContext, useEffect, type FC, useState } from 'react';
 import { FcFolder } from 'react-icons/fc';
-import { BiCaretRight, BiCaretDown, BiDotsHorizontalRounded } from "react-icons/bi";
+import { BiCaretRight, BiCaretDown } from "react-icons/bi";
 import { MyContext } from '../../../../Context/Context';
 import MoreAction from '../MoreAction/MoreAction';
 import RequestAction from '../MoreAction/RequestAction/RequestAction';
@@ -23,8 +23,9 @@ interface Colors {
 }
 
 const CollectionBody: FC<CollectionBodyProps> = () => {
-    const { collection, setActiveOption, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, currentActive } = useContext(MyContext);
-    const newArray = collection?.filter((e: any) => e.parent == null);
+    const { collection, setActiveOption, activeOption, workSpaceId, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, currentActive } = useContext(MyContext);
+    const FilterCollection = collection?.filter((e: any) => e.workspace_id === workSpaceId._id);
+    const newArray = FilterCollection?.filter((e: any) => e.parent === null);
     const [array, setArray] = useState(newArray)
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
@@ -101,6 +102,13 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             setTabData(e);
         }
     };
+    const ViewDocumentation = (e: { _id: any; }) => {
+        if (tabsList.findIndex((f: { _id: any; }) => f._id === e._id) < 0) {
+            setTabsList([...tabsList, e]);
+            setCurrentActive(e._id);
+            setTabData(e);
+        }
+    };
     const openRequest = (ce: any) => {
         ce.openRequest = !ce.openRequest;
         setArray([...array]);
@@ -129,6 +137,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                         </div>
                         <div onClick={() => ClickOption(e)} className="hidden group-hover:block absolute right-2">
                             <MoreAction />
+                            {/* <MoreAction toggleFolder={toggleFolder} /> */}
                         </div>
                     </div>
                     {(toggleFolder === true && e._id === activeFolder) ?
@@ -137,7 +146,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                 <div key={ce._id}>
                                     {e._id === ce.parent ? (
                                         <div className={`w-full relative group flex cursor-pointer py-1 px-2 
-                                                        ${currentActive === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
+                                                        ${e._id === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
                                             <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
                                                 <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
                                                     }-600 w-[70px] min-w-[70px] flex justify-end`} >
@@ -150,6 +159,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                             <p className="hidden group-hover:block absolute right-2">
                                                 <div onClick={() => openRequest(ce)} className='flex justify-center items-center'>
                                                     <RequestAction />
+                                                    {/* <MoreAction toggleFolder={toggleFolder} /> */}
                                                 </div>
                                             </p>
 

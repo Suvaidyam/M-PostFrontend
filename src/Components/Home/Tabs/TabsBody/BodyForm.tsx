@@ -8,20 +8,17 @@ import { tags as t } from '@lezer/highlight';
 interface BodyFromProps { }
 
 const BodyFrom: FC<BodyFromProps> = () => {
-    const { tabData, setJsonText,jsonText, currentActive } = useContext(MyContext);
+    const { tabData, setJsonText, currentActive,topBarData } = useContext(MyContext);
     const locTabList = JSON.parse(localStorage.getItem('tabsList') as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const data = tabData?.details?.body || activeData[0]?.details?.body;
-    console.log(locTabList)
-    //   const myTheme = createTheme({
-    //     theme: 'light',
-
-    //     styles: [
-
-    //       { tag: [t.string, t.special(t.brace)], color: '#CD4B16' } ,
-
-    //     ],
-    //   });
+    const myTheme = createTheme({
+        theme: 'light',
+        settings: {},
+        styles: [
+            { tag: [t.string, t.special(t.brace)], color: '#CD4B16' }
+        ]
+    });
 
     useEffect(() => {
         return () => {
@@ -36,15 +33,16 @@ const BodyFrom: FC<BodyFromProps> = () => {
             // setData(newCode);
         } catch (error) { }
     };
-   
+
     return (
         <div className=" mb-2 font-mono  scrollbar-hide  bg-white  ">
             <CodeMirror
-                // theme={myTheme}
+                theme={myTheme}
                 height="127px"
-                value={JSON.stringify(data, 0 as any, 3 )} 
+                value={JSON.stringify(data, 0 as any, 3)}
                 extensions={[javascript({ jsx: true })] as any}
                 onChange={handleChange}
+                
             />
         </div>
     );

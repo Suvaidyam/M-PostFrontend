@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import { Fragment, useContext, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames'
 import { GoTriangleDown } from 'react-icons/go';
 import CreateWorkSpace from '../CreateWorkSpace/CreateWorkSpace';
@@ -15,7 +14,7 @@ interface WorkSpaceDropDownProps { }
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [workspace, setWorkspace] = useState([]);
-    const { workSpaceId, setWorkSpaceId, workSpaceOpen, setWorkSpaceOpen, loader, setLoader } = useContext(MyContext);
+    const { setWorkSpaceId } = useContext(MyContext);
 
     const config = {
         headers: {
@@ -33,8 +32,10 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             });
     };
     useEffect(() => {
-        getData();
-    }, []);
+        getData()
+    }, [])
+    
+    
 
     const handelSelectedWorkSpace = (e: any) => {
         localStorage.setItem("workSpace", JSON.stringify(e));

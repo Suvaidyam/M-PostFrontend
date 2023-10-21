@@ -9,13 +9,13 @@ import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
 
 interface MoreActionProps {
-
+    // toggleFolder: any
 }
 
 const MoreAction: FC<MoreActionProps> = () => {
-    const { loader, setLoader, activeOption } = useContext(MyContext);
+    // const MoreAction: FC<MoreActionProps> = ({ toggleFolder }) => {
+    const { loader, setLoader, activeOption, tabsList, setTabsList, setCurrentActive, setTabData } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
-    // const [addRequestCollection, setAddRequestCollection] = useState<any>([]);
 
     // Add Request 
     const postData = () => {
@@ -56,6 +56,8 @@ const MoreAction: FC<MoreActionProps> = () => {
                 console.error('Error:', err);
             });
     };
+    
+
 
     return (
         <>
@@ -75,71 +77,48 @@ const MoreAction: FC<MoreActionProps> = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute right-0 mt-2 w-56 z-50 origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 w-56 z-50 origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
                             <Menu.Item>
-                                {({ active }) => (
-                                    <div
-                                        className={classNames(
-                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Share
-                                    </div>
-                                )}
+                                <div
+                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                    Share
+                                </div>
                             </Menu.Item>
                             <Menu.Item>
-                                {({ active }) => (
-                                    <div
-                                        onClick={() => setOpenModel(true)}
-                                        className={classNames(
-                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Rename
-                                        {/* <div><EditCollection /></div> */}
-                                    </div>
-                                )}
+                                <div
+                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                    View Documentation
+                                </div>
                             </Menu.Item>
                             <Menu.Item>
-                                {({ active }) => (
-                                    <div
-                                        className={classNames(
-                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Add folder
-                                    </div>
-                                )}
+                                <div
+                                    onClick={() => setOpenModel(true)}
+                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                    Rename
+                                </div>
                             </Menu.Item>
                             <Menu.Item>
-                                {({ active }) => (
-                                    <div
-                                        onClick={postData}
-                                        className={classNames(
-                                            active ? 'bg-white text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Add request
-                                    </div>
-                                )}
+                                <div
+                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                    {/* className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900 ${toggleFolder === true ? `hidden` : `block`}`}> */}
+                                    Add folder
+                                </div>
                             </Menu.Item>
                             <Menu.Item>
-                                {({ active }) => (
-                                    <div
-                                        onClick={deleteData}
-                                        className={classNames(
-                                            active ? 'bg-red-500 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Delete
-                                    </div>
-                                )}
+                                <div
+                                    onClick={postData}
+                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                    {/* className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900 ${toggleFolder === true ? `hidden` : `block`}`}> */}
+                                    Add request
+                                </div>
+                            </Menu.Item>
+                            <Menu.Item>
+                                <div
+                                    onClick={deleteData}
+                                    className={`w-full block px-4 py-2 text-sm hover:bg-red-500 hover:text-gray-900`}>
+                                    Delete
+                                </div>
                             </Menu.Item>
                         </div>
                     </Menu.Items>

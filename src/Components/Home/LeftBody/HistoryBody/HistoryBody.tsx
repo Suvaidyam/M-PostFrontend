@@ -88,7 +88,7 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
     };
 
     const handleRequest = (ce: any) => {
-        if (tabsList.findIndex((f: { _id: any; }) => f._id === ce._id) < 0) {
+        if (tabsList.findIndex((f: { _id: any; }) => f?._id === ce?._id) < 0) {
             setTabsList([...tabsList, ce]);
             ce.type = "request"
             setCurrentActive(ce._id);
@@ -105,13 +105,13 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
             <div className='mr-4'><SearchBar /></div>
             <Scrollbars className="w-full h-[83vh] min-h-[71vh] pb-2 scrollbar-hide overflow-y-scroll">
                 {history?.map((e: any) => (
-                    <div key={e._id}>
+                    <div key={e?._id}>
                         <div className={`w-full h-7 flex items-center justify-between relative px-2 cursor-pointer hover:bg-gray-100 bg-opacity-60 group`}>
                             <div className="flex items-center gap-2 text-gray-700"
                                 onClick={() => toggle(e)}
                             >
                                 {e.toggle ? <HiChevronRight className="cursor-pointer" /> : <BiChevronDown className="cursor-pointer" />}
-                                <p className="text-sm">{e._id === todayDate ? 'Today' : e._id === yesterdayDate ? 'Yesterday' : e._id}</p>
+                                <p className="text-sm">{e?._id === todayDate ? 'Today' : e?._id === yesterdayDate ? 'Yesterday' : e?._id}</p>
                             </div>
                             <p className="flex items-center">
                                 <Tooltip title="Delete" arrow>
@@ -128,11 +128,11 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
                                     {e.toggle ? (
                                         ''
                                     ) : (
-                                        <div className={`w-full h-7 relative group flex justify-between  bg-opacity-60 py-1 px-2 ${currentActive._id === ce._id ? 'bg-gray-300' : 'hover:bg-gray-100'}`}>
+                                        <div className={`w-full h-7 relative group flex justify-between  bg-opacity-60 py-1 px-2 ${currentActive?._id === ce?._id ? 'bg-gray-300' : 'hover:bg-gray-100'}`}>
                                             <div className="flex items-center gap-2 w-full group-hover:w-[73%] cursor-pointer"
                                                 onClick={() => handleRequest(ce)}
                                             >
-                                                <div className={`text-[11px] text-${getDetails(ce.details)?.color}-600 w-1/4 -ml-5 min-w-[74px] flex justify-end font-semibold`}>
+                                                <div className={`text-[11px] text-${getDetails(ce?.details)?.color}-600 w-1/4 -ml-5 min-w-[74px] flex justify-end font-semibold`}>
                                                     {getDetails(ce.details)?.method}
                                                 </div>
                                                 <Tooltip title={ce?.details?.url} placement="top" disableInteractive>
@@ -142,7 +142,7 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
                                             <div className="flex items-center group-hover:w-[27%]">
                                                 <div className="hidden group-hover:block">
                                                     <div className="flex items-center">
-                                                        <span className="text-[14px] text-green-600">{ce.created_At}</span>
+                                                        <span className="text-[14px] text-green-600">{ce?.created_At}</span>
                                                         <Tooltip title="Delete" arrow>
                                                             <IconButton
                                                                 onClick={() => deleteHistory(ce)}
