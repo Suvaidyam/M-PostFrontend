@@ -36,6 +36,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     };
     const ClickOption = (item: string) => {
         setActiveOption(item);
+        console.log(item)
     };
 
     // Color 
@@ -106,7 +107,9 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
         if (tabsList.findIndex((activeOption: any) => activeOption._id === FilterCollection._id) < 0) {
             setTabsList([...tabsList, activeOption]);
             setCurrentActive(activeOption._id);
+            //  Set Active option Data
             setTabData(activeOption);
+            console.log(activeOption)
         }
     };
     const openRequest = (ce: any) => {
