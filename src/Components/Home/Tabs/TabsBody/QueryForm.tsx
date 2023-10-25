@@ -1,7 +1,4 @@
-import { useContext, type FC, useState } from 'react';
-import { MyContext } from '../../../../Context/Context';
-import CenterTabs from './CenterTabs';
-import ReactJson from 'react-json-view';
+import {  type FC, useState } from 'react';
 import AddRow from "./AddRow";
 
 interface QueryFormProps {
