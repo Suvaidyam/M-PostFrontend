@@ -30,8 +30,8 @@ export default function AddRow({
     descriptionN,
 }: Props) {
     // console.log(params[0].key)
-    const [checkCheckbox, setCheckCheckbox] = useState(false);
-    const [checkRadio, setCheckRadio] = useState(false);
+    const [checkCheckbox, setCheckCheckbox] = useState<boolean>(false);
+    const [checkRadio, setCheckRadio] = useState<boolean>(false);
 
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
@@ -71,7 +71,7 @@ export default function AddRow({
 
 
 
-        let index = data.findIndex((value: { id: any; }) => value.id === rowId);
+        let index = data.findIndex((value: { id: number; }) => value.id === rowId);
 
         if (index === -1) {
             setData((oldArr: any) => [...oldArr, result]);

@@ -15,28 +15,28 @@ interface ContextValue {
     setCollection: any;
     currentTab: string;
     setcurrentTab: React.Dispatch<React.SetStateAction<string>>
-    paramsData: any
-    setParamsData: React.Dispatch<React.SetStateAction<any>>
-    headersData: any
-    setHeadersData: React.Dispatch<React.SetStateAction<any>>
+    paramsData: string[]
+    setParamsData: React.Dispatch<React.SetStateAction<string[]>>
+    headersData: string[]
+    setHeadersData: React.Dispatch<React.SetStateAction<string[]>>
     tabData: any
     setTabData: React.Dispatch<React.SetStateAction<any>>
-    enviroment: any
-    SetEnviroment: React.Dispatch<React.SetStateAction<any>>
-    jsonText: any
-    setJsonText: React.Dispatch<React.SetStateAction<any>>
+    enviroment: string[]
+    SetEnviroment: React.Dispatch<React.SetStateAction<string[]>>
+    jsonText: string
+    setJsonText: React.Dispatch<React.SetStateAction<string>>
     currentActive: any
     setCurrentActive: React.Dispatch<React.SetStateAction<any>>
     tabsList: any
     setTabsList: React.Dispatch<React.SetStateAction<any>>
     workSpaceOpen: any
     setWorkSpaceOpen: React.Dispatch<React.SetStateAction<any>>
-    Msg: any
-    setMsg: React.Dispatch<React.SetStateAction<any>>
-    error: any
-    setError: React.Dispatch<React.SetStateAction<any>>
-    status: any
-    setStatus: React.Dispatch<React.SetStateAction<any>>
+    Msg: string
+    setMsg: React.Dispatch<React.SetStateAction<string>>
+    error: boolean
+    setError: React.Dispatch<React.SetStateAction<boolean>>
+    status: number
+    setStatus: React.Dispatch<React.SetStateAction<number>>
     responseData: any
     setResponseData: React.Dispatch<React.SetStateAction<any>>
     changeAction: any
@@ -73,9 +73,9 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [currentNav, setCurrentNav] = useState(activeNav ? activeNav : "Collection");
     const [collection, setCollection] = useState<Item[]>([]);
     const [currentTab, setcurrentTab] = useState('Params')
-    const [paramsData, setParamsData] = useState([]);
-    const [headersData, setHeadersData] = useState([]);
-    const [enviroment, SetEnviroment] = useState([]);
+    const [paramsData, setParamsData] = useState<string[]>([]);
+    const [headersData, setHeadersData] = useState<string[]>([]);
+    const [enviroment, SetEnviroment] = useState<string[]>([]);
     const [tabData, setTabData] = useState([]);
     const [jsonText, setJsonText] = useState("");
     let activetabs = localStorage.getItem('tabsList')
@@ -87,9 +87,9 @@ const Context: FC<ContextProps> = ({ children }) => {
     localStorage.setItem("currentActive", JSON.stringify(currentActive));
 
     const [workSpaceOpen, setWorkSpaceOpen] = useState(false);
-    const [Msg, setMsg] = useState<any>("");
+    const [Msg, setMsg] = useState("");
     const [error, setError] = useState(false);
-    const [status, setStatus] = useState('200');
+    const [status, setStatus] = useState<number>(200);
     const [responseData, setResponseData] = useState([]);
     const [changeAction, setchangeAction] = useState(false);
     const [topBarData, setTopBarData] = useState("");

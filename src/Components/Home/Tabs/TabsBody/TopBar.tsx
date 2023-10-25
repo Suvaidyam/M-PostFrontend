@@ -10,9 +10,10 @@ import VariableValue from './VariableValue';
 import NewRequest from './NewRequest';
 import { getHeadersAndParams } from '../../../Utils/CommonUtlis';
 import http from "../../../../Service/http";
+import { toast } from 'react-toastify';
 
 type Props = {
-    onSendClick: any
+    onSendClick: () => void;
 }
 
 
@@ -41,7 +42,7 @@ function TopBar({ onSendClick }: Props) {
             },
         })
             .then((res: any) => {
-                setMsg("Save Successfully");
+                toast.success('Save Successfully')
                 setStatus(res.status);
                 setError(true)
                 setIsLoding(true);
@@ -63,7 +64,6 @@ function TopBar({ onSendClick }: Props) {
             url: `http://localhost:4000/environment/${workSpace_Id?._id}`,
         })
             .then((res) => {
-                console.log(res)
                 res.data.environment.map((e: any) =>
                     e.details.map((el: any) => setIsEnv((env) => [...env, el] as any))
                 );

@@ -4,23 +4,21 @@ import ApiError from './ApiError';
 import { MyContext } from '../../../../Context/Context';
 import { AiOutlineGlobal } from "react-icons/ai";
 import { LineWave } from "react-loader-spinner";
-// import { Scrollbars } from "react-custom-scrollbars";
 // import "./Tabs.css";
-
 import ReactJson from 'react-json-view'
+import Scrollbars from 'react-custom-scrollbars';
 type Props = {
     apiResponse: any
-    isLoading: any
+    isLoading: boolean
 
 
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const { setResponseData } = useContext(MyContext);
-
-    const [body, setBody] = useState(true);
-    const [header, setHeader] = useState(false);
-
+    const { setResponseData ,responseData} = useContext(MyContext);
+    const [body, setBody] = useState<boolean>(true);
+    const [header, setHeader] = useState<boolean>(false);
+//  console.log(apiResponse.data)
     const errorData = {
         error: apiResponse?.data
     }
@@ -35,7 +33,6 @@ export default function Response({ apiResponse, isLoading }: Props) {
     };
     // console.log("apiResponse", apiResponse);
     let headers = apiResponse?.headers;
-
     const getStatusElem = (res: any) => {
         if (res) {
             // console.log(typeof res.status, res.status);
@@ -199,7 +196,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                     ) : null}
                                     <div className="px-2 h-[90%]">
                                         {body === true ? (
-                                            // <Scrollbars className="h-full">
+                                            <Scrollbars className="h-full">
                                             <div className="h-full break-all  font-mono">
                                                 {/* {console.log(typeof(apiResponse?.data))} */}
                                                 {typeof (apiResponse?.data) == 'object' ? <ReactJson
@@ -215,7 +212,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                                     src={errorData} />}
 
                                             </div>
-                                            // </Scrollbars>
+                                            </Scrollbars>
                                         ) : null}
                                     </div>
                                 </div>
@@ -224,6 +221,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
                     </div>
                 </>
             )}
+           
         </>
     )
 }

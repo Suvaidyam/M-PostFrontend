@@ -9,10 +9,9 @@ type Props = {}
 
 function TabsBody({ }: Props) {
   const { setMsg, setError, topBarData, paramsData, headersData, jsonText, historyRender, sethistoryRender } = useContext(MyContext);
-  const [apiResponse, setApiResponse] = useState({ status: "100" });
+  const [apiResponse, setApiResponse] = useState({ status: '100' as string});
   const [isLoading, setLoading] = useState(false);
   
-
   const onSendClick = async () => {
     if (topBarData?.url?.length !== 0) {
       let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');

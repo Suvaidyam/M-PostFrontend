@@ -12,7 +12,7 @@ import CenterTabs from './CenterTabs';
 import { Resizable } from "react-resizable-element";
 
 interface QueryTabProps { }
-function TabPanel(props: { [x: string]: any; children: any; value: any; index: any; }) {
+function TabPanel(props: { [x: string]: any; children: React.ReactNode; value: any; index: number; }) {
     const { children, value, index, ...other } = props;
     return (
         <div
@@ -45,7 +45,7 @@ function a11yProps(index: number) {
 }
 
 const QueryTab: FC<QueryTabProps> = () => {
-    const { setcurrentTab, paramsData, setParamsData, headersData, setHeadersData, currentActive, tabData } = useContext(MyContext)
+    const {  paramsData, setParamsData, headersData, setHeadersData, currentActive, tabData } = useContext(MyContext)
     let activeQueryTab = sessionStorage.getItem("queryTab")
     const [value, setValue] = useState(activeQueryTab ? parseInt(activeQueryTab) : 0);
     useEffect(() => {
