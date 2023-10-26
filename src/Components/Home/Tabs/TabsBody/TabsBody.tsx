@@ -11,7 +11,6 @@ function TabsBody({ }: Props) {
   const { setMsg, setError, topBarData, paramsData, headersData, jsonText, historyRender, sethistoryRender } = useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: '100' as string});
   const [isLoading, setLoading] = useState(false);
-  
   const onSendClick = async () => {
     if (topBarData?.url?.length !== 0) {
       let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
@@ -47,7 +46,7 @@ function TabsBody({ }: Props) {
     })
       .then((res: any) => {
         setApiResponse(res);
-        // console.log(res)
+        console.log(res)
       })
       .catch((err: { response: React.SetStateAction<{ status: string }> }) => {
         setApiResponse(err.response);
@@ -60,7 +59,7 @@ function TabsBody({ }: Props) {
   return (
     <>
       <div className=" h-[82.5vh] mx-1 ">
-        <div className="h-[9vh] w-full bg-white shadow-sm flex flex-col items-center">
+        <div className=" py-[6px] w-full bg-white shadow-sm flex flex-col items-center">
           <TopBar onSendClick={onSendClick} />
         </div>
         <div className="w-full h-[73vh] flex flex-col justify-between ">

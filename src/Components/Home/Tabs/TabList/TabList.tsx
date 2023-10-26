@@ -7,9 +7,20 @@ import { motion } from "framer-motion";
 import Http from "../../../../Service/http";
 import { useContext } from "react";
 import { MyContext } from "../../../../Context/Context";
-// import { DataContext } from "../../../Context/DataProvider";
 
 type Props = {}
+interface Details {
+    method?: string | undefined;
+}
+
+interface Colors {
+    [key: string]: string;
+    GET: string;
+    POST: string;
+    PUT: string;
+    DELETE: string;
+    NA: string;
+}
 
 export default function TabList({ }: Props) {
     const {
@@ -21,7 +32,7 @@ export default function TabList({ }: Props) {
         currentActive,
         setCurrentActive,
         setCurrentActiveEnv,
-        currentActiveEnv} = useContext(MyContext);
+        currentActiveEnv } = useContext(MyContext);
     const [newEnviroment, setNewEnviroment] = useState([]);
     const local_variable = newEnviroment?.filter((e: any) => e.name !== "Globals");
     let storeData = sessionStorage.getItem("recentTablength");
@@ -52,14 +63,14 @@ export default function TabList({ }: Props) {
 
     };
     const handleTabClose = (e: { _id: any; }) => {
-        let index = tabsList.findIndex((f:any) => f._id === e._id);
+        let index = tabsList.findIndex((f: any) => f._id === e._id);
         tabsList.splice(index, 1);
         setTabsList(tabsList);
         setTimeout(() => {
             if (tabsList.length) {
                 setCurrentActive(tabsList[index ? index - 1 : 0]._id);
                 // close tabs set data active tabs
-                tabsList.map((e:any) => (
+                tabsList.map((e: any) => (
                     e._id === tabsList[index ? index - 1 : 0]._id &&
                     setTabData(e)
                 ))
@@ -70,9 +81,9 @@ export default function TabList({ }: Props) {
     };
 
 
-    const getDetails = (details: { method: string; }) => {
-        let method: any = details?.method ? details?.method.toUpperCase() : "NA";
-        let colors: any = {
+    const getDetails = (details: Details) => {
+        let method = details?.method ? details?.method.toUpperCase() : "NA";
+        let colors: Colors = {
             GET: "green",
             POST: "blue",
             PUT: "yellow",
@@ -85,15 +96,15 @@ export default function TabList({ }: Props) {
     const getData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") as string);
         Http({
-          method: "get",
-          url: `http://localhost:4000/environment/${workSpace_Id?._id}`,
+            method: "get",
+            url: `http://localhost:4000/environment/${workSpace_Id?._id}`,
         })
-          .then((res) => {
-            setNewEnviroment(res.data.environment);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+            .then((res) => {
+                setNewEnviroment(res.data.environment);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     useEffect(() => {
@@ -103,7 +114,7 @@ export default function TabList({ }: Props) {
     }, [changeAction, workSpaceId, tabsList]);
     return (
         <>
-            <div className="w-full h-[7vh] mt-0.5 bg-white flex">
+            <div className="w-full h-[5.5vh] mt-0.5 bg-white flex">
                 <div className="w-[80%]  flex h-full border-b overflow-x-scroll scrollbar-hide">
                     {tabsList?.map((e: { _id: any; details?: any; type?: any; name?: any; }) => (
                         <div
