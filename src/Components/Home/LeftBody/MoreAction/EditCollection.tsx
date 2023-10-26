@@ -8,17 +8,18 @@ import http from '../../../../Service/http';
 
 interface EditCollectionProps {
     open: boolean
-    setOpen: React.Dispatch<SetStateAction<boolean>>
+    setOpen: React.Dispatch<SetStateAction<boolean>>,
+    renameId: any
 }
 
-const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
+const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId }) => {
     const { loader, setLoader, activeOption } = useContext(MyContext);
     const [name, setName] = useState('');
     const cancelButtonRef = useRef(null);
 
     const PutData = () => {
         http({
-            url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/collection/${renameId?._id}`,
             method: "put",
             data: {
                 name: name
@@ -71,7 +72,7 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen }) => {
                                         <div className='w-full'>
                                             <input type="text"
                                                 onChange={(e) => setName(e.target.value)}
-                                                defaultValue={activeOption.name}
+                                                defaultValue={renameId.name}
                                                 className='w-full outline-none border-[2px] py-1 pl-2' name="name" id="name" />
                                         </div>
                                         <button onClick={PutData} className='w-full border mt-5 py-1 text-white bg-blue-500'>Update</button>
