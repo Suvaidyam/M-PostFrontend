@@ -150,7 +150,7 @@ const Register: FC<RegisterProps> = () => {
                                                 name="gender"
                                                 as="select">
 
-                                                <option value="chooche your gender">Chooche your gender</option>
+                                                <option value="chooche your gender">Choose your gender</option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
                                                 <option value="other">Other</option>

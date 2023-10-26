@@ -7,6 +7,9 @@ import { LineWave } from "react-loader-spinner";
 // import "./Tabs.css";
 import ReactJson from 'react-json-view'
 import Scrollbars from 'react-custom-scrollbars';
+import http from '../../../../Service/http';
+import { getHeadersAndParams } from '../../../Utils/CommonUtlis';
+import { toast } from 'react-toastify';
 type Props = {
     apiResponse: any
     isLoading: boolean
@@ -15,10 +18,13 @@ type Props = {
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const { setResponseData ,responseData} = useContext(MyContext);
+    const { setResponseData,tabData, topBarData,currentActive,jsonText,headersData,paramsData } = useContext(MyContext);
     const [body, setBody] = useState<boolean>(true);
     const [header, setHeader] = useState<boolean>(false);
-//  console.log(apiResponse.data)
+    const locTabList = JSON.parse(localStorage.getItem("tabsList") as string)
+    const activeData = locTabList.filter((e: any) => e._id === currentActive)
+    const [data, setData] = useState(tabData?.details || activeData[0].details);
+    // console.log(apiResponse)
     const errorData = {
         error: apiResponse?.data
     }
@@ -31,6 +37,35 @@ export default function Response({ apiResponse, isLoading }: Props) {
         setBody(false);
         setHeader(true);
     };
+
+    const SaveResponse = () => {
+        http({
+            url: `http://localhost:4000/collection/${tabData._id}`,
+            method: "put",
+            data: {
+                details: {
+                    url: data?.url,
+                    method: data.method.toLowerCase(),
+                    body: jsonText,
+                    headers: getHeadersAndParams(headersData),
+                    query: getHeadersAndParams(paramsData),
+                },
+            },
+        })
+            .then((res: any) => {
+                toast.success('Save Successfully')
+                setResponseData(res)
+                console.log(res)
+                // setStatus(res.status);
+                // setError(true)
+                // setIsLoding(true);
+                // setTimeout(() => {
+                //     setIsLoding(false);
+                // }, 1000);
+                // setchangeAction(!changeAction)
+            })
+    }
+
     // console.log("apiResponse", apiResponse);
     let headers = apiResponse?.headers;
     const getStatusElem = (res: any) => {
@@ -81,7 +116,20 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                 middleLineColor="#2563EB"
                                 lastLineColor="#2563EB"
                             />
-                        </div>) : <ErrorScreen />}
+                        </div>)
+                            // :
+                            // typeof (JSON.parse(localStorage.getItem('saveres') ?? '{}')) === 'object' ?
+                            //     <div className='break-all'>
+                            //         <ReactJson
+                            //             name={false}
+                            //             displayDataTypes={false}
+                            //             displayObjectSize={false}
+                            //             enableClipboard={false}
+                            //             src={JSON.parse(localStorage.getItem('saveres') ?? '{}')}
+                            //         />
+                            //     </div>
+                            :
+                            <ErrorScreen />}
 
                     </div>
                     : <div>
@@ -98,7 +146,9 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                 middleLineColor="#2563EB"
                                 lastLineColor="#2563EB"
                             />
-                        </div>) : <ApiError />}
+                        </div>)
+                            :
+                            <ApiError />}
 
                     </div>
 
@@ -164,9 +214,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                             </pre>
                                             <button
                                                 className="text-gray-800 text-sm font-medium hover:text-blue-600"
-                                                onClick={() => {
-                                                    setResponseData(apiResponse?.data);
-                                                }}
+                                                onClick={SaveResponse}
                                             >
                                                 SaveResponse
                                             </button>
@@ -197,21 +245,21 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                     <div className="px-2 h-[90%]">
                                         {body === true ? (
                                             <Scrollbars className="h-full">
-                                            <div className="h-full break-all  font-mono">
-                                                {/* {console.log(typeof(apiResponse?.data))} */}
-                                                {typeof (apiResponse?.data) == 'object' ? <ReactJson
-                                                    name={false}
-                                                    displayDataTypes={false}
-                                                    displayObjectSize={false}
-                                                    enableClipboard={false}
-                                                    src={apiResponse?.data} /> : <ReactJson
-                                                    name={false}
-                                                    displayDataTypes={false}
-                                                    displayObjectSize={false}
-                                                    enableClipboard={false}
-                                                    src={errorData} />}
-
-                                            </div>
+                                                <div className="h-full break-all  font-mono">
+                                                    {typeof apiResponse?.data === 'object' ? <ReactJson
+                                                        name={false}
+                                                        displayDataTypes={false}
+                                                        displayObjectSize={false}
+                                                        enableClipboard={false}
+                                                        src={apiResponse?.data}
+                                                    />
+                                                        : <ReactJson
+                                                            name={false}
+                                                            displayDataTypes={false}
+                                                            displayObjectSize={false}
+                                                            enableClipboard={false}
+                                                            src={errorData} />}
+                                                </div>
                                             </Scrollbars>
                                         ) : null}
                                     </div>
@@ -221,7 +269,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
                     </div>
                 </>
             )}
-           
+
         </>
     )
 }
