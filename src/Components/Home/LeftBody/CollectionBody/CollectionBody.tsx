@@ -1,6 +1,6 @@
 import { useContext, useEffect, type FC, useState } from 'react';
 import { FcFolder } from 'react-icons/fc';
-import { BiCaretRight, BiCaretDown } from "react-icons/bi";
+import { BiCaretRight, BiCaretDown, BiDotsHorizontalRounded } from "react-icons/bi";
 import { MyContext } from '../../../../Context/Context';
 import MoreAction from '../MoreAction/MoreAction';
 import RequestAction from '../MoreAction/RequestAction/RequestAction';
@@ -26,9 +26,11 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const { collection, setActiveOption, activeOption, workSpaceId, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, currentActive } = useContext(MyContext);
     const FilterCollection = collection?.filter((e: any) => e.workspace_id === workSpaceId._id);
     const newArray = FilterCollection?.filter((e: any) => e.parent === null);
-    const [array, setArray] = useState(newArray)
+    const [array, setArray] = useState(newArray);
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
+    const [openRequestId, setOpenRequestId] = useState<string>('');
+    const [closePopup, setClosePopup] = useState(false)
 
     const ClickFolder = (id: string) => {
         setToggleFolder(!toggleFolder);
@@ -36,7 +38,9 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     };
     const ClickOption = (item: string) => {
         setActiveOption(item);
+        
     };
+
 
     // Color 
 
@@ -89,7 +93,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                 toast.success(res.data.message);
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
             });
     };
 
@@ -105,15 +109,14 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const ViewDocumentation = () => {
         if (tabsList.findIndex((activeOption: any) => activeOption._id === collection.parent) < 0) {
             setTabsList([...tabsList, activeOption]);
-            console.log(activeOption)
             setCurrentActive(activeOption._id);
             setTabData(activeOption);
-
         }
     };
     const openRequest = (ce: any) => {
         ce.openRequest = !ce.openRequest;
         setArray([...array]);
+        setOpenRequestId(ce);
     };
 
     useEffect(() => {
@@ -137,16 +140,18 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                 {e.name}
                             </div>
                         </div>
-                        <div onClick={() => ClickOption(e)} className="hidden group-hover:block absolute right-2">
-                            <MoreAction ViewDocumentation={ViewDocumentation} />
-                            {/* <MoreAction toggleFolder={toggleFolder} /> */}
+                        <div onClick={() => ClickOption(e)} className={`${activeOption._id !== e._id ? 'hidden group-hover:block' : 'block'}   absolute right-2`}>
+                            {/* <BiDotsHorizontalRounded /> */}
+                            {/* <MoreAction ViewDocumentation={ViewDocumentation} deleteId={activeOption} toggleFolder={toggleFolder} /> */}
+                            <MoreAction ViewDocumentation={ViewDocumentation} deleteId={activeOption} toggleFolder={toggleFolder} />
                         </div>
+                        {/* {closePopup === true && } */}
                     </div>
                     {(toggleFolder === true && e._id === activeFolder) ?
                         <div className=" w-full">
                             {collection?.map((ce: any) => (
                                 <div key={ce._id}>
-                                    {e._id === ce.parent ? (
+                                    {e._id === ce.parent && (
                                         <div className={`w-full relative group flex cursor-pointer py-1 px-2 
                                                         ${e._id === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
                                             <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
@@ -158,14 +163,14 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                     {ce.name}
                                                 </p>
                                             </div>
-                                            <p className="hidden group-hover:block absolute right-2">
-                                                <div onClick={() => openRequest(ce)} className='flex justify-center items-center'>
-                                                    <RequestAction />
-                                                    {/* <MoreAction toggleFolder={toggleFolder} /> */}
+                                            <div className="hidden group-hover:block absolute right-2">
+                                                <div onClick={() => openRequest(ce)} className='flex justify-center items-center mb-3'>
+                                                    {/* <BiDotsHorizontalRounded/> */}
+                                                    <MoreAction ViewDocumentation={null} deleteId={openRequestId} toggleFolder={toggleFolder} />
                                                 </div>
-                                            </p>
+                                            </div>
 
-                                        </div>) : null}
+                                        </div>)}
                                 </div>))}
                         </div>
                         : null}

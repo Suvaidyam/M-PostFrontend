@@ -1,12 +1,32 @@
 import type { FC } from 'react';
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
+import http from '../../../../../Service/http';
+import { toast } from 'react-toastify';
+import { MyContext } from '../../../../../Context/Context';
 
-interface RequestActionProps { }
+interface RequestActionProps {
+    openRequestId: any
+}
 
-const RequestAction: FC<RequestActionProps> = () => {
+const RequestAction: FC<RequestActionProps> = ({ openRequestId }) => {
+    const { loader, setLoader } = useContext(MyContext);
+    const deleteData = () => {
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection/${openRequestId?._id}`,
+            method: "delete",
+        })
+            .then((res) => {
+                console.log(res)
+                setLoader(!loader);
+                toast.success(res.data.message);
+            })
+            .catch((err) => {
+                console.error('Error:', err);
+            });
+    };
     return (
         <>
             <Menu as="div" className="relative inline-block text-left pr-2">
@@ -56,7 +76,7 @@ const RequestAction: FC<RequestActionProps> = () => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <div
-                                        // onClick={deleteData}
+                                        onClick={deleteData}
                                         className={classNames(
                                             active ? 'bg-red-500 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm cursor-pointer'

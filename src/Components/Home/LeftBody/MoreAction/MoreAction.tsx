@@ -9,10 +9,12 @@ import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
 
 interface MoreActionProps {
-    ViewDocumentation: any
+    ViewDocumentation: any,
+    deleteId: any,
+    toggleFolder: any
 }
 
-const MoreAction: FC<MoreActionProps> = ({ViewDocumentation}) => {
+const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, toggleFolder }) => {
     // const MoreAction: FC<MoreActionProps> = ({ toggleFolder }) => {
     const { loader, setLoader, activeOption, tabsList, setTabsList, setCurrentActive, setTabData } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
@@ -32,7 +34,6 @@ const MoreAction: FC<MoreActionProps> = ({ViewDocumentation}) => {
             }
         })
             .then((res) => {
-                console.log(res)
                 setLoader(!loader);
                 toast.success(res.data.message);
             })
@@ -42,7 +43,7 @@ const MoreAction: FC<MoreActionProps> = ({ViewDocumentation}) => {
     };
     const deleteData = () => {
         http({
-            url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/collection/${deleteId?._id}`,
             method: "delete",
         })
             .then((res) => {
@@ -84,6 +85,7 @@ const MoreAction: FC<MoreActionProps> = ({ViewDocumentation}) => {
                                 <div
                                     onClick={ViewDocumentation}
                                     className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                    {/* className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900 ${toggleFolder === true ? `hidden` : `block`}`}> */}
                                     View Documentation
                                 </div>
                             </Menu.Item>
@@ -120,7 +122,7 @@ const MoreAction: FC<MoreActionProps> = ({ViewDocumentation}) => {
                     </Menu.Items>
                 </Transition>
             </Menu>
-            {openModel === true ? <EditCollection open={openModel} setOpen={setOpenModel} /> : null}
+            {openModel === true ? <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} /> : null}
         </>
     );
 }
