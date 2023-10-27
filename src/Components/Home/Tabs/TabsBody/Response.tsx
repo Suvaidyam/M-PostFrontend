@@ -8,7 +8,6 @@ import { LineWave } from "react-loader-spinner";
 import ReactJson from 'react-json-view'
 import Scrollbars from 'react-custom-scrollbars';
 import http from '../../../../Service/http';
-import { getHeadersAndParams } from '../../../Utils/CommonUtlis';
 import { toast } from 'react-toastify';
 type Props = {
     apiResponse: any
@@ -18,12 +17,9 @@ type Props = {
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const {tabData, currentActive, jsonText, headersData, paramsData } = useContext(MyContext);
+    const { tabData, setResponseData, responseData } = useContext(MyContext);
     const [body, setBody] = useState<boolean>(true);
     const [header, setHeader] = useState<boolean>(false);
-    const locTabList = JSON.parse(localStorage.getItem("tabsList") as string)
-    const activeData = locTabList.filter((e: any) => e._id === currentActive)
-    const [responseData, setResponseData] = useState([]);
     const errorData = {
         error: apiResponse?.data
     }
@@ -106,18 +102,17 @@ export default function Response({ apiResponse, isLoading }: Props) {
                             />
                         </div>)
                             :
-                            typeof (responseData ?? '{}') === 'object' ?
+                            responseData && typeof responseData === 'object' ?
                                 <div className='break-all'>
                                     <ReactJson
                                         name={false}
                                         displayDataTypes={false}
                                         displayObjectSize={false}
                                         enableClipboard={false}
-                                        src={responseData ?? '{}'}
+                                        src={responseData}
                                     />
                                 </div>
                                 :
-                            
                                 <ErrorScreen />
                         }
 
