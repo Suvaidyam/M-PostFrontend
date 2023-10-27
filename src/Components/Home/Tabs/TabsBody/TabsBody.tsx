@@ -46,7 +46,7 @@ function TabsBody({ }: Props) {
     })
       .then((res: any) => {
         setApiResponse(res);
-        console.log(res)
+        // console.log(res)
       })
       .catch((err: { response: React.SetStateAction<{ status: string }> }) => {
         setApiResponse(err.response);

@@ -18,13 +18,12 @@ type Props = {
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const { setResponseData,tabData, topBarData,currentActive,jsonText,headersData,paramsData } = useContext(MyContext);
+    const {tabData, currentActive, jsonText, headersData, paramsData } = useContext(MyContext);
     const [body, setBody] = useState<boolean>(true);
     const [header, setHeader] = useState<boolean>(false);
     const locTabList = JSON.parse(localStorage.getItem("tabsList") as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
-    const [data, setData] = useState(tabData?.details || activeData[0].details);
-    // console.log(apiResponse)
+    const [responseData, setResponseData] = useState([]);
     const errorData = {
         error: apiResponse?.data
     }
@@ -44,25 +43,14 @@ export default function Response({ apiResponse, isLoading }: Props) {
             method: "put",
             data: {
                 details: {
-                    url: data?.url,
-                    method: data.method.toLowerCase(),
-                    body: jsonText,
-                    headers: getHeadersAndParams(headersData),
-                    query: getHeadersAndParams(paramsData),
+                    response: apiResponse.data
                 },
             },
         })
             .then((res: any) => {
                 toast.success('Save Successfully')
-                setResponseData(res)
-                console.log(res)
-                // setStatus(res.status);
-                // setError(true)
-                // setIsLoding(true);
-                // setTimeout(() => {
-                //     setIsLoding(false);
-                // }, 1000);
-                // setchangeAction(!changeAction)
+                setResponseData(apiResponse.data)
+                console.log(responseData)
             })
     }
 
@@ -117,19 +105,21 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                 lastLineColor="#2563EB"
                             />
                         </div>)
-                            // :
-                            // typeof (JSON.parse(localStorage.getItem('saveres') ?? '{}')) === 'object' ?
-                            //     <div className='break-all'>
-                            //         <ReactJson
-                            //             name={false}
-                            //             displayDataTypes={false}
-                            //             displayObjectSize={false}
-                            //             enableClipboard={false}
-                            //             src={JSON.parse(localStorage.getItem('saveres') ?? '{}')}
-                            //         />
-                            //     </div>
                             :
-                            <ErrorScreen />}
+                            typeof (responseData ?? '{}') === 'object' ?
+                                <div className='break-all'>
+                                    <ReactJson
+                                        name={false}
+                                        displayDataTypes={false}
+                                        displayObjectSize={false}
+                                        enableClipboard={false}
+                                        src={responseData ?? '{}'}
+                                    />
+                                </div>
+                                :
+                            
+                                <ErrorScreen />
+                        }
 
                     </div>
                     : <div>
