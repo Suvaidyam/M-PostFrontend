@@ -1,15 +1,16 @@
 import { MyContext } from '../../../../Context/Context';
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Scrollbars from 'react-custom-scrollbars';
 import { AiOutlineSave } from "react-icons/ai";
-import AddRow from "../TabsBody/AddRow";
 import http from "../../../../Service/http";
 import { BsArrowRight } from 'react-icons/bs';
 import { GoCopy } from 'react-icons/go';
-import { Formik, FieldArray, ErrorMessage, Field, ArrayHelpers } from 'formik';
+import { Formik, FieldArray, ErrorMessage, Field, ArrayHelpers, Form } from 'formik';
 import * as Yup from 'yup';
 import { MdDelete } from 'react-icons/md';
 import { GrAdd } from 'react-icons/gr';
+import AddRow from '../TabsBody/AddRow';
+import { toast } from 'react-toastify';
 
 type Props = {}
 interface Details {
@@ -26,10 +27,9 @@ interface Colors {
 }
 
 function EnvironmentTab({ }: Props) {
-    const { SetEnviroment, enviroment, collection, setStatus, setMsg, setError, tabData, currentActive, tabsList, setTabsList, setTabData, setCurrentActive } = useContext(MyContext);
-    const [rows, addRows] = useState([0]);
+    const { collection, setStatus, setMsg, setError, tabData, currentActive, tabsList, setTabsList, setTabData, setCurrentActive } = useContext(MyContext);
     const [effect, setEffect] = useState(false);
-    console.log(tabData)
+    const buttonRef: any = useRef();
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
         const colors: Colors = {
@@ -52,11 +52,45 @@ function EnvironmentTab({ }: Props) {
     };
 
     const postData = () => {
+        if (buttonRef.current) {
+            buttonRef.current.click();
+        }
+    };
+    //  Add Row
+
+    const validationSchema: any = Yup.object().shape({
+        items: Yup.array().of(
+            Yup.object().shape({
+                variable: Yup.string(),
+                initial: Yup.string(),
+                current_value: Yup.string(),
+            })
+        ),
+    });
+
+    const initialValues: any = {
+        items: tabData?.details?.length > 0 ? tabData?.details?.map((item: any) => {
+            return {
+                variable: item.variable ?? '',
+                value: item.value ?? '',
+                current_value: item.current_value ?? ''
+            }
+        })
+            :
+            [{
+                variable: '',
+                value: '',
+                current_value: ''
+            }]
+    };
+
+    const handleSubmit = (values: { items: any }): any => {
+        console.log(values.items)
         http({
             method: "put",
             url: `http://localhost:4000/environment/${currentActive}`,
             data: {
-                details: enviroment
+                details: values.items
             }
         })
             .then((res) => {
@@ -64,6 +98,7 @@ function EnvironmentTab({ }: Props) {
                 setStatus(res.status)
                 setError(true)
                 setEffect(true)
+                toast.success(res.data.message)
                 setTimeout(() => {
                     setEffect(false)
                 }, 1000)
@@ -74,33 +109,6 @@ function EnvironmentTab({ }: Props) {
                 setError(true)
             });
     };
-    //  Add Row
-
-    const validationSchema: any = Yup.object().shape({
-        items: Yup.array().of(
-            Yup.object().shape({
-                name: Yup.string().required('Name is required'),
-                quantity: Yup.number()
-                    .required('Quantity is required')
-                    .min(1, 'Quantity must be at least 1'),
-            })
-        ),
-    });
-
-    const initialValues: any = {
-        items: [{
-            variable: '',
-            initial: '',
-            current: ''
-        }],
-    };
-
-    const handleSubmit = (values: { items: any }): any => {
-        // Handle form submission
-        console.log(values.items);
-    };
-    console.log("initialValues",initialValues)
-
     return (
         <>
             <Scrollbars className="w-full h-[83vh] min-h-[79vh] scrollbar-hide overflow-y-scroll bg-white ">
@@ -156,71 +164,8 @@ function EnvironmentTab({ }: Props) {
                     )
 
                     : (
+                        // ================ Design 2 ==============
 
-                        // <div className="w-full min-h-screen  bg-white ">
-                        //     <div className=" h-14 px-5 flex items-center justify-between">
-                        //         <div>
-                        //             <p className="font-semibold">{tabData?.name}</p>
-                        //         </div>
-                        //         <div className=" flex items-center justify-center">
-                        //             <div className="">
-                        //                 <button className="flex justify-start items-center text-lg rounded px-4 py-2
-                        //                 hover:bg-gray-200" onClick={postData}>
-                        //                     <AiOutlineSave />
-                        //                     <span className="ml-0.5 text-sm font-semibold">{effect === true ? <>...</> : <>save</>}</span>
-                        //                 </button>
-                        //             </div>
-                        //         </div>
-                        //     </div>
-                        //     <hr />
-                        //     <div className="px-5 h-16 py-2">
-                        //         <p className=" text-sm font-sans text-gray-500">
-                        //             Global variables for a workspace are a set of variables that are
-                        //             always available within the scope of that workspace. They can be
-                        //             viewed and edited by anyone in that workspace.
-                        //         </p>
-                        //     </div>
-                        //     <hr />
-
-                        //     <div className="  bg-white overflow-y-scroll scrollbar-hide  h-[83vh] min-h-[79vh] pb-2  mb-2">
-                        //         <div className="overflow-x-auto relative  pt-3">
-                        //             <table className="w-full text-sm text-left text-gray-600 ">
-                        //                 <thead className="text-xs border text-gray-600 uppercase bg-white ">
-                        //                     <tr>
-                        //                         <th scope="col" className="p-2 w-6 border">
-                        //                             <div className="flex items-center"></div>
-                        //                         </th>
-                        //                         <th scope="col" className="  py-1.5 px-6 border">
-                        //                             VARIABLE
-                        //                         </th>
-                        //                         <th scope="col" className="py-1.5 px-6 border">
-                        //                             INITIAL VALUE
-                        //                         </th>
-                        //                         <th scope="col" className=" py-1.5 px-6 border">
-                        //                             CURRENT VALUE
-                        //                         </th>
-                        //                     </tr>
-                        //                 </thead>
-                        //                 <tbody>
-                        //                     {rows.map((row, index) => (
-                        //                         <AddRow
-                        //                             params={undefined} addRows={addRows}
-                        //                             rowId={index}
-                        //                             key={index}
-                        //                             data={enviroment}
-                        //                             setData={SetEnviroment}
-                        //                             {...{
-                        //                                 variable: 'Add a new variable', value: '',
-                        //                                 description: '', type: 'url', variableN: 'variable',
-                        //                                 valueN: 'value', descriptionN: 'current_value',
-                        //                             }} />
-                        //                     ))}
-
-                        //                 </tbody>
-                        //             </table>
-                        //         </div>
-                        //     </div>
-                        // </div>
                         <div className='w-full h-full'>
                             <div className=" h-14 border-b mb-4 px-5 flex items-center justify-between">
                                 <div>
@@ -228,7 +173,7 @@ function EnvironmentTab({ }: Props) {
                                 </div>
                                 <div className=" flex items-center justify-center">
                                     <div className="">
-                                        <button className="flex justify-start items-center text-lg rounded px-4 py-2
+                                        <button type='button' className="flex justify-start items-center text-lg rounded px-4 py-2
                                         hover:bg-gray-200"
                                             onClick={postData}
                                         >
@@ -239,8 +184,8 @@ function EnvironmentTab({ }: Props) {
                                 </div>
                             </div>
                             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-                                {({ values, handleSubmit }) => (
-                                    <form onSubmit={handleSubmit}>
+                                {({ values }) => (
+                                    <Form>
                                         <FieldArray name="items">
                                             {(arrayHelpers: ArrayHelpers) => (
                                                 <table>
@@ -254,58 +199,60 @@ function EnvironmentTab({ }: Props) {
                                                         </tr>
                                                     </thead>
                                                     <tbody className=''>
-                                                        {values.items.map((item: any, index: number) => (
-                                                            <tr key={index} className='w-full border-y mx-3 group'>
-                                                                <td className='border-r pl-3 h-9 text-[15px]'>
-                                                                    {index !== 0 ? (
-                                                                        <GrAdd className='cursor-pointer hidden group-hover:block' onClick={() => arrayHelpers.push({ name: '', quantity: 0 })} />
-                                                                    )
-                                                                        : (
-                                                                            <GrAdd className='cursor-pointer' onClick={() => arrayHelpers.push({ name: '', quantity: 0 })} />
-                                                                        )}
+                                                        <>
+                                                            {values.items.map((item: any, index: number) => (
+                                                                <tr key={index} className='w-full border-y mx-3 group'>
+                                                                    <td className='border-r pl-3 h-9 text-[15px]'>
+                                                                        {index !== 0 ? (
+                                                                            <GrAdd className='cursor-pointer hidden group-hover:block' onClick={() => arrayHelpers.push({ name: '', quantity: 0 })} />
+                                                                        )
+                                                                            : (
+                                                                                <GrAdd className='cursor-pointer' onClick={() => arrayHelpers.push({ name: '', quantity: 0 })} />
+                                                                            )}
 
-                                                                </td>
-                                                                <td className='w-[32%]'>
-                                                                    <Field
-                                                                        className="w-full border-r outline-none pl-2"
-                                                                        type="text"
-                                                                        placeholder="Add new variable"
-                                                                        name={`items[${index}].variable`} />
-                                                                    <ErrorMessage name={`items[${index}].variable`} component="div" />
-                                                                </td>
-                                                                <td className='w-[32%]'>
-                                                                    <Field
-                                                                        className="w-full border-r outline-none pl-2"
-                                                                        type="text"
-                                                                        name={`items[${index}].initial`} />
-                                                                    <ErrorMessage name={`items[${index}].initial`} component="div" />
-                                                                </td>
-                                                                <td className='w-[32%]'>
-                                                                    <Field
-                                                                        className="w-full border-r outline-none pl-2"
-                                                                        type="text"
-                                                                        name={`items[${index}].current`} />
-                                                                    <ErrorMessage name={`items[${index}].current`} component="div" />
-                                                                </td>
-                                                                <td className=''>
-                                                                    {index !== 0 ? ( // Disable for the first row
-                                                                        <button className='ml-4 text-xl' type="button" onClick={() => arrayHelpers.remove(index)}>
-                                                                            <MdDelete className='hidden group-hover:block' />
-                                                                        </button>
-                                                                    ) : (
-                                                                        <button className='ml-4 text-xl' type="button" disabled>
-                                                                            <MdDelete />
-                                                                        </button>
-                                                                    )}
-                                                                </td>
-                                                            </tr>
-                                                        ))}
+                                                                    </td>
+                                                                    <td className='w-[32%]'>
+                                                                        <Field
+                                                                            className="w-full border-r outline-none pl-2"
+                                                                            type="text"
+                                                                            placeholder="Add new variable"
+                                                                            name={`items[${index}].variable`} />
+                                                                        <ErrorMessage name={`items[${index}].variable`} component="div" />
+                                                                    </td>
+                                                                    <td className='w-[32%]'>
+                                                                        <Field
+                                                                            className="w-full border-r outline-none pl-2"
+                                                                            type="text"
+                                                                            name={`items[${index}].value`} />
+                                                                        <ErrorMessage name={`items[${index}].value`} component="div" />
+                                                                    </td>
+                                                                    <td className='w-[32%]'>
+                                                                        <Field
+                                                                            className="w-full border-r outline-none pl-2"
+                                                                            type="text"
+                                                                            name={`items[${index}].current_value`} />
+                                                                        <ErrorMessage name={`items[${index}].current_value`} component="div" />
+                                                                    </td>
+                                                                    <td className=''>
+                                                                        {tabData?.details !== 0 ? ( // Disable for the first row
+                                                                            <button className='ml-4 text-xl' type="button" onClick={() => arrayHelpers.remove(index)}>
+                                                                                <MdDelete className='hidden group-hover:block' />
+                                                                            </button>
+                                                                        ) : (
+                                                                            <button className='ml-4 text-xl' type="button" disabled>
+                                                                                <MdDelete />
+                                                                            </button>
+                                                                        )}
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </>
                                                     </tbody>
                                                 </table>
                                             )}
                                         </FieldArray>
-                                        <button type='submit'>Submit</button>
-                                    </form>
+                                        <button type='submit' className='hidden' ref={buttonRef}>submit</button>
+                                    </Form>
                                 )}
                             </Formik>
                         </div>
