@@ -7,6 +7,7 @@ import RequestAction from '../MoreAction/RequestAction/RequestAction';
 import BodyHead from '../../BodyHead/BodyHead';
 import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
+import { CollectionLoader } from '../../../Loader/Loader';
 
 interface CollectionBodyProps { }
 interface Details {
@@ -23,7 +24,7 @@ interface Colors {
 }
 
 const CollectionBody: FC<CollectionBodyProps> = () => {
-    const { collection, setActiveOption, activeOption, workSpaceId, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, currentActive } = useContext(MyContext);
+    const { collection, setActiveOption, activeOption, workSpaceId, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, currentActive, globalLoader, setGlobalLoader } = useContext(MyContext);
     const FilterCollection = collection?.filter((e: any) => e.workspace_id === workSpaceId._id);
     const newArray = FilterCollection?.filter((e: any) => e.parent === null);
     const [array, setArray] = useState(newArray);
@@ -38,7 +39,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     };
     const ClickOption = (item: string) => {
         setActiveOption(item);
-        
+
     };
 
 
@@ -59,6 +60,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
 
     // Find Collection Data
     const getData = () => {
+        setGlobalLoader(true)
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
         if (workSpace_Id) {
             http({
@@ -67,6 +69,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             })
                 .then((res) => {
                     setCollection(res.data.collection);
+                    setGlobalLoader(false)
                 })
                 .catch((err) => {
                     console.log(err);
@@ -126,56 +129,70 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     return (
         <>
             <BodyHead {...{ postData, title: "Create collection" }} />
-            {newArray?.map((e: any) => (
-                <div key={e._id} >
-                    <div className='flex gap-2 relative group justify-between border-b h-9 items-center cursor-pointer'>
-                        <div className='w-[80%] justify-start flex truncate'>
-                            <div onClick={() => ClickFolder(e._id)} className='w-10 h-full flex items-center justify-center text-lg'>
-                                {(toggleFolder === true && e._id === activeFolder) ? <BiCaretDown /> : < BiCaretRight />}
-                            </div>
-                            <div className='text-xl pr-2'>
-                                <FcFolder />
-                            </div>
-                            <div className='text-sm'>
-                                {e.name}
-                            </div>
-                        </div>
-                        <div onClick={() => ClickOption(e)} className={`${activeOption._id !== e._id ? 'hidden group-hover:block' : 'block'}   absolute right-2`}>
-                            {/* <BiDotsHorizontalRounded /> */}
-                            {/* <MoreAction ViewDocumentation={ViewDocumentation} deleteId={activeOption} toggleFolder={toggleFolder} /> */}
-                            <MoreAction ViewDocumentation={ViewDocumentation} deleteId={activeOption} toggleFolder={toggleFolder} />
-                        </div>
-                        {/* {closePopup === true && } */}
-                    </div>
-                    {(toggleFolder === true && e._id === activeFolder) ?
-                        <div className=" w-full">
-                            {collection?.map((ce: any) => (
-                                <div key={ce._id}>
-                                    {e._id === ce.parent && (
-                                        <div className={`w-full relative group flex cursor-pointer py-1 px-2 
-                                                        ${e._id === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
-                                            <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
-                                                <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
-                                                    }-600 w-[70px] min-w-[70px] flex justify-end`} >
-                                                    {getDetails(ce?.details).method}
-                                                </p>
-                                                <p className="text-xs text-gray-600 font-normal truncate">
-                                                    {ce.name}
-                                                </p>
-                                            </div>
-                                            <div className="hidden group-hover:block absolute right-2">
-                                                <div onClick={() => openRequest(ce)} className='flex justify-center items-center mb-3'>
-                                                    {/* <BiDotsHorizontalRounded/> */}
-                                                    <MoreAction ViewDocumentation={null} deleteId={openRequestId} toggleFolder={toggleFolder} />
-                                                </div>
-                                            </div>
+            {globalLoader === true ? (
+                <>
+                    {" "}
+                    {newArray?.map(
+                        (e: any) =>
+                            <CollectionLoader key={e._id} />
+                    )}{" "}
+                </>
+            ) : (
+                <>
 
-                                        </div>)}
-                                </div>))}
+                    {newArray?.map((e: any) => (
+                        <div key={e._id} >
+                            <div className='flex gap-2 relative group justify-between border-b h-9 items-center cursor-pointer'>
+                                <div className='w-[80%] justify-start flex truncate'>
+                                    <div onClick={() => ClickFolder(e._id)} className='w-10 h-full flex items-center justify-center text-lg'>
+                                        {(toggleFolder === true && e._id === activeFolder) ? <BiCaretDown /> : < BiCaretRight />}
+                                    </div>
+                                    <div className='text-xl pr-2'>
+                                        <FcFolder />
+                                    </div>
+                                    <div className='text-sm'>
+                                        {e.name}
+                                    </div>
+                                </div>
+                                <div onClick={() => ClickOption(e)} className={`${activeOption._id !== e._id ? 'hidden group-hover:block' : 'block'}   absolute right-2`}>
+                                    {/* <BiDotsHorizontalRounded /> */}
+                                    {/* <MoreAction ViewDocumentation={ViewDocumentation} deleteId={activeOption} toggleFolder={toggleFolder} /> */}
+                                    <MoreAction ViewDocumentation={ViewDocumentation} deleteId={activeOption} toggleFolder={toggleFolder} />
+                                </div>
+                                {/* {closePopup === true && } */}
+                            </div>
+                            {(toggleFolder === true && e._id === activeFolder) ?
+                                <div className=" w-full">
+                                    {collection?.map((ce: any) => (
+                                        <div key={ce._id}>
+                                            {e._id === ce.parent && (
+                                                <div className={`w-full relative group flex cursor-pointer py-1 px-2 
+                                                        ${e._id === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
+                                                    <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
+                                                        <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
+                                                            }-600 w-[70px] min-w-[70px] flex justify-end`} >
+                                                            {getDetails(ce?.details).method}
+                                                        </p>
+                                                        <p className="text-xs text-gray-600 font-normal truncate">
+                                                            {ce.name}
+                                                        </p>
+                                                    </div>
+                                                    <div className="hidden group-hover:block absolute right-2">
+                                                        <div onClick={() => openRequest(ce)} className='flex justify-center items-center mb-3'>
+                                                            {/* <BiDotsHorizontalRounded/> */}
+                                                            <MoreAction ViewDocumentation={null} deleteId={openRequestId} toggleFolder={toggleFolder} />
+                                                        </div>
+                                                    </div>
+
+                                                </div>)}
+                                        </div>))}
+                                </div>
+                                : null}
                         </div>
-                        : null}
-                </div>
-            ))}
+                    ))}
+                </>
+            )}
+
         </>
     );
 }

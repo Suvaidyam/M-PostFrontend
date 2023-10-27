@@ -27,7 +27,7 @@ interface Colors {
 }
 
 function EnvironmentTab({ }: Props) {
-    const { collection, setStatus, setMsg, setError, tabData, currentActive, tabsList, setTabsList, setTabData, setCurrentActive } = useContext(MyContext);
+    const { collection, setStatus, setMsg, setError, tabData, currentActive, tabsList, setTabsList, setTabData, setCurrentActive, loader, setLoader } = useContext(MyContext);
     const [effect, setEffect] = useState(false);
     const buttonRef: any = useRef();
     const getDetails = (details: Details) => {
@@ -85,7 +85,6 @@ function EnvironmentTab({ }: Props) {
     };
 
     const handleSubmit = (values: { items: any }): any => {
-        console.log(values.items)
         http({
             method: "put",
             url: `http://localhost:4000/environment/${currentActive}`,
@@ -99,6 +98,7 @@ function EnvironmentTab({ }: Props) {
                 setError(true)
                 setEffect(true)
                 toast.success(res.data.message)
+                setLoader(!loader)
                 setTimeout(() => {
                     setEffect(false)
                 }, 1000)
