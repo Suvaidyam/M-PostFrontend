@@ -11,27 +11,14 @@ type Props = {
 function NewRequest({ setopen, details }: Props) {
 
   const { jsonText, tabData, headersData, paramsData, setMsg, setStatus,
-    setError, setchangeAction, changeAction } = useContext(MyContext);
+    setError, setchangeAction, changeAction, collection } = useContext(MyContext);
   const [data, setData] = useState(tabData.details);
-  const [collection, setcollection] = useState([])
   const [test, settest] = useState(true)
+  let workSpaceId = JSON.parse(localStorage.getItem('workSpace') as string);
+  const FilterCollection = collection?.filter((e: any) => e.workspace_id === workSpaceId._id);
+  const newColl = FilterCollection?.filter((e: any) => e.parent === null);
 
-  const newColl = collection.filter((e: any) => e.parent === null)
-  const getData = () => {
-    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as string);
-    http({
-      method: "get",
-      url: `http://localhost:4000/collection/${workSpace_Id?._id}`,
-    })
-      .then((res: any) => {
-        setcollection(res?.data?.collection);
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
-  };
   const Save = () => {
-    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as string);
     http({
       method: "post",
       url: `http://localhost:4000/collection`,
@@ -39,7 +26,7 @@ function NewRequest({ setopen, details }: Props) {
         name: data?.name,
         parent: data?.parent,
         type: 'request',
-        workspace_id: workSpace_Id?._id,
+        workspace_id: workSpaceId?._id,
         details: {
           url: details.url,
           method: details?.method?.toLowerCase(),
@@ -64,7 +51,7 @@ function NewRequest({ setopen, details }: Props) {
 
     useEffect(() => {
       return () => {
-        getData();
+        // getData();
       };
     }, [test]);
     useEffect(() => {
@@ -85,7 +72,6 @@ function NewRequest({ setopen, details }: Props) {
             onChange={(e) => setData({ ...data, parent: e.target.value })}>
             <option value="">Select Collection..</option>
             {newColl.map((e: any) => (
-
               <option key={e._id} value={e._id}>{e.name}</option>
             ))}
           </select>

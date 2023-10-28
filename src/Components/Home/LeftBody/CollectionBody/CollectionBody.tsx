@@ -62,6 +62,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const getData = () => {
         setGlobalLoader(true)
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+        console.log(workSpace_Id?._id)
         if (workSpace_Id) {
             http({
                 method: "get",
@@ -69,6 +70,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             })
                 .then((res) => {
                     setCollection(res.data.collection);
+                    console.log(res.data)
                     setGlobalLoader(false)
                 })
                 .catch((err) => {

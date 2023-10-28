@@ -27,7 +27,9 @@ function TopBar({ onSendClick }: Props) {
     const [isLoding, setIsLoding] = useState(false);
     const [isEnv, setIsEnv] = useState([]);
     const handleClose = () => setopen(!open);
+    
     const Save = () => {
+        console.log(tabData._id)
         http({
             url: `http://localhost:4000/collection/${tabData._id}`,
             method: "put",

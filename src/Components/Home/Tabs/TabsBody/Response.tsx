@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ErrorScreen from './ErrorScreen';
 import ApiError from './ApiError';
 import { MyContext } from '../../../../Context/Context';
@@ -9,6 +9,8 @@ import ReactJson from 'react-json-view'
 import Scrollbars from 'react-custom-scrollbars';
 import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
+import { getHeadersAndParams } from '../../../Utils/CommonUtlis';
+
 type Props = {
     apiResponse: any
     isLoading: boolean
@@ -17,9 +19,10 @@ type Props = {
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const { tabData, setResponseData, responseData } = useContext(MyContext);
+    const { tabData, setResponseData, responseData, paramsData, headersData, jsonText, currentActive } = useContext(MyContext);
     const [body, setBody] = useState<boolean>(true);
     const [header, setHeader] = useState<boolean>(false);
+// console.log(tabData)
     const errorData = {
         error: apiResponse?.data
     }
@@ -32,16 +35,12 @@ export default function Response({ apiResponse, isLoading }: Props) {
         setBody(false);
         setHeader(true);
     };
-
+  
     const SaveResponse = () => {
         http({
-            url: `http://localhost:4000/collection/${tabData._id}`,
+            url: `http://localhost:4000/collection/res/${tabData._id}`,
             method: "put",
-            data: {
-                details: {
-                    response: apiResponse.data
-                },
-            },
+            data: apiResponse.data
         })
             .then((res: any) => {
                 toast.success('Save Successfully')
@@ -49,6 +48,11 @@ export default function Response({ apiResponse, isLoading }: Props) {
                 console.log(responseData)
             })
     }
+    useEffect(()=>{
+        const data = JSON.parse(localStorage.getItem('tabsList') ?? '{}');
+        setResponseData(data[0]?.details?.response)
+        console.log(data,responseData)
+    },[])
 
     // console.log("apiResponse", apiResponse);
     let headers = apiResponse?.headers;

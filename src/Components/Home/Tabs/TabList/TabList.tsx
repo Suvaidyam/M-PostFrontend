@@ -120,7 +120,7 @@ export default function TabList({ }: Props) {
                         <div
                             key={e._id}
                             className={`flex items-center justify-between${e._id === currentActive
-                                ? "border-b-2 border-b-blue-500 border-r duration-300" : "border-r"}  w-44 min-w-44 px-1 h-full group cursor-pointer`}
+                                ? " border-r duration-300 border-b-[1.5px] border-b-blue-400" : " border-r"}  w-44 min-w-44 px-1 h-full group cursor-pointer`}
                             onClick={() => setCurrentActive(e._id)}  >
                             <div className="flex items-center  w-[142px] min-w-44 h-full gap-2" onClick={() => setTabData(e)}>
                                 <p
