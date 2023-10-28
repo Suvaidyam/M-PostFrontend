@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import { Fragment, useState, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import classNames from 'classnames';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { MyContext } from '../../../../Context/Context';
 import EditCollection from './EditCollection';
@@ -11,14 +10,13 @@ import { toast } from 'react-toastify';
 interface MoreActionProps {
     ViewDocumentation: any,
     deleteId: any,
-    toggleFolder: any
+    openRequestId: any,
+    collection: any,
 }
 
-const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, toggleFolder }) => {
-    // const MoreAction: FC<MoreActionProps> = ({ toggleFolder }) => {
-    const { loader, setLoader, activeOption, tabsList, setTabsList, setCurrentActive, setTabData } = useContext(MyContext);
+const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection }) => {
+    const { loader, setLoader, activeOption } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
-
     // Add Request 
     const postData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
@@ -43,7 +41,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, toggleFo
     };
     const deleteData = () => {
         http({
-            url: `${process.env.REACT_APP_BASEURL}/collection/${deleteId?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/${collection}/${deleteId?._id}`,
             method: "delete",
         })
             .then((res) => {
@@ -60,7 +58,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, toggleFo
             <Menu as="div" className="relative z-50 inline-block text-left">
                 <div>
                     <Menu.Button className="flex items-center h-full">
-                        <span><BiDotsHorizontalRounded className='text-lg text-black mt-2' /></span>
+                        <span><BiDotsHorizontalRounded className='text-lg text-black' /></span>
                     </Menu.Button>
                 </div>
 
@@ -81,14 +79,15 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, toggleFo
                                     Share
                                 </div>
                             </Menu.Item>
-                            <Menu.Item>
-                                <div
-                                    onClick={ViewDocumentation}
-                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
-                                    {/* className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900 ${toggleFolder === true ? `hidden` : `block`}`}> */}
-                                    View Documentation
-                                </div>
-                            </Menu.Item>
+                            {openRequestId.type === 'folder' &&
+                                <Menu.Item>
+                                    <div
+                                        onClick={ViewDocumentation}
+                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                        View Documentation
+                                    </div>
+                                </Menu.Item>}
+
                             <Menu.Item>
                                 <div
                                     onClick={() => setOpenModel(true)}
@@ -96,21 +95,23 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, toggleFo
                                     Rename
                                 </div>
                             </Menu.Item>
-                            <Menu.Item>
-                                <div
-                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
-                                    {/* className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900 ${toggleFolder === true ? `hidden` : `block`}`}> */}
-                                    Add folder
-                                </div>
-                            </Menu.Item>
-                            <Menu.Item>
-                                <div
-                                    onClick={postData}
-                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
-                                    {/* className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900 ${toggleFolder === true ? `hidden` : `block`}`}> */}
-                                    Add request
-                                </div>
-                            </Menu.Item>
+                            {openRequestId.type === 'folder' &&
+                                <>
+                                    <Menu.Item>
+                                        <div
+                                            className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                            Add folder
+                                        </div>
+                                    </Menu.Item>
+                                    <Menu.Item>
+                                        <div
+                                            onClick={postData}
+                                            className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                            Add request
+                                        </div>
+                                    </Menu.Item>
+                                </>}
+
                             <Menu.Item>
                                 <div
                                     onClick={deleteData}
@@ -122,7 +123,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, toggleFo
                     </Menu.Items>
                 </Transition>
             </Menu>
-            {openModel === true ? <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} /> : null}
+            <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} />
         </>
     );
 }

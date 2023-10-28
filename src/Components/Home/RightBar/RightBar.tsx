@@ -1,21 +1,27 @@
-import { useContext, type FC } from 'react';
+import { useContext, type FC, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 import { BiHelpCircle } from 'react-icons/bi';
 import { BsCaretRight, BsCode } from 'react-icons/bs';
 import { FiTrash2 } from 'react-icons/fi';
 import { MyContext } from '../../../Context/Context';
+import SetEnvironment from './SetEnvironment/SetEnviroment';
 
 interface RightBarProps { }
 
 const RightBar: FC<RightBarProps> = () => {
     const { darkToggle } = useContext(MyContext);
+    const [open, setOpen] = useState(false)
+    const togglePopup = () => {
+        setOpen(!open)
+    }
+    console.log()
 
     return (
         <>
             <div className={`flex border-l-[1.5px] flex-col items-center justify-center gap-5 h-full bg-white py-1.5 relative ${darkToggle === true ? 'bg-slate-800 text-white opacity-80' : ''}`}>
                 <div className="flex flex-col justify-between h-full ">
                     <div>
-                        <div className="cursor-pointer flex justify-center items-center mt-2 gap-1">
+                        <div onClick={togglePopup} className="cursor-pointer flex justify-center items-center mt-2 gap-1">
                             <AiOutlineEye className="text-gray-600 w-8 h-8 p-2 rounded-md hover:bg-blue-200 hover:text-blue-600" />
                         </div>
                         <div className="cursor-pointer flex justify-center items-center mt-1 gap-1">
@@ -42,6 +48,7 @@ const RightBar: FC<RightBarProps> = () => {
                     </div>
                 </div>
             </div>
+            <SetEnvironment open={open} setOpen={setOpen} />
         </>
     );
 }
