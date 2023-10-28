@@ -9,17 +9,18 @@ import http from '../../../../Service/http';
 interface EditCollectionProps {
     open: boolean
     setOpen: React.Dispatch<SetStateAction<boolean>>,
-    renameId: any
+    renameId: any,
+    collection: any
 }
 
-const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId }) => {
+const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, collection }) => {
     const { loader, setLoader, activeOption } = useContext(MyContext);
     const [name, setName] = useState('');
     const cancelButtonRef = useRef(null);
 
     const PutData = () => {
         http({
-            url: `${process.env.REACT_APP_BASEURL}/collection/${renameId?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/${collection}/${renameId?._id}`,
             method: "put",
             data: {
                 name: name

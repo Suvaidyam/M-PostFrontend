@@ -35,7 +35,6 @@ export default function AddRow({
     const [checkCheckbox, setCheckCheckbox] = useState(false);
     const [checkRadio, setCheckRadio] = useState(false);
     const { tabData } = useContext(MyContext);
-    console.log(tabData);
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
         if (!checkCheckbox) {
@@ -85,7 +84,6 @@ export default function AddRow({
             setData(newArray)
         }
     }
-    console.log(tabData)
 
     return (
         <>
