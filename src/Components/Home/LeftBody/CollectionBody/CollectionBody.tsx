@@ -30,21 +30,40 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [array, setArray] = useState(newArray);
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
-    const [openRequestId, setOpenRequestId] = useState<string>('');
-    const [closePopup, setClosePopup] = useState(false)
+    const [openRequestId, setOpenRequestId] = useState<any>('');
+    // console.log(openRequestId)
 
     const ClickFolder = (id: string) => {
         setToggleFolder(!toggleFolder);
         setActiveFolder(id);
+        console.log(id)
     };
     const ClickOption = (item: string) => {
         setActiveOption(item);
-
+        setOpenRequestId(item)
+        console.log(item)
     };
-
-
-    // Color 
-
+    const handleRequest = (e: { _id: any; }) => {
+        if (tabsList.findIndex((f: { _id: any; }) => f._id === e._id) < 0) {
+            setTabsList([...tabsList, e]);
+            setCurrentActive(e._id);
+            setTabData(e);
+        }
+    };
+    const ViewDocumentation = () => {
+        if (tabsList.findIndex((activeOption: any) => activeOption._id === collection.parent) < 0) {
+            setTabsList([...tabsList, activeOption]);
+            setCurrentActive(activeOption._id);
+            setTabData(activeOption);
+        }
+    };
+    const openRequest = (ce: any) => {
+        ce.openRequest = !ce.openRequest;
+        setArray([...array]);
+        setOpenRequestId(ce);
+        setActiveOption(ce);
+        console.log("request", ce)
+    };
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
         const colors: Colors = {
@@ -54,11 +73,8 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             DELETE: "red",
             NA: "grey",
         };
-
         return { method, color: colors[method.toUpperCase()] };
     }
-
-    // Find Collection Data
     const getData = () => {
         setGlobalLoader(true)
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
@@ -80,8 +96,6 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             console.log("workspace Id NOT Found, Please select a workspace");
         }
     };
-
-    // Create Collection
     const postData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
         http({
@@ -101,29 +115,6 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                 console.log(err);
             });
     };
-
-    // Handle Request
-
-    const handleRequest = (e: { _id: any; }) => {
-        if (tabsList.findIndex((f: { _id: any; }) => f._id === e._id) < 0) {
-            setTabsList([...tabsList, e]);
-            setCurrentActive(e._id);
-            setTabData(e);
-        }
-    };
-    const ViewDocumentation = () => {
-        if (tabsList.findIndex((activeOption: any) => activeOption._id === collection.parent) < 0) {
-            setTabsList([...tabsList, activeOption]);
-            setCurrentActive(activeOption._id);
-            setTabData(activeOption);
-        }
-    };
-    const openRequest = (ce: any) => {
-        ce.openRequest = !ce.openRequest;
-        setArray([...array]);
-        setOpenRequestId(ce);
-    };
-
     useEffect(() => {
         getData();
     }, [loader]);
@@ -157,13 +148,10 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                     </div>
                                 </div>
                                 <div onClick={() => ClickOption(e)} className={`${activeOption._id !== e._id ? 'hidden group-hover:block' : 'block'}   absolute right-2`}>
-                                    {/* <BiDotsHorizontalRounded /> */}
-                                    {/* <MoreAction ViewDocumentation={ViewDocumentation} deleteId={activeOption} toggleFolder={toggleFolder} /> */}
-                                    <MoreAction ViewDocumentation={ViewDocumentation} deleteId={activeOption} toggleFolder={toggleFolder} />
+                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' />
                                 </div>
-                                {/* {closePopup === true && } */}
                             </div>
-                            {(toggleFolder === true && e._id === activeFolder) ?
+                            {(toggleFolder === true && e._id === activeFolder) &&
                                 <div className=" w-full">
                                     {collection?.map((ce: any) => (
                                         <div key={ce._id}>
@@ -179,17 +167,15 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                             {ce.name}
                                                         </p>
                                                     </div>
-                                                    <div className="hidden group-hover:block absolute right-2">
-                                                        <div onClick={() => openRequest(ce)} className='flex justify-center items-center mb-3'>
-                                                            {/* <BiDotsHorizontalRounded/> */}
-                                                            <MoreAction ViewDocumentation={null} deleteId={openRequestId} toggleFolder={toggleFolder} />
+                                                    <div className="">
+                                                        <div onClick={() => openRequest(ce)} className='mb-3 pb-5 hidden group-hover:block absolute right-2'>
+                                                            <MoreAction openRequestId={openRequestId} ViewDocumentation={null} deleteId={openRequestId} collection='collection' />
                                                         </div>
                                                     </div>
-
                                                 </div>)}
                                         </div>))}
                                 </div>
-                                : null}
+                            }
                         </div>
                     ))}
                 </>

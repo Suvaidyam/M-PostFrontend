@@ -8,14 +8,18 @@ import { IoCheckmarkDoneCircleOutline, IoCheckmarkDoneCircleSharp } from 'react-
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { useRef } from "react";
 import { CollectionLoader } from '../../../Loader/Loader';
+import MoreAction from '../MoreAction/MoreAction';
 
 interface EnvironmentBodyProps { }
 
 const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
-    const { currentActiveEnv, setCurrentActiveEnv, loader, setLoader, tabsList, setTabsList, setTabData, setCurrentActive, newEnvironment, setNewEnvironment,globalLoader, setGlobalLoader } = useContext(MyContext);
+    const { currentActiveEnv, setCurrentActiveEnv, loader, setLoader, tabsList, setTabsList, setTabData, setCurrentActive, newEnvironment, setNewEnvironment, globalLoader, setGlobalLoader } = useContext(MyContext);
     const global_variable = newEnvironment?.filter((e: { name: string; }) => e.name === 'Globals');
     const local_variable = newEnvironment?.filter((e: { name: string; }) => e.name !== 'Globals');
+    const [isOpen, setIsOpen] = useState(false);
     // Get Environment Data
+
+    const popupRef: any = useRef();
     const getData = () => {
         setGlobalLoader(true)
         let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') ?? '');
@@ -62,6 +66,12 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
         }
     };
 
+    const openRequest = (ce: any) => {
+        ce.openRequest = !ce.openRequest;
+        setNewEnvironment([...newEnvironment]);
+        // setIsOpen(true)
+    };
+
     useEffect(() => {
         return () => {
             getData();
@@ -71,7 +81,6 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
 
     return (
         <>
-            {/* <BodyHead {...{ postData, title: "Create environment" }}/> */}
             <div className="w-full">
                 <BodyHead {...{ postData, title: "Create environment" }} />
                 {globalLoader === true ? (
@@ -118,18 +127,17 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                        text-gray-500 text-2xl"
                                                         onClick={() => setCurrentActiveEnv(ce._id)}
                                                     />}
-                                            <p className="hidden group-hover:block absolute right-2"
+                                            <div className="hidden group-hover:block absolute right-2"
                                             // onClick={() => setcolId(ce)}
                                             >
-                                                <BiDotsHorizontalRounded className="cursor-pointer"
-                                                // onClick={() =>openRequest(ce)}
-                                                />
-                                            </p>
+                                                {/* <BiDotsHorizontalRounded className="cursor-pointer" onClick={() =>openRequest(ce)}/> */}
+                                                <MoreAction ViewDocumentation={''} deleteId={ce} openRequestId={''} collection='environment' />
+                                            </div>
                                             {/* moreaction */}
-                                            {/* {ce.openRequest ? isOpen &&
+                                            {ce.openRequest ? isOpen &&
                                                 <div className="absolute z-50 right-3 top-9" ref={popupRef}>
-                                                    <MoreAction {...{ collection: 'environment' }} />
-                                                </div> : null} */}
+                                                    {/* <MoreAction ViewDocumentation={undefined} deleteId={undefined} openRequestId={undefined} {...{ collection: 'environment' }} /> */}
+                                                </div> : null}
                                         </div>
                                     </div>))}
                                 </div>
