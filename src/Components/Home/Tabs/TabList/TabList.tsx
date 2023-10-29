@@ -32,6 +32,7 @@ export default function TabList({ }: Props) {
         currentActive,
         setCurrentActive,
         setCurrentActiveEnv,
+        tabData,
         currentActiveEnv } = useContext(MyContext);
     const [newEnviroment, setNewEnviroment] = useState([]);
     const local_variable = newEnviroment?.filter((e: any) => e.name !== "Globals");

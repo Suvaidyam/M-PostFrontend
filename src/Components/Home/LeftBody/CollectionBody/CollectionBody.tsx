@@ -36,7 +36,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const ClickFolder = (id: string) => {
         setToggleFolder(!toggleFolder);
         setActiveFolder(id);
-        console.log(id)
+        // console.log(id)
     };
     const ClickOption = (item: string) => {
         setActiveOption(item);
@@ -63,6 +63,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
         setOpenRequestId(ce);
         setActiveOption(ce);
         console.log("request", ce)
+        
     };
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
@@ -78,7 +79,6 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const getData = () => {
         setGlobalLoader(true)
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
-        console.log(workSpace_Id?._id)
         if (workSpace_Id) {
             http({
                 method: "get",
@@ -86,8 +86,8 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             })
                 .then((res) => {
                     setCollection(res.data.collection);
-                    console.log(res.data)
                     setGlobalLoader(false)
+                    // console.log(res.data.collection)
                 })
                 .catch((err) => {
                     console.log(err);

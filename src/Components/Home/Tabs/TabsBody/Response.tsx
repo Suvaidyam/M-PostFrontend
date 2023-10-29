@@ -19,10 +19,14 @@ type Props = {
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const { tabData, setResponseData, responseData, paramsData, headersData, jsonText, currentActive } = useContext(MyContext);
+    const { tabData, collection, setCollection } = useContext(MyContext);
+    console.log(tabData)
     const [body, setBody] = useState<boolean>(true);
     const [header, setHeader] = useState<boolean>(false);
-// console.log(tabData)
+    const [responseData, setResponseData] = useState([]);
+    const currentActive = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
+
+    // console.log(currentActive)
     const errorData = {
         error: apiResponse?.data
     }
@@ -35,8 +39,9 @@ export default function Response({ apiResponse, isLoading }: Props) {
         setBody(false);
         setHeader(true);
     };
-  
+
     const SaveResponse = () => {
+
         http({
             url: `http://localhost:4000/collection/res/${tabData._id}`,
             method: "put",
@@ -45,14 +50,32 @@ export default function Response({ apiResponse, isLoading }: Props) {
             .then((res: any) => {
                 toast.success('Save Successfully')
                 setResponseData(apiResponse.data)
-                console.log(responseData)
+                // console.log(responseData)
             })
     }
-    useEffect(()=>{
-        const data = JSON.parse(localStorage.getItem('tabsList') ?? '{}');
-        setResponseData(data[0]?.details?.response)
-        console.log(data,responseData)
-    },[])
+    const getResponse = () => {
+        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+
+        http({
+            method: "get",
+            url: `http://localhost:4000/collection/${workSpace_Id?._id}`,
+        })
+            .then((res) => {
+                setResponseData(res.data.collection[1].details.response);
+                console.log(res.data.collection)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    useEffect(() => {
+        if (typeof (currentActive) === 'string') {
+            getResponse()
+        } else {
+        }
+    }, [currentActive])
+
+
 
     // console.log("apiResponse", apiResponse);
     let headers = apiResponse?.headers;
@@ -116,8 +139,9 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                         src={responseData}
                                     />
                                 </div>
-                                :
-                                <ErrorScreen />
+                              :
+                              
+                              <ErrorScreen />
                         }
 
                     </div>
