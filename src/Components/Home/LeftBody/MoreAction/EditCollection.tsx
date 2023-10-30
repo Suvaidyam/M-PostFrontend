@@ -76,15 +76,14 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, coll
                                                 defaultValue={renameId.name}
                                                 className='w-full outline-none border-[2px] py-1 pl-2' name="name" id="name" />
                                         </div>
-                                        <button onClick={PutData} className='w-full border mt-5 py-1 text-white bg-blue-500'>Update</button>
-                                        {/* </form> */}
+                                        <button onClick={name.length === 0 ? undefined : PutData} disabled={name.length === 0 ? true : false} className={`w-full mt-5 ${name.length === 0 ? 'bg-slate-300' : ' bg-blue-600'} py-1 text-white`} >Update</button>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
                     </div>
                 </Dialog>
-            </Transition.Root>
+            </Transition.Root >
         </>
     );
 }

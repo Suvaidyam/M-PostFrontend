@@ -9,7 +9,6 @@ import { Formik, FieldArray, ErrorMessage, Field, ArrayHelpers, Form } from 'for
 import * as Yup from 'yup';
 import { MdDelete } from 'react-icons/md';
 import { GrAdd } from 'react-icons/gr';
-import AddRow from '../TabsBody/AddRow';
 import { toast } from 'react-toastify';
 
 type Props = {}
@@ -27,7 +26,7 @@ interface Colors {
 }
 
 function EnvironmentTab({ }: Props) {
-    const { collection, setStatus, setMsg, setError, tabData, currentActive, tabsList, setTabsList, setTabData, setCurrentActive, loader, setLoader } = useContext(MyContext);
+    const { collection, setStatus, setMsg, setError, tabData, setTabData, currentActive, tabsList, setTabsList, setCurrentActive, loader, setLoader } = useContext(MyContext);
     const [effect, setEffect] = useState(false);
     const buttonRef: any = useRef();
     const getDetails = (details: Details) => {
@@ -108,6 +107,9 @@ function EnvironmentTab({ }: Props) {
                 setStatus(err.response.status)
                 setError(true)
             });
+    };
+    const deleteData = (indexToDelete: any) => {
+        console.log(indexToDelete)
     };
     return (
         <>
@@ -235,7 +237,10 @@ function EnvironmentTab({ }: Props) {
                                                                     </td>
                                                                     <td className=''>
                                                                         {tabData?.details !== 0 ? ( // Disable for the first row
-                                                                            <button className='ml-4 text-xl' type="button" onClick={() => arrayHelpers.remove(index)}>
+                                                                            <button className='ml-4 text-xl' type="button"
+                                                                                onClick={() => deleteData(index)}
+                                                                            // onClick={() => arrayHelpers.remove(index)}
+                                                                            >
                                                                                 <MdDelete className='hidden group-hover:block' />
                                                                             </button>
                                                                         ) : (
