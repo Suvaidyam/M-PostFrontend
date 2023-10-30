@@ -5,12 +5,13 @@ import { BsCaretRight, BsCode } from 'react-icons/bs';
 import { FiTrash2 } from 'react-icons/fi';
 import { MyContext } from '../../../Context/Context';
 import SetEnvironment from './SetEnvironment/SetEnviroment';
+import SetCode from './SetCode/SetCode';
 
 interface RightBarProps { }
 
 const RightBar: FC<RightBarProps> = () => {
     const { darkToggle } = useContext(MyContext);
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
     const togglePopup = () => {
         setOpen(!open)
     }
@@ -49,6 +50,7 @@ const RightBar: FC<RightBarProps> = () => {
                 </div>
             </div>
             <SetEnvironment open={open} setOpen={setOpen} />
+            {/* <SetCode open={open} setOpen={setOpen} /> */}
         </>
     );
 }

@@ -46,6 +46,10 @@ const Login: FC<LoginProps> = (data: {}) => {
                         navigate('/workspace')
                     }
                 }, 2000);
+                let token = response.data.token;
+                let payload = token.split(".");
+                let data = atob(payload[1]);
+                sessionStorage.setItem("paylode", data);
                 toast.success(response.data.message)
             })
             .catch((error) => {
