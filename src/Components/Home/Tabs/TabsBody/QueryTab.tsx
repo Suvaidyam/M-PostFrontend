@@ -55,7 +55,7 @@ const QueryTab: FC<QueryTabProps> = () => {
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const paramsBackendData = tabData?.details?.query || activeData[0]?.details?.query;
     const headersBackendData = tabData?.details?.headers || activeData[0]?.details?.headers;
-
+    // console.log(headersBackendData)
     const handleChange = (event: any, newValue: any) => {
         sessionStorage.setItem("queryTab", newValue);
         setValue(newValue);

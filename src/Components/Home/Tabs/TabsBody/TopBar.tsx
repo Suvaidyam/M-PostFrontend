@@ -27,9 +27,10 @@ function TopBar({ onSendClick }: Props) {
     const [isLoding, setIsLoding] = useState(false);
     const [isEnv, setIsEnv] = useState([]);
     const handleClose = () => setopen(!open);
-    
+    const [responseData, setResponseData] = useState<any | null>(null);
+    const currentActives = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
+    const [renderDropdown, setRenderDropdown] = useState(false)
     const Save = () => {
-        console.log(tabData._id)
         http({
             url: `http://localhost:4000/collection/${tabData._id}`,
             method: "put",
@@ -59,6 +60,32 @@ function TopBar({ onSendClick }: Props) {
                 setError(true)
             });
     };
+
+    const getResponse = () => {
+        http({
+            method: "get",
+            url: `http://localhost:4000/collection/getById/${currentActive}`,
+        })
+            .then((res) => {
+                setResponseData(res.data.collection.details);
+                setRenderDropdown(!false)
+                // console.log(res.data.collection.details.method.toUpperCase())
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    useEffect(() => {
+        if (typeof (currentActives) === 'string') {
+            getResponse()
+        }
+        else {
+            setResponseData(null)
+        }
+        setTimeout(() => {
+            setRenderDropdown(!false)
+        }, 200);
+    }, [currentActive])
     const getData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as string);
         http({
@@ -90,17 +117,20 @@ function TopBar({ onSendClick }: Props) {
         <>
             <div className="w-full flex h-full  items-center  px-3 relative ">
                 {/* dropdown */}
-                <div className="w-28 h-11 border-gray-300 border  rounded-l-md bg-white flex items-center focus:outline-none">
-                    <select
-                        className="bg-white font-medium text-sm rounded-l-md text-gray-600  px-4 h-8 focus:outline-none border-none "
-                        onChange={(e) => { setData({ ...data, method: e.target.value.toLowerCase() }); }}
-                        defaultValue={data?.method?.toUpperCase()} >
-                        <option value="GET" > GET </option>
-                        <option value="POST" > POST </option>
-                        <option value="PUT" > PUT </option>
-                        <option value="DELETE" > DELETE </option>
-                    </select>
-                </div>
+            
+                {renderDropdown === true &&
+                    <div className="w-28 h-11 border-gray-300 border  rounded-l-md bg-white flex items-center focus:outline-none">
+                        <select
+                            className="bg-white font-medium text-sm rounded-l-md text-gray-600  px-4 h-8 focus:outline-none border-none "
+                            onChange={(e) => { setData({ ...data, method: e.target.value.toLowerCase() }); }}
+                            defaultValue={responseData?.method?.toUpperCase() || ""}>
+                            <option value="GET" > GET </option>
+                            <option value="POST" > POST </option>
+                            <option value="PUT" > PUT </option>
+                            <option value="DELETE" > DELETE </option>
+                        </select>
+                    </div>
+                }
 
                 {/* input field */}
                 <div className="w-full  input-container ">
@@ -111,7 +141,7 @@ function TopBar({ onSendClick }: Props) {
                         onChange={(e) => {
                             setData({ ...data, url: e.target.value });
                         }}
-                        defaultValue={data?.url || ""}
+                        defaultValue={responseData?.url || ""}
                     />
                     <div className="input-renderer px-2 ">
                         {data?.url?.split(REGEX).map((word: any, i: any) => {

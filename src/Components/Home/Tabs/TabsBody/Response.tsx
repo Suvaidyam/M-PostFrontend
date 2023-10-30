@@ -9,7 +9,6 @@ import ReactJson from 'react-json-view'
 import Scrollbars from 'react-custom-scrollbars';
 import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
-import { getHeadersAndParams } from '../../../Utils/CommonUtlis';
 
 type Props = {
     apiResponse: any
@@ -19,11 +18,11 @@ type Props = {
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const { tabData, collection, setCollection } = useContext(MyContext);
-    console.log(tabData)
+    const { tabData } = useContext(MyContext);
+    // console.log(activeOption)
     const [body, setBody] = useState<boolean>(true);
     const [header, setHeader] = useState<boolean>(false);
-    const [responseData, setResponseData] = useState([]);
+    const [responseData, setResponseData] = useState<string[] | null>(null);
     const currentActive = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
 
     // console.log(currentActive)
@@ -41,7 +40,6 @@ export default function Response({ apiResponse, isLoading }: Props) {
     };
 
     const SaveResponse = () => {
-
         http({
             url: `http://localhost:4000/collection/res/${tabData._id}`,
             method: "put",
@@ -54,15 +52,13 @@ export default function Response({ apiResponse, isLoading }: Props) {
             })
     }
     const getResponse = () => {
-        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
-
         http({
             method: "get",
-            url: `http://localhost:4000/collection/${workSpace_Id?._id}`,
+            url: `http://localhost:4000/collection/getById/${currentActive}`,
         })
             .then((res) => {
-                setResponseData(res.data.collection[1].details.response);
-                console.log(res.data.collection)
+                setResponseData(res.data.collection.details.response);
+                // console.log(res.data.collection)
             })
             .catch((err) => {
                 console.log(err);
@@ -71,7 +67,9 @@ export default function Response({ apiResponse, isLoading }: Props) {
     useEffect(() => {
         if (typeof (currentActive) === 'string') {
             getResponse()
-        } else {
+        }
+        else {
+            setResponseData(null)
         }
     }, [currentActive])
 
@@ -131,6 +129,28 @@ export default function Response({ apiResponse, isLoading }: Props) {
                             :
                             responseData && typeof responseData === 'object' ?
                                 <div className='break-all'>
+                                    <div className="flex justify-between w-full h-[10%]">
+                                        <div className="px-2 flex items-center  py-1 gap-5">
+                                            <span
+                                                className={`text-sm font-medium cursor-pointer  ${body === true ? "text-blue-600" : "text-gray-800 "}`}
+                                            >
+                                                Body
+                                            </span>
+                                
+                                        </div>
+                                        <div className="px-2 flex items-center gap-5">
+                                            <span className="text-gray-800 text-sm font-medium">
+                                                <AiOutlineGlobal />
+                                            </span>
+                                            <pre>
+                                                <span className="text-gray-800 text-sm font-medium">
+                                                    <b>Status:</b>
+                                                    {getStatusElem(apiResponse)}
+                                                </span>
+                                               
+                                              </pre>
+                                        </div>
+                                    </div>
                                     <ReactJson
                                         name={false}
                                         displayDataTypes={false}
@@ -139,9 +159,8 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                         src={responseData}
                                     />
                                 </div>
-                              :
-                              
-                              <ErrorScreen />
+                                :
+                                <ErrorScreen />
                         }
 
                     </div>
