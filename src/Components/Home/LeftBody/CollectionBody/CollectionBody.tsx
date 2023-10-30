@@ -31,17 +31,14 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');
-    // console.log(openRequestId)
 
     const ClickFolder = (id: string) => {
         setToggleFolder(!toggleFolder);
         setActiveFolder(id);
-        // console.log(id)
     };
     const ClickOption = (item: string) => {
         setActiveOption(item);
         setOpenRequestId(item)
-        console.log(item)
     };
     const handleRequest = (e: { _id: any; }) => {
         if (tabsList.findIndex((f: { _id: any; }) => f._id === e._id) < 0) {
@@ -61,9 +58,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
         ce.openRequest = !ce.openRequest;
         setArray([...array]);
         setOpenRequestId(ce);
-        setActiveOption(ce);
-        console.log("request", ce)
-        
+        setActiveOption(ce);        
     };
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
@@ -87,7 +82,6 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                 .then((res) => {
                     setCollection(res.data.collection);
                     setGlobalLoader(false)
-                    // console.log(res.data.collection)
                 })
                 .catch((err) => {
                     console.log(err);

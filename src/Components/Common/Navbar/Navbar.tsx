@@ -2,27 +2,59 @@ import { FC, useContext, useState } from 'react';
 import Vector from '..//..//Assets//Vector.png'
 import { FiSearch } from 'react-icons/fi'
 import { HiOutlineMoon } from 'react-icons/hi'
-import { BiBell } from 'react-icons/bi'
+import { BiBell, BiLogOutCircle } from 'react-icons/bi'
 import avatar from '..//..//Assets//avatar.png'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa'
-import { GoTriangleDown } from 'react-icons/go'
+import { CgProfile } from 'react-icons/cg'
 import { BsFillShareFill } from 'react-icons/bs'
 import { MyContext } from '../../../Context/Context';
 import WorkSpaceDropDown from '../WorkSpaceDropDown/WorkSpaceDropDown';
+import axios from 'axios';
+import { url } from 'inspector';
+import Avatar from '../../Assets/avatar-f.jpg'
+import Avatar_f from '../../Assets/avatar-f.jpg'
+import Profile from '../Profile/Profile';
 
 interface NavbarProps { }
 
 const Navbar: FC<NavbarProps> = () => {
     const [navbarToggle, setNavbarToggle] = useState(false);
     const [dropdownToggle, setDropdownToggle] = useState(false);
-    const { darkToggle, setDakToggle } = useContext(MyContext);
+    const { darkToggle, setDakToggle, setMsg, setError, url, setUrl } = useContext(MyContext);
+    const [openProfile, setOpenProfile] = useState<boolean>(false)
+    const navigate = useNavigate();
     const DarkMOdeToggle = () => {
         setDakToggle(!darkToggle)
     };
     const ClickDropdown = () => {
         setDropdownToggle(!dropdownToggle);
         console.log(dropdownToggle)
+    };
+    // Logout 
+    const logout = async () => {
+        let token = sessionStorage.getItem('token')
+        if (token) {
+            axios.post(`${process.env.REACT_APP_BASEURL}/auth/logout`, {},
+                {
+                    headers: {
+                        "token": ` ${token}`
+                    }
+                })
+                .then((res: any) => {
+                    setMsg(res?.data?.message);
+                    setError(true);
+                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('paylode');
+                    setTimeout(() => {
+                        setError(false)
+                        navigate("/");
+                    }, 1000)
+                })
+                .catch((err) => console.log(err))
+        } else {
+            console.log("token require")
+        }
     };
     return (
 
@@ -48,12 +80,26 @@ const Navbar: FC<NavbarProps> = () => {
                         </div>
                         <div className='w-8 h-8 rounded-[50%] cursor-pointer border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center relative'> <BiBell className='hover:text-blue-500' /><p className='absolute h-2 w-2 bg-red-600 rounded-full top-1 right-2'></p>
                         </div>
-                        <div className='w-12 h-12 rounded-[50%] bg-slate-100 border-[2px] p-[2px] border-blue-500 cursor-pointer'>
-                            <img src={avatar} alt="" />
+                        <div className='w-12 group h-12 rounded-[50%] bg-slate-100 border-[2px] p-[2px] border-blue-500 cursor-pointer'>
+                            <img
+                                src={url?.url ? `${process.env.REACT_APP_BASEURL}/` + url?.url : url?.gender === 'male' ? Avatar : Avatar_f}
+                                // src={avatar}
+                                alt="" />
+
+                            {/*  My Profile */}
+                            <div className='absolute group-hover:block hidden w-[200px] py-2 bg-white border rounded-md top-[63px] right-[120px]'>
+                                <div onClick={() => setOpenProfile(!openProfile)} className="flex h-7 cursor-pointer hover:text-white items-center px-2 hover:bg-blue-300 justify-between">
+                                    <p>Profile</p>
+                                    <CgProfile />
+                                </div>
+                                <div onClick={logout} className="flex h-7 cursor-pointer hover:text-white items-center px-2 hover:bg-red-600 justify-between">
+                                    <p>Logout</p>
+                                    <BiLogOutCircle />
+                                </div>
+                            </div>
                         </div>
                         <button className='bg-blue-600 py-1 px-4 text-white'>SHARE</button>
                     </div>
-
                     <FaBars className='hidden max-[950px]:block cursor-pointer' onClick={() => setNavbarToggle(!navbarToggle)} />
                 </div>
                 {navbarToggle &&
@@ -90,6 +136,7 @@ const Navbar: FC<NavbarProps> = () => {
                         </div>
                     </div>}
             </div>
+            <Profile setOpen={setOpenProfile} open={openProfile} />
         </>
     );
 }

@@ -1,4 +1,4 @@
-import { FC, SetStateAction ,useContext} from 'react';
+import { FC, SetStateAction, useContext } from 'react';
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -14,8 +14,7 @@ interface CreateWorkSpaceProps {
 const CreateWorkSpace: FC<CreateWorkSpaceProps> = ({ open, setOpen }) => {
     const [name, setName] = useState("");
     const [visibility, setVisibility] = useState("");
-    const {loader, setLoader} = useContext(MyContext);
-
+    const { loader, setLoader } = useContext(MyContext);
     const postData = () => {
         http({
             method: "post",
@@ -38,8 +37,6 @@ const CreateWorkSpace: FC<CreateWorkSpaceProps> = ({ open, setOpen }) => {
     const cancelButtonRef = useRef(null);
     return (
         <>
-
-
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                     <Transition.Child
@@ -142,9 +139,9 @@ const CreateWorkSpace: FC<CreateWorkSpaceProps> = ({ open, setOpen }) => {
                                                 </div>
                                             </div>
                                             <button
-                                                className="px-4 py-2 bg-blue-500 rounded-md text-xs font-medium text-white mt-3
-           "
-                                            onClick={postData}
+                                                className={`px-4 py-2  ${name.length === 0 ? 'bg-slate-300' : ' bg-blue-600'} rounded-md text-xs font-medium text-white mt-3`}
+                                                onClick={postData}
+                                                disabled={name.length === 0 ? true : false}
                                             >
                                                 Create Workspace
                                             </button>

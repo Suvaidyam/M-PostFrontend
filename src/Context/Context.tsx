@@ -57,6 +57,8 @@ interface ContextValue {
     setNewEnvironment: React.Dispatch<React.SetStateAction<any>>, 
     globalLoader: any
     setGlobalLoader: React.Dispatch<React.SetStateAction<any>>, 
+    url: any,
+    setUrl: React.Dispatch<React.SetStateAction<any>>, 
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -108,6 +110,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     // Set Environment Data 
     const [newEnvironment, setNewEnvironment] = useState<any>([]);
     const [globalLoader, setGlobalLoader] = useState(false);
+    const [url, setUrl] = useState();
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -165,7 +168,9 @@ const Context: FC<ContextProps> = ({ children }) => {
         newEnvironment,
         setNewEnvironment,
         globalLoader,
-        setGlobalLoader
+        setGlobalLoader,
+        url,
+        setUrl
     };
 
     return (
