@@ -7,6 +7,8 @@ import { TbUpload } from 'react-icons/tb';
 import { Dialog, Transition } from '@headlessui/react'
 import Avatar from '../../Assets/avatar.png'
 import Avatar_f from '../../Assets/avatar-f.jpg'
+import { toast } from 'react-toastify';
+import { AnyAaaaRecord } from 'dns';
 interface ProfileProps {
     open: any
     setOpen: any
@@ -14,18 +16,18 @@ interface ProfileProps {
 
 const Profile: FC<ProfileProps> = ({ open, setOpen }) => {
     const cancelButtonRef = useRef(null)
-    const [file, setfile] = useState<any>(null)
+    const [file, setFile] = useState<any>(null)
     const { setMsg, setError, setStatus, url, setUrl } = useContext(MyContext)
     const [isLoading, setLoading] = useState(false);
-    const [picAction, setpicAction] = useState(true)
-    const paylode: any = sessionStorage.getItem('paylode');
-    const parsedPaylode = paylode ? JSON.parse(paylode) : null;
-    const _id = parsedPaylode ? parsedPaylode._id : null;
+    const [picAction, septicAction] = useState(true)
+    const payload: any = sessionStorage.getItem('paylode');
+    const parsedPayload = payload ? JSON.parse(payload) : null;
+    const _id = parsedPayload ? parsedPayload._id : null;
 
     const Upload = () => {
         const body = new FormData()
         body.append('file', file)
-
+        console.log(body)
         http({
             method: "put",
             url: `${process.env.REACT_APP_BASEURL}/employee/updateImage/${_id}`,
@@ -34,7 +36,10 @@ const Profile: FC<ProfileProps> = ({ open, setOpen }) => {
             setMsg(res.data.message)
             setStatus(res.status)
             setError(true)
-            setpicAction(!picAction)
+            septicAction(!picAction)
+            setOpen(false)
+            console.log(res)
+            toast.success(res.data.message)
         }).catch((error) => {
             setMsg(error.response.data.message)
             setStatus(error.response.status)
@@ -65,7 +70,7 @@ const Profile: FC<ProfileProps> = ({ open, setOpen }) => {
             method: "delete",
             url: `${process.env.REACT_APP_BASEURL}/employee/deletePhoto`,
         }).then((res) => {
-            setpicAction(!picAction)
+            septicAction(!picAction)
             setMsg(res.data.message)
             setStatus(res.status)
             setError(true)
@@ -138,12 +143,12 @@ const Profile: FC<ProfileProps> = ({ open, setOpen }) => {
                                                     <label htmlFor="file" className='cursor-pointer flex items-center gap-2 hover:text-blue-600'>
                                                         <TbUpload /> Upload picture
                                                         <input type="file" id='file' className='h-0 w-0'
-                                                            onChange={(e: any) => setfile(e.target.files[0])}
-                                                        // onChange={(e) => {
-                                                        //     if (e.target.files?.length > 0) {
-                                                        //         setfile(e.target.files[0]);
-                                                        //     }
-                                                        // }}
+                                                            // onChange={(e: any) => setFile(e.target.files[0])}
+                                                            onChange={(e: any) => {
+                                                                if (e?.target?.files?.length > 0) {
+                                                                    setFile(e?.target?.files[0]);
+                                                                }
+                                                            }}
 
                                                         />
                                                     </label>
@@ -152,8 +157,7 @@ const Profile: FC<ProfileProps> = ({ open, setOpen }) => {
                                                 </div>
                                             </div>
                                             <div className="w-full flex justify-between px-3">
-                                                <button className='border px-8 py-1 rounded-md font-medium 
-                    hover:bg-blue-500 hover:text-white' onClick={Upload}>Save</button>
+                                                <button className='border px-8 py-1 rounded-md font-medium hover:bg-blue-500 hover:text-white' onClick={Upload}>Save</button>
                                                 <button className='border px-8 py-1 rounded-md font-medium hover:bg-blue-500 hover:text-white'
                                                     onClick={() => setOpen(false)}
                                                 >Close</button>

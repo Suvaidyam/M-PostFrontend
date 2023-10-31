@@ -12,20 +12,17 @@ interface RightBarProps { }
 const RightBar: FC<RightBarProps> = () => {
     const { darkToggle } = useContext(MyContext);
     const [open, setOpen] = useState(false);
-    const togglePopup = () => {
-        setOpen(!open)
-    }
-    console.log()
+    const [code, setCode] = useState(false);
 
     return (
         <>
             <div className={`flex border-l-[1.5px] flex-col items-center justify-center gap-5 h-full bg-white py-1.5 relative ${darkToggle === true ? 'bg-slate-800 text-white opacity-80' : ''}`}>
                 <div className="flex flex-col justify-between h-full ">
                     <div>
-                        <div onClick={togglePopup} className="cursor-pointer flex justify-center items-center mt-2 gap-1">
+                        <div onClick={()=>setOpen(!open)} className="cursor-pointer flex justify-center items-center mt-2 gap-1">
                             <AiOutlineEye className="text-gray-600 w-8 h-8 p-2 rounded-md hover:bg-blue-200 hover:text-blue-600" />
                         </div>
-                        <div className="cursor-pointer flex justify-center items-center mt-1 gap-1">
+                        <div onClick={() => setCode(!code)} className="cursor-pointer flex justify-center items-center mt-1 gap-1">
                             <BsCode className="text-gray-600 w-8 h-8 p-2 rounded-md hover:bg-blue-200 hover:text-blue-600" />
                         </div>
                     </div>
@@ -50,7 +47,7 @@ const RightBar: FC<RightBarProps> = () => {
                 </div>
             </div>
             <SetEnvironment open={open} setOpen={setOpen} />
-            {/* <SetCode open={open} setOpen={setOpen} /> */}
+            <SetCode open={code} setOpen={setCode} />
         </>
     );
 }

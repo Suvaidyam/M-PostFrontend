@@ -45,7 +45,6 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             method: "delete",
         })
             .then((res) => {
-                console.log(res)
                 setLoader(!loader);
                 toast.success(res.data.message);
             })
@@ -55,7 +54,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
     };
     return (
         <>
-            <Menu as="div" className="relative z-50 inline-block text-left">
+            <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button className="flex items-center h-full">
                         <span><BiDotsHorizontalRounded className='text-lg text-black' /></span>

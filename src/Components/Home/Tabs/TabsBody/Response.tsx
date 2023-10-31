@@ -19,14 +19,12 @@ type Props = {
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const { tabData, collection, setCollection } = useContext(MyContext);
-    console.log(tabData)
+    const { tabData} = useContext(MyContext);
     const [body, setBody] = useState<boolean>(true);
     const [header, setHeader] = useState<boolean>(false);
     const [responseData, setResponseData] = useState([]);
     const currentActive = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
 
-    // console.log(currentActive)
     const errorData = {
         error: apiResponse?.data
     }
@@ -50,7 +48,6 @@ export default function Response({ apiResponse, isLoading }: Props) {
             .then((res: any) => {
                 toast.success('Save Successfully')
                 setResponseData(apiResponse.data)
-                // console.log(responseData)
             })
     }
     const getResponse = () => {
@@ -62,7 +59,6 @@ export default function Response({ apiResponse, isLoading }: Props) {
         })
             .then((res) => {
                 setResponseData(res.data.collection[1].details.response);
-                console.log(res.data.collection)
             })
             .catch((err) => {
                 console.log(err);
@@ -77,11 +73,9 @@ export default function Response({ apiResponse, isLoading }: Props) {
 
 
 
-    // console.log("apiResponse", apiResponse);
     let headers = apiResponse?.headers;
     const getStatusElem = (res: any) => {
         if (res) {
-            // console.log(typeof res.status, res.status);
             if (res.status < 300) {
                 return <span className="text-green-600">{res.status}</span>;
             } else if (res.status >= 300 && res.status < 500) {

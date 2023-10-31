@@ -45,7 +45,6 @@ const SetEnvironment: FC<SetEnvironmentProps> = ({ open, setOpen }) => {
             .catch((err) => {
                 console.log(err);
                 setLoader(false);
-
             });
     };
 

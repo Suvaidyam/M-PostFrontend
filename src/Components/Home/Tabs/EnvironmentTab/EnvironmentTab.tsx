@@ -28,6 +28,9 @@ interface Colors {
 function EnvironmentTab({ }: Props) {
     const { collection, setStatus, setMsg, setError, tabData, setTabData, currentActive, tabsList, setTabsList, setCurrentActive, loader, setLoader } = useContext(MyContext);
     const [effect, setEffect] = useState(false);
+    const [copied, setCopied] = useState(false);
+    const [copyData, setCopyData] = useState({});
+    const [url, setUrl] = useState({});
     const buttonRef: any = useRef();
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
@@ -111,6 +114,40 @@ function EnvironmentTab({ }: Props) {
     const deleteData = (indexToDelete: any) => {
         console.log(indexToDelete)
     };
+    // Copy Function 
+    const copyToClipboard = (e: any) => {
+        setCopyData(e?.details?.body)
+        const textToCopy = JSON.stringify(copyData);
+        setCopied(true);
+        navigator.clipboard.writeText(textToCopy).then(
+            () => {
+                toast.success("Text Copied")
+            },
+            (err) => {
+                console.error(err);
+            }
+        );
+        // setTimeout(() => {
+            setCopied(false);
+        // }, 500);
+    };
+
+    const copyUrl = (e: string) => {
+        setUrl(e)
+        const textToCopy = JSON.stringify(url);
+        setCopied(true);
+        navigator.clipboard.writeText(textToCopy).then(
+            () => {
+                toast.success("Text Copied")
+            },
+            (err) => {
+                console.error(err);
+            }
+        );
+        // setTimeout(() => {
+            setCopied(false);
+        // }, 500);
+    };
     return (
         <>
             <Scrollbars className="w-full h-[83vh] min-h-[79vh] scrollbar-hide overflow-y-scroll bg-white ">
@@ -135,14 +172,14 @@ function EnvironmentTab({ }: Props) {
                                                 </div>
                                                 <div className='w-full h-10 px-2 flex items-center group justify-between rounded text-gray-800 bg-gray-100'>
                                                     {view.details.url}
-                                                    <GoCopy className='cursor-pointer hidden group-hover:block' />
+                                                    <GoCopy onClick={() => copyUrl(view?.details?.url)} className='cursor-pointer hidden group-hover:block' />
                                                 </div>
                                                 <div>
                                                     <div className='text-2xl mt-2 font-semibold'>Body</div>
                                                     <div className="w-full mt-2 py-1  px-2 border">
                                                         <div className='flex justify-between py-1'>
                                                             <p className='py-2 px-5 font-semibold bg-gray-100 text-xs'>JSON</p>
-                                                            <p><GoCopy className='text-xl cursor-pointer' /></p>
+                                                            <p><GoCopy onClick={() => copyToClipboard(view)} className='text-xl cursor-pointer' /></p>
                                                         </div>
                                                         <div className='w-full h-auto'>
                                                             {view?.details?.body === null ?

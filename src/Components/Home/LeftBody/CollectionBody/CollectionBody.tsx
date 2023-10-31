@@ -3,7 +3,6 @@ import { FcFolder } from 'react-icons/fc';
 import { BiCaretRight, BiCaretDown, BiDotsHorizontalRounded } from "react-icons/bi";
 import { MyContext } from '../../../../Context/Context';
 import MoreAction from '../MoreAction/MoreAction';
-import RequestAction from '../MoreAction/RequestAction/RequestAction';
 import BodyHead from '../../BodyHead/BodyHead';
 import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
@@ -58,7 +57,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
         ce.openRequest = !ce.openRequest;
         setArray([...array]);
         setOpenRequestId(ce);
-        setActiveOption(ce);        
+        setActiveOption(ce);
     };
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";

@@ -143,7 +143,7 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
                                         {e.toggle ? (
                                             ''
                                         ) : (
-                                            <div className={`w-full h-7 relative group flex justify-between  bg-opacity-60 py-1 px-2 ${currentActive?._id === ce?._id ? 'bg-gray-300' : 'hover:bg-gray-100'}`}>
+                                            <div className={`w-full h-7 relative group flex justify-between  bg-opacity-60 py-1  ${currentActive?._id === ce?._id ? 'bg-gray-300' : 'hover:bg-gray-100'}`}>
                                                 <div className="flex items-center gap-2 w-full group-hover:w-[73%] cursor-pointer"
                                                     onClick={() => handleRequest(ce)}
                                                 >
@@ -162,7 +162,7 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
                                                                 <IconButton
                                                                     onClick={() => deleteHistory(ce)}
                                                                 >
-                                                                    <MdDelete className="cursor-pointer hidden group-hover:block text-red-500 text-xl" />
+                                                                    <MdDelete className="cursor-pointer mr-2 hidden group-hover:block text-red-500 text-xl" />
                                                                 </IconButton>
                                                             </Tooltip>
                                                         </div>
