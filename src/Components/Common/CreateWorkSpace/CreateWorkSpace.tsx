@@ -1,4 +1,4 @@
-import { FC, SetStateAction, useContext } from 'react';
+import { FC, SetStateAction, useContext, useEffect } from 'react';
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -15,6 +15,7 @@ const CreateWorkSpace: FC<CreateWorkSpaceProps> = ({ open, setOpen }) => {
     const [name, setName] = useState("");
     const [visibility, setVisibility] = useState("");
     const { loader, setLoader } = useContext(MyContext);
+    const cancelButtonRef = useRef(null);
     const postData = () => {
         http({
             method: "post",
@@ -34,7 +35,6 @@ const CreateWorkSpace: FC<CreateWorkSpaceProps> = ({ open, setOpen }) => {
                 console.log(err)
             });
     };
-    const cancelButtonRef = useRef(null);
     return (
         <>
             <Transition.Root show={open} as={Fragment}>

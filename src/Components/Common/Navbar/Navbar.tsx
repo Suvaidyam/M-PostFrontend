@@ -76,23 +76,24 @@ const Navbar: FC<NavbarProps> = () => {
                             <input className='w-48 border-2 py-2 rounded-sm outline-none bg-gray-100 pl-2 pr-5 text-xs text-gray-600' type="text" placeholder='Search..' />
                             <FiSearch className='absolute right-1  top-3' />
                         </div>
-                        <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center'><HiOutlineMoon onClick={DarkMOdeToggle} className='hover:text-blue-500' />
+                        <div className='w-8 h-8 rounded-full border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center'><HiOutlineMoon onClick={DarkMOdeToggle} className='hover:text-blue-500' />
                         </div>
-                        <div className='w-8 h-8 rounded-[50%] cursor-pointer border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center relative'> <BiBell className='hover:text-blue-500' /><p className='absolute h-2 w-2 bg-red-600 rounded-full top-1 right-2'></p>
+                        <div className='w-8 h-8 rounded-full cursor-pointer border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center relative'> <BiBell className='hover:text-blue-500' /><p className='absolute h-2 w-2 bg-red-600 rounded-full top-1 right-2'></p>
                         </div>
-                        <div className='w-12 group h-12 rounded-[50%] bg-slate-100 border-[2px] p-[2px] border-blue-500 cursor-pointer'>
+                        <div className='w-12 group h-12 rounded-full bg-slate-100 border-[2px] p-[2px] border-blue-500 cursor-pointer'>
                             <img
+                                className='rounded-full'
                                 src={url?.url ? `${process.env.REACT_APP_BASEURL}/` + url?.url : url?.gender === 'male' ? Avatar : Avatar_f}
                                 // src={avatar}
                                 alt="" />
 
                             {/*  My Profile */}
                             <div className='absolute group-hover:block hidden w-[200px] py-2 bg-white border rounded-md top-[63px] right-[120px]'>
-                                <div onClick={() => setOpenProfile(!openProfile)} className="flex h-7 cursor-pointer hover:text-white items-center px-2 hover:bg-blue-300 justify-between">
+                                <div onClick={() => setOpenProfile(!openProfile)} className="flex h-7 cursor-pointer hover:text-white items-center px-2  duration-300 hover:bg-blue-300 justify-between">
                                     <p>Profile</p>
                                     <CgProfile />
                                 </div>
-                                <div onClick={logout} className="flex h-7 cursor-pointer hover:text-white items-center px-2 hover:bg-red-600 justify-between">
+                                <div onClick={logout} className="flex h-7 cursor-pointer hover:text-white duration-300 items-center px-2 hover:bg-red-600 justify-between">
                                     <p>Logout</p>
                                     <BiLogOutCircle />
                                 </div>

@@ -13,7 +13,7 @@ const Home: FC<HomeProps> = () => {
     const { darkToggle, slide } = useContext(MyContext);
     return (
         <>
-            <div className={`w-full h-screen ${darkToggle === true ? 'bg-slate-950 text-white opacity-80' : ''} fixed`}>
+            <div className={`w-full h-screen ${darkToggle === true ? 'bg-slate-950 text-white opacity-80' : ''} fixed z-0`}>
                 <Navbar />
                 <div className='w-full h-full pt-20 flex'>
                     {/* ======= Left Body ========= */}
@@ -22,7 +22,7 @@ const Home: FC<HomeProps> = () => {
                             {/* =========== Left Body Top ============== */}
                             <MyWorkSpace />
                         </div>
-                        <div className='w-full h-full -z-20 flex'>
+                        <div className='w-full h-full z-0 flex'>
                             <div className='w-[30%] border-r'>
                                 <LeftBar />
                             </div>

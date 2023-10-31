@@ -62,9 +62,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     }
     return (
         <>
-
-
-
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button className="flex items-center h-full">
@@ -130,7 +127,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                     </Menu.Items>
                 </Transition>
             </Menu>
-            {openModel === true ? <CreateWorkSpace open={openModel} setOpen={setOpenModel} /> : null}
+            <CreateWorkSpace open={openModel} setOpen={setOpenModel} />
         </>
     );
 };

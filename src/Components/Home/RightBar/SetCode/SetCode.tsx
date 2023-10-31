@@ -6,24 +6,12 @@ import copy from 'clipboard-copy';
 
 
 interface SetCodeProps {
-    open:any,
-    setOpen:any
- }
+    open: any,
+    setOpen: any
+}
 
 const SetCode: FC<SetCodeProps> = ({ open, setOpen }) => {
     const cancelButtonRef = useRef(null);
-    const [isCopied, setIsCopied] = useState(false);
-
-    const handleCopyClick = async () => {
-        const textToCopy = 'Hello, world!'; // Replace with the text you want to copy
-        try {
-            await copy(textToCopy);
-            setIsCopied(true);
-        } catch (error) {
-            console.error('Copy to clipboard failed: ', error);
-        }
-    };
-
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -52,11 +40,7 @@ const SetCode: FC<SetCodeProps> = ({ open, setOpen }) => {
                                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                             >
                                 <Dialog.Panel className="">
-                                    <div className="w-[710px] border bg-gray-50 shadow-inner rounded-md  py-5 px-6 flex flex-col justify-between">
-                                        <div>
-                                            <button onClick={handleCopyClick}>Copy to Clipboard</button>
-                                            {isCopied && <p>Text copied to clipboard!</p>}
-                                        </div>
+                                    <div className="w-[710px] h-[400px] border bg-gray-50 shadow-inner rounded-md  py-5 px-6 flex flex-col justify-between">
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
