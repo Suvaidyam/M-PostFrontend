@@ -90,7 +90,7 @@ function EnvironmentTab({ }: Props) {
     const handleSubmit = (values: { items: any }): any => {
         http({
             method: "put",
-            url: `http://localhost:4000/environment/${currentActive}`,
+            url: `${process.env.REACT_APP_BASEURL}/environment/${currentActive}`,
             data: {
                 details: values.items
             }

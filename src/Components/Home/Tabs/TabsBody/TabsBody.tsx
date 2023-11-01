@@ -17,7 +17,7 @@ function TabsBody({ }: Props) {
       // console.log(workSpace_Id._id)
       http({
         method: "post",
-        url: `http://localhost:4000/history`,
+        url: `${process.env.REACT_APP_BASEURL}/history`,
         data: {
           workspace_id: workSpace_Id._id,
           request_id: topBarData._id,

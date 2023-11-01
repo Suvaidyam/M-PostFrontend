@@ -21,7 +21,7 @@ function NewRequest({ setopen, details }: Props) {
   const Save = () => {
     http({
       method: "post",
-      url: `http://localhost:4000/collection`,
+      url: `${process.env.REACT_APP_BASEURL}/collection`,
       data: {
         name: data?.name,
         parent: data?.parent,

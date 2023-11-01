@@ -98,7 +98,7 @@ export default function TabList({ }: Props) {
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") as string);
         Http({
             method: "get",
-            url: `http://localhost:4000/environment/${workSpace_Id?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
         })
             .then((res) => {
                 setNewEnviroment(res.data.environment);
