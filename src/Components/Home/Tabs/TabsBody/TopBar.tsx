@@ -32,7 +32,7 @@ function TopBar({ onSendClick }: Props) {
     const [renderDropdown, setRenderDropdown] = useState(false)
     const Save = () => {
         http({
-            url: `http://localhost:4000/collection/${tabData._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
             method: "put",
             data: {
                 details: {
@@ -64,7 +64,7 @@ function TopBar({ onSendClick }: Props) {
     const getResponse = () => {
         http({
             method: "get",
-            url: `http://localhost:4000/collection/getById/${currentActive}`,
+            url: `${process.env.REACT_APP_BASEURL}/collection/getById/${currentActive}`,
         })
             .then((res) => {
                 setResponseData(res.data.collection.details);
@@ -90,7 +90,7 @@ function TopBar({ onSendClick }: Props) {
         let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as string);
         http({
             method: "get",
-            url: `http://localhost:4000/environment/${workSpace_Id?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
         })
             .then((res) => {
                 res.data.environment.map((e: any) =>

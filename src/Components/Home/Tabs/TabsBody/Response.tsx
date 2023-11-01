@@ -39,7 +39,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
 
     const SaveResponse = () => {
         http({
-            url: `http://localhost:4000/collection/res/${tabData._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/collection/res/${tabData._id}`,
             method: "put",
             data: apiResponse.data
         })
@@ -51,10 +51,10 @@ export default function Response({ apiResponse, isLoading }: Props) {
     const getResponse = () => {
         http({
             method: "get",
-            url: `http://localhost:4000/collection/getById/${currentActive}`,
+            url: `${process.env.REACT_APP_BASEURL}/collection/getById/${currentActive}`,
         })
             .then((res) => {
-                setResponseData(res.data.collection[1].details.response);
+                setResponseData(res.data.collection.details.response);
             })
             .catch((err) => {
                 console.log(err);
