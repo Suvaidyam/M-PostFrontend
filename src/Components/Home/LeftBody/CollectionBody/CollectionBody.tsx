@@ -30,7 +30,6 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');
-
     const ClickFolder = (id: string) => {
         setToggleFolder(!toggleFolder);
         setActiveFolder(id);

@@ -30,6 +30,7 @@ function EnvironmentTab({ }: Props) {
     const [effect, setEffect] = useState(false);
     const [copied, setCopied] = useState(false);
     const [copyData, setCopyData] = useState({});
+    // console.log(collection)
     const [url, setUrl] = useState({});
     console.log(responseData)
     const buttonRef: any = useRef();
@@ -147,11 +148,11 @@ function EnvironmentTab({ }: Props) {
     };
     return (
         <>
-            <Scrollbars className="w-full h-[83vh] min-h-[79vh] scrollbar-hide overflow-y-scroll bg-white ">
+            <Scrollbars className="w-full h-[100vh] min-h-[79vh] scrollbar-hide overflow-y-scroll bg-white ">
                 {tabData.type === 'folder' ?
                     (
                         <div className="flex justify-center">
-                            <div className='w-1/2 h-full'>
+                            <div className='w-1/2 h-'>
                                 <p className='py-3 font-semibold'>Documentation</p>
                                 <p className="text-2xl font-semibold">{tabData?.name}</p>
                                 {collection?.map((view: any) => (
