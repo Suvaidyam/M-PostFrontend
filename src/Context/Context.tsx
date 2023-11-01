@@ -37,8 +37,6 @@ interface ContextValue {
     setError: React.Dispatch<React.SetStateAction<boolean>>
     status: number
     setStatus: React.Dispatch<React.SetStateAction<number>>
-    responseData: any
-    setResponseData: React.Dispatch<React.SetStateAction<any>>
     changeAction: any
     setchangeAction: React.Dispatch<React.SetStateAction<any>>
     topBarData: any
@@ -110,7 +108,6 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [newEnvironment, setNewEnvironment] = useState<any>([]);
     const [globalLoader, setGlobalLoader] = useState(false);
     const [url, setUrl] = useState();
-    const [responseData, setResponseData] = useState<string[] | null>(null);
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -149,8 +146,6 @@ const Context: FC<ContextProps> = ({ children }) => {
         setError,
         status,
         setStatus,
-        responseData,
-        setResponseData,
         changeAction,
         setchangeAction,
         topBarData,

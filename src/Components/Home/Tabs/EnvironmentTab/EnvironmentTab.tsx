@@ -26,13 +26,12 @@ interface Colors {
 }
 
 function EnvironmentTab({ }: Props) {
-    const { collection, setStatus, setMsg, setError, tabData, setTabData, currentActive, tabsList, setTabsList, setCurrentActive, loader, setLoader, responseData } = useContext(MyContext);
+    const { collection, setStatus, setMsg, setError, tabData, setTabData, currentActive, tabsList, setTabsList, setCurrentActive, loader, setLoader } = useContext(MyContext);
     const [effect, setEffect] = useState(false);
     const [copied, setCopied] = useState(false);
     const [copyData, setCopyData] = useState({});
-    // console.log(collection)
     const [url, setUrl] = useState({});
-    console.log(responseData)
+    console.log(collection)
     const buttonRef: any = useRef();
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
@@ -188,6 +187,22 @@ function EnvironmentTab({ }: Props) {
                                                                 :
                                                                 <pre>
                                                                     {JSON.stringify(view?.details?.body, null, 2)}
+                                                                </pre>}
+                                                        </div>
+                                                    </div>
+                                                    {/* ========== Response =========== */}
+                                                    <p>Response</p>
+                                                    <div className="w-full mt-2 py-1  px-2 border">
+                                                        <div className="w-full flex justify-end"><GoCopy onClick={() => copyToClipboard(view)} className='text-xl cursor-pointer' /></div>
+                                                        <div className='w-full break-all'>
+                                                            {view?.details?.response === null ?
+                                                                <pre>
+                                                                    &#123;
+                                                                    &#125;
+                                                                </pre>
+                                                                :
+                                                                <pre>
+                                                                    {JSON.stringify(view?.details?.response, null, 2)}
                                                                 </pre>}
                                                         </div>
                                                     </div>
