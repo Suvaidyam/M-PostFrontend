@@ -89,7 +89,7 @@ const Navbar: FC<NavbarProps> = () => {
 
                             {/*  My Profile */}
                             <div className='absolute group-hover:block hidden w-[200px] py-2 bg-white border rounded-md top-[63px] right-[120px]'>
-                                <div onClick={() => setOpenProfile(!openProfile)} className="flex h-7 cursor-pointer hover:text-white items-center px-2  duration-300 hover:bg-blue-300 justify-between">
+                                <div onClick={() => setOpenProfile(!openProfile)} className="flex h-7 cursor-pointer hover:text-white items-center px-2  duration-300 hover:bg-blue-400 justify-between">
                                     <p>Profile</p>
                                     <CgProfile />
                                 </div>

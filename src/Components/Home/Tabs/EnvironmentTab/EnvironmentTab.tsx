@@ -26,11 +26,12 @@ interface Colors {
 }
 
 function EnvironmentTab({ }: Props) {
-    const { collection, setStatus, setMsg, setError, tabData, setTabData, currentActive, tabsList, setTabsList, setCurrentActive, loader, setLoader } = useContext(MyContext);
+    const { collection, setStatus, setMsg, setError, tabData, setTabData, currentActive, tabsList, setTabsList, setCurrentActive, loader, setLoader, responseData } = useContext(MyContext);
     const [effect, setEffect] = useState(false);
     const [copied, setCopied] = useState(false);
     const [copyData, setCopyData] = useState({});
     const [url, setUrl] = useState({});
+    console.log(responseData)
     const buttonRef: any = useRef();
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
@@ -122,31 +123,27 @@ function EnvironmentTab({ }: Props) {
         navigator.clipboard.writeText(textToCopy).then(
             () => {
                 toast.success("Text Copied")
+                setCopied(false);
             },
             (err) => {
                 console.error(err);
             }
         );
-        // setTimeout(() => {
-            setCopied(false);
-        // }, 500);
     };
 
     const copyUrl = (e: string) => {
         setUrl(e)
         const textToCopy = JSON.stringify(url);
-        setCopied(true);
+        // setCopied(true);
         navigator.clipboard.writeText(textToCopy).then(
             () => {
                 toast.success("Text Copied")
+                // setCopied(false);
             },
             (err) => {
                 console.error(err);
             }
         );
-        // setTimeout(() => {
-            setCopied(false);
-        // }, 500);
     };
     return (
         <>

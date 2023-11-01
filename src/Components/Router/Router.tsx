@@ -5,6 +5,8 @@ import Register from '../Auth/Register/Register';
 import DataProvider from '..//..//Context//Context'
 import Protected from './ProtectedRouter/Protected';
 import Home from '../Home/Home';
+import Report from '../Home/Report/Report';
+import Explore from '../Home/Explore/Explore';
 
 interface RouterProps { }
 
@@ -18,8 +20,8 @@ const Router: FC<RouterProps> = () => {
                         <Route path='/register' element={<Register />} />
                         {/* <Route path='*' element={<Login />} /> */}
                         <Route path='/workspace' element={<Protected Component={<Home />} />} />
-                        {/* <Route path='/reports' element={<Reports />} />
-                        <Route path='/explore' element={<Explore />} /> */}
+                        <Route path='/reports' element={<Report />} />
+                        <Route path='/explore' element={<Explore />} />
                     </Routes>
                 </DataProvider>
             </BrowserRouter>
