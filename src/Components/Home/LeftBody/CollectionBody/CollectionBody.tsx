@@ -1,6 +1,6 @@
 import { useContext, useEffect, type FC, useState } from 'react';
 import { FcFolder } from 'react-icons/fc';
-import { BiCaretRight, BiCaretDown, BiDotsHorizontalRounded } from "react-icons/bi";
+import { BiCaretRight, BiCaretDown } from "react-icons/bi";
 import { MyContext } from '../../../../Context/Context';
 import MoreAction from '../MoreAction/MoreAction';
 import BodyHead from '../../BodyHead/BodyHead';
@@ -125,52 +125,54 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                 </>
             ) : (
                 <>
-
-                    {newArray?.map((e: any) => (
-                        <div key={e._id} >
-                            <div className='flex gap-2 relative group justify-between border-b h-9 items-center cursor-pointer'>
-                                <div className='w-[80%] justify-start flex truncate'>
-                                    <div onClick={() => ClickFolder(e._id)} className='w-10 h-full flex items-center justify-center text-lg'>
-                                        {(toggleFolder === true && e._id === activeFolder) ? <BiCaretDown /> : < BiCaretRight />}
+                    {collection.length === 0 ? <div className='flex h-full justify-center items-center'>Collection not found</div> : <>
+                        {newArray?.map((e: any) => (
+                            <div key={e._id} >
+                                <div className='flex gap-2 relative group justify-between border-b h-9 items-center cursor-pointer'>
+                                    <div className='w-[80%] justify-start flex truncate'>
+                                        <div onClick={() => ClickFolder(e._id)} className='w-10 h-full flex items-center justify-center text-lg'>
+                                            {(toggleFolder === true && e._id === activeFolder) ? <BiCaretDown /> : < BiCaretRight />}
+                                        </div>
+                                        <div className='text-xl pr-2'>
+                                            <FcFolder />
+                                        </div>
+                                        <div className='text-sm'>
+                                            {e.name}
+                                        </div>
                                     </div>
-                                    <div className='text-xl pr-2'>
-                                        <FcFolder />
-                                    </div>
-                                    <div className='text-sm'>
-                                        {e.name}
+                                    <div onClick={() => ClickOption(e)} className={`${activeOption._id !== e._id ? 'hidden group-hover:block' : 'block'}   absolute right-2`}>
+                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' />
                                     </div>
                                 </div>
-                                <div onClick={() => ClickOption(e)} className={`${activeOption._id !== e._id ? 'hidden group-hover:block' : 'block'}   absolute right-2`}>
-                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' />
-                                </div>
-                            </div>
-                            {(toggleFolder === true && e._id === activeFolder) &&
-                                <div className=" w-full">
-                                    {collection?.map((ce: any) => (
-                                        <div key={ce._id}>
-                                            {e._id === ce.parent && (
-                                                <div className={`w-full relative group flex cursor-pointer py-1 px-2 
+                                {(toggleFolder === true && e._id === activeFolder) &&
+                                    <div className=" w-full">
+                                        {collection?.map((ce: any) => (
+                                            <div key={ce._id}>
+                                                {e._id === ce.parent && (
+                                                    <div className={`w-full relative group flex cursor-pointer py-1 px-2 
                                                         ${e._id === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
-                                                    <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
-                                                        <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
-                                                            }-600 w-[70px] min-w-[70px] flex justify-end`} >
-                                                            {getDetails(ce?.details).method}
-                                                        </p>
-                                                        <p className="text-xs text-gray-600 font-normal truncate">
-                                                            {ce.name}
-                                                        </p>
-                                                    </div>
-                                                    <div className="">
-                                                        <div onClick={() => openRequest(ce)} className='mb-3 pb-5 hidden group-hover:block absolute right-2'>
-                                                            <MoreAction openRequestId={openRequestId} ViewDocumentation={null} deleteId={openRequestId} collection='collection' />
+                                                        <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
+                                                            <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
+                                                                }-600 w-[70px] min-w-[70px] flex justify-end`} >
+                                                                {getDetails(ce?.details).method}
+                                                            </p>
+                                                            <p className="text-xs text-gray-600 font-normal truncate">
+                                                                {ce.name}
+                                                            </p>
                                                         </div>
-                                                    </div>
-                                                </div>)}
-                                        </div>))}
-                                </div>
-                            }
-                        </div>
-                    ))}
+                                                        <div className="">
+                                                            <div onClick={() => openRequest(ce)} className='mb-3 pb-5 hidden group-hover:block absolute right-2'>
+                                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={null} deleteId={openRequestId} collection='collection' />
+                                                            </div>
+                                                        </div>
+                                                    </div>)}
+                                            </div>))}
+                                    </div>
+                                }
+                            </div>
+                        ))}
+                    </>}
+
                 </>
             )}
 

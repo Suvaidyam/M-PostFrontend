@@ -10,7 +10,6 @@ interface QueryFormProps {
 
 const QueryForm: FC<QueryFormProps> = ({ data, setData, params }) => {
     const [rows, addRows] = useState([0]);
-  console.log(data)
     return (
         <>
             <div className="px-3  h-44">

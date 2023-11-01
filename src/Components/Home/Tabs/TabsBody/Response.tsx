@@ -18,10 +18,9 @@ type Props = {
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const { tabData} = useContext(MyContext);
+    const { tabData, responseData, setResponseData } = useContext(MyContext);
     const [body, setBody] = useState<boolean>(true);
     const [header, setHeader] = useState<boolean>(false);
-    const [responseData, setResponseData] = useState<string[] | null>(null);
     const currentActive = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
 
     const errorData = {
@@ -130,7 +129,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                             >
                                                 Body
                                             </span>
-                                
+
                                         </div>
                                         <div className="px-2 flex items-center gap-5">
                                             <span className="text-gray-800 text-sm font-medium">
@@ -141,8 +140,8 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                                     <b>Status:</b>
                                                     {getStatusElem(apiResponse)}
                                                 </span>
-                                               
-                                              </pre>
+
+                                            </pre>
                                         </div>
                                     </div>
                                     <ReactJson

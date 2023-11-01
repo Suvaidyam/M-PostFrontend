@@ -96,7 +96,6 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [Msg, setMsg] = useState("");
     const [error, setError] = useState(false);
     const [status, setStatus] = useState<number>(200);
-    const [responseData, setResponseData] = useState([]);
     const [changeAction, setchangeAction] = useState(false);
     const [topBarData, setTopBarData] = useState("");
     // environment active tabs
@@ -111,6 +110,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [newEnvironment, setNewEnvironment] = useState<any>([]);
     const [globalLoader, setGlobalLoader] = useState(false);
     const [url, setUrl] = useState();
+    const [responseData, setResponseData] = useState<string[] | null>(null);
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
