@@ -120,38 +120,41 @@ export default function Response({ apiResponse, isLoading }: Props) {
                             />
                         </div>)
                             :
-                            responseData && typeof responseData === 'object' ?
-                                <div className='break-all'>
-                                    <div className="flex justify-between w-full h-[10%]">
-                                        <div className="px-2 flex items-center  py-1 gap-5">
-                                            <span
-                                                className={`text-sm font-medium cursor-pointer  ${body === true ? "text-blue-600" : "text-gray-800 "}`}
-                                            >
-                                                Body
-                                            </span>
 
-                                        </div>
-                                        <div className="px-2 flex items-center gap-5">
-                                            <span className="text-gray-800 text-sm font-medium">
-                                                <AiOutlineGlobal />
-                                            </span>
-                                            <pre>
-                                                <span className="text-gray-800 text-sm font-medium">
-                                                    <b>Status:</b>
-                                                    {getStatusElem(apiResponse)}
+                            responseData && typeof responseData === 'object' ?
+                                <Scrollbars className="w-full h-[80vh] min-h-[79vh] scrollbar-hide overflow-y-scroll bg-white ">
+                                    <div className='break-all'>
+                                        <div className="flex justify-between w-full h-[10%]">
+                                            <div className="px-2 flex items-center  py-1 gap-5">
+                                                <span
+                                                    className={`text-sm font-medium cursor-pointer  ${body === true ? "text-blue-600" : "text-gray-800 "}`}
+                                                >
+                                                    Body
                                                 </span>
 
-                                            </pre>
+                                            </div>
+                                            <div className="px-2 flex items-center gap-5">
+                                                <span className="text-gray-800 text-sm font-medium">
+                                                    <AiOutlineGlobal />
+                                                </span>
+                                                <pre>
+                                                    <span className="text-gray-800 text-sm font-medium">
+                                                        <b>Status:</b>
+                                                        {getStatusElem(apiResponse)}
+                                                    </span>
+
+                                                </pre>
+                                            </div>
                                         </div>
+                                        <ReactJson
+                                            name={false}
+                                            displayDataTypes={false}
+                                            displayObjectSize={false}
+                                            enableClipboard={false}
+                                            src={responseData}
+                                        />
                                     </div>
-                                    <ReactJson
-                                        name={false}
-                                        displayDataTypes={false}
-                                        displayObjectSize={false}
-                                        enableClipboard={false}
-                                        src={responseData}
-                                    />
-                                </div>
+                                </Scrollbars>
                                 :
                                 <ErrorScreen />
                         }
