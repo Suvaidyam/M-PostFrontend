@@ -18,15 +18,15 @@ const Home: FC<HomeProps> = () => {
                 <div className='w-full h-full pt-20 flex'>
                     {/* ======= Left Body ========= */}
                     <div className='w-[25%] h-full  border-r '>
-                        <div className='w-full h-16  border-b'>
+                        <div className='w-full h-[55px]  max-h-[55px]  min-h-[55px] border-b'>
                             {/* =========== Left Body Top ============== */}
                             <MyWorkSpace />
                         </div>
-                        <div className='w-full h-full z-0 flex'>
+                        <div className='w-full h-full  z-0 flex'>
                             <div className='w-[30%] border-r'>
                                 <LeftBar />
                             </div>
-                            <div className='w-full overflow-y-scroll pb-[66px]'>
+                            <div className='w-full  overflow-y-scroll pb-[60px]'>
                                 <LeftBody />
                             </div>
                         </div>

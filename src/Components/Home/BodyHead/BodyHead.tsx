@@ -1,4 +1,4 @@
-import { type FC} from 'react';
+import { type FC } from 'react';
 import { IoAddSharp } from "react-icons/io5";
 import { motion } from "framer-motion";
 import IconButton from '@mui/material/IconButton';
@@ -13,18 +13,18 @@ const BodyHead: FC<BodyHeadProps> = ({ postData, title }) => {
 
     return (
         <>
-                <div className='relative  flex items-center '>
-                    <SearchBar />
-                    <div className='group relative'>
-                        <motion.div whileTap={{ scale: 0.75 }}>
-                            <Tooltip title={title} arrow>
-                                <IconButton onClick={postData}>
-                                    <IoAddSharp className="text-xl cursor-pointer rounded-sm" />
-                                </IconButton>
-                            </Tooltip>
-                        </motion.div>
-                    </div>
+            <div className='relative  flex items-center '>
+                <SearchBar />
+                <div className='group relative'>
+                    <motion.div whileTap={{ scale: 0.75 }} whileHover={{ scale: 1.1 }} transition={{ duration: 0.2 }}>
+                        <Tooltip title={title} arrow>
+                            <IconButton onClick={postData}>
+                                <IoAddSharp className="text-xl cursor-pointer rounded-sm" />
+                            </IconButton>
+                        </Tooltip>
+                    </motion.div>
                 </div>
+            </div>
         </>
     );
 }

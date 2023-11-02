@@ -18,7 +18,7 @@ const MyWorkSpace: FC<MyWorkSpaceProps> = () => {
     }, [workSpaceId]);
     return (
         <>
-            <div className='w-full h-16 flex justify-between items-center px-2  border-b'>
+            <div className='w-full h-[55px] max-h-[55px] flex justify-between items-center px-2'>
                 <div>
                     {workSpaceName ? (
                         <>{workSpaceName}</>

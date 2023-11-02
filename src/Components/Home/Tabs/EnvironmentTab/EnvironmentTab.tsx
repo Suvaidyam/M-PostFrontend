@@ -10,6 +10,9 @@ import * as Yup from 'yup';
 import { MdDelete } from 'react-icons/md';
 import { GrAdd } from 'react-icons/gr';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
+import JSONView from 'react-json-view';
+
 
 type Props = {}
 interface Details {
@@ -122,8 +125,10 @@ function EnvironmentTab({ }: Props) {
         setCopied(true);
         navigator.clipboard.writeText(textToCopy).then(
             () => {
-                toast.success("Text Copied")
-                setCopied(false);
+                setTimeout(() => {
+                    toast.success("Text Copied");
+                    setCopied(false);
+                }, 500)
             },
             (err) => {
                 console.error(err);
@@ -134,11 +139,13 @@ function EnvironmentTab({ }: Props) {
     const copyUrl = (e: string) => {
         setUrl(e)
         const textToCopy = JSON.stringify(url);
-        // setCopied(true);
+        setCopied(true);
         navigator.clipboard.writeText(textToCopy).then(
             () => {
-                toast.success("Text Copied")
-                // setCopied(false);
+                setTimeout(() => {
+                    toast.success("Text Copied");
+                    setCopied(false);
+                }, 500)
             },
             (err) => {
                 console.error(err);
@@ -147,7 +154,7 @@ function EnvironmentTab({ }: Props) {
     };
     return (
         <>
-            <Scrollbars className="w-full h-[100vh] min-h-[79vh] scrollbar-hide overflow-y-scroll bg-white ">
+            <Scrollbars className="w-full h-[80vh] min-h-[80vh] scrollbar-hide overflow-y-scroll bg-white ">
                 {tabData.type === 'folder' ?
                     (
                         <div className="flex justify-center">
@@ -170,7 +177,13 @@ function EnvironmentTab({ }: Props) {
                                                 {/* ============ Url ============ */}
                                                 <div className='w-full h-10 px-2 flex items-center group justify-between rounded text-gray-800 bg-gray-100'>
                                                     {view.details.url}
-                                                    <GoCopy onClick={() => copyUrl(view?.details?.url)} className='cursor-pointer hidden group-hover:block' />
+
+                                                    <div className='flex items-center'>
+                                                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={{ duration: 0.2 }}>
+                                                            <GoCopy onClick={() => copyUrl(view?.details?.url)} className='cursor-pointer hidden group-hover:block' />
+                                                        </motion.div>
+
+                                                    </div>
                                                 </div>
                                                 <div>
                                                     {/* ========== Body =========== */}
@@ -178,7 +191,11 @@ function EnvironmentTab({ }: Props) {
                                                     <div className="w-full mt-2 py-1  px-2 border">
                                                         <div className='flex justify-between py-1'>
                                                             <p className='py-2 px-5 font-semibold bg-gray-100 text-xs'>JSON</p>
-                                                            <p><GoCopy onClick={() => copyToClipboard(view?.details?.body)} className='text-xl cursor-pointer' /></p>
+                                                            <div>
+                                                                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={{ duration: 0.2 }}>
+                                                                    <GoCopy onClick={() => copyToClipboard(view?.details?.body)} className='text-xl cursor-pointer' />
+                                                                </motion.div>
+                                                            </div>
                                                         </div>
                                                         <div className='w-full h-auto'>
                                                             {view?.details?.body === null ?
@@ -187,15 +204,18 @@ function EnvironmentTab({ }: Props) {
                                                                     &#125;
                                                                 </pre>
                                                                 :
-                                                                <pre>
-                                                                    {JSON.stringify(view?.details?.body, null, 2)}
-                                                                </pre>}
+                                                                <JSONView src={view?.details?.body} theme="monokai" name={null} />
+                                                            }
                                                         </div>
                                                     </div>
                                                     {/* ========== Response =========== */}
                                                     <p>Response</p>
                                                     <div className="w-full mt-2 py-1  px-2 border">
-                                                        <div className="w-full flex justify-end"><GoCopy onClick={() => copyToClipboard(view?.details?.response)} className='text-xl cursor-pointer' /></div>
+                                                        <div className="w-full flex justify-end">
+                                                            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={{ duration: 0.2 }}>
+                                                                <GoCopy onClick={() => copyToClipboard(view?.details?.response)} className='text-xl cursor-pointer' />
+                                                            </motion.div>
+                                                        </div>
                                                         <div className='w-full break-all truncate'>
                                                             {view?.details?.response === null ?
                                                                 <pre>
@@ -203,9 +223,7 @@ function EnvironmentTab({ }: Props) {
                                                                     &#125;
                                                                 </pre>
                                                                 :
-                                                                <pre>
-                                                                    {JSON.stringify(view?.details?.response, null, 2)}
-                                                                </pre>}
+                                                                <JSONView src={view?.details?.response} theme="monokai" name={null} />}
                                                         </div>
                                                     </div>
                                                 </div>
