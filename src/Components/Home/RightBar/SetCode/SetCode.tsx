@@ -1,9 +1,6 @@
 import type { FC } from 'react';
-import { Fragment, useRef, useState, useContext, useEffect } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { RxCross2 } from 'react-icons/rx';
-import copy from 'clipboard-copy';
-
+import { Fragment, useRef, useState, useContext, useEffect } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 
 interface SetCodeProps {
     open: any,
