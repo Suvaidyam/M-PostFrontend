@@ -117,7 +117,7 @@ function EnvironmentTab({ }: Props) {
     };
     // Copy Function 
     const copyToClipboard = (e: any) => {
-        setCopyData(e?.details?.body)
+        setCopyData(e)
         const textToCopy = JSON.stringify(copyData);
         setCopied(true);
         navigator.clipboard.writeText(textToCopy).then(
@@ -167,16 +167,18 @@ function EnvironmentTab({ }: Props) {
                                                     </div>
                                                     <div onClick={() => handleRequest(view)} className="flex gap-1 items-center pr-2 hover:text-blue-700 hover:underline cursor-pointer">Open Request <BsArrowRight /></div>
                                                 </div>
+                                                {/* ============ Url ============ */}
                                                 <div className='w-full h-10 px-2 flex items-center group justify-between rounded text-gray-800 bg-gray-100'>
                                                     {view.details.url}
                                                     <GoCopy onClick={() => copyUrl(view?.details?.url)} className='cursor-pointer hidden group-hover:block' />
                                                 </div>
                                                 <div>
+                                                    {/* ========== Body =========== */}
                                                     <div className='text-2xl mt-2 font-semibold'>Body</div>
                                                     <div className="w-full mt-2 py-1  px-2 border">
                                                         <div className='flex justify-between py-1'>
                                                             <p className='py-2 px-5 font-semibold bg-gray-100 text-xs'>JSON</p>
-                                                            <p><GoCopy onClick={() => copyToClipboard(view)} className='text-xl cursor-pointer' /></p>
+                                                            <p><GoCopy onClick={() => copyToClipboard(view?.details?.body)} className='text-xl cursor-pointer' /></p>
                                                         </div>
                                                         <div className='w-full h-auto'>
                                                             {view?.details?.body === null ?
@@ -193,8 +195,8 @@ function EnvironmentTab({ }: Props) {
                                                     {/* ========== Response =========== */}
                                                     <p>Response</p>
                                                     <div className="w-full mt-2 py-1  px-2 border">
-                                                        <div className="w-full flex justify-end"><GoCopy onClick={() => copyToClipboard(view)} className='text-xl cursor-pointer' /></div>
-                                                        <div className='w-full break-all'>
+                                                        <div className="w-full flex justify-end"><GoCopy onClick={() => copyToClipboard(view?.details?.response)} className='text-xl cursor-pointer' /></div>
+                                                        <div className='w-full break-all truncate'>
                                                             {view?.details?.response === null ?
                                                                 <pre>
                                                                     &#123;
