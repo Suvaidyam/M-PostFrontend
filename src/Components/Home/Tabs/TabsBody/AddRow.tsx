@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react'
-import { MyContext } from '../../../../Context/Context';
+import React, { useContext, useRef, useState } from 'react'
 
 type Props = {
     params: any,
@@ -34,7 +33,7 @@ export default function AddRow({
 }: Props) {
     const [checkCheckbox, setCheckCheckbox] = useState(false);
     const [checkRadio, setCheckRadio] = useState(false);
-    const { tabData } = useContext(MyContext);
+    const [types, setTypes] = useState<string>('text')
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
         if (!checkCheckbox) {
@@ -83,8 +82,12 @@ export default function AddRow({
             });
             setData(newArray)
         }
+
     }
 
+    const handleTypeChange = (e: any) => {
+        setTypes(e.target.value)
+    }
     return (
         <>
             <tr className="bg-white border  w-full">
@@ -105,25 +108,35 @@ export default function AddRow({
                 </td>
                 <th
                     scope="row"
-                    className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                    <input
-                        type={type}
-                        className="w-full px-6 border py-0.5 focus:outline-none "
-                        onChange={(e) => onTextChange(e)}
-                        name={variableN}
-                        placeholder={variable}
+                    className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white group relative">
+                    <div>
+                        <input
+                            type={type}
+                            className="w-full px-6 border py-0.5 focus:outline-none  "
+                            onChange={(e) => onTextChange(e)}
+                            name={variableN}
+                            placeholder={variable}
                         // defaultValue={defaultValue}
-                    />
+                        />
+                    </div>
+
+                    <div className='hidden group-hover:block absolute right-0 top-2 '>
+                        <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent'>
+                            <option value={'text'}>Text</option>
+                            <option value={'file'}>File</option>
+                        </select>
+                    </div>
                 </th>
                 <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
                     <input
-                        type={type}
+                        type={types}
                         className="w-full px-6 border py-0.5 focus:outline-none "
                         onChange={(e) => onTextChange(e)}
                         name={valueN}
                         placeholder={value}
-                        // defaultValue={defaultValue}
+                    // defaultValue={defaultValue}
                     />
+
                 </th>
                 <th
                     scope="row"
@@ -135,7 +148,7 @@ export default function AddRow({
                         onChange={(e) => onTextChange(e)}
                         name={descriptionN}
                         placeholder={description}
-                        // defaultValue={defaultValue}
+                    // defaultValue={defaultValue}
                     />
                 </th>
             </tr>

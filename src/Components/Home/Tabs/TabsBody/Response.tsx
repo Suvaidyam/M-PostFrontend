@@ -23,7 +23,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
     const [header, setHeader] = useState<boolean>(false);
     const [responseData, setResponseData] = useState<string[] | null>(null);
     const currentActive = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
-    console.log(currentActive)
+    // console.log(currentActive)
 
     const errorData = {
         error: apiResponse?.data
