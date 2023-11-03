@@ -9,18 +9,17 @@ import { BiGroup } from 'react-icons/bi';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { MyContext } from '../../../Context/Context';
 import Scrollbars from 'react-custom-scrollbars';
-import { dividerClasses } from '@mui/material';
-import { CollectionLoader } from '../../Loader/Loader';
 import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import AllWorkspace from './AllWorkspace/AllWorkspace';
 
 interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
-    const [workspace, setWorkspace] = useState([]);
+    const [workspace, setWorkspace] = useState<any>([]);
     const { setWorkSpaceId, loader, setLoader } = useContext(MyContext);
-    const [onLoader, setOnLoader] = useState(false)
+    const [open, setOpen] = useState<boolean>(false)
 
     const config = {
         headers: {
@@ -28,22 +27,22 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
         }
     };
     const getData = () => {
+        // setLoader(true);
         const url = `${process.env.REACT_APP_BASEURL}/workspace`;
         axios.get(url, config)
             .then(res => {
                 setWorkspace(res.data.workSpace);
-                // setLoader(!loader);
+                setLoader(false);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     };
     const deleteData = (e: any) => {
-        console.log(e)
         const url = `${process.env.REACT_APP_BASEURL}/workspace/${e._id}`;
         axios.delete(url, config)
             .then(res => {
-                setOnLoader(!onLoader);
+                setLoader(!loader);
                 toast.success(res.data.message);
             })
             .catch(error => {
@@ -52,7 +51,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     };
     useEffect(() => {
         getData()
-    }, [onLoader])
+    }, [loader])
 
 
 
@@ -120,14 +119,17 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                 ))}
                             </div>
                         </Scrollbars>
-                        <p
+                        <div
+                            onClick={()=>setOpen(true)}
                             className="w-full  text-xs text-gray-400 hover:text-blue-500 cursor-pointer py-1.5 border-t flex items-center">
                             View all Workspace <IoIosArrowRoundForward className="mt-1" />
-                        </p>
+                        </div>
                     </Menu.Items>
                 </Transition>
             </Menu>
+            {/* ==================== Popup Components ==================== */}
             <CreateWorkSpace open={openModel} setOpen={setOpenModel} />
+            <AllWorkspace open={open} setOpen={setOpen} workspace={workspace} />
         </>
     );
 };

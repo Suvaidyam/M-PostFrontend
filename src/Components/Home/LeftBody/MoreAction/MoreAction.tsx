@@ -6,6 +6,7 @@ import { MyContext } from '../../../../Context/Context';
 import EditCollection from './EditCollection';
 import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
+import Share from './Share/Share';
 
 interface MoreActionProps {
     ViewDocumentation: any,
@@ -17,6 +18,7 @@ interface MoreActionProps {
 const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection }) => {
     const { loader, setLoader, activeOption } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
+    const [openShare, setOpenShare] = useState<boolean>(false);
     // Add Request 
     const postData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
@@ -74,6 +76,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                         <div className="py-1">
                             <Menu.Item>
                                 <div
+                                    onClick={() => setOpenShare(true)}
                                     className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                     Share
                                 </div>
@@ -122,7 +125,9 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                     </Menu.Items>
                 </Transition>
             </Menu>
+            {/* ============= Popup Components =========== */}
             <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} />
+            <Share open={openShare} setOpen={setOpenShare} />
         </>
     );
 }
