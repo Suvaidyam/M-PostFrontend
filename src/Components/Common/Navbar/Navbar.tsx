@@ -20,16 +20,11 @@ interface NavbarProps { }
 
 const Navbar: FC<NavbarProps> = () => {
     const [navbarToggle, setNavbarToggle] = useState(false);
-    const [dropdownToggle, setDropdownToggle] = useState(false);
     const { darkToggle, setDakToggle, setMsg, setError, url, setUrl } = useContext(MyContext);
     const [openProfile, setOpenProfile] = useState<boolean>(false)
     const navigate = useNavigate();
     const DarkMOdeToggle = () => {
         setDakToggle(!darkToggle)
-    };
-    const ClickDropdown = () => {
-        setDropdownToggle(!dropdownToggle);
-        console.log(dropdownToggle)
     };
     // Logout 
     const logout = async () => {

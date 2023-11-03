@@ -31,10 +31,6 @@ interface Colors {
 function EnvironmentTab({ }: Props) {
     const { collection, setStatus, setMsg, setError, tabData, setTabData, currentActive, tabsList, setTabsList, setCurrentActive, loader, setLoader } = useContext(MyContext);
     const [effect, setEffect] = useState(false);
-    const [copied, setCopied] = useState(false);
-    const [copyData, setCopyData] = useState({});
-    const [url, setUrl] = useState({});
-    console.log(collection)
     const buttonRef: any = useRef();
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
@@ -45,7 +41,6 @@ function EnvironmentTab({ }: Props) {
             DELETE: "red",
             NA: "grey",
         };
-
         return { method, color: colors[method.toUpperCase()] };
     };
 
@@ -119,16 +114,11 @@ function EnvironmentTab({ }: Props) {
         console.log(indexToDelete)
     };
     // Copy Function 
-    const copyToClipboard = (e: any) => {
-        setCopyData(e)
-        const textToCopy = JSON.stringify(copyData);
-        setCopied(true);
+    const copyJson = (e: any) => {
+        const textToCopy = JSON.stringify(e);
         navigator.clipboard.writeText(textToCopy).then(
             () => {
-                setTimeout(() => {
-                    toast.success("Text Copied");
-                    setCopied(false);
-                }, 500)
+                toast.success("Text Copied");
             },
             (err) => {
                 console.error(err);
@@ -136,22 +126,6 @@ function EnvironmentTab({ }: Props) {
         );
     };
 
-    const copyUrl = (e: string) => {
-        setUrl(e)
-        const textToCopy = JSON.stringify(url);
-        setCopied(true);
-        navigator.clipboard.writeText(textToCopy).then(
-            () => {
-                setTimeout(() => {
-                    toast.success("Text Copied");
-                    setCopied(false);
-                }, 500)
-            },
-            (err) => {
-                console.error(err);
-            }
-        );
-    };
     return (
         <>
             <Scrollbars className="w-full h-[80vh] min-h-[80vh] scrollbar-hide overflow-y-scroll bg-white ">
@@ -180,7 +154,7 @@ function EnvironmentTab({ }: Props) {
 
                                                     <div className='flex items-center'>
                                                         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={{ duration: 0.2 }}>
-                                                            <GoCopy onClick={() => copyUrl(view?.details?.url)} className='cursor-pointer hidden group-hover:block' />
+                                                            <GoCopy onClick={() => copyJson(view?.details?.url)} className='cursor-pointer hidden group-hover:block' />
                                                         </motion.div>
 
                                                     </div>
@@ -193,7 +167,7 @@ function EnvironmentTab({ }: Props) {
                                                             <p className='py-2 px-5 font-semibold bg-gray-100 text-xs'>JSON</p>
                                                             <div>
                                                                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={{ duration: 0.2 }}>
-                                                                    <GoCopy onClick={() => copyToClipboard(view?.details?.body)} className='text-xl cursor-pointer' />
+                                                                    <GoCopy onClick={() => copyJson(view?.details?.body)} className='text-xl cursor-pointer' />
                                                                 </motion.div>
                                                             </div>
                                                         </div>
@@ -209,11 +183,11 @@ function EnvironmentTab({ }: Props) {
                                                         </div>
                                                     </div>
                                                     {/* ========== Response =========== */}
-                                                    <p>Response</p>
+                                                    <p className='text-2xl mt-2 font-semibold'>Response</p>
                                                     <div className="w-full mt-2 py-1  px-2 border">
-                                                        <div className="w-full flex justify-end">
+                                                        <div className="w-full flex justify-end mb-1">
                                                             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={{ duration: 0.2 }}>
-                                                                <GoCopy onClick={() => copyToClipboard(view?.details?.response)} className='text-xl cursor-pointer' />
+                                                                <GoCopy onClick={() => copyJson(view?.details?.response)} className='text-xl cursor-pointer' />
                                                             </motion.div>
                                                         </div>
                                                         <div className='w-full break-all truncate'>

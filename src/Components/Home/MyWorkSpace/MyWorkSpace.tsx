@@ -9,16 +9,17 @@ interface MyWorkSpaceProps { }
 const MyWorkSpace: FC<MyWorkSpaceProps> = () => {
     const { workSpaceId } = useContext(MyContext);
     const [workSpaceName, setWorkSpaceName] = useState("");
-    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+    // let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
     useEffect(() => {
         setWorkSpaceName("");
         setTimeout(() => {
-            setWorkSpaceName(workSpace_Id?.name);
+            setWorkSpaceName(workSpaceId?.name);
         }, 600);
     }, [workSpaceId]);
     return (
         <>
             <div className='w-full h-[55px] max-h-[55px] flex justify-between items-center px-2'>
+                
                 <div>
                     {workSpaceName ? (
                         <>{workSpaceName}</>

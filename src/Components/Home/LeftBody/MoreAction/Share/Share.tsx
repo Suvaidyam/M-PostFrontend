@@ -1,13 +1,13 @@
 import type { FC } from 'react';
-import { Fragment, useRef } from 'react';
+import { Fragment, useRef} from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-interface SetCodeProps {
-    open: any,
-    setOpen: any
+interface ShareProps {
+    open: boolean
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const SetCode: FC<SetCodeProps> = ({ open, setOpen }) => {
+const Share: FC<ShareProps> = ({ open, setOpen }) => {
     const cancelButtonRef = useRef(null);
     return (
         <>
@@ -49,4 +49,4 @@ const SetCode: FC<SetCodeProps> = ({ open, setOpen }) => {
     );
 }
 
-export default SetCode;
+export default Share;
