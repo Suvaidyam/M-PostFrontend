@@ -18,12 +18,14 @@ type Props = {
 }
 
 export default function Response({ apiResponse, isLoading }: Props) {
-    const { tabData} = useContext(MyContext);
+    const { tabData } = useContext(MyContext);
     const [body, setBody] = useState<boolean>(true);
     const [header, setHeader] = useState<boolean>(false);
     const [responseData, setResponseData] = useState<string[] | null>(null);
+    const [responseDataheaders, setResponseDataheaders] = useState<string[] | null>(null);
     const currentActive = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
-
+    // console.log(responseDataheaders)
+    // console.log(apiResponse)
     const errorData = {
         error: apiResponse?.data
     }
@@ -38,16 +40,29 @@ export default function Response({ apiResponse, isLoading }: Props) {
     };
 
     const SaveResponse = () => {
-        http({
-            url: `${process.env.REACT_APP_BASEURL}/collection/res/${tabData._id}`,
-            method: "put",
-            data: apiResponse.data
-        })
-            .then((res: any) => {
-                toast.success('Save Successfully')
-                setResponseData(apiResponse.data)
-
+        if (body === true) {
+            http({
+                url: `${process.env.REACT_APP_BASEURL}/collection/res/${tabData._id}`,
+                method: "put",
+                data: apiResponse.data
             })
+                .then((res: any) => {
+                    toast.success('Save Successfully')
+                    setResponseData(apiResponse.data)
+                })
+        } else if (header === true) {
+            http({
+                url: `${process.env.REACT_APP_BASEURL}/collection/resHeaders/${tabData._id}`,
+                method: "put",
+                data: apiResponse.headers
+            })
+                .then((res: any) => {
+                    toast.success('Save Successfully')
+                    setResponseDataheaders(apiResponse.headers)
+                })
+        } else {
+
+        }
     }
     const getResponse = () => {
         http({
@@ -57,6 +72,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
             .then((res) => {
                 setResponseData(res.data.collection.details.response);
                 // setSaveResponse(res.data.collection.details.response);
+                setResponseDataheaders(res.data.collection.details.responseHeaders)
             })
             .catch((err) => {
                 console.log(err);
@@ -124,38 +140,68 @@ export default function Response({ apiResponse, isLoading }: Props) {
                         </div>)
                             :
                             responseData && typeof responseData === 'object' ?
-                            <Scrollbars className="w-full h-[100vh] min-h-[79vh] scrollbar-hide overflow-y-scroll bg-white ">
-                                <div className='break-all'>
-                                    <div className="flex justify-between w-full h-[10%]">
-                                        <div className="px-2 flex items-center  py-1 gap-5">
-                                            <span
-                                                className={`text-sm font-medium cursor-pointer  ${body === true ? "text-blue-600" : "text-gray-800 "}`}
-                                            >
-                                                Body
-                                            </span>
-
-                                        </div>
-                                        <div className="px-2 flex items-center gap-5">
-                                            <span className="text-gray-800 text-sm font-medium">
-                                                <AiOutlineGlobal />
-                                            </span>
-                                            <pre>
-                                                <span className="text-gray-800 text-sm font-medium">
-                                                    <b>Status:</b>
-                                                    {getStatusElem(apiResponse)}
+                                <Scrollbars className="w-full h-[100vh] min-h-[79vh] scrollbar-hide overflow-y-scroll bg-white ">
+                                    <div className='break-all'>
+                                        <div className="flex justify-between w-full h-[10%]">
+                                            <div className="px-2 flex items-center  py-1 gap-5">
+                                                <span
+                                                    className={`text-sm font-medium cursor-pointer  ${body === true ? "text-blue-600" : "text-gray-800 "}`}
+                                                    onClick={BodyTab}
+                                                >
+                                                    Body
                                                 </span>
-
-                                            </pre>
+                                                <span
+                                                    className={`text-sm font-medium cursor-pointer  ${header === true ? "text-blue-600" : "text-gray-800 "}`}
+                                                    onClick={HeaderTab}
+                                                >
+                                                    Headers
+                                                </span>
+                                            </div>
+                                            {/* <div className="px-2 flex items-center gap-5">
+                                                <span className="text-gray-800 text-sm font-medium">
+                                                    <AiOutlineGlobal />
+                                                </span>
+                                                <pre>
+                                                    <span className="text-gray-800 text-sm font-medium">
+                                                        <b>Status:</b>
+                                                        {getStatusElem(apiResponse)}
+                                                    </span>
+                                                </pre>
+                                            </div> */}
                                         </div>
+                                        {body ?
+                                            <ReactJson
+                                                name={false}
+                                                displayDataTypes={false}
+                                                displayObjectSize={false}
+                                                enableClipboard={false}
+                                                src={responseData}
+                                            />
+                                            : <div className="w-full mt-1 h-[89%]">
+                                                <div className="w-full flex">
+                                                    <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
+                                                        Key
+                                                    </div>
+                                                    <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
+                                                        Value
+                                                    </div>
+                                                </div>
+                                                {
+                                                    responseDataheaders && getResponseHeaderElem(responseDataheaders)?.map((e: any) => (
+                                                        responseDataheaders && <div className="w-full flex">
+                                                            <div className="w-1/2 border py-1.5 px-2 text-sm ">
+                                                                {e?.key}
+                                                            </div>
+                                                            <div className="w-1/2 border py-1.5 px-2 text-sm ">
+                                                                {e?.props?.children[1]}
+                                                            </div>
+                                                        </div>
+                                                    )) ||
+                                                    <p className='flex h-60 justify-center items-center'>No Headers</p>
+                                                }
+                                            </div>
+                                        }
                                     </div>
-                                    <ReactJson
-                                        name={false}
-                                        displayDataTypes={false}
-                                        displayObjectSize={false}
-                                        enableClipboard={false}
-                                        src={responseData}
-                                    />
-                                </div>
                                 </Scrollbars>
                                 :
                                 <ErrorScreen />
