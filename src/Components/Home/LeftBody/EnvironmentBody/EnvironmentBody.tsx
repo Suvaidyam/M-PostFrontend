@@ -29,7 +29,7 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
         })
             .then((res) => {
                 setNewEnvironment(res.data.environment);
-                setLoader(!loader);
+                // setLoader(!loader);
                 setGlobalLoader(false)
             })
             .catch((err) => {
@@ -115,7 +115,7 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                             <div className="flex items-center gap-2 w-full h-8 "
                                                 onClick={() => handleRequest(ce)}
                                             >
-                                                <p className="text-xs font-normal pl-4"> {ce.name}</p>
+                                                <p className="text-xs font-semibold text-gray-600 pl-4"> {ce.name}</p>
                                             </div>
                                             {
                                                 // ce._id === showEnv_id ? 

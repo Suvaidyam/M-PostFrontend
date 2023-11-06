@@ -1,201 +1,324 @@
-import { FC, useContext } from 'react';
-import { IoIosArrowRoundBack, IoIosHelpCircleOutline } from "react-icons/io";
-import StepProgressBar from 'react-step-progress';
-import 'react-step-progress/dist/index.css';
-import {
-    AiFillLock,
-    AiOutlineEye,
-    AiOutlineEyeInvisible,
-} from "react-icons/ai";
-import { MdClose } from 'react-icons/md'
+import type { FC } from 'react';
+import React, { useContext, useState } from 'react';
+import Steeper from '../../Common/Steeper/Steeper';
+import { CiMail } from 'react-icons/ci';
+import { MdOutlineDone } from 'react-icons/md';
+import { IoIosHelpCircleOutline } from 'react-icons/io';
+import { AiFillLock, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import OtpInput from 'react-otp-input';
+import http from '../../../Service/http';
 import { MyContext } from '../../../Context/Context';
-import {MdOutlineDone} from 'react-icons/md'
-import {CiMail} from 'react-icons/ci'
-import  './forget.css';
+import { toast } from 'react-toastify';
 
 interface ForgetPasswordProps { }
-
+export interface OTPInputProps {
+    value: number | string;
+    onChange: any;
+    numInputs: number;
+    separator?: JSX.Element | undefined;
+    isDisabled?: boolean | undefined;
+    shouldAutoFocus?: boolean | undefined;
+    hasErrored?: boolean | undefined;
+    isInputNum?: boolean | undefined;
+    containerStyle?: string | React.CSSProperties | undefined;
+    inputStyle?: string | React.CSSProperties | undefined;
+    focusStyle?: string | React.CSSProperties | undefined;
+    disabledStyle?: string | React.CSSProperties | undefined;
+    errorStyle?: string | React.CSSProperties | undefined;
+}
 const ForgetPassword: FC<ForgetPasswordProps> = () => {
-    const { setForgetPasswordPopup }: any = useContext(MyContext)
-    const step1Content =  <div className='w-full flex flex-col justify-center items-center px-2 pt-8 gap-5'>
-    <div className='w-32 h-32 rounded-full bg-[#93c5fd] relative flex justify-center items-center p-5'>
-        <span><AiFillLock className='text-7xl text-blue-600' /></span>
-        <span className='absolute right-6 bottom-6 text-red-600 text-3xl'><IoIosHelpCircleOutline /></span>
-    </div>
-    <p className='text-center text-sm text-gray-600 font-semibold tracking-wider'>Please Enter Your Email Address to Recieve a verifycation Otp</p>
-    <div className='w-full'>
-        <input
-            type="email"
-            name="email"
-            id="email"
-            className='block py-1.5 w-full text-sm text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0'
-            placeholder=" "
-        />
-        <label
-            htmlFor="email"
-            className="font-medium absolute  text-gray-700 
-  duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
-   peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-    peer-focus:scale-75 peer-focus:-translate-y-6 text-sm"
-        >
-            Email Address{" "}
-        </label>
-    </div>
-</div>;
-    const step2Content =   <div className="w-full pt-5 flex flex-col items-center mt-6 gap-5 ">
-    <div className="w-32 h-32 rounded-full bg-blue-300 flex justify-center items-center ">
-      <CiMail className="text-7xl text-blue-500" />
-    </div>
-    <p className="text-gray-600 text-center text-sm tracking-wider font-medium px-5">
-      Please Enter The 4 Digit Code Sent To{" "}
-      <span className="text-blue-500">hdgfj.gmail.com</span>
-    </p>
-    {/* <OTPInput
-      value={OTP}
-      onChange={setOTP}
-      autoFocus
-      OTPLength={4}
-      otpType="number"
-      disabled={false}
-    />
-    <ResendOTP
-      onResendClick={() => console.log("Resend clicked")}
-    /> */}
-  </div>;
-    const step3Content =  <div className="w-full pt-5 flex flex-col items-center mt-6 gap-5 ">
-    <div className="w-32 h-32 rounded-full bg-blue-300 flex justify-center items-center relative">
-      <AiFillLock className="text-7xl text-blue-500" />
-      <p
-        className="absolute right-7 text-green-500 bottom-6 w-6 h-6 border-2 rounded-full 
-    flex justify-center items-center border-green-500"
-      >
-        <MdOutlineDone className="text-2xl" />
-      </p>
-    </div>
-    <p className="text-gray-600 text-center text-sm tracking-wider font-medium px-5">
-      Your New Password Must Be Differnt from Previously Used
-      Password
-    </p>
-    {/* new password */}
-    <div className="relative z-0 w-full mb-3 group">
-      <input
-        // type={vissiable === true ? "text" : "password"}
-        name="password"
-        id="password"
-        className="block py-1.5 w-full text-sm
-     text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
-     dark:border-gray-600 focus:outline-none focus:ring-0
-      focus:border-blue-600 peer"
-        placeholder=" "
-        onChange={(e) => {
-        //   setPassword(e.target.value);
-        }}
-      />
-      <label
-        htmlFor="password"
-        className="font-medium absolute  text-gray-700 
-         duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] 
-         peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-         peer-focus:scale-75 peer-focus:-translate-y-6 text-sm"
-      >
-        New Password{" "}
-      </label>
-      {true ? (
-        <AiOutlineEye
-          className="absolute right-0 top-3 cursor-pointer"
-        //   onClick={() => setvissiable(!vissiable)}
-        />
-      ) : (
-        <AiOutlineEyeInvisible
-          className="absolute right-0 top-3 cursor-pointer"
-        //   onClick={() => setvissiable(!vissiable)}
-        />
-      )}
-    </div>
-    {/* confrom Password */}
-    <div className="relative z-0 w-full mb-6 group">
-      <input
-        type="password"
-        name="confrompassword"
-        id="confrompassword"
-        className="block py-1.5 w-full text-sm
-     text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
-     dark:border-gray-600 focus:outline-none focus:ring-0  focus:border-blue-600 peer"
-        placeholder=" "
-    //   onChange={(e)=>setConformPassword(e.target.value)}
-      />
-      <label
-        htmlFor="confrompassword"
-        className="font-medium absolute  text-gray-700 
-    duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
-     peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-      peer-focus:scale-75 peer-focus:-translate-y-6 text-sm"
-      >
-        Confrom Password
-      </label>
-     {/* {password.match(conformPassword) ? setMsg('Password Match'): setMsg('Not Match Password !')}
-     {password.match(conformPassword) && setError(true)}
-     {password.match(conformPassword) ? setStatus(200):setStatus(400)} */}
-    </div>
-  </div>;
-
-    // setup step validators, will be called before proceeding to the next step
-    function step2Validator(e: any) {
-        // return a boolean
+    const [activeStep, setActiveStep] = useState<number>(0)
+    const [email, setEmail] = useState("");
+    const { setMsg, setError, setStatus } = useContext(MyContext)
+    const [otp, setOtp] = useState('');
+    const [visible, setVisible] = useState(false);
+    const [password, setPassword] = useState<any>("");
+    const [conformPassword, setConformPassword] = useState<any>("");
+    const steps = [
+        { title: "Email", completed: activeStep > 0 },
+        { title: "Otp", completed: activeStep > 1 },
+        { title: "Password", completed: activeStep > 2 },
+    ];
+    const validate =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const handleNext = () => {
+        if (activeStep < steps.length) {
+            setActiveStep(activeStep + 1)
+        }
+    };
+    const handleBack = () => {
+        setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
     }
+    // ===================== First step =====================
+    const FirstStep = () => {
+        http({
+            method: "post",
+            url: `${process.env.REACT_APP_BASEURL}/auth/otp`,
+            data: {
+                email: email,
+            },
+        })
+            .then((res) => {
+                if (activeStep < steps.length) {
+                    setActiveStep(activeStep + 1)
+                }
+                setMsg(res.data.message);
+                setStatus(res.status);
+                setError(true);
+            })
+            .catch((err) => {
+                setMsg(err.response.data.message);
+                setStatus(err.response.status);
+                setError(true);
+            });
+    };
+    // ===================== Second step =====================
 
-    function step3Validator(e: any) {
-        // return a boolean
-    }
+    const SecondStep = () => {
+        http({
+            method: "post",
+            url: `${process.env.REACT_APP_BASEURL}/auth/verifyotp`,
+            data: {
+                email: email,
+                otpCode: otp,
+            },
+        })
+            .then((res) => {
+                if (res.data.message === "OTP verified") {
+                    if (activeStep < steps.length) {
+                        setActiveStep(activeStep + 1)
+                    }
+                }
+                toast.success(res.data.message);
+                setMsg(res.data.message);
+                setStatus(res.status);
+                setError(true);
+            })
+            .catch((err) => {
+                setMsg(err.response.data.message);
+                setStatus(err.response.status);
+                setError(true);
+            });
+    };
+    // ===================== Second step =====================
 
-    function onFormSubmit(e: any) {
-        // handle the submit logic here
-        // This function will be executed at the last step
-        // when the submit button (next button in the previous steps) is pressed
-    }
+    const ThirdStep = () => {
+        http({
+            method: "post",
+            url: `${process.env.REACT_APP_BASEURL}/auth/forgetpassword`,
+            data: {
+                email: email,
+                password: password,
+            },
+        })
+            .then((res) => {
+                if (password.match(conformPassword && password.length === conformPassword.length)) {
+                    if (activeStep < steps.length) {
+                        setActiveStep(activeStep + 1)
+                    }
+                    setMsg(res.data.message);
+                    setStatus(res.status);
+                    toast.success(res.data.message);
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                setMsg(err.response.data.message);
+                setStatus(err.response.status);
+                setError(true);
+            });
+    };
+
+    // ===================== incrementStep =====================
+    const incrementStep = () => {
+        activeStep === 0 && FirstStep();
+        activeStep === 1 && otp.length === 4 && SecondStep();
+        activeStep === 2 && ThirdStep();
+    };
+
     return (
         <>
-            <div className='w-full h-screen p-4 inset-0 bg-gray-500 bg-opacity-75 transition-opacity absolute top-0 flex justify-center'>
-                <div className='w-[470px] h-full  bg-white p-2 rounded-md drop-shadow-lg'>
-                   
-                    <div className='w-full flex items-center justify-between cursor-pointer'>
-                        <p className='text-3xl'><IoIosArrowRoundBack /></p>
-                        <p className='text-mg text-gray-700 font-medium'>Recover Password</p>
-                    </div>
-                    <StepProgressBar
-                        startingStep={0}
-                        onSubmit={onFormSubmit}
-                        steps={[
-                            {
-                                label: 'Email',
-                                //   subtitle: '10%',
-                                name: 'step 1',
-                                content: step1Content
-                            },
-                            {
-                                label: 'Otp',
-                                //   subtitle: '50%',
-                                name: 'step 2',
-                                content: step2Content,
-                                //   validator: step2Validator
-                            },
-                            {
-                                label: 'Password',
-                                //   subtitle: '100%',
-                                name: 'step 3',
-                                content: step3Content,
-                                //   validator: step3Validator
-                            }
-                        ]}
-                    />
-
+            <div className='w-full h-screen  pt-5'>
+                {/* ========= Stepper Component ========= */}
+                <div className="pr-[75px]"><Steeper steps={steps} activeStep={activeStep} /></div>
+                <div className='w-full h-[400px] flex justify-center'>
+                    {/*=============== Email verify =================*/}
+                    {activeStep === 0 && (
+                        <div className='w-[500px]'>
+                            <div className="w-full pt-5 flex flex-col items-center mt-6 gap-5">
+                                <div className="w-32 h-32 rounded-full bg-blue-300 flex justify-center items-center relative">
+                                    <AiFillLock className="text-7xl text-blue-600" />
+                                    <p className="absolute right-6 text-red-500 bottom-6 text-3xl">
+                                        <IoIosHelpCircleOutline />
+                                    </p>
+                                </div>
+                                <p className="text-gray-600 text-center text-sm tracking-wider font-medium px-5">
+                                    Please Enter Your Email Address to Receive a
+                                    verification Otp
+                                </p>
+                                <div className="relative z-0 w-full mb-6 group">
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        className={`block py-1.5 w-full text-sm text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 peer ${email.match(validate)
+                                            ? "border-blue-600"
+                                            : "border-red-600"
+                                            }`}
+                                        placeholder=" "
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                    {email.match(validate) && (
+                                        <MdOutlineDone className="absolute right-0 top-3 cursor-pointer text-green-600" />
+                                    )}
+                                    <label
+                                        htmlFor="email"
+                                        className="font-medium absolute  text-gray-700 
+                                    duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
+                                    peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                                    peer-focus:scale-75 peer-focus:-translate-y-6 text-sm"
+                                    >
+                                        Email Address{" "}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {/* ===============Otp verify ===========*/}
+                    {activeStep === 1 && (
+                        <>
+                            <div className="w-[500px] pt-5 flex flex-col items-center mt-6 gap-5 ">
+                                <div className="w-32 h-32 rounded-full bg-blue-300 flex justify-center items-center ">
+                                    <CiMail className="text-7xl text-blue-500" />
+                                </div>
+                                <p className="text-gray-600 text-center text-sm tracking-wider font-medium">
+                                    Please Enter The 4 Digit Code Sent To{" "}
+                                    <span className="text-blue-500">{email}</span>
+                                </p>
+                                <div className=''>
+                                    <OtpInput
+                                        value={otp}
+                                        onChange={setOtp}
+                                        numInputs={4}
+                                        renderSeparator={<span>-</span>}
+                                        renderInput={(props, index) => (
+                                            <input
+                                                {...props}
+                                                style={{
+                                                    width: '30px',
+                                                    height: '40px',
+                                                    border: '1px solid #ccc', // Add your desired border style here
+                                                    borderRadius: '2px',      // Optional: add rounded corners
+                                                    padding: '10px'           // Optional: adjust padding
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                        </>
+                    )}
+                    {/*  */}
+                    {activeStep === 2 && (
+                        <>
+                            <div className="w-[500px] pt-5 flex flex-col items-center mt-6 gap-5 ">
+                                <div className="w-32 h-32 rounded-full bg-blue-300 flex justify-center items-center relative">
+                                    <AiFillLock className="text-7xl text-blue-500" />
+                                    <p
+                                        className="absolute right-7 text-green-500 bottom-6 w-6 h-6 border-2 rounded-full 
+                      flex justify-center items-center border-green-500"
+                                    >
+                                        <MdOutlineDone className="text-2xl" />
+                                    </p>
+                                </div>
+                                <p className="text-gray-600 text-center text-sm tracking-wider font-medium px-5">
+                                    Your New Password Must Be Different from Previously Used
+                                    Password
+                                </p>
+                                {/* new password */}
+                                <div className="relative z-0 w-full mb-3 group">
+                                    <input
+                                        type={visible === true ? "text" : "password"}
+                                        name="password"
+                                        id="password"
+                                        className="block py-1.5 w-full text-sm
+                       text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
+                       dark:border-gray-600 focus:outline-none focus:ring-0
+                        focus:border-blue-600 peer"
+                                        placeholder=" "
+                                        onChange={(e) => {
+                                            setPassword(e.target.value);
+                                        }}
+                                    />
+                                    <label
+                                        htmlFor="password"
+                                        className="font-medium absolute  text-gray-700 
+                           duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] 
+                           peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                           peer-focus:scale-75 peer-focus:-translate-y-6 text-sm"
+                                    >
+                                        New Password{" "}
+                                    </label>
+                                    {visible === true ? (
+                                        <AiOutlineEye
+                                            className="absolute right-0 top-3 cursor-pointer"
+                                            onClick={() => setVisible(!visible)}
+                                        />
+                                    ) : (
+                                        <AiOutlineEyeInvisible
+                                            className="absolute right-0 top-3 cursor-pointer"
+                                            onClick={() => setVisible(!visible)}
+                                        />
+                                    )}
+                                </div>
+                                {/* conform Password */}
+                                <div className="relative z-0 w-full mb-6 group">
+                                    <input
+                                        type="password"
+                                        name="conformPassword"
+                                        id="conformPassword"
+                                        className="block py-1.5 w-full text-sm
+                       text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none 
+                       dark:border-gray-600 focus:outline-none focus:ring-0  focus:border-blue-600 peer"
+                                        placeholder=" "
+                                        onChange={(e) => setConformPassword(e.target.value)} />
+                                    <label
+                                        htmlFor="conformPassword"
+                                        className="font-medium absolute  text-gray-700 
+                      duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
+                       peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                        peer-focus:scale-75 peer-focus:-translate-y-6 text-sm"
+                                    >
+                                        Conform Password
+                                    </label>
+                                    {password.match(conformPassword) ? setMsg('Password Match') : setMsg('Not Match Password !')}
+                                    {password.match(conformPassword) && setError(true)}
+                                    {password.match(conformPassword) ? setStatus(200) : setStatus(400)}
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
-                <div onClick={() => setForgetPasswordPopup(false)} className='w-10 h-10 rounded-full bg-[#93c5fd] flex justify-center items-center'><MdClose className='text-2xl' /></div>
+                {/* ========= Button ========= */}
+                <div className="mt-4 flex justify-center">
+                    <button
+                        onClick={handleBack}
+                        disabled={activeStep === 0}
+                        className="bg-blue-500 text-white py-2 px-4 rounded-md disabled:bg-blue-400"
+                    >
+                        Back
+                    </button>
+                    <button
+                        onClick={incrementStep}
+                        disabled={activeStep === steps.length}
+                        className="bg-blue-500 text-white py-2 px-4 rounded-md disabled:bg-blue-400"
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </>
     );
 }
 
 export default ForgetPassword;
-
-

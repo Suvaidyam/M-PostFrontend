@@ -14,20 +14,20 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.39",
-    "@types/react": "^18.2.17",
-    "@types/react-dom": "^18.2.7",
     "@uiw/codemirror-themes": "^4.21.20",
     "@uiw/react-codemirror": "^4.21.20",
     "axios": "^1.4.0",
     "classnames": "^2.3.2",
     "formik": "^2.4.2",
     "framer-motion": "^10.16.4",
+    "otp-input-react": "^0.3.0",
     "react": "^18.2.0",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-json-view": "^1.21.3",
     "react-loader-spinner": "^5.4.5",
+    "react-otp-input": "^3.1.0",
     "react-progress-stepper": "^0.2.2",
     "react-resizable-element": "^0.1.5",
     "react-router-dom": "^6.14.2",
@@ -63,7 +63,10 @@
     ]
   },
   "devDependencies": {
+    "@types/react": "^18.2.35",
     "@types/react-custom-scrollbars": "^4.0.11",
+    "@types/react-dom": "^18.2.14",
+    "@types/react-otp-input": "^2.0.3",
     "tailwindcss": "^3.3.3"
   }
 }

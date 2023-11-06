@@ -7,6 +7,7 @@ import Protected from './ProtectedRouter/Protected';
 import Home from '../Home/Home';
 import Report from '../Home/Report/Report';
 import Explore from '../Home/Explore/Explore';
+import ForgetPassword from '../Auth/ForgetPassword/ForgetPassword';
 
 interface RouterProps { }
 
@@ -22,6 +23,7 @@ const Router: FC<RouterProps> = () => {
                         <Route path='/workspace' element={<Protected Component={<Home />} />} />
                         <Route path='/reports' element={<Report />} />
                         <Route path='/explore' element={<Explore />} />
+                        <Route path='/forgetPassword' element={<ForgetPassword />} />
                     </Routes>
                 </DataProvider>
             </BrowserRouter>

@@ -7,11 +7,8 @@ import sos from '..//..//Assets//SOS.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import {
-    AiOutlineEye,
-    AiOutlineEyeInvisible,
-} from "react-icons/ai";
-import ForgetPassword from '../ForgetPassword/ForgetPassword';
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import ForgetPassword from '../../Common/Steeper/Steeper';
 import { MyContext } from '../../../Context/Context';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -23,7 +20,6 @@ interface IFormValue {
 const Login: FC<LoginProps> = (data: {}) => {
     const [open, setOpen] = useState<boolean>(false);
     const [check, setCheck] = useState(true);
-    const { forgetPasswordPopup, setForgetPasswordPopup }: any = useContext(MyContext)
     const initialValues: IFormValue = {
         email: '',
         password: ''
@@ -140,10 +136,10 @@ const Login: FC<LoginProps> = (data: {}) => {
                                                 <span className="text-red-500">terms & conditions</span>
                                             </label>
                                         </div>
-                                        <p
-                                            onClick={() => setForgetPasswordPopup(true)}
-                                            className="text-sm text-blue-600 cursor-pointer">Forget Password?</p>
-                                        {forgetPasswordPopup && <ForgetPassword />}
+                                        <Link
+                                            to={'/forgetPassword'}
+                                            // onClick={() => setForgetPasswordPopup(true)}
+                                            className="text-sm text-blue-600 cursor-pointer">Forget Password?</Link>
 
                                     </div>
                                     <div className="w-full flex justify-end">
@@ -190,7 +186,9 @@ const Login: FC<LoginProps> = (data: {}) => {
 
                     {/* right end */}
                 </div>
+                {/* ===================== popup Component ======================= */}
             </div>
+
         </>
     );
 }
