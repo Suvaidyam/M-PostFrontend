@@ -36,7 +36,6 @@ function TabsBody({ }: Props) {
         return false;
       }
     }
-
     http({
       url: topBarData.url,
       method: topBarData.method,
