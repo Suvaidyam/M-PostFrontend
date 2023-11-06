@@ -13,7 +13,6 @@ function CenterTabs({ }: Props) {
     // console.log(event.target.value);
     setSelected(event.target.value);
   };
-
   return (
     <>
       <div className='w-full h-44'>
