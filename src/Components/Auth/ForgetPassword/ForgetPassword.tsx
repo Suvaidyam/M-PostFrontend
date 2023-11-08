@@ -9,6 +9,8 @@ import OtpInput from 'react-otp-input';
 import http from '../../../Service/http';
 import { MyContext } from '../../../Context/Context';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { BiArrowBack } from 'react-icons/bi';
 
 interface ForgetPasswordProps { }
 export interface OTPInputProps {
@@ -39,16 +41,16 @@ const ForgetPassword: FC<ForgetPasswordProps> = () => {
         { title: "Otp", completed: activeStep > 1 },
         { title: "Password", completed: activeStep > 2 },
     ];
-    const validate =
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    const handleNext = () => {
-        if (activeStep < steps.length) {
-            setActiveStep(activeStep + 1)
-        }
-    };
+    const validate = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    // const handleNext = () => {
+    //     if (activeStep < steps.length) {
+    //         setActiveStep(activeStep + 1)
+    //     }
+    // };
     const handleBack = () => {
         setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
     }
+
     // ===================== First step =====================
     const FirstStep = () => {
         http({
@@ -70,10 +72,11 @@ const ForgetPassword: FC<ForgetPasswordProps> = () => {
                 setMsg(err.response.data.message);
                 setStatus(err.response.status);
                 setError(true);
+                toast.error('Email Require')
             });
     };
-    // ===================== Second step =====================
 
+    // ===================== Second step =====================
     const SecondStep = () => {
         http({
             method: "post",
@@ -98,10 +101,11 @@ const ForgetPassword: FC<ForgetPasswordProps> = () => {
                 setMsg(err.response.data.message);
                 setStatus(err.response.status);
                 setError(true);
+                console.log(err)
             });
     };
-    // ===================== Second step =====================
 
+    // ===================== Second step =====================
     const ThirdStep = () => {
         http({
             method: "post",
@@ -139,6 +143,7 @@ const ForgetPassword: FC<ForgetPasswordProps> = () => {
     return (
         <>
             <div className='w-full h-screen  pt-5'>
+                <Link to={'/'} className='flex justify-end items-center gap-3 text-blue-600 pr-5 underline'> <BiArrowBack /> Back to Login</Link>
                 {/* ========= Stepper Component ========= */}
                 <div className="pr-[75px]"><Steeper steps={steps} activeStep={activeStep} /></div>
                 <div className='w-full h-[400px] flex justify-center'>
@@ -207,9 +212,9 @@ const ForgetPassword: FC<ForgetPasswordProps> = () => {
                                                 style={{
                                                     width: '30px',
                                                     height: '40px',
-                                                    border: '1px solid #ccc', // Add your desired border style here
-                                                    borderRadius: '2px',      // Optional: add rounded corners
-                                                    padding: '10px'           // Optional: adjust padding
+                                                    border: '1px solid #ccc',
+                                                    borderRadius: '2px',
+                                                    padding: '10px'
                                                 }}
                                             />
                                         )}
@@ -300,7 +305,7 @@ const ForgetPassword: FC<ForgetPasswordProps> = () => {
                     )}
                 </div>
                 {/* ========= Button ========= */}
-                <div className="mt-4 flex justify-center">
+                <div className="mt-4 gap-[390px] flex justify-center">
                     <button
                         onClick={handleBack}
                         disabled={activeStep === 0}
@@ -309,6 +314,7 @@ const ForgetPassword: FC<ForgetPasswordProps> = () => {
                         Back
                     </button>
                     <button
+                        // onClick={handleNext}
                         onClick={incrementStep}
                         disabled={activeStep === steps.length}
                         className="bg-blue-500 text-white py-2 px-4 rounded-md disabled:bg-blue-400"

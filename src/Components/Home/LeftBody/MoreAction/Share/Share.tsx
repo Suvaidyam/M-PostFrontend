@@ -1,6 +1,11 @@
 import type { FC } from 'react';
-import { Fragment, useRef} from 'react';
+import { Fragment, useContext, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { AiOutlineClose } from 'react-icons/ai';
+import { MdOutlineDone } from 'react-icons/md';
+import { toast } from 'react-toastify';
+import { MyContext } from '../../../../../Context/Context';
+import http from '../../../../../Service/http';
 
 interface ShareProps {
     open: boolean
@@ -9,6 +14,25 @@ interface ShareProps {
 
 const Share: FC<ShareProps> = ({ open, setOpen }) => {
     const cancelButtonRef = useRef(null);
+    const [tab, setTab] = useState<string>('People');
+    const { activeOption, collection, shareUrl } = useContext(MyContext);
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+    const findCollection = collection?.filter((e: any) => e.workspace_id === workSpace_Id?._id);
+    const abc = findCollection?.filter((e: any) => e.parent === activeOption?._id);
+    const [email, setEmail] = useState("");
+    const validate = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    // Copy Function 
+    const copyUrl = () => {
+        navigator.clipboard.writeText(shareUrl).then(
+            () => {
+                toast.success("Text Copied");
+            },
+            (err) => {
+                console.error(err);
+            }
+        );
+    };
+
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -37,7 +61,93 @@ const Share: FC<ShareProps> = ({ open, setOpen }) => {
                                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                             >
                                 <Dialog.Panel className="">
-                                    <div className="w-[710px] h-[400px] border bg-gray-50 shadow-inner rounded-md  py-5 px-6 flex flex-col justify-between">
+                                    <div className="w-[710px]  pb-10 border bg-gray-50 shadow-inner rounded-md  py-5 px-6">
+                                        <div className="w-full">
+                                            <div className="flex justify-between text-xl font-semibold items-center pb-3">
+                                                <p>Share Mock Data Generation</p>
+                                                <AiOutlineClose className='cursor-pointer' onClick={() => setOpen(false)} />
+                                            </div>
+                                            <div className="flex gap-5">
+                                                <p onClick={() => setTab('People')} className={`${tab === 'People' && 'border-b-2 border-blue-600'} duration-100  cursor-pointer`}>With People</p>
+                                                <p onClick={() => setTab('Postman')} className={`${tab === 'Postman' && 'border-b-2 border-blue-600'} duration-100  cursor-pointer`}>Via Run in Postman</p>
+                                                <p onClick={() => setTab('API')} className={`${tab === 'API' && 'border-b-2 border-blue-600'} duration-100 cursor-pointer`}>Via API</p>
+                                            </div>
+                                            {/* ================== People ================== */}
+                                            {
+                                                tab === 'People' &&
+                                                <>
+                                                    <div className="w-full flex justify-between gap-3 mt-8">
+                                                        <div className="relative z-0 w-full mb-6 group">
+                                                            <input
+                                                                type="email"
+                                                                name="email"
+                                                                id="email"
+                                                                className={`block py-1.5 w-full text-sm text-gray-600 bg-transparent border-0 border-b border-gray-700 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 peer ${email.match(validate)
+                                                                    ? "border-blue-600"
+                                                                    : "border-red-600"
+                                                                    }`}
+                                                                placeholder=" "
+                                                                onChange={(e) => setEmail(e.target.value)}
+                                                            />
+                                                            {email.match(validate) && (
+                                                                <MdOutlineDone className="absolute right-0 top-3 cursor-pointer text-green-600" />
+                                                            )}
+                                                            <label
+                                                                htmlFor="email"
+                                                                className="font-medium absolute left-0 text-gray-700 
+                                                                duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:left-0
+                                                                peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                                                                peer-focus:scale-75 peer-focus:-translate-y-6 text-sm"
+                                                            >
+                                                                Enter name, group name or email{" "}
+                                                            </label>
+                                                        </div>
+                                                        <button disabled={!email.match(validate)} className={`border h-9 w-28 ${email.match(validate) ? 'bg-blue-600' : 'bg-blue-400'} text-white rounded`}>Share</button>
+                                                    </div>
+                                                    <hr />
+                                                    <div className="w-full pt-4 text-start">
+                                                        <p className='text-sm font-semibold'>Share via link</p>
+                                                        <div className=" w-full flex gap-3 mt-2">
+                                                            <input value={shareUrl} type="text" className='w-full border border-black rounded px-2 ' />
+                                                            <button onClick={copyUrl} className={`border-[1.5px] h-9 w-28 rounded`}>Copy Link</button>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            }
+                                            {/* ================== Postman ================== */}
+                                            {
+                                                tab === 'Postman' &&
+                                                <div className='w-full text-start mt-4'>
+                                                    <p>
+                                                        Embed a Run in Postman button on your website or docs to make it easier for people to discover and interact with your collection.
+                                                    </p>
+                                                    <p className='mt-2'>Who can view this collection?</p>
+                                                    <div className="">
+                                                        <div className="flex flex-col">
+                                                            <div className="flex gap-2">
+                                                                <input type="radio" name="CheckTeam" id="Team" />
+                                                                <label htmlFor="Team">Team</label>
+                                                            </div>
+                                                            <p className='text-xs pl-5 -mt-1'>Anyone in restless-resonance-574981 team can view.</p>
+                                                        </div>
+                                                        <div className="flex flex-col mt-2">
+                                                            <div className="flex gap-2">
+                                                                <input type="radio" name="CheckTeam" id="Public" />
+                                                                <label htmlFor="Public">Public</label>
+                                                            </div>
+                                                            <p className='text-xs pl-5 -mt-1'>Everyone can view.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            {/* ================== API ================== */}
+                                            {
+                                                tab === 'API' &&
+                                                <div className='w-full mt-4'>
+                                                    <p>Ui Coming Soon</p>
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
@@ -47,6 +157,6 @@ const Share: FC<ShareProps> = ({ open, setOpen }) => {
             </Transition.Root >
         </>
     );
-}
+};
 
 export default Share;
