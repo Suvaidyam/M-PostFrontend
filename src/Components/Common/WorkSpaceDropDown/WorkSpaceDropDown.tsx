@@ -12,6 +12,9 @@ import Scrollbars from 'react-custom-scrollbars';
 import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import AllWorkspace from './AllWorkspace/AllWorkspace';
+import { CiShare2 } from 'react-icons/ci';
+import Share from '../../Home/LeftBody/MoreAction/Share/Share';
+import http from '../../../Service/http';
 
 interface WorkSpaceDropDownProps { }
 
@@ -19,7 +22,9 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [workspace, setWorkspace] = useState<any>([]);
     const { setWorkSpaceId, loader, setLoader } = useContext(MyContext);
-    const [open, setOpen] = useState<boolean>(false)
+    const [open, setOpen] = useState<boolean>(false);
+    const [openShare, setOpenShare] = useState<boolean>(false);
+    const [shareUrl, setShareUrl] = useState<string>('');
 
     const config = {
         headers: {
@@ -49,12 +54,24 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                 console.error('Error:', error);
             });
     };
+    // ================== Share Workspace ===================
+    const shareWorkspace = (workspace: any) => {
+        setOpenShare(true)
+        console.log(workspace)
+        http({
+            method: "post",
+            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${workspace?._id}`,
+        })
+            .then((res: any) => {
+                setShareUrl(res.data.url);
+            })
+            .catch((err: any) => {
+                console.log(err);
+            });
+    }
     useEffect(() => {
         getData()
     }, [loader])
-
-
-
     const handelSelectedWorkSpace = (e: any) => {
         localStorage.setItem("workSpace", JSON.stringify(e));
         setWorkSpaceId(e);
@@ -112,7 +129,13 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                                         {workData.name}
                                                     </div>
                                                 </div>
-                                                <MdDelete onClick={() => deleteData(workData)} className='bg-white group-hover:block hidden text-lg mr-2 text-red-600' />
+                                                <div className="bg-white group-hover:block hidden">
+                                                    <div className="flex items-center gap-3">
+                                                        <CiShare2 onClick={() => shareWorkspace(workData)} />
+                                                        <MdDelete onClick={() => deleteData(workData)} className=' text-lg mr-2 text-red-600' />
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         )}
                                     </Menu.Item>
@@ -120,7 +143,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                             </div>
                         </Scrollbars>
                         <div
-                            onClick={()=>setOpen(true)}
+                            onClick={() => setOpen(true)}
                             className="w-full  text-xs text-gray-400 hover:text-blue-500 cursor-pointer py-1.5 border-t flex items-center">
                             View all Workspace <IoIosArrowRoundForward className="mt-1" />
                         </div>
@@ -130,6 +153,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             {/* ==================== Popup Components ==================== */}
             <CreateWorkSpace open={openModel} setOpen={setOpenModel} />
             <AllWorkspace open={open} setOpen={setOpen} workspace={workspace} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} />
         </>
     );
 };

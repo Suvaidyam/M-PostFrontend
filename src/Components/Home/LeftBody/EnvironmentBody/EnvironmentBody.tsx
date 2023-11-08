@@ -18,11 +18,10 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
     const local_variable = newEnvironment?.filter((e: { name: string; }) => e.name !== 'Globals');
     const [isOpen, setIsOpen] = useState(false);
     // Get Environment Data
-
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const popupRef: any = useRef();
     const getData = () => {
         setGlobalLoader(true)
-        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') ?? '');
         http({
             method: "get",
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
@@ -40,7 +39,6 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
     // 
 
     const postData = () => {
-        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') ?? '');
         http({
             url: `${process.env.REACT_APP_BASEURL}/environment`,
             method: "post",

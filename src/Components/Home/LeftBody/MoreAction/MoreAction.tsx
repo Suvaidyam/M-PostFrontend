@@ -16,12 +16,14 @@ interface MoreActionProps {
 }
 
 const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection }) => {
-    const { loader, setLoader, activeOption, setShareUrl } = useContext(MyContext);
+    const { loader, setLoader, activeOption } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
+    const [shareUrl, setShareUrl] = useState<string>('');
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+
     // ============================ Add Collection Request ============================
     const postData = () => {
-        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
         http({
             url: `${process.env.REACT_APP_BASEURL}/collection`,
             method: "post",
@@ -144,7 +146,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             </Menu>
             {/* ============= Popup Components =========== */}
             <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} />
-            <Share open={openShare} setOpen={setOpenShare} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} />
         </>
     );
 }

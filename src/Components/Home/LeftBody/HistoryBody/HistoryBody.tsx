@@ -41,6 +41,7 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
     const options: IOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const todayDate: string = today.toLocaleDateString('en-IN', options).split('/').reverse().join('-');
     const yesterdayDate: string = yesterday.toLocaleDateString('en-IN', options).split('/').reverse().join('-');
+    let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') ?? '');
 
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
@@ -62,7 +63,6 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
     // Get History Details
     const getData = () => {
         setGlobalLoader(true);
-        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
         http({
             method: "get",
             url: `${process.env.REACT_APP_BASEURL}/history/${workSpace_Id?._id}`,
