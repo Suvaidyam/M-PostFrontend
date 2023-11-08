@@ -30,6 +30,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const ClickFolder = (id: string) => {
         setToggleFolder(!toggleFolder);
         setActiveFolder(id);
@@ -71,7 +72,6 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     }
     const getData = () => {
         setGlobalLoader(true)
-        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
         if (workSpace_Id) {
             http({
                 method: "get",
@@ -89,7 +89,6 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
         }
     };
     const postData = () => {
-        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
         http({
             url: `${process.env.REACT_APP_BASEURL}/collection`,
             method: "post",

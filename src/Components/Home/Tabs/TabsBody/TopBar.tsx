@@ -30,6 +30,7 @@ function TopBar({ onSendClick }: Props) {
     const [responseData, setResponseData] = useState<any | null>(null);
     const currentActives = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
     const [renderDropdown, setRenderDropdown] = useState(false)
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const Save = () => {
         http({
             url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
@@ -87,7 +88,6 @@ function TopBar({ onSendClick }: Props) {
         }, 200);
     }, [currentActive])
     const getData = () => {
-        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as string);
         http({
             method: "get",
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,

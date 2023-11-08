@@ -21,6 +21,7 @@ const SetEnvironment: FC<SetEnvironmentProps> = ({ open, setOpen }) => {
     const global: any = newEnviroment.filter((e: any) => e?.name === 'Globals');
     const [onLoader, setOnLoader] = useState(false)
     const local: any = newEnviroment.filter((e: any) => e?._id === currentActiveEnv);
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
 
     const newInvObj: any = {
         name: "New Environment",
@@ -33,7 +34,6 @@ const SetEnvironment: FC<SetEnvironmentProps> = ({ open, setOpen }) => {
 
     const getData = () => {
         setOnLoader(true)
-        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') ?? "");
         http({
             method: "get",
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
