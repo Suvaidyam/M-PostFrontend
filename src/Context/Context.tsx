@@ -50,13 +50,15 @@ interface ContextValue {
     historyRender: boolean
     sethistoryRender: React.Dispatch<React.SetStateAction<boolean>>
     activeOption: any
-    setActiveOption: React.Dispatch<React.SetStateAction<any>>, 
+    setActiveOption: React.Dispatch<React.SetStateAction<any>>,
     newEnvironment: any
-    setNewEnvironment: React.Dispatch<React.SetStateAction<any>>, 
+    setNewEnvironment: React.Dispatch<React.SetStateAction<any>>,
     globalLoader: any
-    setGlobalLoader: React.Dispatch<React.SetStateAction<any>>, 
+    setGlobalLoader: React.Dispatch<React.SetStateAction<any>>,
     url: any,
-    setUrl: React.Dispatch<React.SetStateAction<any>>, 
+    setUrl: React.Dispatch<React.SetStateAction<any>>,
+    shareUrl: string,
+    setShareUrl: React.Dispatch<React.SetStateAction<string>>,
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -108,6 +110,8 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [newEnvironment, setNewEnvironment] = useState<any>([]);
     const [globalLoader, setGlobalLoader] = useState(false);
     const [url, setUrl] = useState();
+    // ========== Collection Share Url ===========
+    const [shareUrl, setShareUrl] = useState<string>('');
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -165,7 +169,9 @@ const Context: FC<ContextProps> = ({ children }) => {
         globalLoader,
         setGlobalLoader,
         url,
-        setUrl
+        setUrl,
+        shareUrl,
+        setShareUrl
     };
 
     return (

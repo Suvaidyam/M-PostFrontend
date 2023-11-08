@@ -35,7 +35,6 @@ const Login: FC<LoginProps> = (data: {}) => {
     const handleLogin = (values: IFormValue) => {
         axios.post(`http://localhost:4000/auth/login`, values)
             .then((response: any) => {
-                console.log(response)
                 setTimeout(() => {
                     if (response.status === 200) {
                         sessionStorage.setItem('token', response.data.token)
