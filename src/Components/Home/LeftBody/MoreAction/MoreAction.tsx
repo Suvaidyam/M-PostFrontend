@@ -16,10 +16,10 @@ interface MoreActionProps {
 }
 
 const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection }) => {
-    const { loader, setLoader, activeOption } = useContext(MyContext);
+    const { loader, setLoader, activeOption, setShareUrl } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
-    // Add Request 
+    // ============================ Add Collection Request ============================
     const postData = () => {
         let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
         http({
@@ -41,6 +41,8 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                 console.log(err)
             });
     };
+
+    // ============================ Delete Collection ============================
     const deleteData = () => {
         http({
             url: `${process.env.REACT_APP_BASEURL}/${collection}/${deleteId?._id}`,
@@ -54,6 +56,21 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                 console.error('Error:', err);
             });
     };
+
+    // ============================ Share Collection ============================
+    const share = () => {
+        setOpenShare(true);
+        http({
+            method: "post",
+            url: `${process.env.REACT_APP_BASEURL}/share/collection/${activeOption?._id}`,
+        })
+            .then((res: any) => {
+                setShareUrl(res.data.url);
+            })
+            .catch((err: any) => {
+                console.log(err);
+            });
+    }
     return (
         <>
             <Menu as="div" className="relative inline-block text-left">
@@ -76,7 +93,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                         <div className="py-1">
                             <Menu.Item>
                                 <div
-                                    onClick={() => setOpenShare(true)}
+                                    onClick={share}
                                     className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                     Share
                                 </div>
