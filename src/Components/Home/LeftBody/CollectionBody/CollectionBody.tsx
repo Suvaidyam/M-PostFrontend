@@ -27,6 +27,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const FilterCollection = collection?.filter((e: any) => e.workspace_id === workSpaceId._id);
     const newArray = FilterCollection?.filter((e: any) => e.parent === null);
     const [array, setArray] = useState(newArray);
+    console.log(collection);
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');

@@ -57,7 +57,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     // ================== Share Workspace ===================
     const shareWorkspace = (workspace: any) => {
         setOpenShare(true)
-        console.log(workspace)
         http({
             method: "post",
             url: `${process.env.REACT_APP_BASEURL}/share/workspace/${workspace?._id}`,

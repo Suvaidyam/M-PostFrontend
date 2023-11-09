@@ -101,13 +101,16 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                                 </div>
                             </Menu.Item>
                             {openRequestId.type === 'folder' &&
-                                <Menu.Item>
-                                    <div
-                                        onClick={ViewDocumentation}
-                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
-                                        View Documentation
-                                    </div>
-                                </Menu.Item>}
+                                <>
+                                    <Menu.Item>
+                                        <div
+                                            onClick={ViewDocumentation}
+                                            className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                            View Documentation
+                                        </div>
+                                    </Menu.Item>
+                                </>
+                            }
 
                             <Menu.Item>
                                 <div
