@@ -49,6 +49,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             .then(res => {
                 setLoader(!loader);
                 toast.success(res.data.message);
+                
             })
             .catch(error => {
                 console.error('Error:', error);
