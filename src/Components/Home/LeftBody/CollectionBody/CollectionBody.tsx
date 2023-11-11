@@ -49,8 +49,12 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             item.share.includes(filterItem.created_by)
         )
     );
+    // console.log(allCollectionData)
+    // console.log(filteredShareData)
     const concatFolderData = newArray.concat(filteredShareData);
     const concatReqData = collection.concat(filteredShareData);
+    console.log(collection)
+    console.log(concatReqData)
     // ================== All Collection =====================
     const allCollection = () => {
         setGlobalLoader(true)
@@ -186,7 +190,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                 }
                                 {(toggleFolder === true && e._id === activeFolder) &&
                                     <div className=" w-full">
-                                        {concatReqData?.map((ce: any) => (
+                                        {allCollectionData?.map((ce: any) => (
                                             <>
                                                 {ce?.type === 'request' &&
                                                     <div key={ce._id}>
