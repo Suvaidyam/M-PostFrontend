@@ -11,7 +11,6 @@ import { BsFillShareFill } from 'react-icons/bs'
 import { MyContext } from '../../../Context/Context';
 import WorkSpaceDropDown from '../WorkSpaceDropDown/WorkSpaceDropDown';
 import axios from 'axios';
-import { url } from 'inspector';
 import Avatar from '../../Assets/avatar-f.jpg'
 import Avatar_f from '../../Assets/avatar-f.jpg'
 import Profile from '../Profile/Profile';
@@ -20,7 +19,7 @@ interface NavbarProps { }
 
 const Navbar: FC<NavbarProps> = () => {
     const [navbarToggle, setNavbarToggle] = useState(false);
-    const { darkToggle, setDakToggle, setMsg, setError, url, setUrl } = useContext(MyContext);
+    const { darkToggle, setDakToggle, setMsg, setError, url } = useContext(MyContext);
     const [openProfile, setOpenProfile] = useState<boolean>(false)
     const navigate = useNavigate();
     const DarkMOdeToggle = () => {
@@ -52,7 +51,6 @@ const Navbar: FC<NavbarProps> = () => {
         }
     };
     return (
-
         <>
             <div className={`w-full h-20 z-50 fixed top-0 bg-white ${darkToggle === true ? 'bg-slate-900 text-white' : ''}`}>
                 <div className='w-full  h-20  border flex justify-between items-center px-4 relative'>
@@ -65,7 +63,6 @@ const Navbar: FC<NavbarProps> = () => {
                         <NavLink to="/reports"><span>Reports</span></NavLink>
                         <NavLink to="/explore"><span>Explore</span></NavLink>
                     </div>
-
                     <div className='flex items-center gap-5 max-[950px]:hidden'>
                         <div className='relative'>
                             <input className='w-48 border-2 py-2 rounded-sm outline-none bg-gray-100 pl-2 pr-5 text-xs text-gray-600' type="text" placeholder='Search..' />
@@ -77,11 +74,10 @@ const Navbar: FC<NavbarProps> = () => {
                         </div>
                         <div className='w-12 group h-12 rounded-full bg-slate-100 border-[2px] p-[2px] border-blue-500 cursor-pointer'>
                             <img
-                                className='rounded-full'
+                                className='rounded-full w-full h-full'
                                 src={url?.url ? `${process.env.REACT_APP_BASEURL}/` + url?.url : url?.gender === 'male' ? Avatar : Avatar_f}
                                 // src={avatar}
                                 alt="" />
-
                             {/*  My Profile */}
                             <div className='absolute group-hover:block hidden w-[200px] py-2 bg-white border rounded-md top-[63px] right-[120px]'>
                                 <div onClick={() => setOpenProfile(!openProfile)} className="flex h-7 cursor-pointer hover:text-white items-center px-2  duration-300 hover:bg-blue-400 justify-between">

@@ -21,15 +21,29 @@ interface WorkSpaceDropDownProps { }
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [workspace, setWorkspace] = useState<any>([]);
+    const [allWorkspace, setAllWorkspace] = useState<any>([]);
     const { setWorkSpaceId, loader, setLoader } = useContext(MyContext);
     const [open, setOpen] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
     const [shareUrl, setShareUrl] = useState<string>('');
-
     const config = {
         headers: {
             'token': sessionStorage.getItem("token")
         }
+    };
+    console.log(allWorkspace)
+    console.log(workspace)
+    const getAllWorkspace = () => {
+        // setLoader(true);
+        const url = `${process.env.REACT_APP_BASEURL}/workspace/allWorkSpace`;
+        axios.get(url, config)
+            .then(res => {
+                setAllWorkspace(res.data.workSpace);
+                setLoader(false);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     };
     const getData = () => {
         // setLoader(true);
@@ -49,7 +63,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             .then(res => {
                 setLoader(!loader);
                 toast.success(res.data.message);
-                
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -71,6 +84,8 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     }
     useEffect(() => {
         getData()
+        getAllWorkspace();
+        // eslint-disable-next-line
     }, [loader])
     const handelSelectedWorkSpace = (e: any) => {
         localStorage.setItem("workSpace", JSON.stringify(e));
@@ -94,7 +109,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                     leaveTo="transform opacity-0 scale-95"
                 >
                     <Menu.Items className="absolute -left-[85px] mt-2 px-2 w-56 z-[600] origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-
                         <Scrollbars className='w-full h-full min-h-[290px]'>
                             <div className="py-1">
                                 <Menu.Item>
@@ -113,15 +127,14 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                 </Menu.Item>
                                 <p className='text-xs text-gray-400 pt-2 font-semibold'>Recently visited</p>
                                 {workspace.map((workData: any) => (
-
                                     <Menu.Item key={workData._id}>
                                         {({ active }) => (
-                                            <div className='w-full h-9 hover:bg-white group flex items-center justify-between'>
+                                            <div className='w-full h-9 hover:bg-white group mt-1 flex items-center justify-between'>
                                                 <div
                                                     onClick={() => handelSelectedWorkSpace(workData)}
                                                     className={classNames(
                                                         active ? ' text-gray-900' : 'text-gray-700',
-                                                        'w-[95%]  flex mt-1 pl-2 items-center text-sm'
+                                                        'w-[95%]  flex mt-1 pl-2 items-center text-sm truncate'
                                                     )}
                                                 >
                                                     <div className="w-full flex gap-3 items-center">
@@ -130,12 +143,11 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                                     </div>
                                                 </div>
                                                 <div className="bg-white group-hover:block hidden">
-                                                    <div className="flex items-center gap-3">
+                                                    <div className="flex h-9 items-center gap-3">
                                                         <CiShare2 onClick={() => shareWorkspace(workData)} />
                                                         <MdDelete onClick={() => deleteData(workData)} className=' text-lg mr-2 text-red-600' />
                                                     </div>
                                                 </div>
-
                                             </div>
                                         )}
                                     </Menu.Item>
