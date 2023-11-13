@@ -9,7 +9,6 @@ import { BiChevronDown } from 'react-icons/bi';
 import { MyContext } from '../../../../Context/Context';
 import { toast } from 'react-toastify';
 import SearchBar from '../../SearchBar/SearchBar';
-import { CollectionLoader } from '../../../Loader/Loader';
 
 interface HistoryBodyProps { }
 interface Details {
@@ -37,15 +36,12 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
-
     const options: IOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const todayDate: string = today.toLocaleDateString('en-IN', options).split('/').reverse().join('-');
     const yesterdayDate: string = yesterday.toLocaleDateString('en-IN', options).split('/').reverse().join('-');
     let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') ?? '');
-
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
-
         const colors: Colors = {
             GET: "green",
             POST: "blue",
@@ -53,7 +49,6 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
             DELETE: "red",
             NA: "grey",
         };
-
         return { method, color: colors[method.toUpperCase()] };
     }
     const toggle = (e: any) => {
@@ -89,7 +84,6 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
                 console.log(err);
             });
     };
-
     const handleRequest = (ce: any) => {
         if (tabsList.findIndex((f: { _id: any; }) => f?._id === ce?._id) < 0) {
             setTabsList([...tabsList, ce]);
@@ -98,11 +92,10 @@ const HistoryBody: FC<HistoryBodyProps> = () => {
             setTabData(ce);
         }
     };
-
     useEffect(() => {
         getData();
+        // eslint-disable-next-line
     }, [loader]);
-
     return (
         <>
             <div className='mr-4'><SearchBar /></div>

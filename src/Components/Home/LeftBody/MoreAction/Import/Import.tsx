@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import http from '../../../../../Service/http';
+import { MyContext } from '../../../../../Context/Context';
 
 interface ImportProps {
     open: any,
@@ -14,7 +15,7 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
     const cancelButtonRef = useRef(null);
     const [tab, setTab] = useState<string>('workspace');
     const [value, setValue] = useState('');
-
+    const { loader, setLoader } = useContext(MyContext);
     const tokenMatch = value.match(/token=([^&]*)/);
     if (tokenMatch) {
         var token: string = tokenMatch[1];
@@ -25,6 +26,7 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
             url: `${process.env.REACT_APP_BASEURL}/join/workspace/${token}`,
         })
             .then((res: any) => {
+                setLoader(!loader)
                 toast.success(res.data.message);
             })
             .catch((err: any) => {
@@ -37,13 +39,13 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
             url: `${process.env.REACT_APP_BASEURL}/join/collection/${token}`,
         })
             .then((res: any) => {
+                setLoader(!loader)
                 toast.success(res.data.message);
             })
             .catch((err: any) => {
                 toast.error(err.response.data.message);
             });
     }
-
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -59,7 +61,6 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
                     >
                         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                     </Transition.Child>
-
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                             <Transition.Child

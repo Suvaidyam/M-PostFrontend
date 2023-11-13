@@ -12,7 +12,6 @@ interface CollectionBodyProps { }
 interface Details {
     method?: string | undefined;
 }
-
 interface Colors {
     [key: string]: string;
     GET: string;
@@ -21,21 +20,19 @@ interface Colors {
     DELETE: string;
     NA: string;
 }
-
 interface IAllCollection {
     created_by: string;
-    details: null | any; // You can replace 'any' with a more specific type if needed
+    details: null | string;
     name: string;
-    parent: null | any; // You can replace 'any' with a more specific type if needed
+    parent: null | string;
     share: string[];
     type: string;
     workspace_id: string;
     __v: number;
     _id: string;
 }
-
 const CollectionBody: FC<CollectionBodyProps> = () => {
-    const { collection, setActiveOption, activeOption, workSpaceId, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, currentActive, globalLoader, setGlobalLoader } = useContext(MyContext);
+    const { collection, setActiveOption, activeOption, workSpaceId, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, globalLoader, setGlobalLoader } = useContext(MyContext);
     const [allCollectionData, setAllCollectionData] = useState<IAllCollection[]>([]);
     const FilterCollection = collection?.filter((e: any) => e?.workspace_id === workSpaceId?._id);
     const newArray = FilterCollection?.filter((e: any) => e.parent === null);
@@ -43,18 +40,15 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');
-    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
+    const workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
+    console.log(workSpace_Id)
     const filteredShareData = allCollectionData.filter(item =>
         FilterCollection.some((filterItem: { created_by: string; }) =>
             item.share.includes(filterItem.created_by)
         )
     );
-    // console.log(allCollectionData)
-    // console.log(filteredShareData)
     const concatFolderData = newArray.concat(filteredShareData);
-    const concatReqData = collection.concat(filteredShareData);
-    console.log(collection)
-    console.log(concatReqData)
+    console.log(concatFolderData)
     // ================== All Collection =====================
     const allCollection = () => {
         setGlobalLoader(true)
@@ -148,12 +142,11 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
         };
         return { method, color: colors[method.toUpperCase()] };
     }
-
     useEffect(() => {
         getData();
         allCollection();
+        //  eslint-disable-next-line
     }, [loader]);
-
     return (
         <>
             <BodyHead {...{ postData, title: "Create collection" }} />
@@ -167,7 +160,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                 </>
             ) : (
                 <>
-                    {collection.length === 0 ? <div className='flex h-full justify-center items-center'>Collection not found</div> : <>
+                    {concatFolderData.length === 0 ? <div className='flex h-full justify-center items-center'>Collection not found</div> : <>
                         {concatFolderData?.map((e: any) => (
                             <div key={e._id} >
                                 {e.type === 'folder' &&
