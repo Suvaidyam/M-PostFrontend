@@ -59,6 +59,10 @@ interface ContextValue {
     setUrl: React.Dispatch<React.SetStateAction<any>>,
     shareUrl: string,
     setShareUrl: React.Dispatch<React.SetStateAction<string>>,
+    formData: any,
+    setFormData: React.Dispatch<React.SetStateAction<string>>
+    text: any,
+    setText: React.Dispatch<React.SetStateAction<string>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -112,6 +116,8 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [url, setUrl] = useState();
     // ========== Collection Share Url ===========
     const [shareUrl, setShareUrl] = useState<string>('');
+    const [formData, setFormData] = useState<any>(null);
+    const [text, setText] = useState<any>()
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -171,7 +177,11 @@ const Context: FC<ContextProps> = ({ children }) => {
         url,
         setUrl,
         shareUrl,
-        setShareUrl
+        setShareUrl,
+        formData,
+        setFormData,
+        text,
+        setText
     };
 
     return (

@@ -13,7 +13,7 @@ import http from "../../../../Service/http";
 import { toast } from 'react-toastify';
 
 type Props = {
-    onSendClick: () => void;
+    onSendClick: (e:any) => void;
 }
 
 
