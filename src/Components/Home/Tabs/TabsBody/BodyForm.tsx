@@ -8,7 +8,7 @@ import { tags as t } from '@lezer/highlight';
 interface BodyFromProps { }
 
 const BodyFrom: FC<BodyFromProps> = () => {
-    const { tabData, setJsonText, currentActive ,formData} = useContext(MyContext);
+    const { tabData, setJsonText, currentActive, formData } = useContext(MyContext);
     const locTabList = JSON.parse(localStorage.getItem('tabsList') as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const data = tabData?.details?.body || activeData[0]?.details?.body;
@@ -41,7 +41,7 @@ const BodyFrom: FC<BodyFromProps> = () => {
                 value={JSON.stringify(data, 0 as any, 3)}
                 extensions={[javascript({ jsx: true })] as any}
                 onChange={handleChange}
-                
+
             />
         </div>
     );
