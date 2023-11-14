@@ -118,16 +118,12 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                                     <IoCheckmarkDoneCircleOutline className="cursor-pointer hidden group-hover:block mr-8 text-gray-500 text-2xl"
                                                         onClick={() => setCurrentActiveEnv(ce._id)}
                                                     />}
-                                            <div className="hidden group-hover:block absolute right-2"
-                                            // onClick={() => setcolId(ce)}
-                                            >
-                                                {/* <BiDotsHorizontalRounded className="cursor-pointer" onClick={() =>openRequest(ce)}/> */}
+                                            <div className="hidden group-hover:block absolute right-2">
                                                 <MoreAction ViewDocumentation={''} deleteId={ce} openRequestId={''} collection='environment' />
                                             </div>
                                             {/* moreAction */}
                                             {ce.openRequest ? isOpen &&
                                                 <div className="absolute z-50 right-3 top-9" ref={popupRef}>
-                                                    {/* <MoreAction ViewDocumentation={undefined} deleteId={undefined} openRequestId={undefined} {...{ collection: 'environment' }} /> */}
                                                 </div> : null}
                                         </div>
                                     </div>))}
@@ -136,7 +132,6 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                         </div>
                     </>
                 )}
-                {/* {collEdit === true ? <EditCollection {...{ apiUrl: 'environment' }} /> : null} */}
             </div>
         </>
     );

@@ -31,8 +31,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             'token': sessionStorage.getItem("token")
         }
     };
-    console.log(allWorkspace)
-    console.log(workspace)
     const getAllWorkspace = () => {
         // setLoader(true);
         const url = `${process.env.REACT_APP_BASEURL}/workspace/allWorkSpace`;

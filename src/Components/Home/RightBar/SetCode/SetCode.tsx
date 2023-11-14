@@ -1,30 +1,43 @@
 import type { FC } from 'react';
-import { Fragment, useRef } from 'react';
-import { Dialog, Transition, Menu } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Fragment, useRef, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import Scrollbars from 'react-custom-scrollbars';
+import { Select, Option } from "@material-tailwind/react";
 
 interface SetCodeProps {
     open: any,
     setOpen: any
 }
-
+interface IMethodArray {
+    id: number
+    method: string;
+}
 const SetCode: FC<SetCodeProps> = ({ open, setOpen }) => {
     const cancelButtonRef = useRef(null);
-    const code = `const axios = require('axios');
-    let config = {
-        method: 'post',
+    const [method, setMethod] = useState('NodeJs-Axios');
+    const methodArray: IMethodArray[] = [
+        { id: 1, method: 'JavaScript-Fetch' },
+        { id: 2, method: ' NodeJs-Native' },
+        { id: 3, method: 'NodeJs-Request' },
+        { id: 4, method: 'NodeJs-Unirest' },
+        { id: 5, method: 'NodeJs-Axios' },
+    ];
+    const code = `
+        const axios = require('axios');
+        let config = {
+        method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://postman-integration-testing.glitch.me/register',
-        headers: { }
-      };
-      axios.request(config)
+        url: 'http://localhost:4000/collection',
+        headers: {
+            token goes Hare
+        }};
+        axios.request(config)
         .then((response) => {
         console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-    console.log(error);
-    });`;
-
+        })
+        .catch((error) => {
+        console.log(error);
+        });`
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -40,7 +53,6 @@ const SetCode: FC<SetCodeProps> = ({ open, setOpen }) => {
                     >
                         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                     </Transition.Child>
-
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                             <Transition.Child
@@ -53,49 +65,27 @@ const SetCode: FC<SetCodeProps> = ({ open, setOpen }) => {
                                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                             >
                                 <Dialog.Panel className="">
-                                    <div className="w-[710px] h-[400px] border bg-gray-50 shadow-inner rounded-md  py-5 px-6">
-                                        {/* =================== Dropdown =================== */}
-                                        {/* <div className=" flex justify-end">
-                                            <Menu as="div" className="relative inline-block text-left">
-                                                <div>
-                                                    <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                                        Options
-                                                        <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                    </Menu.Button>
+                                    <div className="w-[710px] h-[400px] text-start border bg-gray-50 shadow-inner rounded-md  py-5 px-6">
+                                        <Scrollbars className='w-full h-full overflow-hidden'>
+                                            <div className="group w-[180px]">
+                                                {/* ========================== Method Dropdown  ========================== */}
+                                                <div className="w-72">
+                                                    <Select label="Select Version">
+                                                        {methodArray.map((e: IMethodArray) => (
+                                                            <Option key={e.id} onClick={() => setMethod(e.method)}>{e.method}</Option>
+                                                        ))}
+                                                    </Select>
                                                 </div>
-
-                                                <Transition
-                                                    as={Fragment}
-                                                    enter="transition ease-out duration-100"
-                                                    enterFrom="transform opacity-0 scale-95"
-                                                    enterTo="transform opacity-100 scale-100"
-                                                    leave="transition ease-in duration-75"
-                                                    leaveFrom="transform opacity-100 scale-100"
-                                                    leaveTo="transform opacity-0 scale-95"
-                                                >
-                                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                        <div className="py-1 pl-2">
-                                                            <Menu.Item>
-                                                                <p>Fetch</p>
-                                                            </Menu.Item>
-                                                            <Menu.Item>
-                                                                <p>axios</p>
-                                                            </Menu.Item>
-                                                            <Menu.Item>
-                                                                <p>Option 1</p>
-                                                            </Menu.Item>
-                                                        </div>
-                                                    </Menu.Items>
-                                                </Transition>
-                                            </Menu>
-                                        </div> */}
-                                        {/* =================== code =================== */}
-                                        <div className="flex justify-start">
-                                            <pre>
-                                                <code>{code}</code>
-                                            </pre>
-                                        </div>
-
+                                                {/* ========================== Method Option  ========================== */}
+                                            </div>
+                                            {/* ========================== Method Axios  ========================== */}
+                                            {
+                                                method === 'NodeJs-Axios' &&
+                                                <div className='flex justify-center'>
+                                                    <pre>{code}</pre>
+                                                </div>
+                                            }
+                                        </Scrollbars>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
