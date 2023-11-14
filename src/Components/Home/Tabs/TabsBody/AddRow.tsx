@@ -34,7 +34,7 @@ export default function AddRow({
     const [checkCheckbox, setCheckCheckbox] = useState(false);
     const [checkRadio, setCheckRadio] = useState(false);
     const [types, setTypes] = useState<string>('text')
-    const { formData, setFormData, setText } = useContext(MyContext)
+    const {  setFormData } = useContext(MyContext)
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
         if (!checkCheckbox) {
@@ -62,6 +62,8 @@ export default function AddRow({
         let result = data.filter((entry: { id: any; }) => entry.id === rowId)[0];
         if (e.target.type === 'file') {
             setFormData(e.target.files[0])
+            // const formDatas = new FormData();
+            // formDatas.append('img', e.target.files[0]);            
         }
         result = { ...result, id: rowId, [e.target.name]: e.target.value }
         if (!checkCheckbox) {
@@ -73,7 +75,6 @@ export default function AddRow({
 
         }
         let index = data.findIndex((value: { id: number; }) => value.id === rowId);
-
         if (index === -1) {
             setData((oldArr: any) => [...oldArr, result]);
         } else {

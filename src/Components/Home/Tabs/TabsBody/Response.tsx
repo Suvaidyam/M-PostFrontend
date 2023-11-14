@@ -70,9 +70,9 @@ export default function Response({ apiResponse, isLoading }: Props) {
             url: `${process.env.REACT_APP_BASEURL}/collection/getById/${currentActive}`,
         })
             .then((res) => {
-                setResponseData(res.data.collection.details.response);
+                setResponseData(res?.data?.collection?.details?.response);
                 // setSaveResponse(res.data.collection.details.response);
-                setResponseDataheaders(res.data.collection.details.responseHeaders)
+                setResponseDataheaders(res?.data?.collection?.details?.responseHeaders)
             })
             .catch((err) => {
                 console.log(err);
