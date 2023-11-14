@@ -41,14 +41,12 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');
     const workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
-    console.log(workSpace_Id)
     const filteredShareData = allCollectionData.filter(item =>
         FilterCollection.some((filterItem: { created_by: string; }) =>
             item.share.includes(filterItem.created_by)
         )
     );
     const concatFolderData = newArray.concat(filteredShareData);
-    console.log(concatFolderData)
     // ================== All Collection =====================
     const allCollection = () => {
         setGlobalLoader(true)
