@@ -1,4 +1,4 @@
-import { useState, useContext, type FC } from 'react';
+import { useState, type FC } from 'react';
 import Logo from '..//..//Assets//login-Bg.png'
 import Vetor from '..//..//Assets//Vector.png'
 import google from '..//..//Assets//google.png'
@@ -8,8 +8,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import ForgetPassword from '../../Common/Steeper/Steeper';
-import { MyContext } from '../../../Context/Context';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 interface LoginProps { }

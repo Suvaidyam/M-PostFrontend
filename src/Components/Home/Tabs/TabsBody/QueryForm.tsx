@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react';
+import { type FC, useState, useContext } from 'react';
 import AddRow from "./AddRow";
 
 interface QueryFormProps {
@@ -10,7 +10,7 @@ interface QueryFormProps {
 
 const QueryForm: FC<QueryFormProps> = ({ data, setData, params }) => {
     const [rows, addRows] = useState([0]);
-    console.log(data)
+    // console.log(data)
     return (
         <>
             <div className="px-3  h-44">
