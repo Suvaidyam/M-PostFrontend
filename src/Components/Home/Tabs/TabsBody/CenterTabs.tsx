@@ -6,7 +6,7 @@ import BodyFrom from './BodyForm';
 type Props = {}
 
 function CenterTabs({ }: Props) {
-  const {  paramsData, setParamsData, headersData, setHeadersData } = useContext(MyContext)
+  const {  formData, setFormData } = useContext(MyContext)
   const [selected, setSelected] = useState("json");
   const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     // console.log(event.target.value);
@@ -56,12 +56,12 @@ function CenterTabs({ }: Props) {
           </label>
         </div>
         {selected === "form-data" ? (
-          <QueryForm data={paramsData} setData={setParamsData} params={undefined} />
+          <QueryForm data={formData} setData={setFormData} params={undefined} />
         ) : (
           <></>
         )}
         {selected === "x-www-form-urlencoded" ? (
-          <QueryForm data={headersData} setData={setHeadersData} params={undefined} />
+          <QueryForm data={formData} setData={setFormData} params={undefined} />
         ) : (
           <></>
         )}

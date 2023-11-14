@@ -8,13 +8,31 @@ import http from "../../../../Service/http";
 type Props = {}
 
 function TabsBody({ }: Props) {
-  const { setMsg, setError, topBarData, paramsData, headersData, jsonText, historyRender, sethistoryRender, formData } = useContext(MyContext);
+  const {
+    setMsg, setError, topBarData,
+    jsonText, historyRender, sethistoryRender,
+    paramsData, headersData, formData
+  } = useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: '100' as string });
   const [isLoading, setLoading] = useState(false);
 
   const onSendClick = async () => {
-    const formDatas = new FormData();
-    formDatas.append('img', formData);
+    let postData:any;
+    let contentType = 'json'; //@todo: radio button value
+    if(contentType === 'json'){
+      postData = {}; //@todo: json body data
+    }else{
+      const newFormData = new FormData();
+      for(let el of formData){
+        if(el.type === 'file' && el.files?.length){
+          newFormData.append(el.key, el.files[0]);
+        }else{
+          newFormData.append(el.key, el.value);
+        }
+      }
+      postData = newFormData;
+    }
+    //@todo - check.. how to store postData into history API
     if (topBarData?.url?.length !== 0) {
       let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
       // console.log(workSpace_Id._id)
@@ -42,7 +60,7 @@ function TabsBody({ }: Props) {
     http({
       url: topBarData.url,
       method: topBarData.method,
-      data: formDatas,
+      data: postData,
       headers: getHeadersAndParams(headersData),
       query: getHeadersAndParams(paramsData),
     })
