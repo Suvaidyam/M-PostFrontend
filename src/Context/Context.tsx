@@ -15,10 +15,14 @@ interface ContextValue {
     setCollection: any;
     currentTab: string;
     setcurrentTab: React.Dispatch<React.SetStateAction<string>>
+
     paramsData: string[]
     setParamsData: React.Dispatch<React.SetStateAction<string[]>>
     headersData: string[]
     setHeadersData: React.Dispatch<React.SetStateAction<string[]>>
+    formData: any[],
+    setFormData: React.Dispatch<React.SetStateAction<any[]>>
+
     tabData: any
     setTabData: React.Dispatch<React.SetStateAction<any>>
     enviroment: string[]
@@ -59,8 +63,6 @@ interface ContextValue {
     setUrl: React.Dispatch<React.SetStateAction<any>>,
     shareUrl: string,
     setShareUrl: React.Dispatch<React.SetStateAction<string>>,
-    formData: any,
-    setFormData: React.Dispatch<React.SetStateAction<string>>
     text: any,
     setText: React.Dispatch<React.SetStateAction<string>>
     workspace: any[],
@@ -110,15 +112,15 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [workSpaceId, setWorkSpaceId] = useState(JSON.parse(localStorage.getItem('workSpace') as any));
     const [loader, setLoader] = useState(false);
     const [historyRender, sethistoryRender] = useState(false);
-    // Set Active option Data 
+    // Set Active option Data
     const [activeOption, setActiveOption] = useState<string>('');
-    // Set Environment Data 
+    // Set Environment Data
     const [newEnvironment, setNewEnvironment] = useState<any>([]);
     const [globalLoader, setGlobalLoader] = useState(false);
     const [url, setUrl] = useState();
     // ========== Collection Share Url ===========
     const [shareUrl, setShareUrl] = useState<string>('');
-    const [formData, setFormData] = useState<any>(null);
+    const [formData, setFormData] = useState<any>([]);
     const [text, setText] = useState<any>()
     // Set Workspace
     const [workspace, setWorkspace] = useState<any>([]);
@@ -138,10 +140,14 @@ const Context: FC<ContextProps> = ({ children }) => {
         setCollection,
         currentTab,
         setcurrentTab,
+
         paramsData,
         setParamsData,
         headersData,
         setHeadersData,
+        formData,
+        setFormData,
+
         tabData,
         setTabData,
         jsonText,
@@ -182,8 +188,6 @@ const Context: FC<ContextProps> = ({ children }) => {
         setUrl,
         shareUrl,
         setShareUrl,
-        formData,
-        setFormData,
         text,
         setText,
         workspace,

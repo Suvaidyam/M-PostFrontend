@@ -5,7 +5,6 @@ interface QueryFormProps {
     data: any
     setData: any
     params: any
-
 }
 
 const QueryForm: FC<QueryFormProps> = ({ data, setData, params }) => {
