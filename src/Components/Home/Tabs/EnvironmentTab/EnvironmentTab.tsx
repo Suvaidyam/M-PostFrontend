@@ -43,7 +43,6 @@ function EnvironmentTab({ }: Props) {
         };
         return { method, color: colors[method.toUpperCase()] };
     };
-
     const handleRequest = (e: { _id: any; }) => {
         if (tabsList.findIndex((f: { _id: any; }) => f._id === e._id) < 0) {
             setTabsList([...tabsList, e]);
@@ -51,14 +50,12 @@ function EnvironmentTab({ }: Props) {
             setTabData(e);
         }
     };
-
     const postData = () => {
         if (buttonRef.current) {
             buttonRef.current.click();
         }
     };
     //  Add Row
-
     const validationSchema: any = Yup.object().shape({
         items: Yup.array().of(
             Yup.object().shape({
@@ -68,7 +65,6 @@ function EnvironmentTab({ }: Props) {
             })
         ),
     });
-
     const initialValues: any = {
         items: tabData?.details?.length > 0 ? tabData?.details?.map((item: any) => {
             return {
@@ -84,7 +80,6 @@ function EnvironmentTab({ }: Props) {
                 current_value: ''
             }]
     };
-
     const handleSubmit = (values: { items: any }): any => {
         http({
             method: "put",
@@ -125,7 +120,6 @@ function EnvironmentTab({ }: Props) {
             }
         );
     };
-
     return (
         <>
             <Scrollbars className="w-full h-[80vh] min-h-[80vh] scrollbar-hide overflow-y-scroll bg-white ">
@@ -151,12 +145,10 @@ function EnvironmentTab({ }: Props) {
                                                 {/* ============ Url ============ */}
                                                 <div className='w-full h-10 px-2 flex items-center group justify-between rounded text-gray-800 bg-gray-100'>
                                                     {view.details.url}
-
                                                     <div className='flex items-center'>
                                                         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={{ duration: 0.2 }}>
                                                             <GoCopy onClick={() => copyJson(view?.details?.url)} className='cursor-pointer hidden group-hover:block' />
                                                         </motion.div>
-
                                                     </div>
                                                 </div>
                                                 <div>
@@ -208,10 +200,8 @@ function EnvironmentTab({ }: Props) {
                             </div>
                         </div>
                     )
-
                     : (
                         // ================ Design 2 ==============
-
                         <div className='w-full h-full'>
                             <div className=" h-14 border-b mb-4 px-5 flex items-center justify-between">
                                 <div>
