@@ -1,10 +1,8 @@
 import type { FC } from 'react';
 import { Fragment, useRef, useState, useContext, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import http from '../../../../Service/http';
 import { MyContext } from '../../../../Context/Context';
-import { AnyARecord } from 'dns';
 import { EnvLoader } from '../../../Loader/Loader';
 import Scrollbars from 'react-custom-scrollbars';
 import { RxCross2 } from 'react-icons/rx';
@@ -21,6 +19,7 @@ const SetEnvironment: FC<SetEnvironmentProps> = ({ open, setOpen }) => {
     const global: any = newEnviroment.filter((e: any) => e?.name === 'Globals');
     const [onLoader, setOnLoader] = useState(false)
     const local: any = newEnviroment.filter((e: any) => e?._id === currentActiveEnv);
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
 
     const newInvObj: any = {
         name: "New Environment",
@@ -30,10 +29,8 @@ const SetEnvironment: FC<SetEnvironmentProps> = ({ open, setOpen }) => {
         setTabsList([...tabsList, el]);
         setCurrentActive(el._id);
     };
-
     const getData = () => {
         setOnLoader(true)
-        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') ?? "");
         http({
             method: "get",
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
@@ -47,11 +44,10 @@ const SetEnvironment: FC<SetEnvironmentProps> = ({ open, setOpen }) => {
                 setLoader(false);
             });
     };
-
     useEffect(() => {
         getData();
+        //  eslint-disable-next-line
     }, [loader]);
-
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -67,7 +63,6 @@ const SetEnvironment: FC<SetEnvironmentProps> = ({ open, setOpen }) => {
                     >
                         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                     </Transition.Child>
-
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                             <Transition.Child
@@ -169,7 +164,6 @@ const SetEnvironment: FC<SetEnvironmentProps> = ({ open, setOpen }) => {
                                                                     </>
                                                                 ) : null}
                                                             </div>
-
                                                         ))}
                                                     </Scrollbars>
                                                 </div>

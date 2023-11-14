@@ -12,19 +12,36 @@ import Scrollbars from 'react-custom-scrollbars';
 import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import AllWorkspace from './AllWorkspace/AllWorkspace';
+import { CiShare2 } from 'react-icons/ci';
+import Share from '../../Home/LeftBody/MoreAction/Share/Share';
+import http from '../../../Service/http';
 
 interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [workspace, setWorkspace] = useState<any>([]);
+    const [allWorkspace, setAllWorkspace] = useState<any>([]);
     const { setWorkSpaceId, loader, setLoader } = useContext(MyContext);
-    const [open, setOpen] = useState<boolean>(false)
-
+    const [open, setOpen] = useState<boolean>(false);
+    const [openShare, setOpenShare] = useState<boolean>(false);
+    const [shareUrl, setShareUrl] = useState<string>('');
     const config = {
         headers: {
             'token': sessionStorage.getItem("token")
         }
+    };
+    const getAllWorkspace = () => {
+        // setLoader(true);
+        const url = `${process.env.REACT_APP_BASEURL}/workspace/allWorkSpace`;
+        axios.get(url, config)
+            .then(res => {
+                setAllWorkspace(res.data.workSpace);
+                setLoader(false);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     };
     const getData = () => {
         // setLoader(true);
@@ -49,12 +66,25 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                 console.error('Error:', error);
             });
     };
+    // ================== Share Workspace ===================
+    const shareWorkspace = (workspace: any) => {
+        setOpenShare(true)
+        http({
+            method: "post",
+            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${workspace?._id}`,
+        })
+            .then((res: any) => {
+                setShareUrl(res.data.url);
+            })
+            .catch((err: any) => {
+                console.log(err);
+            });
+    }
     useEffect(() => {
         getData()
+        getAllWorkspace();
+        // eslint-disable-next-line
     }, [loader])
-
-
-
     const handelSelectedWorkSpace = (e: any) => {
         localStorage.setItem("workSpace", JSON.stringify(e));
         setWorkSpaceId(e);
@@ -77,7 +107,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                     leaveTo="transform opacity-0 scale-95"
                 >
                     <Menu.Items className="absolute -left-[85px] mt-2 px-2 w-56 z-[600] origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-
                         <Scrollbars className='w-full h-full min-h-[290px]'>
                             <div className="py-1">
                                 <Menu.Item>
@@ -96,15 +125,14 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                 </Menu.Item>
                                 <p className='text-xs text-gray-400 pt-2 font-semibold'>Recently visited</p>
                                 {workspace.map((workData: any) => (
-
                                     <Menu.Item key={workData._id}>
                                         {({ active }) => (
-                                            <div className='w-full h-9 hover:bg-white group flex items-center justify-between'>
+                                            <div className='w-full h-9 hover:bg-white group mt-1 flex items-center justify-between'>
                                                 <div
                                                     onClick={() => handelSelectedWorkSpace(workData)}
                                                     className={classNames(
                                                         active ? ' text-gray-900' : 'text-gray-700',
-                                                        'w-[95%]  flex mt-1 pl-2 items-center text-sm'
+                                                        'w-[95%]  flex mt-1 pl-2 items-center text-sm truncate'
                                                     )}
                                                 >
                                                     <div className="w-full flex gap-3 items-center">
@@ -112,7 +140,12 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                                         {workData.name}
                                                     </div>
                                                 </div>
-                                                <MdDelete onClick={() => deleteData(workData)} className='bg-white group-hover:block hidden text-lg mr-2 text-red-600' />
+                                                <div className="bg-white group-hover:block hidden">
+                                                    <div className="flex h-9 items-center gap-3">
+                                                        <CiShare2 onClick={() => shareWorkspace(workData)} />
+                                                        <MdDelete onClick={() => deleteData(workData)} className=' text-lg mr-2 text-red-600' />
+                                                    </div>
+                                                </div>
                                             </div>
                                         )}
                                     </Menu.Item>
@@ -120,7 +153,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                             </div>
                         </Scrollbars>
                         <div
-                            onClick={()=>setOpen(true)}
+                            onClick={() => setOpen(true)}
                             className="w-full  text-xs text-gray-400 hover:text-blue-500 cursor-pointer py-1.5 border-t flex items-center">
                             View all Workspace <IoIosArrowRoundForward className="mt-1" />
                         </div>
@@ -130,6 +163,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             {/* ==================== Popup Components ==================== */}
             <CreateWorkSpace open={openModel} setOpen={setOpenModel} />
             <AllWorkspace open={open} setOpen={setOpen} workspace={workspace} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} />
         </>
     );
 };

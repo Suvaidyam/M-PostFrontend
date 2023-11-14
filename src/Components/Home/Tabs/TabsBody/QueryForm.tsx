@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react';
+import { type FC, useState, useContext } from 'react';
 import AddRow from "./AddRow";
 
 interface QueryFormProps {
@@ -41,7 +41,7 @@ const QueryForm: FC<QueryFormProps> = ({ data, setData, params }) => {
                                     data={data}
                                     setData={setData}
                                     {...{
-                                        variable: 'Key', value: 'Value', description: 'Description', type: data,
+                                        variable: 'Key', value: 'Value', description: 'Description', type: 'text',
                                         variableN: 'key', valueN: 'value', descriptionN: 'description', params
                                     }}
                                 />

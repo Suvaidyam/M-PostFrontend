@@ -1,11 +1,9 @@
 import { FC, useContext, useState, useEffect } from 'react';
 import { MyContext } from '../../../../Context/Context';
 import http from '../../../../Service/http';
-import { array } from 'yargs';
 import BodyHead from '../../BodyHead/BodyHead';
 import { toast } from 'react-toastify';
 import { IoCheckmarkDoneCircleOutline, IoCheckmarkDoneCircleSharp } from 'react-icons/io5';
-import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { useRef } from "react";
 import { CollectionLoader } from '../../../Loader/Loader';
 import MoreAction from '../MoreAction/MoreAction';
@@ -18,11 +16,10 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
     const local_variable = newEnvironment?.filter((e: { name: string; }) => e.name !== 'Globals');
     const [isOpen, setIsOpen] = useState(false);
     // Get Environment Data
-
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const popupRef: any = useRef();
     const getData = () => {
         setGlobalLoader(true)
-        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') ?? '');
         http({
             method: "get",
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
@@ -40,7 +37,6 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
     // 
 
     const postData = () => {
-        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') ?? '');
         http({
             url: `${process.env.REACT_APP_BASEURL}/environment`,
             method: "post",
@@ -66,19 +62,16 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
         }
     };
 
-    const openRequest = (ce: any) => {
-        ce.openRequest = !ce.openRequest;
-        setNewEnvironment([...newEnvironment]);
-        // setIsOpen(true)
-    };
+    // const openRequest = (ce: any) => {
+    //     ce.openRequest = !ce.openRequest;
+    //     setNewEnvironment([...newEnvironment]);
+    //     // setIsOpen(true)
+    // };
 
     useEffect(() => {
-        return () => {
-            getData();
-        }
+        getData();
+        // eslint-disable-next-line
     }, [loader])
-
-
     return (
         <>
             <div className="w-full">
@@ -110,8 +103,7 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                 <div className=" w-full pt-1">
                                     {local_variable?.map((ce: any) => (<div key={ce._id}>
                                         <div className={`w-full h-8  relative group flex cursor-pointer items-center 
-                                    ${ce._id === currentActiveEnv ? 'bg-gray-300' : 'hover:bg-gray-200'}
-                                 border-b py-1 px-2 `} >
+                                    ${ce._id === currentActiveEnv ? 'bg-gray-300' : 'hover:bg-gray-200'} border-b py-1 px-2 `} >
                                             <div className="flex items-center gap-2 w-full h-8 "
                                                 onClick={() => handleRequest(ce)}
                                             >
@@ -123,20 +115,15 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                         text-gray-500 text-2xl"
                                                     onClick={() => setCurrentActiveEnv(null)}
                                                 /> :
-                                                    <IoCheckmarkDoneCircleOutline className="cursor-pointer hidden group-hover:block mr-8
-                                       text-gray-500 text-2xl"
+                                                    <IoCheckmarkDoneCircleOutline className="cursor-pointer hidden group-hover:block mr-8 text-gray-500 text-2xl"
                                                         onClick={() => setCurrentActiveEnv(ce._id)}
                                                     />}
-                                            <div className="hidden group-hover:block absolute right-2"
-                                            // onClick={() => setcolId(ce)}
-                                            >
-                                                {/* <BiDotsHorizontalRounded className="cursor-pointer" onClick={() =>openRequest(ce)}/> */}
+                                            <div className="hidden group-hover:block absolute right-2">
                                                 <MoreAction ViewDocumentation={''} deleteId={ce} openRequestId={''} collection='environment' />
                                             </div>
-                                            {/* moreaction */}
+                                            {/* moreAction */}
                                             {ce.openRequest ? isOpen &&
                                                 <div className="absolute z-50 right-3 top-9" ref={popupRef}>
-                                                    {/* <MoreAction ViewDocumentation={undefined} deleteId={undefined} openRequestId={undefined} {...{ collection: 'environment' }} /> */}
                                                 </div> : null}
                                         </div>
                                     </div>))}
@@ -145,7 +132,6 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                         </div>
                     </>
                 )}
-                {/* {collEdit === true ? <EditCollection {...{ apiUrl: 'environment' }} /> : null} */}
             </div>
         </>
     );

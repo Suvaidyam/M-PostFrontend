@@ -16,12 +16,14 @@ interface MoreActionProps {
 }
 
 const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection }) => {
-    const { loader, setLoader, activeOption, setShareUrl } = useContext(MyContext);
+    const { loader, setLoader, activeOption } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
+    const [shareUrl, setShareUrl] = useState<string>('');
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+
     // ============================ Add Collection Request ============================
     const postData = () => {
-        let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
         http({
             url: `${process.env.REACT_APP_BASEURL}/collection`,
             method: "post",
@@ -99,13 +101,16 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                                 </div>
                             </Menu.Item>
                             {openRequestId.type === 'folder' &&
-                                <Menu.Item>
-                                    <div
-                                        onClick={ViewDocumentation}
-                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
-                                        View Documentation
-                                    </div>
-                                </Menu.Item>}
+                                <>
+                                    <Menu.Item>
+                                        <div
+                                            onClick={ViewDocumentation}
+                                            className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                            View Documentation
+                                        </div>
+                                    </Menu.Item>
+                                </>
+                            }
 
                             <Menu.Item>
                                 <div
@@ -144,7 +149,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             </Menu>
             {/* ============= Popup Components =========== */}
             <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} />
-            <Share open={openShare} setOpen={setOpenShare} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} />
         </>
     );
 }

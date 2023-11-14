@@ -1,29 +1,29 @@
 import type { FC } from 'react';
-import { Fragment, useContext, useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { MdOutlineDone } from 'react-icons/md';
 import { toast } from 'react-toastify';
-import { MyContext } from '../../../../../Context/Context';
-import http from '../../../../../Service/http';
+// import { MyContext } from '../../../../../Context/Context';
 
 interface ShareProps {
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
+    urlValue: string
 }
 
-const Share: FC<ShareProps> = ({ open, setOpen }) => {
+const Share: FC<ShareProps> = ({ open, setOpen, urlValue }) => {
     const cancelButtonRef = useRef(null);
     const [tab, setTab] = useState<string>('People');
-    const { activeOption, collection, shareUrl } = useContext(MyContext);
-    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
-    const findCollection = collection?.filter((e: any) => e.workspace_id === workSpace_Id?._id);
-    const abc = findCollection?.filter((e: any) => e.parent === activeOption?._id);
+    // const { activeOption, collection } = useContext(MyContext);
+    // let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
+    // const findCollection = collection?.filter((e: any) => e.workspace_id === workSpace_Id?._id);
+    // const abc = findCollection?.filter((e: any) => e.parent === activeOption?._id);
     const [email, setEmail] = useState("");
     const validate = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     // Copy Function 
     const copyUrl = () => {
-        navigator.clipboard.writeText(shareUrl).then(
+        navigator.clipboard.writeText(urlValue).then(
             () => {
                 toast.success("Text Copied");
             },
@@ -48,7 +48,6 @@ const Share: FC<ShareProps> = ({ open, setOpen }) => {
                     >
                         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                     </Transition.Child>
-
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                             <Transition.Child
@@ -69,7 +68,7 @@ const Share: FC<ShareProps> = ({ open, setOpen }) => {
                                             </div>
                                             <div className="flex gap-5">
                                                 <p onClick={() => setTab('People')} className={`${tab === 'People' && 'border-b-2 border-blue-600'} duration-100  cursor-pointer`}>With People</p>
-                                                <p onClick={() => setTab('Postman')} className={`${tab === 'Postman' && 'border-b-2 border-blue-600'} duration-100  cursor-pointer`}>Via Run in Postman</p>
+                                                <p onClick={() => setTab('M_POST')} className={`${tab === 'M_POST' && 'border-b-2 border-blue-600'} duration-100  cursor-pointer`}>Via Run in M-Post</p>
                                                 <p onClick={() => setTab('API')} className={`${tab === 'API' && 'border-b-2 border-blue-600'} duration-100 cursor-pointer`}>Via API</p>
                                             </div>
                                             {/* ================== People ================== */}
@@ -108,18 +107,18 @@ const Share: FC<ShareProps> = ({ open, setOpen }) => {
                                                     <div className="w-full pt-4 text-start">
                                                         <p className='text-sm font-semibold'>Share via link</p>
                                                         <div className=" w-full flex gap-3 mt-2">
-                                                            <input value={shareUrl} type="text" className='w-full border border-black rounded px-2 ' />
+                                                            <input value={urlValue} type="text" className='w-full border border-black rounded px-2 ' />
                                                             <button onClick={copyUrl} className={`border-[1.5px] h-9 w-28 rounded`}>Copy Link</button>
                                                         </div>
                                                     </div>
                                                 </>
                                             }
-                                            {/* ================== Postman ================== */}
+                                            {/* ================== M_POST ================== */}
                                             {
-                                                tab === 'Postman' &&
+                                                tab === 'M_POST' &&
                                                 <div className='w-full text-start mt-4'>
                                                     <p>
-                                                        Embed a Run in Postman button on your website or docs to make it easier for people to discover and interact with your collection.
+                                                        Embed a Run in M-Post button on your website or docs to make it easier for people to discover and interact with your collection.
                                                     </p>
                                                     <p className='mt-2'>Who can view this collection?</p>
                                                     <div className="">

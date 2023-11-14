@@ -8,12 +8,15 @@ import http from "../../../../Service/http";
 type Props = {}
 
 function TabsBody({ }: Props) {
-  const { setMsg, setError, topBarData, paramsData, headersData, jsonText, historyRender, sethistoryRender } = useContext(MyContext);
-  const [apiResponse, setApiResponse] = useState({ status: '100' as string});
+  const { setMsg, setError, topBarData, paramsData, headersData, jsonText, historyRender, sethistoryRender, formData } = useContext(MyContext);
+  const [apiResponse, setApiResponse] = useState({ status: '100' as string });
   const [isLoading, setLoading] = useState(false);
+
   const onSendClick = async () => {
+    const formDatas = new FormData();
+    formDatas.append('img', formData);
     if (topBarData?.url?.length !== 0) {
-      let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+      let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
       // console.log(workSpace_Id._id)
       http({
         method: "post",
@@ -39,7 +42,7 @@ function TabsBody({ }: Props) {
     http({
       url: topBarData.url,
       method: topBarData.method,
-      data: jsonText,
+      data: formDatas,
       headers: getHeadersAndParams(headersData),
       query: getHeadersAndParams(paramsData),
     })

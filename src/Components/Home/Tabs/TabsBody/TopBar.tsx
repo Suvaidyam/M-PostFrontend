@@ -13,7 +13,7 @@ import http from "../../../../Service/http";
 import { toast } from 'react-toastify';
 
 type Props = {
-    onSendClick: () => void;
+    onSendClick: (e:any) => void;
 }
 
 
@@ -30,6 +30,7 @@ function TopBar({ onSendClick }: Props) {
     const [responseData, setResponseData] = useState<any | null>(null);
     const currentActives = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
     const [renderDropdown, setRenderDropdown] = useState(false)
+    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const Save = () => {
         http({
             url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
@@ -87,7 +88,6 @@ function TopBar({ onSendClick }: Props) {
         }, 200);
     }, [currentActive])
     const getData = () => {
-        let workSpace_Id = JSON.parse(localStorage.getItem('workSpace') as string);
         http({
             method: "get",
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
@@ -149,7 +149,7 @@ function TopBar({ onSendClick }: Props) {
                                 return (
                                     <Tooltip TransitionComponent={Zoom} title={<VariableValue data={word} />} placement="bottom-start">
                                         <div key={i} className="text-[#1D4ED8] group z-50">
-                                            <span className='text-xs font-semibold cursor-pointer'>{word}</span>
+                                            {/* <span className='text-xs font-semibold cursor-pointer'>{word}</span> */}
                                         </div>
                                     </Tooltip>
                                     // <div key={i} className="text-[#1D4ED8] group z-50">
