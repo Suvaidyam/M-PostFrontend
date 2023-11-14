@@ -18,7 +18,7 @@ function TabsBody({ }: Props) {
 
   const onSendClick = async () => {
     let postData:any;
-    let contentType = 'json'; //@todo: radio button value
+    let contentType = ''; //@todo: radio button value
     if(contentType === 'json'){
       postData = {}; //@todo: json body data
     }else{
