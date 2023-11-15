@@ -20,9 +20,8 @@ interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
-    const [workspace, setWorkspace] = useState<any>([]);
     const [allWorkspace, setAllWorkspace] = useState<any>([]);
-    const { setWorkSpaceId, loader, setLoader } = useContext(MyContext);
+    const { setWorkSpaceId, loader, setLoader, workspace, setWorkspace } = useContext(MyContext);
     const [open, setOpen] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
     const [shareUrl, setShareUrl] = useState<string>('');
