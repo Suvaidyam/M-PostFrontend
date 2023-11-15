@@ -15,36 +15,46 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
     const cancelButtonRef = useRef(null);
     const [tab, setTab] = useState<string>('workspace');
     const [value, setValue] = useState('');
-    const { loader, setLoader } = useContext(MyContext);
+    const { loader, setLoader, collection, workspace } = useContext(MyContext);
+    const importIdMatch = value?.split('/')[5]?.split('?')[0];
     const tokenMatch = value.match(/token=([^&]*)/);
     if (tokenMatch) {
-        var token: string = tokenMatch[1];
+        var token = tokenMatch[1];
     }
     const importWorkspace = () => {
-        http({
-            method: "get",
-            url: `${process.env.REACT_APP_BASEURL}/join/workspace/${token}`,
-        })
-            .then((res: any) => {
-                setLoader(!loader)
-                toast.success(res.data.message);
+        if (workspace && importIdMatch && workspace?.find((col: { _id: string }) => (col._id === importIdMatch))) {
+            return toast.error('Workspace Already Alliable');
+        } else {
+            http({
+                method: "get",
+                url: `${process.env.REACT_APP_BASEURL}/join/workspace/${token}`,
             })
-            .catch((err: any) => {
-                toast.error(err.response.data.message);
-            });
+                .then((res: any) => {
+                    setLoader(!loader);
+                    toast.success(res.data.message);
+                })
+                .catch((err: any) => {
+                    toast.error(err.response.data.message);
+                    console.log(err);
+                });
+        }
     }
     const importCollection = () => {
-        http({
-            method: "get",
-            url: `${process.env.REACT_APP_BASEURL}/join/collection/${token}`,
-        })
-            .then((res: any) => {
-                setLoader(!loader)
-                toast.success(res.data.message);
+        if (collection && importIdMatch && collection?.find((col: { _id: string }) => (col._id === importIdMatch))) {
+            return toast.error('Collection Already Alliable')
+        } else {
+            http({
+                method: "get",
+                url: `${process.env.REACT_APP_BASEURL}/join/collection/${token}`,
             })
-            .catch((err: any) => {
-                toast.error(err.response.data.message);
-            });
+                .then((res: any) => {
+                    setLoader(!loader)
+                    toast.success(res.data.message);
+                })
+                .catch((err: any) => {
+                    toast.error(err.response.data.message);
+                });
+        }
     }
     return (
         <>
@@ -91,7 +101,7 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
                                                         <p className='text-sm font-semibold'>Import Workspace Url</p>
                                                         <div className=" w-full flex gap-3 mt-2">
                                                             <input onChange={(e) => setValue(e.target.value)} type="text" className='w-full border border-black rounded px-2 ' />
-                                                            <button onClick={importWorkspace} className={`border-[1.5px] h-9 w-28 rounded`}>Join</button>
+                                                            <button disabled={value.length === 0 ? true : false} onClick={importWorkspace} className={` ${value?.length === 0 ? 'bg-gray-400' : 'bg-blue-gray-600'} text-white font-semibold border-black h-9 w-28 rounded`}>Join</button>
                                                         </div>
                                                     </div>
                                                 </>
@@ -104,7 +114,7 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
                                                         <p className='text-sm font-semibold'>Import Collection Url</p>
                                                         <div className=" w-full flex gap-3 mt-2">
                                                             <input onChange={(e) => setValue(e.target.value)} type="text" className='w-full border border-black rounded px-2 ' />
-                                                            <button onClick={importCollection} className={`border-[1.5px] h-9 w-28 rounded`}>Join</button>
+                                                            <button disabled={value?.length === 0 ? true : false} onClick={importCollection} className={` ${value?.length === 0 ? 'bg-gray-400' : 'bg-blue-gray-600'} text-white font-semibold border-black h-9 w-28 rounded`}>Join</button>
                                                         </div>
                                                     </div>
                                                 </div>

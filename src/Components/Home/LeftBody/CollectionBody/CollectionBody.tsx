@@ -32,7 +32,7 @@ interface IAllCollection {
     _id: string;
 }
 const CollectionBody: FC<CollectionBodyProps> = () => {
-    const { collection, setActiveOption, activeOption, workSpaceId, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, globalLoader, setGlobalLoader } = useContext(MyContext);
+    const { setActiveOption, activeOption, workSpaceId, collection, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, globalLoader, setGlobalLoader } = useContext(MyContext);
     const [allCollectionData, setAllCollectionData] = useState<IAllCollection[]>([]);
     const FilterCollection = collection?.filter((e: any) => e?.workspace_id === workSpaceId?._id);
     const newArray = FilterCollection?.filter((e: any) => e.parent === null);

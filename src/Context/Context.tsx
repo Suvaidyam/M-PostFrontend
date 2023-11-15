@@ -63,6 +63,8 @@ interface ContextValue {
     setFormData: React.Dispatch<React.SetStateAction<string>>
     text: any,
     setText: React.Dispatch<React.SetStateAction<string>>
+    workspace: any[],
+    setWorkspace: React.Dispatch<React.SetStateAction<any[]>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -118,6 +120,8 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [shareUrl, setShareUrl] = useState<string>('');
     const [formData, setFormData] = useState<any>(null);
     const [text, setText] = useState<any>()
+    // Set Workspace
+    const [workspace, setWorkspace] = useState<any>([]);
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -181,7 +185,9 @@ const Context: FC<ContextProps> = ({ children }) => {
         formData,
         setFormData,
         text,
-        setText
+        setText,
+        workspace,
+        setWorkspace
     };
 
     return (
