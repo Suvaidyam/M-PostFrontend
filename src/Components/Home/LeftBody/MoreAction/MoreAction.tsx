@@ -21,7 +21,6 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
     const [openShare, setOpenShare] = useState<boolean>(false);
     const [shareUrl, setShareUrl] = useState<string>('');
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
-
     // ============================ Add Collection Request ============================
     const postData = () => {
         http({
@@ -43,7 +42,6 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                 console.log(err)
             });
     };
-
     // ============================ Delete Collection ============================
     const deleteData = () => {
         http({
@@ -81,7 +79,6 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                         <span><BiDotsHorizontalRounded className='text-lg text-black' /></span>
                     </Menu.Button>
                 </div>
-
                 <Transition
                     as={Fragment}
                     enter="transition ease-out duration-100"
@@ -111,7 +108,6 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                                     </Menu.Item>
                                 </>
                             }
-
                             <Menu.Item>
                                 <div
                                     onClick={() => setOpenModel(true)}
@@ -135,7 +131,6 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                                         </div>
                                     </Menu.Item>
                                 </>}
-
                             <Menu.Item>
                                 <div
                                     onClick={deleteData}
