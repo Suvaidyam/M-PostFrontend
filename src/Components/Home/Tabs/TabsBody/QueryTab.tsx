@@ -45,7 +45,7 @@ function a11yProps(index: number) {
 }
 
 const QueryTab: FC<QueryTabProps> = () => {
-    const {  paramsData, setParamsData, headersData, setHeadersData, currentActive, tabData } = useContext(MyContext)
+    const { paramsData, setParamsData, headersData, setHeadersData, currentActive, tabData,  setbodyTab } = useContext(MyContext)
     let activeQueryTab = sessionStorage.getItem("queryTab")
     const [value, setValue] = useState(activeQueryTab ? parseInt(activeQueryTab) : 0);
     useEffect(() => {
@@ -61,6 +61,7 @@ const QueryTab: FC<QueryTabProps> = () => {
         setValue(newValue);
         // console.log(value);
     };
+
     return (
         <div className=" w-full h-full">
             <Box sx={{ width: "100%" }}>
@@ -79,6 +80,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                                 color: "#000000",
                             }}
                             label="Params"
+                            onClick={() => setbodyTab('Params')}
                             {...a11yProps(0)}
                         />
                         <Tab
@@ -89,6 +91,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                                 color: "#000000",
                             }}
                             label="Headers"
+                            onClick={() => setbodyTab('Headers')}
                             {...a11yProps(1)}
                         />
                         <Tab
@@ -98,6 +101,8 @@ const QueryTab: FC<QueryTabProps> = () => {
                                 textTransform: "capitalize",
                                 color: "#000000",
                             }}
+
+                            onClick={() => setbodyTab('Body')}
                             label="Body"
                             {...a11yProps(2)}
                         />

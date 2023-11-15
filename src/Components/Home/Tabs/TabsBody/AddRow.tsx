@@ -34,7 +34,8 @@ export default function AddRow({
     const [checkCheckbox, setCheckCheckbox] = useState(false);
     const [checkRadio, setCheckRadio] = useState(false);
     const [types, setTypes] = useState<string>('text')
-    const { formData, setFormData } = useContext(MyContext)
+    const {bodyTab } = useContext(MyContext)
+
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
         if (!checkCheckbox) {
@@ -60,8 +61,8 @@ export default function AddRow({
 
     const onTextChange = (e: any) => {
         let result = data.filter((entry: { id: any; }) => entry.id === rowId)[0];
-        let {type, name, value,files} = e.target;
-        result = { ...result,id: rowId, [name]: value, type, files:files }
+        let { type, name, value, files } = e.target;
+        result = { ...result, id: rowId, [name]: value, type, files: files }
         // console.log("result",result);
 
         if (!checkCheckbox) {
@@ -118,12 +119,15 @@ export default function AddRow({
                         />
                     </div>
 
-                    <div className='hidden group-hover:block absolute right-0 top-2 '>
-                        <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent'>
-                            <option value={'text'}>Text</option>
-                            <option value={'file'}>File</option>
-                        </select>
-                    </div>
+                    {
+                        bodyTab === 'Body' ? <div className='hidden group-hover:block absolute right-0 top-2 '>
+                            <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent'>
+                                <option value={'text'}>Text</option>
+                                <option value={'file'}>File</option>
+                            </select>
+                        </div>
+                            : null
+                    }
                 </th>
                 <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
                     <input
