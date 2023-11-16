@@ -22,8 +22,6 @@ interface ContextValue {
     setHeadersData: React.Dispatch<React.SetStateAction<string[]>>
     formData: any[],
     setFormData: React.Dispatch<React.SetStateAction<any[]>>
-    selected:string, 
-    setSelected:React.Dispatch<React.SetStateAction<string>>
 
     tabData: any
     setTabData: React.Dispatch<React.SetStateAction<any>>
@@ -67,8 +65,12 @@ interface ContextValue {
     setShareUrl: React.Dispatch<React.SetStateAction<string>>,
     text: any,
     setText: React.Dispatch<React.SetStateAction<string>>
-    bodyTab:string, 
-    setbodyTab:React.Dispatch<React.SetStateAction<string>>
+    workspace: any[],
+    setWorkspace: React.Dispatch<React.SetStateAction<any[]>>
+    selected: string,
+    setSelected: React.Dispatch<React.SetStateAction<string>>
+    bodyTab: string,
+    setBodyTab: React.Dispatch<React.SetStateAction<string>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -124,8 +126,11 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [shareUrl, setShareUrl] = useState<string>('');
     const [formData, setFormData] = useState<any>([]);
     const [text, setText] = useState<any>()
+    // Set Workspace
+    const [workspace, setWorkspace] = useState<any>([]);
     const [selected, setSelected] = useState<string>("json");
-    const [bodyTab, setbodyTab] = useState<string>('Body')
+    const [bodyTab, setBodyTab] = useState<string>("Body");
+
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
         setForgetPasswordPopup,
@@ -148,7 +153,6 @@ const Context: FC<ContextProps> = ({ children }) => {
         setHeadersData,
         formData,
         setFormData,
-
         tabData,
         setTabData,
         jsonText,
@@ -191,8 +195,12 @@ const Context: FC<ContextProps> = ({ children }) => {
         setShareUrl,
         text,
         setText,
-        selected, setSelected,
-        bodyTab, setbodyTab
+        workspace,
+        setWorkspace,
+        selected,
+        setSelected,
+        bodyTab,
+        setBodyTab
     };
 
     return (

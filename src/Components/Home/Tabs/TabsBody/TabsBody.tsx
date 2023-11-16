@@ -5,9 +5,9 @@ import Response from './Response'
 import { MyContext } from '../../../../Context/Context'
 import { checkParams, getHeadersAndParams } from '../../../Utils/CommonUtlis'
 import http from "../../../../Service/http";
-type Props = {}
+// type Props = {}
 
-function TabsBody({ }: Props) {
+function TabsBody() {
   const { setMsg, setError, topBarData, jsonText, historyRender, sethistoryRender, paramsData, headersData, formData, selected } = useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: '100' as string });
   const [isLoading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ function TabsBody({ }: Props) {
   const onSendClick = async () => {
     let postData: any;
     let contentType = selected; //@todo: radio button value
-    if (selected === 'json') {
+    if (contentType === 'json') {
       postData = jsonText; //@todo: json body data
     } else if (contentType === 'form-data') {
       const newFormData = new FormData();

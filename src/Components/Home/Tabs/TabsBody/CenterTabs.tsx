@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import QueryForm from './QueryForm';
 import { MyContext } from '../../../../Context/Context';
 import BodyFrom from './BodyForm';
 
-type Props = {}
+// type Props = {}
 
-function CenterTabs({ }: Props) {
-  const {  formData, setFormData,selected,setSelected } = useContext(MyContext)
+function CenterTabs() {
+  const { formData, setFormData, selected, setSelected } = useContext(MyContext)
   const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     // console.log(event.target.value);
     setSelected(event.target.value);

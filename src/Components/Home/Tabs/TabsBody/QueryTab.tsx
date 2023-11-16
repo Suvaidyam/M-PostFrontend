@@ -45,16 +45,16 @@ function a11yProps(index: number) {
 }
 
 const QueryTab: FC<QueryTabProps> = () => {
-    const { paramsData, setParamsData, headersData, setHeadersData, currentActive, tabData,  setbodyTab } = useContext(MyContext)
+    const { paramsData, setParamsData, headersData, setHeadersData, setBodyTab } = useContext(MyContext)
     let activeQueryTab = sessionStorage.getItem("queryTab")
     const [value, setValue] = useState(activeQueryTab ? parseInt(activeQueryTab) : 0);
     useEffect(() => {
         sessionStorage.setItem("queryTab", value as any);
     }, [value])
     const locTabList: any = JSON.parse(localStorage.getItem('tabsList') as any)
-    const activeData = locTabList.filter((e: any) => e._id === currentActive)
-    const paramsBackendData = tabData?.details?.query || activeData[0]?.details?.query;
-    const headersBackendData = tabData?.details?.headers || activeData[0]?.details?.headers;
+    // const activeData = locTabList.filter((e: any) => e._id === currentActive)
+    // const paramsBackendData = tabData?.details?.query || activeData[0]?.details?.query;
+    // const headersBackendData = tabData?.details?.headers || activeData[0]?.details?.headers;
     // console.log(headersBackendData)
     const handleChange = (event: any, newValue: any) => {
         sessionStorage.setItem("queryTab", newValue);
@@ -80,7 +80,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                                 color: "#000000",
                             }}
                             label="Params"
-                            onClick={() => setbodyTab('Params')}
+                            onClick={() => setBodyTab("Params")}
                             {...a11yProps(0)}
                         />
                         <Tab
@@ -91,7 +91,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                                 color: "#000000",
                             }}
                             label="Headers"
-                            onClick={() => setbodyTab('Headers')}
+                            onClick={() => setBodyTab("Headers")}
                             {...a11yProps(1)}
                         />
                         <Tab
@@ -101,8 +101,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                                 textTransform: "capitalize",
                                 color: "#000000",
                             }}
-
-                            onClick={() => setbodyTab('Body')}
+                            onClick={() => setBodyTab("Body")}
                             label="Body"
                             {...a11yProps(2)}
                         />
@@ -111,8 +110,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                 <Resizable direction="bottom" >
                     <div className="bg-white h-full overflow-hidden overflow-y-scroll">
                         <TabPanel value={value} index={0}>
-                            <QueryForm data={paramsData} setData={setParamsData} params={null}
-                            />
+                            <QueryForm data={paramsData} setData={setParamsData} params={null} />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             <QueryForm data={headersData} setData={setHeadersData} params={null} />

@@ -34,13 +34,13 @@ export default function AddRow({
     const [checkCheckbox, setCheckCheckbox] = useState(false);
     const [checkRadio, setCheckRadio] = useState(false);
     const [types, setTypes] = useState<string>('text')
-    const {bodyTab } = useContext(MyContext)
-
+    const { bodyTab } = useContext(MyContext)
+    console.log(data)
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
+        console.log(result)
         if (!checkCheckbox) {
             setCheckCheckbox(true);
-            // addRows(oldArr => [...oldArr, rowId]);
             result = { ...result, id: rowId, check: true }
         } else {
             setCheckCheckbox(false);
@@ -125,8 +125,7 @@ export default function AddRow({
                                 <option value={'text'}>Text</option>
                                 <option value={'file'}>File</option>
                             </select>
-                        </div>
-                            : null
+                        </div> : null
                     }
                 </th>
                 <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
