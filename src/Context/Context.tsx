@@ -67,6 +67,10 @@ interface ContextValue {
     setText: React.Dispatch<React.SetStateAction<string>>
     workspace: any[],
     setWorkspace: React.Dispatch<React.SetStateAction<any[]>>
+    selected: string,
+    setSelected: React.Dispatch<React.SetStateAction<string>>
+    bodyTab: string,
+    setBodyTab: React.Dispatch<React.SetStateAction<string>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -124,6 +128,8 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [text, setText] = useState<any>()
     // Set Workspace
     const [workspace, setWorkspace] = useState<any>([]);
+    const [selected, setSelected] = useState<string>("json");
+    const [bodyTab, setBodyTab] = useState<string>("Body");
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -191,7 +197,11 @@ const Context: FC<ContextProps> = ({ children }) => {
         text,
         setText,
         workspace,
-        setWorkspace
+        setWorkspace,
+        selected,
+        setSelected,
+        bodyTab,
+        setBodyTab
     };
 
     return (
