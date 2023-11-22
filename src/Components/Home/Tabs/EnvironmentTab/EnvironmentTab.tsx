@@ -18,7 +18,6 @@ type Props = {}
 interface Details {
     method?: string | undefined;
 }
-
 interface Colors {
     [key: string]: string;
     GET: string;
@@ -27,7 +26,6 @@ interface Colors {
     DELETE: string;
     NA: string;
 }
-
 function EnvironmentTab({ }: Props) {
     const { collection, setStatus, setMsg, setError, tabData, setTabData, currentActive, tabsList, setTabsList, setCurrentActive, loader, setLoader } = useContext(MyContext);
     const [effect, setEffect] = useState(false);
@@ -113,7 +111,7 @@ function EnvironmentTab({ }: Props) {
         const textToCopy = JSON.stringify(e);
         navigator.clipboard.writeText(textToCopy).then(
             () => {
-                toast.success("Text Copied");
+                toast.success("Json Copied");
             },
             (err) => {
                 console.error(err);
