@@ -15,14 +15,12 @@ interface ContextValue {
     setCollection: any;
     currentTab: string;
     setcurrentTab: React.Dispatch<React.SetStateAction<string>>
-
     paramsData: string[]
     setParamsData: React.Dispatch<React.SetStateAction<string[]>>
     headersData: string[]
     setHeadersData: React.Dispatch<React.SetStateAction<string[]>>
     formData: any[],
     setFormData: React.Dispatch<React.SetStateAction<any[]>>
-
     tabData: any
     setTabData: React.Dispatch<React.SetStateAction<any>>
     enviroment: string[]
@@ -71,14 +69,25 @@ interface ContextValue {
     setSelected: React.Dispatch<React.SetStateAction<string>>
     bodyTab: string,
     setBodyTab: React.Dispatch<React.SetStateAction<string>>
+    trash: boolean,
+    setTrash: React.Dispatch<React.SetStateAction<boolean>>
+    codeMethod: boolean,
+    setCodeMethod: React.Dispatch<React.SetStateAction<boolean>>
 }
 interface ContextProps {
     children: React.ReactNode;
 }
-
-interface Item {
+interface ICollection {
     created_by: string;
-    id: number;
+    deleted: boolean;
+    details: null | string;
+    name: string;
+    parent: null | string;
+    share: string[];
+    type: string;
+    workspace_id: string;
+    __v: number;
+    _id: string;
 }
 export const MyContext = React.createContext<ContextValue>({} as ContextValue);
 
@@ -89,7 +98,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [slide, setSlide] = useState(false);
     const activeNav = localStorage.getItem("currentNav")
     const [currentNav, setCurrentNav] = useState(activeNav ? activeNav : "Collection");
-    const [collection, setCollection] = useState<Item[]>([]);
+    const [collection, setCollection] = useState<ICollection[]>([]);
     const [currentTab, setcurrentTab] = useState('Params')
     const [paramsData, setParamsData] = useState<string[]>([]);
     const [headersData, setHeadersData] = useState<string[]>([]);
@@ -103,7 +112,6 @@ const Context: FC<ContextProps> = ({ children }) => {
     let abc = localStorage.getItem("currentActive")
     const [currentActive, setCurrentActive] = useState(abc ? JSON.parse(abc) : '');
     localStorage.setItem("currentActive", JSON.stringify(currentActive));
-
     const [workSpaceOpen, setWorkSpaceOpen] = useState(false);
     const [Msg, setMsg] = useState("");
     const [error, setError] = useState(false);
@@ -130,6 +138,8 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [workspace, setWorkspace] = useState<any>([]);
     const [selected, setSelected] = useState<string>("json");
     const [bodyTab, setBodyTab] = useState<string>("Body");
+    const [trash, setTrash] = useState<boolean>(false);
+    const [codeMethod, setCodeMethod] = useState<boolean>(false);
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -146,7 +156,6 @@ const Context: FC<ContextProps> = ({ children }) => {
         setCollection,
         currentTab,
         setcurrentTab,
-
         paramsData,
         setParamsData,
         headersData,
@@ -200,7 +209,11 @@ const Context: FC<ContextProps> = ({ children }) => {
         selected,
         setSelected,
         bodyTab,
-        setBodyTab
+        setBodyTab,
+        trash,
+        setTrash,
+        codeMethod,
+        setCodeMethod
     };
 
     return (

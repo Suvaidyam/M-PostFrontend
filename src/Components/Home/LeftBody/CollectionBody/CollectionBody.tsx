@@ -22,6 +22,7 @@ interface Colors {
 }
 interface IAllCollection {
     created_by: string;
+    deleted: boolean;
     details: null | string;
     name: string;
     parent: null | string;
@@ -31,6 +32,7 @@ interface IAllCollection {
     __v: number;
     _id: string;
 }
+
 const CollectionBody: FC<CollectionBodyProps> = () => {
     const { setActiveOption, activeOption, workSpaceId, collection, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, globalLoader, setGlobalLoader } = useContext(MyContext);
     const [allCollectionData, setAllCollectionData] = useState<IAllCollection[]>([]);
@@ -160,9 +162,9 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                 <>
                     {concatFolderData.length === 0 ? <div className='flex h-full justify-center items-center'>Collection not found</div> : <>
                         {concatFolderData?.map((e: any) => (
-                            <div key={e._id} >
+                            <div key={e?._id} >
                                 {e.type === 'folder' &&
-                                    <div className='flex gap-2 relative group justify-between border-b h-9 items-center cursor-pointer'>
+                                    <div key={e?._id} className='flex gap-2 relative group justify-between border-b h-9 items-center cursor-pointer'>
                                         <div className='w-[80%] justify-start flex truncate'>
                                             <div onClick={() => ClickFolder(e._id)} className='w-10 h-full flex items-center justify-center text-lg'>
                                                 {(toggleFolder === true && e._id === activeFolder) ? <BiCaretDown /> : < BiCaretRight />}
@@ -182,30 +184,34 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                 {(toggleFolder === true && e._id === activeFolder) &&
                                     <div className=" w-full">
                                         {allCollectionData?.map((ce: any) => (
-                                            <>
-                                                {ce?.type === 'request' &&
-                                                    <div key={ce._id}>
-                                                        {e._id === ce.parent && (
-                                                            <div className={`w-full relative group flex cursor-pointer py-1 px-2 
+                                            <div>
+                                                {ce?.deleted === false &&
+                                                    <div>
+                                                        {ce?.type === 'request' &&
+                                                            <div key={ce._id}>
+                                                                {e._id === ce.parent && (
+                                                                    <div className={`w-full relative group flex cursor-pointer py-1 px-2 
                                                         ${e._id === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
-                                                                <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
-                                                                    <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
-                                                                        }-600 w-[70px] min-w-[70px] flex justify-end`} >
-                                                                        {getDetails(ce?.details).method}
-                                                                    </p>
-                                                                    <p className="text-xs text-gray-600 font-normal truncate">
-                                                                        {ce.name}
-                                                                    </p>
-                                                                </div>
-                                                                <div className="">
-                                                                    <div onClick={() => openRequest(ce)} className='mb-3 pb-5 hidden group-hover:block absolute right-2'>
-                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={null} deleteId={openRequestId} collection='collection' />
-                                                                    </div>
-                                                                </div>
-                                                            </div>)}
+                                                                        <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
+                                                                            <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
+                                                                                }-600 w-[70px] min-w-[70px] flex justify-end`} >
+                                                                                {getDetails(ce?.details).method}
+                                                                            </p>
+                                                                            <p className="text-xs text-gray-600 font-normal truncate">
+                                                                                {ce.name}
+                                                                            </p>
+                                                                        </div>
+                                                                        <div className="">
+                                                                            <div onClick={() => openRequest(ce)} className='mb-3 pb-5 hidden group-hover:block absolute right-2'>
+                                                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={null} deleteId={openRequestId} collection='collection' />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>)}
+                                                            </div>
+                                                        }
                                                     </div>
                                                 }
-                                            </>
+                                            </div>
                                         ))}
                                     </div>
                                 }
