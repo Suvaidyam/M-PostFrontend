@@ -24,7 +24,7 @@ function CenterTabs() {
             checked={selected === "form-data"}
             onChange={handleChange}
           />
-          <label htmlFor="form-data" className="font-medium text-xs">
+          <label htmlFor="form-data" className="font-medium text-xs cursor-pointer">
             form-data
           </label>
 
@@ -37,7 +37,7 @@ function CenterTabs() {
             onChange={handleChange}
             checked={selected === "x-www-form-urlencoded"}
           />
-          <label htmlFor="x-www-form-urlencoded" className="font-medium text-xs">
+          <label htmlFor="x-www-form-urlencoded" className="font-medium text-xs cursor-pointer">
             x-www-form-urlencoded
           </label>
 
@@ -50,7 +50,7 @@ function CenterTabs() {
             onChange={handleChange}
             checked={selected === "json"}
           />
-          <label htmlFor="json" className="font-medium text-xs">
+          <label htmlFor="json" className="font-medium text-xs cursor-pointer">
             json
           </label>
         </div>

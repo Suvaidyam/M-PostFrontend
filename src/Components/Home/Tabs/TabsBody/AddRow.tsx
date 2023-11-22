@@ -34,11 +34,11 @@ export default function AddRow({
     const [checkCheckbox, setCheckCheckbox] = useState(false);
     const [checkRadio, setCheckRadio] = useState(false);
     const [types, setTypes] = useState<string>('text')
-    const {bodyTab } = useContext(MyContext)
-    console.log(data)
+    const { bodyTab } = useContext(MyContext)
+    // console.log(data)
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
-        console.log(result)
+        // console.log(result)
         if (!checkCheckbox) {
             setCheckCheckbox(true);
             result = { ...result, id: rowId, check: true }
@@ -46,6 +46,7 @@ export default function AddRow({
             setCheckCheckbox(false);
             result = { ...result, id: rowId, check: false }
         }
+        // console.log(result)
 
         let index = data.findIndex((value: any) => value.id === Number(e.target.name));
         if (index === -1) {
@@ -56,12 +57,14 @@ export default function AddRow({
             });
             setData(newArray)
         }
+
     }
 
 
     const onTextChange = (e: any) => {
         let result = data.filter((entry: { id: any; }) => entry.id === rowId)[0];
         let { type, name, value, files } = e.target;
+        console.log(e.target.type)
         result = { ...result, id: rowId, [name]: value, type, files: files }
         // console.log("result",result);
 
@@ -121,7 +124,7 @@ export default function AddRow({
 
                     {
                         bodyTab === 'Body' ? <div className='hidden group-hover:block absolute right-0 top-2 '>
-                            <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent'>
+                            <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent cursor-pointer'>
                                 <option value={'text'}>Text</option>
                                 <option value={'file'}>File</option>
                             </select>

@@ -146,6 +146,7 @@ const Context: FC<ContextProps> = ({ children }) => {
         setCollection,
         currentTab,
         setcurrentTab,
+
         paramsData,
         setParamsData,
         headersData,
