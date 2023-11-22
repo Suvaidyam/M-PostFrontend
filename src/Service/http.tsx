@@ -37,11 +37,10 @@ axios.interceptors.response.use(function (response: any) {
   error.response['resSize'] = getSizeInBytes(error.response.data);
   return Promise.reject(error);
 });
-export default async (option: any) => {
+export default (option: any) => {
   let token = sessionStorage.getItem("token");
-  option.headers = option.headers !== undefined
-    ? option.headers
-    : Object.assign(option.headers, { token });
+  option.headers = !option.headers ? { token } : Object.assign(option.headers);
+
   // option.url = `http://localhost:4000/${option.url}`
   return axios(option);
 };

@@ -35,7 +35,16 @@ export default function AddRow({
     const [checkRadio, setCheckRadio] = useState(false);
     const [types, setTypes] = useState<string>('text')
     const { bodyTab } = useContext(MyContext)
-    // console.log(data)
+    const dataObject = {
+
+        variable: data,
+        value: data,
+
+
+
+    };
+    console.log(dataObject.variable)
+    // Using square bracket notation
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
         // console.log(result)
@@ -118,6 +127,7 @@ export default function AddRow({
                             onChange={(e) => onTextChange(e)}
                             name={variableN}
                             placeholder={variable}
+                        // defaultValue={JSON.stringify(dataObject.variable)}
                         // defaultValue={defaultValue}
                         />
                     </div>
@@ -138,7 +148,8 @@ export default function AddRow({
                         onChange={(e) => onTextChange(e)}
                         name={valueN}
                         placeholder={value}
-                    // defaultValue={defaultValue}
+                    // value={dataObject.key}
+                    // defaultValue={JSON.stringify(dataObject.value)}
                     />
 
                 </th>
