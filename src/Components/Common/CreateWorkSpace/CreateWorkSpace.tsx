@@ -32,6 +32,7 @@ const CreateWorkSpace: FC<CreateWorkSpaceProps> = ({ open, setOpen }) => {
             })
             .catch((err) => {
                 console.log(err)
+                toast.error(err?.response?.data?.message)
             });
     };
     return (

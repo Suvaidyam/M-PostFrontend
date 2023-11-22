@@ -1,10 +1,10 @@
-import { FC, useContext, useState, useEffect } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { MyContext } from '../../../../Context/Context';
 import http from '../../../../Service/http';
 import BodyHead from '../../BodyHead/BodyHead';
 import { toast } from 'react-toastify';
 import { IoCheckmarkDoneCircleOutline, IoCheckmarkDoneCircleSharp } from 'react-icons/io5';
-import { useRef } from "react";
+// import { useRef } from "react";
 import { CollectionLoader } from '../../../Loader/Loader';
 import MoreAction from '../MoreAction/MoreAction';
 
@@ -14,10 +14,11 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
     const { currentActiveEnv, setCurrentActiveEnv, loader, setLoader, tabsList, setTabsList, setTabData, setCurrentActive, newEnvironment, setNewEnvironment, globalLoader, setGlobalLoader } = useContext(MyContext);
     const global_variable = newEnvironment?.filter((e: { name: string; }) => e.name === 'Globals');
     const local_variable = newEnvironment?.filter((e: { name: string; }) => e.name !== 'Globals');
-    const [isOpen, setIsOpen] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
     // Get Environment Data
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
-    const popupRef: any = useRef();
+    // const popupRef: any = useRef();
+    // ======================= Get Environment =======================
     const getData = () => {
         setGlobalLoader(true)
         http({
@@ -33,9 +34,7 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                 console.log(err);
             });
     };
-
-    // 
-
+    // ======================= Create Environment =======================
     const postData = () => {
         http({
             url: `${process.env.REACT_APP_BASEURL}/environment`,
@@ -53,7 +52,7 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                 console.log(err)
             });
     };
-
+    // ======================= Open Environment =======================
     const handleRequest = (e: any) => {
         if (tabsList.findIndex((f: any) => f._id === e._id) < 0) {
             setTabsList([...tabsList, e]);
@@ -65,7 +64,7 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
     // const openRequest = (ce: any) => {
     //     ce.openRequest = !ce.openRequest;
     //     setNewEnvironment([...newEnvironment]);
-    //     // setIsOpen(true)
+    //     setIsOpen(true)
     // };
 
     useEffect(() => {
@@ -122,9 +121,9 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                                 <MoreAction ViewDocumentation={''} deleteId={ce} openRequestId={''} collection='environment' />
                                             </div>
                                             {/* moreAction */}
-                                            {ce.openRequest ? isOpen &&
+                                            {/* {ce.openRequest ? isOpen &&
                                                 <div className="absolute z-50 right-3 top-9" ref={popupRef}>
-                                                </div> : null}
+                                                </div> : null} */}
                                         </div>
                                     </div>))}
                                 </div>

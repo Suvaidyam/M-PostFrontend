@@ -3,10 +3,11 @@ import { Fragment, useState, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { MyContext } from '../../../../Context/Context';
-import EditCollection from './EditCollection';
+import EditCollection from './EditCollection/EditCollection';
 import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
 import Share from './Share/Share';
+import AlertPopup from './AlertPopup/AlertPopup';
 
 interface MoreActionProps {
     ViewDocumentation: any,
@@ -18,6 +19,7 @@ interface MoreActionProps {
 const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection }) => {
     const { loader, setLoader, activeOption } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
+    const [openAlert, setOpenAlert] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
     const [shareUrl, setShareUrl] = useState<string>('');
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
@@ -40,6 +42,21 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             })
             .catch((err) => {
                 console.log(err)
+            });
+    };
+    // ============================ Soft Collection ============================
+    const softDeleteData = () => {
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection/softDeleteCollection/${deleteId?._id}`,
+            method: "put",
+        })
+            .then((res) => {
+                setLoader(!loader);
+                toast.success(res.data.message);
+                console.log(res)
+            })
+            .catch((err) => {
+                console.error('Error:', err);
             });
     };
     // ============================ Delete Collection ============================
@@ -133,8 +150,9 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                                 </>}
                             <Menu.Item>
                                 <div
-                                    onClick={deleteData}
-                                    className={`w-full block px-4 py-2 text-sm hover:bg-red-500 hover:text-gray-900`}>
+                                    // onClick={deleteData}
+                                    onClick={() => setOpenAlert(true)}
+                                    className={`w-full block px-4 py-2 text-sm hover:bg-red-500 hover:text-white`}>
                                     Delete
                                 </div>
                             </Menu.Item>
@@ -145,6 +163,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             {/* ============= Popup Components =========== */}
             <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} />
             <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} />
+            <AlertPopup open={openAlert} setOpen={setOpenAlert} message={'collection'} method={softDeleteData} />
         </>
     );
 }

@@ -2,9 +2,9 @@ import type { FC, SetStateAction } from 'react';
 import { Fragment, useContext, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { AiOutlineClose } from 'react-icons/ai';
-import { MyContext } from '../../../../Context/Context';
+import { MyContext } from '../../../../../Context/Context';
 import { toast } from 'react-toastify';
-import http from '../../../../Service/http';
+import http from '../../../../../Service/http';
 
 interface EditCollectionProps {
     open: boolean
@@ -14,10 +14,9 @@ interface EditCollectionProps {
 }
 
 const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, collection }) => {
-    const { loader, setLoader, activeOption } = useContext(MyContext);
+    const { loader, setLoader } = useContext(MyContext);
     const [name, setName] = useState('');
     const cancelButtonRef = useRef(null);
-
     const PutData = () => {
         http({
             url: `${process.env.REACT_APP_BASEURL}/${collection}/${renameId?._id}`,
@@ -35,9 +34,6 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, coll
                 console.log(err)
             });
     };
-
-    // use
-
     return (
         <>
             <Transition.Root show={open} as={Fragment}>

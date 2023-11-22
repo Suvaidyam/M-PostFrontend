@@ -4,6 +4,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import Scrollbars from 'react-custom-scrollbars';
 import { Select, Option } from "@material-tailwind/react";
 import { AiOutlineClose } from 'react-icons/ai';
+import { GoCopy } from 'react-icons/go';
+import { toast } from 'react-toastify';
 
 interface SetCodeProps {
     open: any,
@@ -16,14 +18,97 @@ interface IMethodArray {
 const SetCode: FC<SetCodeProps> = ({ open, setOpen }) => {
     const cancelButtonRef = useRef(null);
     const [method, setMethod] = useState('Blank');
+    const [copyLoader, setCopyLoader] = useState<boolean>(false)
+    const [copyMethod, setCopyMethod] = useState('');
     const methodArray: IMethodArray[] = [
-        { id: 1, method: 'JavaScript-Fetch' },
+        { id: 1, method: 'NodeJs-Axios' },
         { id: 2, method: 'NodeJs-Native' },
         { id: 3, method: 'NodeJs-Request' },
         { id: 4, method: 'NodeJs-Unirest' },
-        { id: 5, method: 'NodeJs-Axios' },
+        { id: 5, method: 'JavaScript-Fetch' },
     ];
-    const JavaScriptFetch = `{
+    //     const methodArrays = [
+    //         {
+    //             key: 'JavaScript-Fetch',
+    //             code: `const axios = require('axios');
+    //         let config = {
+    //         method: 'get',
+    //         maxBodyLength: Infinity,
+    //         url: 'http://localhost:4000/collection',
+    //         headers: {
+    //             token goes Hare
+    //         }};
+    //         axios.request(config)
+    //         .then((response) => {
+    //         console.log(JSON.stringify(response.data));
+    //         })
+    //         .catch((error) => {
+    //         console.log(error);
+    //         });
+    // `
+    //         },
+    //         {
+    //             key: 'JavaScript-Fetch',
+    //             code: `var myHeaders = new Headers();
+    // myHeaders.append("token", "");
+    // var requestOptions = {
+    //     method: 'GET',
+    //     headers: myHeaders,
+    //     redirect: 'follow'
+    // };
+    // fetch("http://localhost:4000/collection", requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('error', error));`
+    //         },
+    //         {
+    //             key: 'NodeJs-Native',
+    //             code: `var myHeaders = new Headers();
+    // myHeaders.append("token", "");
+    // var requestOptions = {
+    //     method: 'GET',
+    //     headers: myHeaders,
+    //     redirect: 'follow'
+    // };
+    // fetch("http://localhost:4000/collection", requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('error', error));`
+    //         },
+    //         {
+    //             key: 'NodeJs-Request',
+    //             code: `
+    //             var myHeaders = new Headers();
+    // myHeaders.append("token", "");
+
+    // var requestOptions = {
+    //     method: 'GET',
+    //     headers: myHeaders,
+    //     redirect: 'follow'
+    // };
+
+    // fetch("http://localhost:4000/collection", requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('error', error));`
+    //         },
+    //         {
+    //             key: 'NodeJs-Unirest',
+    //             code: `
+    //             var unirest = require('unirest');
+    // var req = unirest('GET', 'http://localhost:4000/collection')
+    //     .headers({
+    //     'token': ''
+    //     })
+    //     .end(function (res) {
+    //     if (res.error) throw new Error(res.error);
+    //     console.log(res.raw_body);
+    //     });
+    //             `
+
+    //         },
+    //     ]
+    const JavaScriptFetch = `
 var myHeaders = new Headers();
 myHeaders.append("token", "");
 var requestOptions = {
@@ -34,7 +119,7 @@ var requestOptions = {
 fetch("http://localhost:4000/collection", requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
-    .catch(error => console.log('error', error));}
+    .catch(error => console.log('error', error));
     `
     const NodeJsAxios = `
         const axios = require('axios');
@@ -106,6 +191,26 @@ var req = unirest('GET', 'http://localhost:4000/collection')
     console.log(res.raw_body);
     });
     `
+    // Copy Function 
+    const copyJson = () => {
+        setCopyLoader(true)
+        { method === 'JavaScript-Fetch' && setCopyMethod(JavaScriptFetch) }
+        { method === 'NodeJs-Axios' && setCopyMethod(NodeJsAxios) }
+        { method === 'NodeJs-Native' && setCopyMethod(NodeJsNative) }
+        { method === 'NodeJs-Request' && setCopyMethod(NodeJsRequest) }
+        { method === 'NodeJsUnirest' && setCopyMethod(NodeJsUnirest) }
+        navigator.clipboard.writeText(copyMethod).then(
+            () => {
+                setTimeout(function () {
+                    toast.success("Text Copied");
+                    setCopyLoader(false)
+                }, 2000);
+            },
+            (err) => {
+                console.error(err);
+            }
+        );
+    };
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -137,22 +242,23 @@ var req = unirest('GET', 'http://localhost:4000/collection')
                                         <Scrollbars className='w-full h-full overflow-hidden'>
                                             {/* ========================== Method Dropdown  ========================== */}
                                             <div className="w-full bg-white flex items-center fixed justify-between pt-1">
-                                                <div className="w-72 ml-2">
-                                                    <Select label="Select Version">
+                                                <div className="w-72 ml-4">
+                                                    <Select label="Select Method">
                                                         {methodArray.map((e: IMethodArray) => (
                                                             <Option key={e.id} onClick={() => setMethod(e.method)}>{e.method}</Option>
                                                         ))}
                                                     </Select>
                                                 </div>
-                                                <div>
-                                                    <AiOutlineClose onClick={() => setOpen(false)} className='text-xl mr-2 cursor-pointer' />
+                                                <div className='flex items-center'>
+                                                    {copyLoader === false ? <GoCopy onClick={copyJson} className='text-xl mr-4 cursor-pointer' /> : <p className='text-3xl text-green-600 mr-4 cursor-pointer'>...</p>}
+                                                    <AiOutlineClose onClick={() => setOpen(false)} className='text-xl mr-4 cursor-pointer' />
                                                 </div>
                                             </div>
                                             {/* ========================== Methods  ========================== */}
                                             <div className='flex  items-center mt-10 justify-center'>
                                                 {
                                                     method === 'Blank' &&
-                                                    <div className='flex justify-center'>
+                                                    <div className='flex justify-center mt-36 items-center'>
                                                         <p>Please Select Method</p>
                                                     </div>
                                                 }

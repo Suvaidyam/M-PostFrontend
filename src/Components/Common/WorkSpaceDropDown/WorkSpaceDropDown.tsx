@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC, SetStateAction } from 'react';
 import { Fragment, useContext, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import classNames from 'classnames'
@@ -15,57 +15,66 @@ import AllWorkspace from './AllWorkspace/AllWorkspace';
 import { CiShare2 } from 'react-icons/ci';
 import Share from '../../Home/LeftBody/MoreAction/Share/Share';
 import http from '../../../Service/http';
+import AlertPopup from '../../Home/LeftBody/MoreAction/AlertPopup/AlertPopup';
 
 interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
-    const [allWorkspace, setAllWorkspace] = useState<any>([]);
     const { setWorkSpaceId, loader, setLoader, workspace, setWorkspace } = useContext(MyContext);
     const [open, setOpen] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
     const [shareUrl, setShareUrl] = useState<string>('');
-    const config = {
-        headers: {
-            'token': sessionStorage.getItem("token")
-        }
-    };
-    const getAllWorkspace = () => {
-        // setLoader(true);
-        const url = `${process.env.REACT_APP_BASEURL}/workspace/allWorkSpace`;
-        axios.get(url, config)
-            .then(res => {
-                setAllWorkspace(res.data.workSpace);
-                setLoader(false);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    };
+    const [deleteId, setDeleteId] = useState<any>([]);
+    const [openAlert, setOpenAlert] = useState<boolean>(false);
+    // =========================== Get Workspace ===========================
     const getData = () => {
-        // setLoader(true);
-        const url = `${process.env.REACT_APP_BASEURL}/workspace`;
-        axios.get(url, config)
-            .then(res => {
+        http({
+            method: "get",
+            url: `${process.env.REACT_APP_BASEURL}/workspace`,
+        })
+            .then((res: any) => {
                 setWorkspace(res.data.workSpace);
                 setLoader(false);
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .catch((err: any) => {
+                console.log(err);
             });
     };
-    const deleteData = (e: any) => {
-        const url = `${process.env.REACT_APP_BASEURL}/workspace/${e._id}`;
-        axios.delete(url, config)
-            .then(res => {
+    // =========================== Delete Workspace ===========================
+    // const deleteData = (e: any) => {
+    //     http({
+    //         method: "delete",
+    //         url: `${process.env.REACT_APP_BASEURL}/workspace/${e._id}`,
+    //     })
+    //         .then((res: any) => {
+    //             setLoader(!loader);
+    //             toast.success(res.data.message);
+    //         })
+    //         .catch((err: any) => {
+    //             console.log(err);
+    //         });
+    // };
+    // =========================== SoftDelete Workspace ===========================
+    const softDeleteData = () => {
+        http({
+            method: "put",
+            url: `${process.env.REACT_APP_BASEURL}/workspace/softPutWorkSpace/${deleteId?._id}`,
+        })
+            .then((res: any) => {
                 setLoader(!loader);
                 toast.success(res.data.message);
+                setOpenAlert(false)
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .catch((err: any) => {
+                console.log(err);
             });
     };
-    // ================== Share Workspace ===================
+    const deleteAlert = (e: any) => {
+        setDeleteId(e)
+        setOpenAlert(true)
+    }
+    // =========================== Share Workspace ===========================
     const shareWorkspace = (workspace: any) => {
         setOpenShare(true)
         http({
@@ -81,7 +90,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     }
     useEffect(() => {
         getData()
-        getAllWorkspace();
         // eslint-disable-next-line
     }, [loader])
     const handelSelectedWorkSpace = (e: any) => {
@@ -142,7 +150,10 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                                 <div className="bg-white group-hover:block hidden">
                                                     <div className="flex h-9 items-center gap-3">
                                                         <CiShare2 onClick={() => shareWorkspace(workData)} />
-                                                        <MdDelete onClick={() => deleteData(workData)} className=' text-lg mr-2 text-red-600' />
+                                                        <MdDelete
+                                                            onClick={() => deleteAlert(workData)}
+                                                            className=' text-lg mr-2 text-red-600'
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,6 +174,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             <CreateWorkSpace open={openModel} setOpen={setOpenModel} />
             <AllWorkspace open={open} setOpen={setOpen} workspace={workspace} />
             <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} />
+            <AlertPopup open={openAlert} setOpen={setOpenAlert} message={'workspace'} method={softDeleteData} />
         </>
     );
 };
