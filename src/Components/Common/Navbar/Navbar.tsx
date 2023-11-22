@@ -14,6 +14,8 @@ import axios from 'axios';
 import Avatar from '../../Assets/avatar-f.jpg'
 import Avatar_f from '../../Assets/avatar-f.jpg'
 import Profile from '../Profile/Profile';
+import http from '../../../Service/http';
+import { toast } from 'react-toastify';
 
 interface NavbarProps { }
 
@@ -29,13 +31,12 @@ const Navbar: FC<NavbarProps> = () => {
     const logout = async () => {
         let token = sessionStorage.getItem('token')
         if (token) {
-            axios.post(`${process.env.REACT_APP_BASEURL}/auth/logout`, {},
-                {
-                    headers: {
-                        "token": ` ${token}`
-                    }
-                })
-                .then((res: any) => {
+            http({
+                method: "post",
+                url: `${process.env.REACT_APP_BASEURL}/auth/logout`,
+
+            })
+                .then((res) => {
                     setMsg(res?.data?.message);
                     setError(true);
                     sessionStorage.removeItem('token');
@@ -44,12 +45,41 @@ const Navbar: FC<NavbarProps> = () => {
                         setError(false)
                         navigate("/");
                     }, 1000)
+                    toast.success(res.data.message);
                 })
-                .catch((err) => console.log(err))
+                .catch((err) => {
+                    console.log(err)
+                    toast.error(err?.response?.data?.message)
+                });
         } else {
             console.log("token require")
         }
     };
+    // // Logout 
+    // const logout = async () => {
+    //     let token = sessionStorage.getItem('token')
+    //     if (token) {
+    //         axios.post(`${process.env.REACT_APP_BASEURL}/auth/logout`, {},
+    //             {
+    //                 headers: {
+    //                     "token": ` ${token}`
+    //                 }
+    //             })
+    //             .then((res: any) => {
+    //                 setMsg(res?.data?.message);
+    //                 setError(true);
+    //                 sessionStorage.removeItem('token');
+    //                 sessionStorage.removeItem('paylode');
+    //                 setTimeout(() => {
+    //                     setError(false)
+    //                     navigate("/");
+    //                 }, 1000)
+    //             })
+    //             .catch((err) => console.log(err))
+    //     } else {
+    //         console.log("token require")
+    //     }
+    // };
     return (
         <>
             <div className={`w-full h-20 z-50 fixed top-0 bg-white ${darkToggle === true ? 'bg-slate-900 text-white' : ''}`}>

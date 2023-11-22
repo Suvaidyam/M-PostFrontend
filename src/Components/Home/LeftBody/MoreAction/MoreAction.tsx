@@ -53,27 +53,11 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             .then((res) => {
                 setLoader(!loader);
                 toast.success(res.data.message);
-                console.log(res)
             })
             .catch((err) => {
                 console.error('Error:', err);
             });
     };
-    // ============================ Delete Collection ============================
-    const deleteData = () => {
-        http({
-            url: `${process.env.REACT_APP_BASEURL}/${collection}/${deleteId?._id}`,
-            method: "delete",
-        })
-            .then((res) => {
-                setLoader(!loader);
-                toast.success(res.data.message);
-            })
-            .catch((err) => {
-                console.error('Error:', err);
-            });
-    };
-
     // ============================ Share Collection ============================
     const share = () => {
         setOpenShare(true);

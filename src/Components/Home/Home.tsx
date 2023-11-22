@@ -6,11 +6,13 @@ import LeftBody from './LeftBody/LeftBody';
 import RightBar from './RightBar/RightBar';
 import Tabs from './Tabs/Tabs';
 import { MyContext } from '../../Context/Context';
+import Trash from './RightBar/Trash/Trash';
+import SetCode from './RightBar/SetCode/SetCode';
 
 interface HomeProps { }
 
 const Home: FC<HomeProps> = () => {
-    const { darkToggle, slide } = useContext(MyContext);
+    const { darkToggle, trash, codeMethod } = useContext(MyContext);
     return (
         <>
             <div className={`w-full h-screen ${darkToggle === true ? 'bg-slate-950 text-white opacity-80' : ''} fixed z-0`}>
@@ -33,7 +35,11 @@ const Home: FC<HomeProps> = () => {
                     </div>
                     <div className='w-full h-full flex'>
                         {/* ========== Center Body ========== */}
-                        <div className='w-[94%] h-full border-r'><Tabs /></div>
+                        <div className='w-[94%] flex h-full border-r'>
+                            <Tabs />
+                            {trash === true && <Trash />}
+                            {codeMethod === true && <SetCode />}
+                        </div>
                         {/* ========== Right Body =========== */}
                         <div className='w-[6%] h-full'><RightBar /></div>
                     </div>

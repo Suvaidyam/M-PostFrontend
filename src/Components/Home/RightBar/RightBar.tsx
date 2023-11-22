@@ -6,23 +6,30 @@ import { FiTrash2 } from 'react-icons/fi';
 import { MyContext } from '../../../Context/Context';
 import SetEnvironment from './SetEnvironment/SetEnviroment';
 import SetCode from './SetCode/SetCode';
+import { Link } from 'react-router-dom';
 
 interface RightBarProps { }
 
 const RightBar: FC<RightBarProps> = () => {
-    const { darkToggle } = useContext(MyContext);
-    const [open, setOpen] = useState(false);
-    const [code, setCode] = useState(false);
-
+    const { darkToggle, trash, setTrash, codeMethod, setCodeMethod } = useContext(MyContext);
+    const [open, setOpen] = useState<boolean>(false);
+    const trashToggle = () => {
+        setTrash(!trash)
+        setCodeMethod(false)
+    }
+    const codeToggle = () => {
+        setCodeMethod(!codeMethod)
+        setTrash(false)
+    }
     return (
         <>
             <div className={`flex border-l-[1.5px] flex-col items-center justify-center gap-5 h-full bg-white py-1.5 relative ${darkToggle === true ? 'bg-slate-800 text-white opacity-80' : ''}`}>
                 <div className="flex flex-col justify-between h-full ">
                     <div>
-                        <div onClick={()=>setOpen(!open)} className="cursor-pointer flex justify-center items-center mt-2 gap-1">
+                        <div onClick={() => setOpen(!open)} className="cursor-pointer flex justify-center items-center mt-2 gap-1">
                             <AiOutlineEye className="text-gray-600 w-8 h-8 p-2 rounded-md hover:bg-blue-200 hover:text-blue-600" />
                         </div>
-                        <div onClick={() => setCode(!code)} className="cursor-pointer flex justify-center items-center mt-1 gap-1">
+                        <div onClick={codeToggle} className="cursor-pointer flex justify-center items-center mt-1 gap-1">
                             <BsCode className="text-gray-600 w-8 h-8 p-2 rounded-md hover:bg-blue-200 hover:text-blue-600" />
                         </div>
                     </div>
@@ -32,13 +39,13 @@ const RightBar: FC<RightBarProps> = () => {
                         </div>
                         <p className="text-[10px] w-full flex justify-center font-medium text-gray-600">Runner</p>
                         <div
+                            onClick={trashToggle}
                             className="hover:bg-blue-200 w-8 h-8 flex justify-center items-center rounded-md cursor-pointer group">
                             <FiTrash2 className=" group-hover:text-blue-600 text-gray-600" />
                         </div>
                         <p className="text-[10px] w-full flex justify-center font-medium text-gray-600">Trash</p>
                         <div
-                            className="hover:bg-blue-200 w-8 h-8 flex justify-center items-center 
-                             rounded-md cursor-pointer group"
+                            className="hover:bg-blue-200 w-8 h-8 flex justify-center items-center rounded-md cursor-pointer group"
                         >
                             <BiHelpCircle className=" group-hover:text-blue-600 text-gray-600" />
                         </div>
@@ -47,7 +54,7 @@ const RightBar: FC<RightBarProps> = () => {
                 </div>
             </div>
             <SetEnvironment open={open} setOpen={setOpen} />
-            <SetCode open={code} setOpen={setCode} />
+            {/* <SetCode open={code} setOpen={setCode} /> */}
         </>
     );
 }
