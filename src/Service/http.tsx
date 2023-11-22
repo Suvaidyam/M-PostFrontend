@@ -13,7 +13,7 @@ const getSizeInBytes = (obj: any) => {
   return bytes;
 };
 // Add a request interceptor
-axios.interceptors.request.use(function (config:any) {
+axios.interceptors.request.use(function (config: any) {
   // Do something before request is sent
   config['startTime'] = new Date();
   return config;
@@ -22,7 +22,7 @@ axios.interceptors.request.use(function (config:any) {
   return Promise.reject(error);
 });
 // Add a response interceptor
-axios.interceptors.response.use(function (response:any) {
+axios.interceptors.response.use(function (response: any) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
   // console.log('response', response);
@@ -37,11 +37,10 @@ axios.interceptors.response.use(function (response:any) {
   error.response['resSize'] = getSizeInBytes(error.response.data);
   return Promise.reject(error);
 });
-export default async (option:any) => {
-
+export default async (option: any) => {
   let token = sessionStorage.getItem("token");
-  option.headers = !option.headers
-    ? { token }
+  option.headers = option.headers !== undefined
+    ? option.headers
     : Object.assign(option.headers, { token });
   // option.url = `http://localhost:4000/${option.url}`
   return axios(option);

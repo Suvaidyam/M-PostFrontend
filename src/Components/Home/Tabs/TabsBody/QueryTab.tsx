@@ -51,7 +51,7 @@ const QueryTab: FC<QueryTabProps> = () => {
     useEffect(() => {
         sessionStorage.setItem("queryTab", value as any);
     }, [value])
-    const locTabList: any = JSON.parse(localStorage.getItem('tabsList') as any)
+    // const locTabList: any = JSON.parse(localStorage.getItem('tabsList') as any)
     // const activeData = locTabList.filter((e: any) => e._id === currentActive)
     // const paramsBackendData = tabData?.details?.query || activeData[0]?.details?.query;
     // const headersBackendData = tabData?.details?.headers || activeData[0]?.details?.headers;

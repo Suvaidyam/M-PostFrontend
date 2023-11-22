@@ -1,4 +1,4 @@
-import { type FC, useState, useContext } from 'react';
+import { type FC, useState } from 'react';
 import AddRow from "./AddRow";
 
 interface QueryFormProps {

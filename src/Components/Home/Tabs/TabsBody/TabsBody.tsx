@@ -11,25 +11,29 @@ function TabsBody() {
   const { setMsg, setError, topBarData, jsonText, historyRender, sethistoryRender, paramsData, headersData, formData, selected } = useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: '100' as string });
   const [isLoading, setLoading] = useState(false);
-
+  // const [contentsType, setContentsType] = useState<any>('application/json')
   const onSendClick = async () => {
-    let postData: any;
-    let contentType = selected; //@todo: radio button value
-    if (contentType === 'json') {
-      postData = jsonText; //@todo: json body data
-    } else if (contentType === 'form-data') {
-      const newFormData = new FormData();
-      for (let el of formData) {
-        if (el.type === 'file' && el.files?.length) {
-          newFormData.append(el.key, el.files[0]);
-        } else {
-          newFormData.append(el.key, el.value);
-        }
-      }
-      postData = newFormData;
-    } else {
-      console.log('error')
-    }
+    // let postData: any;
+    // let contentType = selected; //@todo: radio button value
+    // if (contentType === 'json') {
+    //   setContentsType('application/json')
+    //   postData = jsonText; //@todo: json body data
+    // } else if (contentType === 'form-data') {
+    //   setContentsType('multipart/form-data')
+    //   const newFormData = new FormData();
+    //   for (let el of formData) {
+    //     if (el.type === 'file' && el.files?.length) {
+    //       newFormData.append(el.key, el.files[0]);
+    //     } else {
+    //       newFormData.append(el.key, el.value);
+
+    //     }
+    //   }
+    //   postData = newFormData;
+
+    // } else {
+    //   console.log('error')
+    // }
     //@todo - check.. how to store postData into history API
     if (topBarData?.url?.length !== 0) {
       let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
@@ -55,16 +59,48 @@ function TabsBody() {
         return false;
       }
     }
+
+
+
+    // ========= Post form-data && json ===========
+
+    let postData;
+    let contentType = selected; // @todo: radio button value
+    let headers: any = {};
+
+    if (contentType === 'json') {
+      headers['Content-Type'] = 'application/json';
+      postData = jsonText; // @todo: json body data
+    } else if (contentType === 'form-data') {
+      headers['Content-Type'] = 'multipart/form-data';
+      const newFormData = new FormData();
+
+      for (let el of formData) {
+        if (el.type === 'file' && el.files?.length) {
+          newFormData.append(el.key, el.files[0]);
+        } else {
+          newFormData.append(el.key, el.value);
+        }
+      }
+
+      postData = newFormData;
+    } else {
+      console.log('Invalid contentType');
+      return; // Handle or return an error, as needed
+    }
+    const headersDatas = getHeadersAndParams(headers);
+
     http({
       url: topBarData.url,
       method: topBarData.method,
       data: postData,
+      // headers: headersDatas,
       headers: getHeadersAndParams(headersData),
       query: getHeadersAndParams(paramsData),
     })
       .then((res: any) => {
         setApiResponse(res);
-        // console.log(res)
+        console.log(res)
       })
       .catch((err: { response: React.SetStateAction<{ status: string }> }) => {
         setApiResponse(err.response);
@@ -73,6 +109,9 @@ function TabsBody() {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
+
+
+
   }
   return (
     <>
