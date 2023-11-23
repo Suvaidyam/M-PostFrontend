@@ -10,7 +10,8 @@ import http from "../../../../Service/http";
 function TabsBody() {
   const { setMsg, setError, topBarData, jsonText, historyRender, sethistoryRender, paramsData, headersData, formData, selected } = useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: '100' as string });
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
+
   // const [contentsType, setContentsType] = useState<any>('application/json')
   const onSendClick = async () => {
     // let postData: any;
@@ -113,6 +114,7 @@ function TabsBody() {
 
 
   }
+
   return (
     <>
       <div className=" h-[82.5vh] mx-1 ">

@@ -13,8 +13,9 @@ import http from "../../../../Service/http";
 import { toast } from 'react-toastify';
 
 type Props = {
-    onSendClick: (e:any) => void;
+    onSendClick: (e: any) => void;
 }
+
 
 
 function TopBar({ onSendClick }: Props) {
@@ -113,15 +114,16 @@ function TopBar({ onSendClick }: Props) {
         };
     }, []);
 
+
     return (
         <>
             <div className="w-full flex h-full  items-center  px-3 relative ">
                 {/* dropdown */}
-            
+
                 {renderDropdown === true &&
                     <div className="w-28 h-11 border-gray-300 border  rounded-l-md bg-white flex items-center focus:outline-none">
                         <select
-                            className="bg-white font-medium text-sm rounded-l-md text-gray-600  px-4 h-8 focus:outline-none border-none "
+                            className={`bg-white font-medium text-sm rounded-l-md text-gray-600  px-4 h-8 focus:outline-none border-none`}
                             onChange={(e) => { setData({ ...data, method: e.target.value.toLowerCase() }); }}
                             defaultValue={responseData?.method?.toUpperCase() || ""}>
                             <option value="GET" > GET </option>
