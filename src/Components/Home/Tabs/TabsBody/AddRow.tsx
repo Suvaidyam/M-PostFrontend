@@ -31,20 +31,11 @@ export default function AddRow({
     descriptionN,
     // defaultValue
 }: Props) {
-    const [checkCheckbox, setCheckCheckbox] = useState(false);
-    const [checkRadio, setCheckRadio] = useState(false);
+    const [checkCheckbox, setCheckCheckbox] = useState<boolean>(false);
+    const [checkRadio, setCheckRadio] = useState<boolean>(false);
     const [types, setTypes] = useState<string>('text')
     const { bodyTab } = useContext(MyContext)
-    const dataObject = {
-
-        variable: data,
-        value: data,
-
-
-
-    };
-    console.log(dataObject.variable)
-    // Using square bracket notation
+    // console.log(data)
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
         // console.log(result)
@@ -73,7 +64,7 @@ export default function AddRow({
     const onTextChange = (e: any) => {
         let result = data.filter((entry: { id: any; }) => entry.id === rowId)[0];
         let { type, name, value, files } = e.target;
-        console.log(e.target.type)
+        // console.log(e.target.type)
         result = { ...result, id: rowId, [name]: value, type, files: files }
         // console.log("result",result);
 
@@ -112,6 +103,8 @@ export default function AddRow({
                                 className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
                                 name={rowId}
                                 onChange={(e) => handleChange(e)}
+                                defaultValue={data[0]?.check}
+
                             /> : <></>
                         }
 
@@ -127,8 +120,7 @@ export default function AddRow({
                             onChange={(e) => onTextChange(e)}
                             name={variableN}
                             placeholder={variable}
-                        // defaultValue={JSON.stringify(dataObject.variable)}
-                        // defaultValue={defaultValue}
+                        // defaultValue={data[0]?.key}
                         />
                     </div>
 
@@ -148,8 +140,7 @@ export default function AddRow({
                         onChange={(e) => onTextChange(e)}
                         name={valueN}
                         placeholder={value}
-                    // value={dataObject.key}
-                    // defaultValue={JSON.stringify(dataObject.value)}
+                    // defaultValue={data[0]?.value}
                     />
 
                 </th>
