@@ -69,10 +69,8 @@ interface ContextValue {
     setSelected: React.Dispatch<React.SetStateAction<string>>
     bodyTab: string,
     setBodyTab: React.Dispatch<React.SetStateAction<string>>
-    trash: boolean,
-    setTrash: React.Dispatch<React.SetStateAction<boolean>>
-    codeMethod: boolean,
-    setCodeMethod: React.Dispatch<React.SetStateAction<boolean>>
+    rightBar: string,
+    setRightBar: React.Dispatch<React.SetStateAction<string>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -140,6 +138,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [bodyTab, setBodyTab] = useState<string>("Params");
     const [trash, setTrash] = useState<boolean>(false);
     const [codeMethod, setCodeMethod] = useState<boolean>(false);
+    const [rightBar, setRightBar] = useState<string>('close');
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -210,10 +209,8 @@ const Context: FC<ContextProps> = ({ children }) => {
         setSelected,
         bodyTab,
         setBodyTab,
-        trash,
-        setTrash,
-        codeMethod,
-        setCodeMethod
+        rightBar,
+        setRightBar
     };
 
     return (
