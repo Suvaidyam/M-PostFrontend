@@ -3,14 +3,8 @@ import Scrollbars from 'react-custom-scrollbars';
 import { Select, Option } from "@material-tailwind/react";
 import { IoClose } from "react-icons/io5";
 import { MyContext } from '../../../../Context/Context';
-import { toast } from 'react-toastify';
-import { AiOutlineClose } from 'react-icons/ai';
-import { GoCopy } from 'react-icons/go';
 
-interface SetCodeProps {
-    // open: any,
-    // setOpen: any
-}
+interface SetCodeProps { }
 interface IMethodArray {
     id: number
     method: string;
@@ -18,8 +12,6 @@ interface IMethodArray {
 const SetCode: FC<SetCodeProps> = () => {
     const [method, setMethod] = useState('Blank');
     const { setRightBar } = useContext(MyContext)
-    const [copyLoader, setCopyLoader] = useState<boolean>(false)
-    const [copyMethod, setCopyMethod] = useState('');
     const methodArray: IMethodArray[] = [
         { id: 1, method: 'NodeJs-Axios' },
         { id: 2, method: 'NodeJs-Native' },
@@ -212,24 +204,21 @@ const SetCode: FC<SetCodeProps> = () => {
     return (
         <>
             <div className="w-full border-l h-full">
-                <div className='w-full h-10 flex border-b-2  items-center justify-between'>
-                    <p className='text-lg my-1 ml-2'>Methods</p>
+                <div className='w-full h-16 border-b flex  items-center justify-between'>
+                    <div className="w-40 ml-4">
+                        <Select label="Select Method">
+                            {methodArray.map((e: IMethodArray) => (
+                                <Option key={e.id} onClick={() => setMethod(e.method)}>{e.method}</Option>
+                            ))}
+                        </Select>
+                    </div>
                     <div className="h-[90%]  w-8 flex justify-center items-center text-lg hover:bg-slate-100 duration-300 rounded-full cursor-pointer mr-2">
                         <IoClose onClick={() => setRightBar('close')} />
                     </div>
                 </div>
-                <div className="w-full h-full overflow-hidden text-start border bg-white shadow-inner rounded-md  py-2">
+                <div className="w-full h-full overflow-hidden text-start  bg-white  rounded-md  py-2">
                     <Scrollbars className='w-full h-full overflow-hidden'>
-                        <div className="w-full bg-white flex items-center justify-between pt-1">
-                            <div className="w-24 ml-4">
-                                <Select label="Select Method">
-                                    {methodArray.map((e: IMethodArray) => (
-                                        <Option key={e.id} onClick={() => setMethod(e.method)}>{e.method}</Option>
-                                    ))}
-                                </Select>
-                            </div>
-                        </div>
-                        <div className='flex  items-center justify-center'>
+                        <div className='w-full h-full flex justify-center'>
                             {
                                 method === 'Blank' &&
                                 <div className='w-full h-full flex justify-center items-center'>

@@ -41,20 +41,6 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                 console.log(err);
             });
     };
-    // =========================== Delete Workspace ===========================
-    // const deleteData = (e: any) => {
-    //     http({
-    //         method: "delete",
-    //         url: `${process.env.REACT_APP_BASEURL}/workspace/${e._id}`,
-    //     })
-    //         .then((res: any) => {
-    //             setLoader(!loader);
-    //             toast.success(res.data.message);
-    //         })
-    //         .catch((err: any) => {
-    //             console.log(err);
-    //         });
-    // };
     // =========================== SoftDelete Workspace ===========================
     const softDeleteData = () => {
         http({
@@ -142,7 +128,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                                         'w-[95%]  flex mt-1 pl-2 items-center text-sm truncate'
                                                     )}
                                                 >
-                                                    <div className="w-full flex gap-3 items-center">
+                                                    <div className="w-full truncate flex gap-3 items-center">
                                                         <BiGroup className='text-lg text-gray-700' />
                                                         {workData.name}
                                                     </div>

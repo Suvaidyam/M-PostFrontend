@@ -103,9 +103,9 @@ function EnvironmentTab({ }: Props) {
                 setError(true)
             });
     };
-    const deleteData = (indexToDelete: any) => {
-        console.log(indexToDelete)
-    };
+    // const deleteData = (indexToDelete: any) => {
+    //     console.log(indexToDelete)
+    // };
     // Copy Function 
     const copyJson = (e: any) => {
         const textToCopy = JSON.stringify(e);
@@ -243,7 +243,6 @@ function EnvironmentTab({ }: Props) {
                                                                             : (
                                                                                 <GrAdd className='cursor-pointer' onClick={() => arrayHelpers.push({ name: '', quantity: 0 })} />
                                                                             )}
-
                                                                     </td>
                                                                     <td className='w-[32%]'>
                                                                         <Field
@@ -270,7 +269,7 @@ function EnvironmentTab({ }: Props) {
                                                                     <td className=''>
                                                                         {tabData?.details !== 0 ? ( // Disable for the first row
                                                                             <button className='ml-4 text-xl' type="button"
-                                                                                onClick={() => deleteData(index)}
+                                                                            // onClick={() => deleteData(index)}
                                                                             // onClick={() => arrayHelpers.remove(index)}
                                                                             >
                                                                                 <MdDelete className='hidden group-hover:block' />
