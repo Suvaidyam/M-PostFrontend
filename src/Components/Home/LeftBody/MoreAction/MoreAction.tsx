@@ -43,7 +43,27 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             .catch((err) => {
                 console.log(err)
             });
+    };    //  ============================== Create Folder ==============================
+    const AddFolder = () => {
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection`,
+            method: "post",
+            data: {
+                type: "folder",
+                name: "New Folder",
+                parent: activeOption?._id,
+                workspace_id: workSpace_Id._id,
+            },
+        })
+            .then((res) => {
+                setLoader(!loader);
+                toast.success(res.data.message);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
+
     // ============================ Soft Collection ============================
     const softDeleteData = () => {
         http({
@@ -74,9 +94,9 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
     }
     return (
         <>
-            <Menu as="div" className="relative inline-block text-left">
-                <div>
-                    <Menu.Button className="flex items-center h-full">
+            <Menu as="div" className="relative h-full inline-block text-left">
+                <div className='h-full flex items-center'>
+                    <Menu.Button className="h-full flex items-center">
                         <span><BiDotsHorizontalRounded className='text-lg text-black' /></span>
                     </Menu.Button>
                 </div>
@@ -89,25 +109,25 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute right-0 w-56 z-50 origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute cursor-pointer right-0 w-56 z-50 origin-top-right rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
-                            <Menu.Item>
-                                <div
-                                    onClick={share}
-                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
-                                    Share
-                                </div>
-                            </Menu.Item>
-                            {openRequestId.type === 'folder' &&
-                                <>
-                                    <Menu.Item>
-                                        <div
-                                            onClick={ViewDocumentation}
-                                            className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
-                                            View Documentation
-                                        </div>
-                                    </Menu.Item>
-                                </>
+                            {openRequestId?.type === 'collection' &&
+                                <Menu.Item>
+                                    <div
+                                        onClick={share}
+                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                        Share
+                                    </div>
+                                </Menu.Item>
+                            }
+                            {openRequestId?.type === 'folder' &&
+                                <Menu.Item>
+                                    <div
+                                        onClick={ViewDocumentation}
+                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                        View Documentation
+                                    </div>
+                                </Menu.Item>
                             }
                             <Menu.Item>
                                 <div
@@ -116,22 +136,24 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                                     Rename
                                 </div>
                             </Menu.Item>
-                            {openRequestId.type === 'folder' &&
-                                <>
-                                    <Menu.Item>
-                                        <div
-                                            className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
-                                            Add folder
-                                        </div>
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                        <div
-                                            onClick={postData}
-                                            className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
-                                            Add request
-                                        </div>
-                                    </Menu.Item>
-                                </>}
+                            {openRequestId?.type === 'collection' &&
+                                <Menu.Item>
+                                    <div
+                                        onClick={AddFolder}
+                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                        Add folder
+                                    </div>
+                                </Menu.Item>
+                            }
+                            {openRequestId?.type === 'folder' &&
+                                <Menu.Item>
+                                    <div
+                                        onClick={postData}
+                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                        Add request
+                                    </div>
+                                </Menu.Item>
+                            }
                             <Menu.Item>
                                 <div
                                     // onClick={deleteData}

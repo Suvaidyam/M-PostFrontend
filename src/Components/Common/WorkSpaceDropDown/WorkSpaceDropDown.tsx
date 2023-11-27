@@ -1,10 +1,9 @@
-import type { FC, SetStateAction } from 'react';
+import type { FC } from 'react';
 import { Fragment, useContext, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import classNames from 'classnames'
 import { GoTriangleDown } from 'react-icons/go';
 import CreateWorkSpace from '../CreateWorkSpace/CreateWorkSpace';
-import axios from 'axios';
 import { BiGroup } from 'react-icons/bi';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { MyContext } from '../../../Context/Context';

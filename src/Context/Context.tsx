@@ -136,8 +136,6 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [workspace, setWorkspace] = useState<any>([]);
     const [selected, setSelected] = useState<string>("json");
     const [bodyTab, setBodyTab] = useState<string>("Params");
-    const [trash, setTrash] = useState<boolean>(false);
-    const [codeMethod, setCodeMethod] = useState<boolean>(false);
     const [rightBar, setRightBar] = useState<string>('close');
 
     const contextValue: ContextValue | null = {
