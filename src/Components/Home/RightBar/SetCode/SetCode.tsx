@@ -19,85 +19,85 @@ const SetCode: FC<SetCodeProps> = () => {
         { id: 4, method: 'NodeJs-Unirest' },
         { id: 5, method: 'JavaScript-Fetch' },
     ];
-    const methodArrays = [
-        {
-            key: 'JavaScript-Fetch',
-            code: `const axios = require('axios');
-                let config = {
-                method: 'get',
-                maxBodyLength: Infinity,
-                url: 'http://localhost:4000/collection',
-                headers: {
-                    token goes Hare
-                }};
-                axios.request(config)
-                .then((response) => {
-                console.log(JSON.stringify(response.data));
-                })
-                .catch((error) => {
-                console.log(error);
-                });
-        `
-        },
-        {
-            key: 'JavaScript-Fetch',
-            code: `var myHeaders = new Headers();
-        myHeaders.append("token", "");
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        fetch("http://localhost:4000/collection", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));`
-        },
-        {
-            key: 'NodeJs-Native',
-            code: `var myHeaders = new Headers();
-        myHeaders.append("token", "");
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        fetch("http://localhost:4000/collection", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));`
-        },
-        {
-            key: 'NodeJs-Request',
-            code: `
-                    var myHeaders = new Headers();
-        myHeaders.append("token", "");
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        fetch("http://localhost:4000/collection", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));`
-        },
-        {
-            key: 'NodeJs-Unirest',
-            code: `
-                    var unirest = require('unirest');
-        var req = unirest('GET', 'http://localhost:4000/collection')
-            .headers({
-            'token': ''
-            })
-            .end(function (res) {
-            if (res.error) throw new Error(res.error);
-            console.log(res.raw_body);
-            });
-                    `
+    // const methodArrays = [
+    //     {
+    //         key: 'JavaScript-Fetch',
+    //         code: `const axios = require('axios');
+    //             let config = {
+    //             method: 'get',
+    //             maxBodyLength: Infinity,
+    //             url: 'http://localhost:4000/collection',
+    //             headers: {
+    //                 token goes Hare
+    //             }};
+    //             axios.request(config)
+    //             .then((response) => {
+    //             console.log(JSON.stringify(response.data));
+    //             })
+    //             .catch((error) => {
+    //             console.log(error);
+    //             });
+    //     `
+    //     },
+    //     {
+    //         key: 'JavaScript-Fetch',
+    //         code: `var myHeaders = new Headers();
+    //     myHeaders.append("token", "");
+    //     var requestOptions = {
+    //         method: 'GET',
+    //         headers: myHeaders,
+    //         redirect: 'follow'
+    //     };
+    //     fetch("http://localhost:4000/collection", requestOptions)
+    //         .then(response => response.text())
+    //         .then(result => console.log(result))
+    //         .catch(error => console.log('error', error));`
+    //     },
+    //     {
+    //         key: 'NodeJs-Native',
+    //         code: `var myHeaders = new Headers();
+    //     myHeaders.append("token", "");
+    //     var requestOptions = {
+    //         method: 'GET',
+    //         headers: myHeaders,
+    //         redirect: 'follow'
+    //     };
+    //     fetch("http://localhost:4000/collection", requestOptions)
+    //         .then(response => response.text())
+    //         .then(result => console.log(result))
+    //         .catch(error => console.log('error', error));`
+    //     },
+    //     {
+    //         key: 'NodeJs-Request',
+    //         code: `
+    //                 var myHeaders = new Headers();
+    //     myHeaders.append("token", "");
+    //     var requestOptions = {
+    //         method: 'GET',
+    //         headers: myHeaders,
+    //         redirect: 'follow'
+    //     };
+    //     fetch("http://localhost:4000/collection", requestOptions)
+    //         .then(response => response.text())
+    //         .then(result => console.log(result))
+    //         .catch(error => console.log('error', error));`
+    //     },
+    //     {
+    //         key: 'NodeJs-Unirest',
+    //         code: `
+    //                 var unirest = require('unirest');
+    //     var req = unirest('GET', 'http://localhost:4000/collection')
+    //         .headers({
+    //         'token': ''
+    //         })
+    //         .end(function (res) {
+    //         if (res.error) throw new Error(res.error);
+    //         console.log(res.raw_body);
+    //         });
+    //                 `
 
-        },
-    ]
+    //     },
+    // ]
     const JavaScriptFetch = `
     var myHeaders = new Headers();
     myHeaders.append("token", "");

@@ -118,6 +118,7 @@ function EnvironmentTab({ }: Props) {
             }
         );
     };
+    console.log(collection)
     return (
         <>
             <Scrollbars className="w-full h-[80vh] min-h-[80vh] scrollbar-hide overflow-y-scroll bg-white ">
@@ -293,7 +294,6 @@ function EnvironmentTab({ }: Props) {
                             </Formik>
                         </div>
                     )}
-
             </Scrollbars>
         </>
     )

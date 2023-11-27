@@ -27,6 +27,7 @@ function TopBar({ onSendClick }: Props) {
     const [open, setopen] = useState(false);
     const [isLoding, setIsLoding] = useState(false);
     const [isEnv, setIsEnv] = useState([]);
+    console.log(isEnv)
     const handleClose = () => setopen(!open);
     const [responseData, setResponseData] = useState<any | null>(null);
     const currentActives = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
@@ -94,6 +95,7 @@ function TopBar({ onSendClick }: Props) {
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
         })
             .then((res) => {
+                console.log(res)
                 res.data.environment.map((e: any) =>
                     e.details.map((el: any) => setIsEnv((env) => [...env, el] as any))
                 );
@@ -119,7 +121,6 @@ function TopBar({ onSendClick }: Props) {
         <>
             <div className="w-full flex h-full  items-center  px-3 relative ">
                 {/* dropdown */}
-
                 {renderDropdown === true &&
                     <div className="w-28 h-11 border-gray-300 border  rounded-l-md bg-white flex items-center focus:outline-none">
                         <select
@@ -133,7 +134,6 @@ function TopBar({ onSendClick }: Props) {
                         </select>
                     </div>
                 }
-
                 {/* input field */}
                 <div className="w-full  input-container ">
                     <input
@@ -141,7 +141,7 @@ function TopBar({ onSendClick }: Props) {
                         type="url"
                         className="text-xs font-semibold px-2 h-11 w-full border-gray-300 border bg-white focus:outline-none"
                         onChange={(e) => {
-                            setData({ ...data, url: e.target.value });
+                            setData({ ...data, url: e?.target?.value });
                         }}
                         defaultValue={responseData?.url || ""}
                     />

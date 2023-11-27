@@ -61,11 +61,11 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
         }
     };
 
-    // const openRequest = (ce: any) => {
-    //     ce.openRequest = !ce.openRequest;
-    //     setNewEnvironment([...newEnvironment]);
-    //     setIsOpen(true)
-    // };
+    const openRequest = (ce: any) => {
+        ce.openRequest = !ce.openRequest;
+        setNewEnvironment([...newEnvironment]);
+        // setIsOpen(true)
+    };
 
     useEffect(() => {
         getData();
@@ -109,9 +109,7 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                                 <p className="text-xs font-semibold text-gray-600 pl-4"> {ce.name}</p>
                                             </div>
                                             {
-                                                // ce._id === showEnv_id ? 
-                                                ce._id === currentActiveEnv ? < IoCheckmarkDoneCircleSharp className="cursor-pointer mr-8
-                                        text-gray-500 text-2xl"
+                                                ce._id === currentActiveEnv ? < IoCheckmarkDoneCircleSharp className="cursor-pointer mr-8 text-gray-500 text-2xl"
                                                     onClick={() => setCurrentActiveEnv(null)}
                                                 /> :
                                                     <IoCheckmarkDoneCircleOutline className="cursor-pointer hidden group-hover:block mr-8 text-gray-500 text-2xl"
@@ -120,10 +118,6 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                             <div className="hidden group-hover:block absolute right-2">
                                                 <MoreAction ViewDocumentation={''} deleteId={ce} openRequestId={''} collection='environment' />
                                             </div>
-                                            {/* moreAction */}
-                                            {/* {ce.openRequest ? isOpen &&
-                                                <div className="absolute z-50 right-3 top-9" ref={popupRef}>
-                                                </div> : null} */}
                                         </div>
                                     </div>))}
                                 </div>
