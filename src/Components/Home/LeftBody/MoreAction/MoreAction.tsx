@@ -14,10 +14,11 @@ interface MoreActionProps {
     deleteId: any,
     openRequestId: any,
     collection: any,
+    deleteMessage: string
 }
 
-const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection }) => {
-    const { loader, setLoader, activeOption } = useContext(MyContext);
+const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection, deleteMessage }) => {
+    const { loader, setLoader, activeOption, accessValue } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [openAlert, setOpenAlert] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
@@ -67,7 +68,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
     // ============================ Soft Collection ============================
     const softDeleteData = () => {
         http({
-            url: `${process.env.REACT_APP_BASEURL}/collection/softDeleteCollection/${deleteId?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/${collection}/softDelete/${deleteId?._id}`,
             method: "put",
         })
             .then((res) => {
@@ -79,11 +80,10 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             });
     };
     // ============================ Share Collection ============================
-    const share = () => {
-        setOpenShare(true);
+    const shareCollection = () => {
         http({
             method: "post",
-            url: `${process.env.REACT_APP_BASEURL}/share/collection/${activeOption?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/share/collection/${accessValue}/${activeOption?._id}`,
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
@@ -114,7 +114,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                             {openRequestId?.type === 'collection' &&
                                 <Menu.Item>
                                     <div
-                                        onClick={share}
+                                        onClick={() => setOpenShare(!openShare)}
                                         className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                         Share
                                     </div>
@@ -168,8 +168,8 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             </Menu>
             {/* ============= Popup Components =========== */}
             <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} />
-            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} />
-            <AlertPopup open={openAlert} setOpen={setOpenAlert} message={'collection'} method={softDeleteData} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareCollection} />
+            <AlertPopup open={openAlert} setOpen={setOpenAlert} message={deleteMessage} method={softDeleteData} />
         </>
     );
 }

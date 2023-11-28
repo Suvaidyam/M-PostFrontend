@@ -1,20 +1,23 @@
 import type { FC } from 'react';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useContext, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { MdOutlineDone } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { MyContext } from '../../../../../Context/Context';
 // import { MyContext } from '../../../../../Context/Context';
 
 interface ShareProps {
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
-    urlValue: string
+    urlValue: string,
+    share: any
 }
 
-const Share: FC<ShareProps> = ({ open, setOpen, urlValue }) => {
+const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share }) => {
     const cancelButtonRef = useRef(null);
     const [tab, setTab] = useState<string>('People');
+    const { accessValue, setAccessValue } = useContext(MyContext);
     // const { activeOption, collection } = useContext(MyContext);
     // let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     // const findCollection = collection?.filter((e: any) => e.workspace_id === workSpace_Id?._id);
@@ -25,7 +28,7 @@ const Share: FC<ShareProps> = ({ open, setOpen, urlValue }) => {
     const copyUrl = () => {
         navigator.clipboard.writeText(urlValue).then(
             () => {
-                toast.success("Text Copied");
+                toast.success("Url Copied");
             },
             (err) => {
                 console.error(err);
@@ -60,7 +63,7 @@ const Share: FC<ShareProps> = ({ open, setOpen, urlValue }) => {
                                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                             >
                                 <Dialog.Panel className="">
-                                    <div className="w-[710px]  pb-10 border bg-gray-50 shadow-inner rounded-md  py-5 px-6">
+                                    <div className="w-[710px]  pb-5 border bg-gray-50 shadow-inner rounded-md  py-5 px-6">
                                         <div className="w-full">
                                             <div className="flex justify-between text-xl font-semibold items-center pb-3">
                                                 <p>Share Mock Data Generation</p>
@@ -104,12 +107,24 @@ const Share: FC<ShareProps> = ({ open, setOpen, urlValue }) => {
                                                         <button disabled={!email.match(validate)} className={`border h-9 w-28 ${email.match(validate) ? 'bg-blue-600' : 'bg-blue-400'} text-white rounded`}>Share</button>
                                                     </div>
                                                     <hr />
+                                                    {/* ============================= CheckBox ============================= */}
                                                     <div className="w-full pt-4 text-start">
                                                         <p className='text-sm font-semibold'>Share via link</p>
-                                                        <div className=" w-full flex gap-3 mt-2">
-                                                            <input value={urlValue} type="text" className='w-full border border-black rounded px-2 ' />
-                                                            <button onClick={copyUrl} className={`border-[1.5px] h-9 w-28 rounded`}>Copy Link</button>
+                                                        <div className="w-full flex gap-2">
+                                                            <input checked={accessValue === 'read'} onClick={() => setAccessValue('read')} type="radio" name="radio" id="radio1" className='cursor-pointer' />
+                                                            <label htmlFor="radio1" className='text-sm cursor-pointer'>Read</label>
                                                         </div>
+                                                        <div className="w-full flex gap-2 mt-1">
+                                                            <input checked={accessValue === 'readWrite'} onClick={() => setAccessValue('readWrite')} type="radio" name="radio" id="radio2" className='cursor-pointer' />
+                                                            <label htmlFor="radio2" className='text-sm cursor-pointer'>Read and Write</label>
+                                                        </div>
+                                                        <button onClick={share} disabled={accessValue === '' ? true : false} className={` ${accessValue === '' ? 'bg-blue-400' : 'bg-blue-600'} text-white rounded mt-2 py-2 px-4 text-sm`}>Generate Link</button>
+                                                        {urlValue === '' ? '' :
+                                                            <div className=" w-full flex gap-3 mt-2">
+                                                                <input disabled value={urlValue} type="text" className='w-full border border-black rounded px-2 ' />
+                                                                <button onClick={copyUrl} className={`border-[1.5px] border-black h-9 w-28 rounded`}>Copy Link</button>
+                                                            </div>
+                                                        }
                                                     </div>
                                                 </>
                                             }

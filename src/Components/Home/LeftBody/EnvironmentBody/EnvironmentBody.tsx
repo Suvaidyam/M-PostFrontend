@@ -13,7 +13,8 @@ interface EnvironmentBodyProps { }
 const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
     const { currentActiveEnv, setCurrentActiveEnv, loader, setLoader, tabsList, setTabsList, setTabData, setCurrentActive, newEnvironment, setNewEnvironment, globalLoader, setGlobalLoader } = useContext(MyContext);
     const global_variable = newEnvironment?.filter((e: { name: string; }) => e.name === 'Globals');
-    const local_variable = newEnvironment?.filter((e: { name: string; }) => e.name !== 'Globals');
+    const local_variable = newEnvironment?.filter((e: { name: string; deleted: boolean }) => e.name !== 'Globals' && e.deleted === false);
+    console.log(local_variable)
     // const [isOpen, setIsOpen] = useState(false);
     // Get Environment Data
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
@@ -116,7 +117,7 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                                         onClick={() => setCurrentActiveEnv(ce._id)}
                                                     />}
                                             <div className="hidden group-hover:block absolute right-2">
-                                                <MoreAction ViewDocumentation={''} deleteId={ce} openRequestId={''} collection='environment' />
+                                                <MoreAction ViewDocumentation={undefined} deleteId={ce} openRequestId={undefined} collection='environment' deleteMessage={'Environment'} />
                                             </div>
                                         </div>
                                     </div>))}
