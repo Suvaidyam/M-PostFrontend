@@ -39,7 +39,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [allCollectionData, setAllCollectionData] = useState<IAllCollection[]>([]);
     const FilterCollection = collection?.filter((e: any) => e?.workspace_id === workSpaceId?._id);
     const newArray = FilterCollection?.filter((e: any) => e.parent === null);
-    // const [array, setArray] = useState(newArray);
+    const [array, setArray] = useState(newArray);
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [toggleCollection, setToggleCollection] = useState<boolean>(false);
     const [activeCollection, setActiveCollection] = useState<string>('');
@@ -51,7 +51,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             item.share.includes(filterItem.created_by)
         )
     );
-    const concatFolderData = newArray.concat(filteredShareData);
+    const collectionConcatData = newArray.concat(filteredShareData);
     // console.log(collection)
     // ================== All Collection =====================
     const allCollection = () => {
@@ -168,12 +168,12 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                 </>
             ) : (
                 <>
-                    {concatFolderData.length === 0 ? <div className='flex h-full w-full justify-center items-center'>Collection not found</div> : <>
+                    {collectionConcatData.length === 0 ? <div className='flex h-full w-full justify-center items-center'>Collection not found</div> : <>
                         {/* ================================= Collection type ================================= */}
                         {
-                            FilterCollection?.map((col: any) => (
+                            collectionConcatData?.map((col: any) => (
                                 <div key={col?._id} className='w-full'>
-                                    {col?.type === 'collection' &&
+                                    {col?.type === 'collection' && col?.deleted === false &&
                                         <div className="w-full h-9 flex gap-1 cursor-default items-center border-b">
                                             <div onClick={() => toggleCollectionArrow(col?._id)} className='w-10 h-full cursor-pointer flex items-center justify-center text-lg'>
                                                 {(toggleCollection === true && col?._id === activeCollection) ? <BiCaretDown /> : < BiCaretRight />}
@@ -183,16 +183,16 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                 <p>{col?.name}</p>
                                             </div>
                                             <div onClick={() => ClickOption(col)} className={`h-full mr-1.5 flex items-center`}>
-                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' />
+                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} />
                                             </div>
                                         </div>
                                     }
                                     {/* ================================= Folder type ================================= */}
                                     {(toggleCollection === true && col?._id === activeCollection) &&
                                         <div key={col?._id}>
-                                            {FilterCollection?.map((Fc: any) => (
+                                            {allCollectionData?.map((Fc: any) => (
                                                 <div key={Fc?._id}>
-                                                    {Fc?.type === 'folder' && col?._id === Fc?.parent &&
+                                                    {Fc?.type === 'folder' && Fc?.deleted === false && col?._id === Fc?.parent &&
                                                         <>
                                                             <div className="w-full pl-4 h-8 flex gap-1 cursor-default items-center border-b">
                                                                 <div onClick={() => toggleFolderArrow(Fc?._id)} className='w-10 h-full cursor-pointer flex items-center justify-center text-lg'>
@@ -203,22 +203,22 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                                     <p>{Fc?.name}</p>
                                                                 </div>
                                                                 <div onClick={() => ClickOption(Fc)} className={`h-full mr-1.5 flex items-center`}>
-                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' />
+                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} />
                                                                 </div>
                                                             </div>
                                                             {/* ================================= Request type ================================= */}
                                                             {(toggleFolder === true && Fc?._id === activeFolder) &&
                                                                 <div key={Fc?._id}>
-                                                                    {FilterCollection?.map((req: any) => (
+                                                                    {allCollectionData?.map((req: any) => (
                                                                         <div key={req?._id}>
-                                                                            {req?.type === 'request' && Fc?._id === req?.parent &&
+                                                                            {req?.type === 'request' && req?.deleted === false && Fc?._id === req?.parent &&
                                                                                 <div className="w-full pl-16 h-8 flex gap-1   items-center justify-between border-b">
                                                                                     <div onClick={() => handleRequest(req)} className="w-4/5 cursor-pointer h-full truncate flex items-center gap-2">
                                                                                         <p className={`text-sm text-${getDetails(req?.details).color}-600`}>{getDetails(req?.details).method}</p>
                                                                                         <p className='text-sm'>{req?.name}</p>
                                                                                     </div>
                                                                                     <div onClick={() => ClickOption(req)} className={`h-full mr-1.5 flex items-center`}>
-                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' />
+                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} />
                                                                                     </div>
                                                                                 </div>
                                                                             }
@@ -232,7 +232,19 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                             ))}
                                         </div>
                                     }
-                                    {/* {(toggleFolder === true && ef?._id === activeFolder) &&
+                                </div>
+                            ))
+                        }
+                    </>}
+                </>
+            )}
+        </>
+    );
+}
+
+export default CollectionBody;
+
+{/* {(toggleFolder === true && ef?._id === activeFolder) &&
                                         <div key={ef?._id}>
                                             {FilterCollection?.map((er: any) => (
                                                 <div key={er?._id}>
@@ -251,7 +263,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                             ))}
                                         </div>
                                     } */}
-                                    {/* {concatFolderData?.map((e: any) => (
+{/* {concatFolderData?.map((e: any) => (
                                         <div key={e?._id} >
                                             {e.type === 'folder' &&
                                                 <div key={e?._id} className='flex gap-2 relative group justify-between border-b h-9 items-center cursor-pointer'>
@@ -307,14 +319,3 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                             }
                                         </div>
                                     ))} */}
-                                </div>
-                            ))
-                        }
-                    </>}
-                </>
-            )}
-        </>
-    );
-}
-
-export default CollectionBody;

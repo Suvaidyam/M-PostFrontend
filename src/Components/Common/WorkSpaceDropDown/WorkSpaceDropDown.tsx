@@ -20,12 +20,13 @@ interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
-    const { setWorkSpaceId, loader, setLoader, workspace, setWorkspace } = useContext(MyContext);
+    const { setWorkSpaceId, loader, setLoader, workspace, setWorkspace, accessValue } = useContext(MyContext);
     const [open, setOpen] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
     const [shareUrl, setShareUrl] = useState<string>('');
     const [deleteId, setDeleteId] = useState<any>([]);
     const [openAlert, setOpenAlert] = useState<boolean>(false);
+    const [shareData, setShareData] = useState<any>({})
     // =========================== Get Workspace ===========================
     const getData = () => {
         http({
@@ -60,11 +61,11 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
         setOpenAlert(true)
     }
     // =========================== Share Workspace ===========================
-    const shareWorkspace = (workspace: any) => {
+    const shareWorkspace = () => {
         setOpenShare(true)
         http({
             method: "post",
-            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${workspace?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${accessValue}/${shareData?._id}`,
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
@@ -72,6 +73,10 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             .catch((err: any) => {
                 console.log(err);
             });
+    }
+    const shareToggle = (e: any) => {
+        setOpenShare(!openShare)
+        setShareData(e)
     }
     useEffect(() => {
         getData()
@@ -134,7 +139,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                                 </div>
                                                 <div className="bg-white group-hover:block hidden">
                                                     <div className="flex h-9 items-center gap-3">
-                                                        <CiShare2 onClick={() => shareWorkspace(workData)} />
+                                                        <CiShare2 onClick={() => shareToggle(workData)} />
                                                         <MdDelete
                                                             onClick={() => deleteAlert(workData)}
                                                             className=' text-lg mr-2 text-red-600'
@@ -158,7 +163,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             {/* ==================== Popup Components ==================== */}
             <CreateWorkSpace open={openModel} setOpen={setOpenModel} />
             <AllWorkspace open={open} setOpen={setOpen} workspace={workspace} />
-            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareWorkspace} />
             <AlertPopup open={openAlert} setOpen={setOpenAlert} message={'workspace'} method={softDeleteData} />
         </>
     );
