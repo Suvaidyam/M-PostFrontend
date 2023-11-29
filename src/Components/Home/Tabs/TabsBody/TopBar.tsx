@@ -114,6 +114,60 @@ function TopBar({ onSendClick }: Props) {
         };
     }, []);
 
+    // function objectToQueryString(obj: any) {
+    //     const queryString = `?${encodeURIComponent(obj.id)}=${encodeURIComponent(obj.value)}`;
+    //     return queryString == '?undefined=undefined' ? "" : queryString;
+    // }
+    // // =======  usage  =======
+    // const myObject = {
+    //     id: paramsData[0]?.key,
+    //     value: paramsData[0]?.value,
+
+    // };
+
+    // const queryString = objectToQueryString(myObject);
+    // console.log(queryString);
+
+    // function objectToQueryString(baseURL: string, obj: any) {
+    //     const queryString = `?${encodeURIComponent(obj.id)}=${encodeURIComponent(obj.value)}`;
+    //     return queryString === '?undefined=undefined' ? baseURL : `${baseURL}${queryString}`;
+    // }
+
+    // // =======  usage  =======
+
+    // // Assuming you have a base URL
+    // const baseURL = data?.url;
+
+    // const myObject = {
+    //     id: paramsData[0]?.key,
+    //     value: paramsData[0]?.value,
+    // };
+
+    // const finalURL = objectToQueryString(baseURL, myObject);
+
+    // console.log(finalURL);
+
+    function objectToQueryString(obj: any) {
+        const queryString = `?${encodeURIComponent(obj.id)}=${encodeURIComponent(obj.value) !== "undefined" ? encodeURIComponent(obj.value) : ""}`;
+        console.log(encodeURIComponent(obj.value))
+        return queryString === '?undefined=undefined' ? "" : queryString;
+    }
+
+    // =======  usage  =======
+
+    const myObject = {
+        id: paramsData[0]?.key,
+        value: paramsData[0]?.value,
+    };
+
+    let baseUrl = data?.url?.split('?')?.[0]; // Replace with your actual base URL
+    const queryString = objectToQueryString(myObject);
+
+    const fullUrl = baseUrl ? baseUrl + queryString : baseUrl;
+    useEffect(() => {
+        setData({ ...data, url: fullUrl });
+    }, [queryString])
+
 
     return (
         <>
@@ -143,7 +197,10 @@ function TopBar({ onSendClick }: Props) {
                         onChange={(e) => {
                             setData({ ...data, url: e.target.value });
                         }}
-                        defaultValue={responseData?.url || ""}
+                        defaultValue={responseData?.url || ''}
+                        value={data.url}
+
+
                     />
                     <div className="input-renderer px-2 ">
                         {data?.url?.split(REGEX).map((word: any, i: any) => {
@@ -201,6 +258,7 @@ function TopBar({ onSendClick }: Props) {
                         </DialogContent>
                     </Dialog>}
             </div>
+
         </>
     )
 }

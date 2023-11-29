@@ -12,29 +12,7 @@ function TabsBody() {
   const [apiResponse, setApiResponse] = useState({ status: '100' as string });
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  // const [contentsType, setContentsType] = useState<any>('application/json')
   const onSendClick = async () => {
-    // let postData: any;
-    // let contentType = selected; //@todo: radio button value
-    // if (contentType === 'json') {
-    //   setContentsType('application/json')
-    //   postData = jsonText; //@todo: json body data
-    // } else if (contentType === 'form-data') {
-    //   setContentsType('multipart/form-data')
-    //   const newFormData = new FormData();
-    //   for (let el of formData) {
-    //     if (el.type === 'file' && el.files?.length) {
-    //       newFormData.append(el.key, el.files[0]);
-    //     } else {
-    //       newFormData.append(el.key, el.value);
-
-    //     }
-    //   }
-    //   postData = newFormData;
-
-    // } else {
-    //   console.log('error')
-    // }
     //@todo - check.. how to store postData into history API
     if (topBarData?.url?.length !== 0) {
       let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
