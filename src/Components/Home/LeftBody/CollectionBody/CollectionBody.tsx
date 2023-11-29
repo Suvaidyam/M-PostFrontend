@@ -39,20 +39,26 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [allCollectionData, setAllCollectionData] = useState<IAllCollection[]>([]);
     const FilterCollection = collection?.filter((e: any) => e?.workspace_id === workSpaceId?._id);
     const newArray = FilterCollection?.filter((e: any) => e.parent === null);
-    const [array, setArray] = useState(newArray);
+    // const [array, setArray] = useState(newArray);
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
     const [toggleCollection, setToggleCollection] = useState<boolean>(false);
     const [activeCollection, setActiveCollection] = useState<string>('');
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');
     const workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
-    const filteredShareData = allCollectionData.filter(item =>
-        FilterCollection.some((filterItem: { created_by: string; }) =>
-            item.share.includes(filterItem.created_by)
+    // const filteredShareData = allCollectionData.filter((item: any) =>
+    //     FilterCollection.some((filterItem: { created_by: any; }) =>
+    //         item?.share?.shareId?.includes(filterItem.created_by)
+    //     )
+    // );
+    const filteredShareData = allCollectionData?.filter((item: any) =>
+        FilterCollection?.some((filterItem: { created_by: any; }) =>
+            item?.share?.some((shareItem: any) =>
+                shareItem?.shareId === filterItem?.created_by
+            )
         )
     );
-    const collectionConcatData = newArray.concat(filteredShareData);
-    // console.log(collection)
+    const collectionConcatData = newArray?.concat(filteredShareData);
     // ================== All Collection =====================
     const allCollection = () => {
         setGlobalLoader(true)
@@ -106,7 +112,86 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                 console.log(err);
             });
     };
-    //  
+    //  ============================== Create Folder ==============================
+    const AddFolder = () => {
+        const isPermissionValid = activeOption?.share?.some((e: any) =>
+            e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
+        );
+        if (activeOption?.share?.length === 0 || isPermissionValid) {
+            const uniqueShare = activeOption?.share?.filter((share: any, index: number, self: any[]) =>
+                index === self.findIndex((s: any) => s.shareId === share.shareId)
+            );
+            http({
+                url: `${process.env.REACT_APP_BASEURL}/collection`,
+                method: "post",
+                data: {
+                    type: "folder",
+                    name: "New Folder",
+                    parent: activeOption?._id,
+                    share: uniqueShare,
+                    workspace_id: workSpace_Id._id,
+                },
+            })
+                .then((res) => {
+                    setLoader(!loader);
+                    toast.success(res.data.message);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            toast.error('Access Denied');
+        }
+    };
+    //  ============================== Create Request ==============================
+    const AddRequest = () => {
+        const isPermissionValid = activeOption?.share?.some((e: any) =>
+            e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
+        );
+        if (activeOption?.share?.length === 0 || isPermissionValid) {
+            http({
+                url: `${process.env.REACT_APP_BASEURL}/collection`,
+                method: "post",
+                data: {
+                    name: "New Request",
+                    type: "request",
+                    parent: activeOption?._id,
+                    workspace_id: workSpace_Id,
+                    details: { method: "get", url: "" },
+                }
+            })
+                .then((res) => {
+                    setLoader(!loader);
+                    toast.success(res.data.message);
+                })
+                .catch((err) => {
+                    console.log(err)
+                });
+        } else {
+            toast.error('Access Denied');
+        }
+    };
+    // ============================ Soft Delete ============================
+    const softDeleteData = () => {
+        const isPermissionValid = activeOption?.share?.some((e: any) =>
+            e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
+        );
+        if (activeOption?.share?.length === 0 || isPermissionValid) {
+            http({
+                url: `${process.env.REACT_APP_BASEURL}/collection/softDelete/${activeOption?._id}`,
+                method: "put",
+            })
+                .then((res) => {
+                    setLoader(!loader);
+                    toast.success(res.data.message);
+                })
+                .catch((err) => {
+                    console.error('Error:', err);
+                });
+        } else {
+            toast.error('Access Denied');
+        }
+    };
     const toggleCollectionArrow = (id: string) => {
         setToggleCollection(!toggleCollection);
         setActiveCollection(id);
@@ -183,7 +268,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                 <p>{col?.name}</p>
                                             </div>
                                             <div onClick={() => ClickOption(col)} className={`h-full mr-1.5 flex items-center`}>
-                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} />
+                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={undefined} />
                                             </div>
                                         </div>
                                     }
@@ -203,7 +288,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                                     <p>{Fc?.name}</p>
                                                                 </div>
                                                                 <div onClick={() => ClickOption(Fc)} className={`h-full mr-1.5 flex items-center`}>
-                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} />
+                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={undefined} AddRequest={AddRequest} />
                                                                 </div>
                                                             </div>
                                                             {/* ================================= Request type ================================= */}
@@ -218,7 +303,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                                                         <p className='text-sm'>{req?.name}</p>
                                                                                     </div>
                                                                                     <div onClick={() => ClickOption(req)} className={`h-full mr-1.5 flex items-center`}>
-                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} />
+                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={undefined} AddRequest={undefined} />
                                                                                     </div>
                                                                                 </div>
                                                                             }
