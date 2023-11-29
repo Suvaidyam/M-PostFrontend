@@ -90,6 +90,7 @@ export default function AddRow({
     const handleTypeChange = (e: any) => {
         setTypes(e.target.value)
     }
+    console.log(data[rowId]?.check)
     return (
         <>
             <tr className="bg-white border  w-full">
@@ -103,8 +104,7 @@ export default function AddRow({
                                 className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
                                 name={rowId}
                                 onChange={(e) => handleChange(e)}
-                                defaultValue={data[0]?.check}
-
+                                defaultChecked={data[rowId]?.check}
                             /> : <></>
                         }
 
@@ -120,7 +120,7 @@ export default function AddRow({
                             onChange={(e) => onTextChange(e)}
                             name={variableN}
                             placeholder={variable}
-                        // defaultValue={data[0]?.key}
+                            defaultValue={data[rowId]?.key}
                         />
                     </div>
 
@@ -140,7 +140,8 @@ export default function AddRow({
                         onChange={(e) => onTextChange(e)}
                         name={valueN}
                         placeholder={value}
-                    // defaultValue={data[0]?.value}
+                        defaultValue={data[rowId]?.value}
+
                     />
 
                 </th>
