@@ -26,7 +26,8 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [shareUrl, setShareUrl] = useState<string>('');
     const [deleteId, setDeleteId] = useState<any>([]);
     const [openAlert, setOpenAlert] = useState<boolean>(false);
-    const [shareData, setShareData] = useState<any>({})
+    const [shareData, setShareData] = useState<any>({});
+    // console.log(workspace)
     // =========================== Get Workspace ===========================
     const getData = () => {
         http({

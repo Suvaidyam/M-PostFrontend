@@ -15,9 +15,12 @@ interface MoreActionProps {
     openRequestId: any,
     collection: any,
     deleteMessage: string
+    Delete: any
+    AddFolder: any
+    AddRequest: any
 }
 
-const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection, deleteMessage }) => {
+const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection, deleteMessage, Delete, AddFolder, AddRequest }) => {
     const { loader, setLoader, activeOption, accessValue } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [openAlert, setOpenAlert] = useState<boolean>(false);
@@ -25,59 +28,74 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
     const [shareUrl, setShareUrl] = useState<string>('');
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
     // ============================ Add Collection Request ============================
-    const postData = () => {
-        http({
-            url: `${process.env.REACT_APP_BASEURL}/collection`,
-            method: "post",
-            data: {
-                name: "New Request",
-                type: "request",
-                parent: activeOption?._id,
-                workspace_id: workSpace_Id,
-                details: { method: "get", url: "" },
-            }
-        })
-            .then((res) => {
-                setLoader(!loader);
-                toast.success(res.data.message);
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    };    //  ============================== Create Folder ==============================
-    const AddFolder = () => {
-        http({
-            url: `${process.env.REACT_APP_BASEURL}/collection`,
-            method: "post",
-            data: {
-                type: "folder",
-                name: "New Folder",
-                parent: activeOption?._id,
-                workspace_id: workSpace_Id._id,
-            },
-        })
-            .then((res) => {
-                setLoader(!loader);
-                toast.success(res.data.message);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
+    // const postData = () => {
+    //     http({
+    //         url: `${process.env.REACT_APP_BASEURL}/collection`,
+    //         method: "post",
+    //         data: {
+    //             name: "New Request",
+    //             type: "request",
+    //             parent: activeOption?._id,
+    //             workspace_id: workSpace_Id,
+    //             details: { method: "get", url: "" },
+    //         }
+    //     })
+    //         .then((res) => {
+    //             setLoader(!loader);
+    //             toast.success(res.data.message);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         });
+    // };
+    //  ============================== Create Folder ==============================
+    // const AddFolder = () => {
+    //     http({
+    //         url: `${process.env.REACT_APP_BASEURL}/collection`,
+    //         method: "post",
+    //         data: {
+    //             type: "folder",
+    //             name: "New Folder",
+    //             parent: activeOption?._id,
+    //             workspace_id: workSpace_Id._id,
+    //         },
+    //     })
+    //         .then((res) => {
+    //             setLoader(!loader);
+    //             toast.success(res.data.message);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // };
     // ============================ Soft Collection ============================
     const softDeleteData = () => {
-        http({
-            url: `${process.env.REACT_APP_BASEURL}/${collection}/softDelete/${deleteId?._id}`,
-            method: "put",
-        })
-            .then((res) => {
-                setLoader(!loader);
-                toast.success(res.data.message);
+        if (deleteId?.share?.map((e: any) => (e?.permission !== 'read'))) {
+            http({
+                url: `${process.env.REACT_APP_BASEURL}/${collection}/softDelete/${deleteId?._id}`,
+                method: "put",
             })
-            .catch((err) => {
-                console.error('Error:', err);
-            });
+                .then((res) => {
+                    setLoader(!loader);
+                    toast.success(res.data.message);
+                })
+                .catch((err) => {
+                    console.error('Error:', err);
+                });
+        } else {
+            toast.error('Access Denied')
+        }
+        // http({
+        //     url: `${process.env.REACT_APP_BASEURL}/${collection}/softDelete/${deleteId?._id}`,
+        //     method: "put",
+        // })
+        //     .then((res) => {
+        //         setLoader(!loader);
+        //         toast.success(res.data.message);
+        //     })
+        //     .catch((err) => {
+        //         console.error('Error:', err);
+        //     });
     };
     // ============================ Share Collection ============================
     const shareCollection = () => {
@@ -148,7 +166,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                             {openRequestId?.type === 'folder' &&
                                 <Menu.Item>
                                     <div
-                                        onClick={postData}
+                                        onClick={AddRequest}
                                         className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                         Add request
                                     </div>
@@ -169,7 +187,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             {/* ============= Popup Components =========== */}
             <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} />
             <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareCollection} />
-            <AlertPopup open={openAlert} setOpen={setOpenAlert} message={deleteMessage} method={softDeleteData} />
+            <AlertPopup open={openAlert} setOpen={setOpenAlert} message={deleteMessage} method={Delete} />
         </>
     );
 }
