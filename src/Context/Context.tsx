@@ -15,8 +15,8 @@ interface ContextValue {
     setCollection: any;
     currentTab: string;
     setcurrentTab: React.Dispatch<React.SetStateAction<string>>
-    paramsData: string[]
-    setParamsData: React.Dispatch<React.SetStateAction<string[]>>
+    paramsData: any[]
+    setParamsData: React.Dispatch<React.SetStateAction<any[]>>
     headersData: string[]
     setHeadersData: React.Dispatch<React.SetStateAction<string[]>>
     formData: any[],
@@ -71,8 +71,6 @@ interface ContextValue {
     setBodyTab: React.Dispatch<React.SetStateAction<string>>
     rightBar: string,
     setRightBar: React.Dispatch<React.SetStateAction<string>>
-    accessValue: string,
-    setAccessValue: React.Dispatch<React.SetStateAction<string>>,
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -100,7 +98,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [currentNav, setCurrentNav] = useState(activeNav ? activeNav : "Collection");
     const [collection, setCollection] = useState<ICollection[]>([]);
     const [currentTab, setcurrentTab] = useState('Params')
-    const [paramsData, setParamsData] = useState<string[]>([]);
+    const [paramsData, setParamsData] = useState<any[]>([]);
     const [headersData, setHeadersData] = useState<string[]>([]);
     const [enviroment, SetEnviroment] = useState<string[]>([]);
     const [tabData, setTabData] = useState([]);
@@ -139,7 +137,6 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [selected, setSelected] = useState<string>("json");
     const [bodyTab, setBodyTab] = useState<string>("Params");
     const [rightBar, setRightBar] = useState<string>('close');
-    const [accessValue, setAccessValue] = useState<string>('');
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -212,8 +209,6 @@ const Context: FC<ContextProps> = ({ children }) => {
         setBodyTab,
         rightBar,
         setRightBar,
-        accessValue,
-        setAccessValue
     };
 
     return (

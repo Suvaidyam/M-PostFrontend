@@ -10,14 +10,18 @@ import { MyContext } from '../../../../../Context/Context';
 interface ShareProps {
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
+    isChecked: boolean,
+    setIsChecked: React.Dispatch<React.SetStateAction<boolean>>,
     urlValue: string,
-    share: any
+    share: any,
+    accessValue: string,
+    setAccessValue: React.Dispatch<React.SetStateAction<string>>,
 }
 
-const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share }) => {
+const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share, isChecked, setIsChecked, accessValue, setAccessValue }) => {
     const cancelButtonRef = useRef(null);
     const [tab, setTab] = useState<string>('People');
-    const { accessValue, setAccessValue } = useContext(MyContext);
+    // const { accessValue, setAccessValue } = useContext(MyContext);
     // const { activeOption, collection } = useContext(MyContext);
     // let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     // const findCollection = collection?.filter((e: any) => e.workspace_id === workSpace_Id?._id);
@@ -35,7 +39,6 @@ const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share }) => {
             }
         );
     };
-
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -109,7 +112,7 @@ const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share }) => {
                                                     <hr />
                                                     {/* ============================= CheckBox ============================= */}
                                                     <div className="w-full pt-4 text-start">
-                                                        <p className='text-sm font-semibold'>Share via link</p>
+                                                        <p className='text-sm font-semibold'>Share via link write access</p>
                                                         <div className="w-full flex gap-2">
                                                             <input checked={accessValue === 'read'} onClick={() => setAccessValue('read')} type="radio" name="radio" id="radio1" className='cursor-pointer' />
                                                             <label htmlFor="radio1" className='text-sm cursor-pointer'>Read</label>
@@ -117,6 +120,10 @@ const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share }) => {
                                                         <div className="w-full flex gap-2 mt-1">
                                                             <input checked={accessValue === 'readWrite'} onClick={() => setAccessValue('readWrite')} type="radio" name="radio" id="radio2" className='cursor-pointer' />
                                                             <label htmlFor="radio2" className='text-sm cursor-pointer'>Read and Write</label>
+                                                        </div>
+                                                        <div className="w-full flex gap-2 mt-1">
+                                                            <input type="checkbox" checked={isChecked} onClick={() => setIsChecked(!isChecked)} name="checkbox" id="checkbox" className='cursor-pointer' />
+                                                            <label htmlFor="checkbox" className='text-sm cursor-pointer'>Sharing</label>
                                                         </div>
                                                         <button onClick={share} disabled={accessValue === '' ? true : false} className={` ${accessValue === '' ? 'bg-blue-400' : 'bg-blue-600'} text-white rounded mt-2 py-2 px-4 text-sm`}>Generate Link</button>
                                                         {urlValue === '' ? '' :

@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC, SetStateAction } from 'react';
 import { Fragment, useState, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
@@ -18,90 +18,32 @@ interface MoreActionProps {
     Delete: any
     AddFolder: any
     AddRequest: any
+    collectionConcatData: any
+    Rename: any
+    name: any
+    colName: React.Dispatch<SetStateAction<any>>,
 }
 
-const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection, deleteMessage, Delete, AddFolder, AddRequest }) => {
-    const { loader, setLoader, activeOption, accessValue } = useContext(MyContext);
+const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection, deleteMessage, Delete, AddFolder, AddRequest, collectionConcatData, name, colName, Rename }) => {
+    const { activeOption, workSpaceId } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [openAlert, setOpenAlert] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
     const [shareUrl, setShareUrl] = useState<string>('');
-    let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
-    // ============================ Add Collection Request ============================
-    // const postData = () => {
-    //     http({
-    //         url: `${process.env.REACT_APP_BASEURL}/collection`,
-    //         method: "post",
-    //         data: {
-    //             name: "New Request",
-    //             type: "request",
-    //             parent: activeOption?._id,
-    //             workspace_id: workSpace_Id,
-    //             details: { method: "get", url: "" },
-    //         }
-    //     })
-    //         .then((res) => {
-    //             setLoader(!loader);
-    //             toast.success(res.data.message);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         });
-    // };
-    //  ============================== Create Folder ==============================
-    // const AddFolder = () => {
-    //     http({
-    //         url: `${process.env.REACT_APP_BASEURL}/collection`,
-    //         method: "post",
-    //         data: {
-    //             type: "folder",
-    //             name: "New Folder",
-    //             parent: activeOption?._id,
-    //             workspace_id: workSpace_Id._id,
-    //         },
-    //     })
-    //         .then((res) => {
-    //             setLoader(!loader);
-    //             toast.success(res.data.message);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // };
-    // ============================ Soft Collection ============================
-    const softDeleteData = () => {
-        if (deleteId?.share?.map((e: any) => (e?.permission !== 'read'))) {
-            http({
-                url: `${process.env.REACT_APP_BASEURL}/${collection}/softDelete/${deleteId?._id}`,
-                method: "put",
-            })
-                .then((res) => {
-                    setLoader(!loader);
-                    toast.success(res.data.message);
-                })
-                .catch((err) => {
-                    console.error('Error:', err);
-                });
-        } else {
-            toast.error('Access Denied')
-        }
-        // http({
-        //     url: `${process.env.REACT_APP_BASEURL}/${collection}/softDelete/${deleteId?._id}`,
-        //     method: "put",
-        // })
-        //     .then((res) => {
-        //         setLoader(!loader);
-        //         toast.success(res.data.message);
-        //     })
-        //     .catch((err) => {
-        //         console.error('Error:', err);
-        //     });
-    };
-    // ============================ Share Collection ============================
+    const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [accessValue, setAccessValue] = useState<string>('');
+    // let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '');
+    const sharePermission = activeOption?.share?.some((e: any) =>
+        e?.sharing === true && collectionConcatData?.some((en: any) => en?.created_by === e?.shareId)
+    );
+    const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
+    const RenamePermission = activeOption?.share?.some((e: any) =>
+        e?.permission !== 'read' && collectionConcatData?.some((en: any) => en?.created_by === e?.shareId)
+    );
     const shareCollection = () => {
         http({
             method: "post",
-            url: `${process.env.REACT_APP_BASEURL}/share/collection/${accessValue}/${activeOption?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/share/collection/${accessValue}/${isChecked}/${activeOption?._id}`,
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
@@ -110,6 +52,21 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                 console.log(err);
             });
     }
+    const ShareAlert = () => {
+        if (rootPermission || sharePermission) {
+            setOpenShare(!openShare)
+        } else {
+            toast.error('Access Denied');
+        }
+    }
+    const RenameAlert = () => {
+        if (rootPermission || RenamePermission) {
+            setOpenModel(true)
+        } else {
+            toast.error('Access Denied');
+        }
+    }
+
     return (
         <>
             <Menu as="div" className="relative h-full inline-block text-left">
@@ -132,8 +89,8 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                             {openRequestId?.type === 'collection' &&
                                 <Menu.Item>
                                     <div
-                                        onClick={() => setOpenShare(!openShare)}
-                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                        onClick={ShareAlert}
+                                        className={`w-full block ${sharePermission || rootPermission ? 'cursor-pointer' : 'cursor-not-allowed'} px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                         Share
                                     </div>
                                 </Menu.Item>
@@ -149,8 +106,9 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                             }
                             <Menu.Item>
                                 <div
-                                    onClick={() => setOpenModel(true)}
-                                    className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                    onClick={RenameAlert}
+                                    // onClick={() => setOpenModel(true)}
+                                    className={`w-full ${RenamePermission || rootPermission ? 'cursor-pointer' : 'cursor-not-allowed'} block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                     Rename
                                 </div>
                             </Menu.Item>
@@ -185,8 +143,8 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                 </Transition>
             </Menu>
             {/* ============= Popup Components =========== */}
-            <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} />
-            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareCollection} />
+            <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} Rename={Rename} name={name} setName={colName} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareCollection} isChecked={isChecked} setIsChecked={setIsChecked} accessValue={accessValue} setAccessValue={setAccessValue} />
             <AlertPopup open={openAlert} setOpen={setOpenAlert} message={deleteMessage} method={Delete} />
         </>
     );

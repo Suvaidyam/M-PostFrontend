@@ -8,6 +8,7 @@ import http from '../../../../Service/http';
 import { toast } from 'react-toastify';
 import { CollectionLoader } from '../../../Loader/Loader';
 import { BsFillCollectionFill } from "react-icons/bs";
+import { IoIosShareAlt } from "react-icons/io";
 
 interface CollectionBodyProps { }
 interface Details {
@@ -46,16 +47,10 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');
     const workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
-    // const filteredShareData = allCollectionData.filter((item: any) =>
-    //     FilterCollection.some((filterItem: { created_by: any; }) =>
-    //         item?.share?.shareId?.includes(filterItem.created_by)
-    //     )
-    // );
+    const [name, setName] = useState('');
     const filteredShareData = allCollectionData?.filter((item: any) =>
-        FilterCollection?.some((filterItem: { created_by: any; }) =>
-            item?.share?.some((shareItem: any) =>
-                shareItem?.shareId === filterItem?.created_by
-            )
+        item?.share?.some((shareItem: any) =>
+            shareItem?.shareId === workSpaceId?.created_by
         )
     );
     const collectionConcatData = newArray?.concat(filteredShareData);
@@ -114,10 +109,11 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     };
     //  ============================== Create Folder ==============================
     const AddFolder = () => {
-        const isPermissionValid = activeOption?.share?.some((e: any) =>
+        const sharePermission = activeOption?.share?.some((e: any) =>
             e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
         );
-        if (activeOption?.share?.length === 0 || isPermissionValid) {
+        const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
+        if (sharePermission || rootPermission) {
             const uniqueShare = activeOption?.share?.filter((share: any, index: number, self: any[]) =>
                 index === self.findIndex((s: any) => s.shareId === share.shareId)
             );
@@ -129,7 +125,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                     name: "New Folder",
                     parent: activeOption?._id,
                     share: uniqueShare,
-                    workspace_id: workSpace_Id._id,
+                    workspace_id: activeOption?.workspace_id,
                 },
             })
                 .then((res) => {
@@ -145,10 +141,14 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     };
     //  ============================== Create Request ==============================
     const AddRequest = () => {
-        const isPermissionValid = activeOption?.share?.some((e: any) =>
+        const sharePermission = activeOption?.share?.some((e: any) =>
             e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
         );
-        if (activeOption?.share?.length === 0 || isPermissionValid) {
+        const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
+        if (sharePermission || rootPermission) {
+            const uniqueShare = activeOption?.share?.filter((share: any, index: number, self: any[]) =>
+                index === self.findIndex((s: any) => s.shareId === share.shareId)
+            );
             http({
                 url: `${process.env.REACT_APP_BASEURL}/collection`,
                 method: "post",
@@ -156,7 +156,8 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                     name: "New Request",
                     type: "request",
                     parent: activeOption?._id,
-                    workspace_id: workSpace_Id,
+                    workspace_id: activeOption?.workspace_id,
+                    share: uniqueShare,
                     details: { method: "get", url: "" },
                 }
             })
@@ -171,12 +172,39 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             toast.error('Access Denied');
         }
     };
-    // ============================ Soft Delete ============================
-    const softDeleteData = () => {
-        const isPermissionValid = activeOption?.share?.some((e: any) =>
+    //  ============================== Rename Collection ==============================
+    const PutData = () => {
+        const sharePermission = activeOption?.share?.some((e: any) =>
             e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
         );
-        if (activeOption?.share?.length === 0 || isPermissionValid) {
+        const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
+        if (sharePermission || rootPermission) {
+            http({
+                url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
+                method: "put",
+                data: {
+                    name: name
+                },
+            })
+                .then((res) => {
+                    toast.success(res.data.message);
+                    setLoader(!loader)
+                    // setOpen(false)
+                })
+                .catch((err) => {
+                    console.log(err)
+                });
+        } else {
+            toast.error('Access Denied');
+        }
+    };
+    // ============================ Soft Delete ============================
+    const softDeleteData = () => {
+        const sharePermission = activeOption?.share?.some((e: any) =>
+            e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
+        );
+        const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
+        if (sharePermission || rootPermission) {
             http({
                 url: `${process.env.REACT_APP_BASEURL}/collection/softDelete/${activeOption?._id}`,
                 method: "put",
@@ -218,12 +246,12 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             setTabData(activeOption);
         }
     };
-    const openRequest = (ce: any) => {
-        ce.openRequest = !ce.openRequest;
-        // setArray([...array]);
-        setOpenRequestId(ce);
-        setActiveOption(ce);
-    };
+    // const openRequest = (ce: any) => {
+    //     ce.openRequest = !ce.openRequest;
+    //     // setArray([...array]);
+    //     setOpenRequestId(ce);
+    //     setActiveOption(ce);
+    // };
     const getDetails = (details: Details) => {
         const method: string = details?.method ? details.method.toUpperCase() : "NA";
         const colors: Colors = {
@@ -263,12 +291,13 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                             <div onClick={() => toggleCollectionArrow(col?._id)} className='w-10 h-full cursor-pointer flex items-center justify-center text-lg'>
                                                 {(toggleCollection === true && col?._id === activeCollection) ? <BiCaretDown /> : < BiCaretRight />}
                                             </div>
-                                            <div className="w-4/5 h-full truncate flex items-center gap-3">
-                                                <BsFillCollectionFill className='text-yellow-900' />
+                                            <div className="w-4/5 h-full relative truncate flex items-center gap-3">
+                                                {col?.workspace_id !== workSpaceId?._id && <IoIosShareAlt className='absolute text-xs left-0.5 text-white top-[13px]' />}
+                                                <BsFillCollectionFill className='text-yellow-900 text-[17px]' />
                                                 <p>{col?.name}</p>
                                             </div>
                                             <div onClick={() => ClickOption(col)} className={`h-full mr-1.5 flex items-center`}>
-                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={undefined} />
+                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} />
                                             </div>
                                         </div>
                                     }
@@ -288,7 +317,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                                     <p>{Fc?.name}</p>
                                                                 </div>
                                                                 <div onClick={() => ClickOption(Fc)} className={`h-full mr-1.5 flex items-center`}>
-                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={undefined} AddRequest={AddRequest} />
+                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} />
                                                                 </div>
                                                             </div>
                                                             {/* ================================= Request type ================================= */}
@@ -303,7 +332,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                                                         <p className='text-sm'>{req?.name}</p>
                                                                                     </div>
                                                                                     <div onClick={() => ClickOption(req)} className={`h-full mr-1.5 flex items-center`}>
-                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={undefined} AddRequest={undefined} />
+                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} />
                                                                                     </div>
                                                                                 </div>
                                                                             }
