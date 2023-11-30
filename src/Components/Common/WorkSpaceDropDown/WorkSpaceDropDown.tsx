@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC, SetStateAction } from 'react';
 import { Fragment, useContext, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import classNames from 'classnames'
@@ -20,13 +20,15 @@ interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
-    const { setWorkSpaceId, loader, setLoader, workspace, setWorkspace, accessValue } = useContext(MyContext);
+    const { setWorkSpaceId, loader, setLoader, workspace, setWorkspace } = useContext(MyContext);
     const [open, setOpen] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
     const [shareUrl, setShareUrl] = useState<string>('');
     const [deleteId, setDeleteId] = useState<any>([]);
     const [openAlert, setOpenAlert] = useState<boolean>(false);
+    const [isChecked, setIsChecked] = useState<boolean>(false);
     const [shareData, setShareData] = useState<any>({});
+    const [accessValue, setAccessValue] = useState<string>('');
     // console.log(workspace)
     // =========================== Get Workspace ===========================
     const getData = () => {
@@ -164,7 +166,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             {/* ==================== Popup Components ==================== */}
             <CreateWorkSpace open={openModel} setOpen={setOpenModel} />
             <AllWorkspace open={open} setOpen={setOpen} workspace={workspace} />
-            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareWorkspace} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareWorkspace} isChecked={isChecked} setIsChecked={setIsChecked} accessValue={accessValue} setAccessValue={setAccessValue} />
             <AlertPopup open={openAlert} setOpen={setOpenAlert} message={'workspace'} method={softDeleteData} />
         </>
     );

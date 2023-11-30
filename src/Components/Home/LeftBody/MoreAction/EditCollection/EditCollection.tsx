@@ -3,37 +3,37 @@ import { Fragment, useContext, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { AiOutlineClose } from 'react-icons/ai';
 import { MyContext } from '../../../../../Context/Context';
-import { toast } from 'react-toastify';
-import http from '../../../../../Service/http';
 
 interface EditCollectionProps {
     open: boolean
     setOpen: React.Dispatch<SetStateAction<boolean>>,
     renameId: any,
     collection: any
+    Rename: any
+    name: any,
+    setName: React.Dispatch<SetStateAction<any>>,
 }
 
-const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, collection }) => {
-    const { loader, setLoader } = useContext(MyContext);
-    const [name, setName] = useState('');
+const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, collection, Rename, name, setName }) => {
+    // const [name, setName] = useState('');
     const cancelButtonRef = useRef(null);
-    const PutData = () => {
-        http({
-            url: `${process.env.REACT_APP_BASEURL}/${collection}/${renameId?._id}`,
-            method: "put",
-            data: {
-                name: name
-            },
-        })
-            .then((res) => {
-                toast.success(res.data.message);
-                setLoader(!loader)
-                setOpen(false)
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    };
+    // const PutData = () => {
+    //     http({
+    //         url: `${process.env.REACT_APP_BASEURL}/${collection}/${renameId?._id}`,
+    //         method: "put",
+    //         data: {
+    //             name: name
+    //         },
+    //     })
+    //         .then((res) => {
+    //             toast.success(res.data.message);
+    //             setLoader(!loader)
+    //             setOpen(false)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         });
+    // };
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -49,7 +49,6 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, coll
                     >
                         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                     </Transition.Child>
-
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                             <Transition.Child
@@ -72,7 +71,7 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, coll
                                                 defaultValue={renameId.name}
                                                 className='w-full outline-none border-[2px] py-1 pl-2' name="name" id="name" />
                                         </div>
-                                        <button onClick={name.length === 0 ? undefined : PutData} disabled={name.length === 0 ? true : false} className={`w-full mt-5 ${name.length === 0 ? 'bg-slate-300' : ' bg-blue-600'} py-1 text-white`} >Update</button>
+                                        <button onClick={name.length === 0 ? undefined : Rename} disabled={name.length === 0 ? true : false} className={`w-full mt-5 ${name.length === 0 ? ' bg-blue-gray-300 ' : ' bg-blue-600'} py-1 text-white`} >Update</button>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

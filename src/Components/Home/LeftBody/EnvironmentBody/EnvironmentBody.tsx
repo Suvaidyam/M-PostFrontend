@@ -117,7 +117,9 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                                         onClick={() => setCurrentActiveEnv(ce._id)}
                                                     />}
                                             <div className="hidden group-hover:block absolute right-2">
-                                                <MoreAction ViewDocumentation={undefined} deleteId={ce} openRequestId={undefined} collection='environment' deleteMessage={'Environment'} Delete={undefined} AddFolder={undefined} AddRequest={undefined} />
+                                                <MoreAction ViewDocumentation={undefined} deleteId={ce} openRequestId={undefined} collection='environment' deleteMessage={'Environment'} Delete={undefined} AddFolder={undefined} AddRequest={undefined} collectionConcatData={undefined} Rename={undefined} name={undefined} colName={function (value: any): void {
+                                                    throw new Error('Function not implemented.');
+                                                }} />
                                             </div>
                                         </div>
                                     </div>))}
