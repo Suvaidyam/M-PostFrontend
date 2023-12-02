@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MyContext } from '../../../../Context/Context';
 type Props = {
     params: any,
@@ -34,8 +34,10 @@ export default function AddRow({
     const [checkCheckbox, setCheckCheckbox] = useState<boolean>(false);
     const [checkRadio, setCheckRadio] = useState<boolean>(false);
     const [types, setTypes] = useState<string>('text')
-    const { bodyTab } = useContext(MyContext)
-    // console.log(data)
+    const { bodyTab, inputData } = useContext(MyContext)
+    const queryKey = inputData?.split('?')?.[1]?.split('=')?.[0]
+    const queryValue = inputData?.split('?')?.[1]?.split('=')?.[1]
+    // console.log(queryKey)
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
         // console.log(result)
@@ -46,7 +48,6 @@ export default function AddRow({
             setCheckCheckbox(false);
             result = { ...result, id: rowId, check: false }
         }
-        // console.log(result)
 
         let index = data.findIndex((value: any) => value.id === Number(e.target.name));
         if (index === -1) {
@@ -59,6 +60,7 @@ export default function AddRow({
         }
 
     }
+
 
 
     const onTextChange = (e: any) => {
@@ -90,7 +92,25 @@ export default function AddRow({
     const handleTypeChange = (e: any) => {
         setTypes(e.target.value)
     }
-    console.log(data[rowId]?.check)
+
+    useEffect(() => {
+        if (data.length >= 1) {
+            setCheckRadio(true)
+        } else {
+            setCheckRadio(false)
+        }
+    }, [checkRadio])
+    // useEffect(() => {
+    //     // if (inputData && inputData?.split('?').length > 1) {
+    //     // if (data[rowId].key && data[rowId].value) {
+    //     // }
+    //     data[0] = { key: queryKey, value: queryValue }
+    //     setData([...data]);
+    //     console.log(data[0] = { key: queryKey, value: queryValue }
+    //     )
+
+    // }, [inputData])
+
     return (
         <>
             <tr className="bg-white border  w-full">
@@ -98,7 +118,7 @@ export default function AddRow({
                     <div className="flex items-center ">
                         {
                             checkRadio === true ? <input
-                                checked={checkCheckbox}
+                                // checked={checkCheckbox}
                                 id="checkbox-table-search-1"
                                 type="checkbox"
                                 className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
@@ -120,7 +140,9 @@ export default function AddRow({
                             onChange={(e) => onTextChange(e)}
                             name={variableN}
                             placeholder={variable}
-                            defaultValue={data[rowId]?.key}
+                            // defaultValue={data[rowId]?.key}
+                            value={queryKey}
+
                         />
                     </div>
 
@@ -141,6 +163,7 @@ export default function AddRow({
                         name={valueN}
                         placeholder={value}
                         defaultValue={data[rowId]?.value}
+                    // value={inputData}
 
                     />
 

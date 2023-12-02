@@ -47,10 +47,16 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');
     const workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
+<<<<<<< HEAD
     const [name, setName] = useState('');
     const filteredShareData = allCollectionData?.filter((item: any) =>
         item?.share?.some((shareItem: any) =>
             shareItem?.shareId === workSpaceId?.created_by
+=======
+    const filteredShareData = allCollectionData.filter(item =>
+        FilterCollection.some((filterItem: { created_by: string; }) =>
+            item?.share?.includes(filterItem.created_by)
+>>>>>>> dev_sujeet
         )
     );
     const collectionConcatData = newArray?.concat(filteredShareData);

@@ -20,7 +20,7 @@ type Props = {
 
 function TopBar({ onSendClick }: Props) {
     const REGEX = /({{.*?}})/g;
-    const { jsonText, tabData, setTopBarData, headersData, setStatus, currentActive, paramsData, setMsg, setError, changeAction, setchangeAction } = useContext(MyContext);
+    const { setInputData, jsonText, tabData, setTopBarData, headersData, setStatus, currentActive, paramsData, setMsg, setError, changeAction, setchangeAction } = useContext(MyContext);
     const locTabList = JSON.parse(localStorage.getItem("tabsList") as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const [data, setData] = useState(tabData?.details || activeData[0].details);
@@ -70,7 +70,7 @@ function TopBar({ onSendClick }: Props) {
             url: `${process.env.REACT_APP_BASEURL}/collection/getById/${currentActive}`,
         })
             .then((res) => {
-                setResponseData(res.data.collection.details);
+                setResponseData(res?.data?.collection?.details);
                 setRenderDropdown(!false)
                 // console.log(res.data.collection.details.method.toUpperCase())
             })
@@ -116,43 +116,9 @@ function TopBar({ onSendClick }: Props) {
         };
     }, []);
 
-    // function objectToQueryString(obj: any) {
-    //     const queryString = `?${encodeURIComponent(obj.id)}=${encodeURIComponent(obj.value)}`;
-    //     return queryString == '?undefined=undefined' ? "" : queryString;
-    // }
-    // // =======  usage  =======
-    // const myObject = {
-    //     id: paramsData[0]?.key,
-    //     value: paramsData[0]?.value,
-
-    // };
-
-    // const queryString = objectToQueryString(myObject);
-    // console.log(queryString);
-
-    // function objectToQueryString(baseURL: string, obj: any) {
-    //     const queryString = `?${encodeURIComponent(obj.id)}=${encodeURIComponent(obj.value)}`;
-    //     return queryString === '?undefined=undefined' ? baseURL : `${baseURL}${queryString}`;
-    // }
-
-    // // =======  usage  =======
-
-    // // Assuming you have a base URL
-    // const baseURL = data?.url;
-
-    // const myObject = {
-    //     id: paramsData[0]?.key,
-    //     value: paramsData[0]?.value,
-    // };
-
-    // const finalURL = objectToQueryString(baseURL, myObject);
-
-    // console.log(finalURL);
-
     function objectToQueryString(obj: any) {
         const queryString = `?${encodeURIComponent(obj.id)}=${encodeURIComponent(obj.value) !== "undefined" ? encodeURIComponent(obj.value) : ""}`;
-        console.log(encodeURIComponent(obj.value))
-        return queryString === '?undefined=undefined' ? "" : queryString;
+        return queryString === '?undefined=' ? "" : queryString;
     }
 
     // =======  usage  =======
@@ -162,14 +128,15 @@ function TopBar({ onSendClick }: Props) {
         value: paramsData[0]?.value,
     };
 
-    let baseUrl = data?.url?.split('?')?.[0]; // Replace with your actual base URL
+    let baseUrl = data?.url?.split('?')?.[0];
     const queryString = objectToQueryString(myObject);
 
-    const fullUrl = baseUrl ? baseUrl + queryString : baseUrl;
+    const fullUrl = `${baseUrl}${queryString}`
+
+    setInputData(data?.url)
     useEffect(() => {
         setData({ ...data, url: fullUrl });
     }, [queryString])
-
 
     return (
         <>
@@ -199,8 +166,6 @@ function TopBar({ onSendClick }: Props) {
                         }}
                         defaultValue={responseData?.url || ''}
                         value={data.url}
-
-
                     />
                     <div className="input-renderer px-2 ">
                         {data?.url?.split(REGEX).map((word: any, i: any) => {
