@@ -75,6 +75,8 @@ interface ContextValue {
     setCodeMethod: React.Dispatch<React.SetStateAction<boolean>>
     inputData: any
     setInputData: React.Dispatch<React.SetStateAction<any>>
+    rightBar: any
+    setRightBar: React.Dispatch<React.SetStateAction<any>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -143,6 +145,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [trash, setTrash] = useState<boolean>(false);
     const [codeMethod, setCodeMethod] = useState<boolean>(false);
     const [inputData, setInputData] = useState<any>();
+    const [rightBar, setRightBar] = useState<any>();
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -218,7 +221,8 @@ const Context: FC<ContextProps> = ({ children }) => {
         codeMethod,
         setCodeMethod,
         inputData,
-        setInputData
+        setInputData,
+        rightBar, setRightBar
     };
 
     return (
