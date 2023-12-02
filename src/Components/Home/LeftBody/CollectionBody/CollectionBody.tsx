@@ -45,7 +45,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const filteredShareData = allCollectionData.filter(item =>
         FilterCollection.some((filterItem: { created_by: string; }) =>
-            item.share.includes(filterItem.created_by)
+            item?.share?.includes(filterItem.created_by)
         )
     );
     const concatFolderData = newArray.concat(filteredShareData);

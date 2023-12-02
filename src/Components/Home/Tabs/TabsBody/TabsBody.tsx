@@ -68,18 +68,18 @@ function TabsBody() {
       return; // Handle or return an error, as needed
     }
     const headersDatas = getHeadersAndParams(headers);
-
+    // console.log(headersDatas)
     http({
       url: topBarData.url,
       method: topBarData.method,
       data: postData,
-      // headers: headersDatas,
+      ContentType: headersDatas,
       headers: getHeadersAndParams(headersData),
       query: getHeadersAndParams(paramsData),
     })
       .then((res: any) => {
         setApiResponse(res);
-        console.log(res)
+        // console.log(res)
       })
       .catch((err: { response: React.SetStateAction<{ status: string }> }) => {
         setApiResponse(err.response);

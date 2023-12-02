@@ -15,8 +15,8 @@ interface ContextValue {
     setCollection: any;
     currentTab: string;
     setcurrentTab: React.Dispatch<React.SetStateAction<string>>
-    paramsData: string[]
-    setParamsData: React.Dispatch<React.SetStateAction<string[]>>
+    paramsData: any[]
+    setParamsData: React.Dispatch<React.SetStateAction<any[]>>
     headersData: string[]
     setHeadersData: React.Dispatch<React.SetStateAction<string[]>>
     formData: any[],
@@ -73,6 +73,8 @@ interface ContextValue {
     setTrash: React.Dispatch<React.SetStateAction<boolean>>
     codeMethod: boolean,
     setCodeMethod: React.Dispatch<React.SetStateAction<boolean>>
+    inputData: any
+    setInputData: React.Dispatch<React.SetStateAction<any>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -100,7 +102,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [currentNav, setCurrentNav] = useState(activeNav ? activeNav : "Collection");
     const [collection, setCollection] = useState<ICollection[]>([]);
     const [currentTab, setcurrentTab] = useState('Params')
-    const [paramsData, setParamsData] = useState<string[]>([]);
+    const [paramsData, setParamsData] = useState<any[]>([]);
     const [headersData, setHeadersData] = useState<string[]>([]);
     const [enviroment, SetEnviroment] = useState<string[]>([]);
     const [tabData, setTabData] = useState([]);
@@ -140,6 +142,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [bodyTab, setBodyTab] = useState<string>("Params");
     const [trash, setTrash] = useState<boolean>(false);
     const [codeMethod, setCodeMethod] = useState<boolean>(false);
+    const [inputData, setInputData] = useState<any>();
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -213,7 +216,9 @@ const Context: FC<ContextProps> = ({ children }) => {
         trash,
         setTrash,
         codeMethod,
-        setCodeMethod
+        setCodeMethod,
+        inputData,
+        setInputData
     };
 
     return (
