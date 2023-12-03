@@ -22,23 +22,12 @@ interface Colors {
     DELETE: string;
     NA: string;
 }
-interface IAllCollection {
-    created_by: string;
-    deleted: boolean;
-    details: null | string;
-    name: string;
-    parent: null | string;
-    share: string[];
-    type: string;
-    workspace_id: string;
-    __v: number;
-    _id: string;
-}
 
 const CollectionBody: FC<CollectionBodyProps> = () => {
-    const { setActiveOption, activeOption, workSpaceId, collection, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, globalLoader, setGlobalLoader } = useContext(MyContext);
-    const [allCollectionData, setAllCollectionData] = useState<IAllCollection[]>([]);
-    const FilterCollection = collection?.filter((e: any) => e?.workspace_id === workSpaceId?._id);
+    const { setActiveOption, activeOption, workSpaceId, collection, setCollection, loader, setLoader, tabsList, setTabsList, setCurrentActive, setTabData, globalLoader, setGlobalLoader, allCollectionData, setAllCollectionData } = useContext(MyContext);
+    const workSpace = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
+    const FilterCollection = collection?.filter((e: any) => e?.workspace_id === workSpace?._id);
+    const ByPassCollection = allCollectionData?.filter((e: any) => e?.workspace_id === workSpace?._id);
     const newArray = FilterCollection?.filter((e: any) => e.parent === null);
     // const [array, setArray] = useState(newArray);
     const [toggleFolder, setToggleFolder] = useState<boolean>(false);
@@ -46,15 +35,13 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     const [activeCollection, setActiveCollection] = useState<string>('');
     const [activeFolder, setActiveFolder] = useState<string>('');
     const [openRequestId, setOpenRequestId] = useState<any>('');
-    const [name, setName] = useState<any>('');
-
-    const workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
-    const filteredShareData = allCollectionData.filter(item =>
-        FilterCollection.some((filterItem: { created_by: string; }) =>
-            item?.share?.includes(filterItem.created_by)
+    const [name, setName] = useState('');
+    const filteredShareData = allCollectionData?.filter((item: any) =>
+        item?.share?.some((shareItem: any) =>
+            shareItem?.shareId === workSpace?.created_by
         )
     );
-    const collectionConcatData = newArray?.concat(filteredShareData);
+    const collectionConcatData = ByPassCollection?.concat(filteredShareData);
     // ================== All Collection =====================
     const allCollection = () => {
         setGlobalLoader(true)
@@ -73,10 +60,10 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     //  ================= Get Collection ======================
     const getData = () => {
         setGlobalLoader(true)
-        if (workSpace_Id) {
+        if (workSpace) {
             http({
                 method: "get",
-                url: `${process.env.REACT_APP_BASEURL}/collection/${workSpace_Id?._id}`,
+                url: `${process.env.REACT_APP_BASEURL}/collection/${workSpace?._id}`,
             })
                 .then((res) => {
                     setCollection(res.data.collection);
@@ -97,7 +84,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
             data: {
                 type: "collection",
                 name: "New Collection",
-                workspace_id: workSpace_Id._id,
+                workspace_id: workSpace._id,
             },
         })
             .then((res) => {
@@ -298,7 +285,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                 <p>{col?.name}</p>
                                             </div>
                                             <div onClick={() => ClickOption(col)} className={`h-full mr-1.5 flex items-center`}>
-                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} />
+                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} activeOption={activeOption} />
                                             </div>
                                         </div>
                                     }
@@ -318,7 +305,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                                     <p>{Fc?.name}</p>
                                                                 </div>
                                                                 <div onClick={() => ClickOption(Fc)} className={`h-full mr-1.5 flex items-center`}>
-                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} />
+                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} activeOption={activeOption} />
                                                                 </div>
                                                             </div>
                                                             {/* ================================= Request type ================================= */}
@@ -333,7 +320,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                                                         <p className='text-sm'>{req?.name}</p>
                                                                                     </div>
                                                                                     <div onClick={() => ClickOption(req)} className={`h-full mr-1.5 flex items-center`}>
-                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} />
+                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} activeOption={activeOption} />
                                                                                     </div>
                                                                                 </div>
                                                                             }

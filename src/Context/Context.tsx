@@ -69,14 +69,18 @@ interface ContextValue {
     setSelected: React.Dispatch<React.SetStateAction<string>>
     bodyTab: string,
     setBodyTab: React.Dispatch<React.SetStateAction<string>>
+    rightBar: string,
+    setRightBar: React.Dispatch<React.SetStateAction<string>>
+    allCollectionData: ICollection[]
+    setAllCollectionData: React.Dispatch<React.SetStateAction<ICollection[]>>
     trash: boolean,
     setTrash: React.Dispatch<React.SetStateAction<boolean>>
     codeMethod: boolean,
     setCodeMethod: React.Dispatch<React.SetStateAction<boolean>>
     inputData: any
     setInputData: React.Dispatch<React.SetStateAction<any>>
-    rightBar: any
-    setRightBar: React.Dispatch<React.SetStateAction<any>>
+    // rightBar: any
+    // setRightBar: React.Dispatch<React.SetStateAction<any>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -142,10 +146,12 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [workspace, setWorkspace] = useState<any>([]);
     const [selected, setSelected] = useState<string>("json");
     const [bodyTab, setBodyTab] = useState<string>("Params");
+    const [rightBar, setRightBar] = useState<string>('close');
+    const [allCollectionData, setAllCollectionData] = useState<ICollection[]>([]);
     const [trash, setTrash] = useState<boolean>(false);
     const [codeMethod, setCodeMethod] = useState<boolean>(false);
     const [inputData, setInputData] = useState<any>();
-    const [rightBar, setRightBar] = useState<any>();
+    // const [rightBar, setRightBar] = useState<any>();
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -216,13 +222,18 @@ const Context: FC<ContextProps> = ({ children }) => {
         setSelected,
         bodyTab,
         setBodyTab,
+        rightBar,
+        setRightBar,
+        allCollectionData,
+        setAllCollectionData,
         trash,
         setTrash,
         codeMethod,
         setCodeMethod,
         inputData,
         setInputData,
-        rightBar, setRightBar
+        // rightBar,
+        // setRightBar
     };
 
     return (

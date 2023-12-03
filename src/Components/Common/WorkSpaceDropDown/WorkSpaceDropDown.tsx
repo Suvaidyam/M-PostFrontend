@@ -1,4 +1,4 @@
-import type { FC, SetStateAction } from 'react';
+import type { FC } from 'react';
 import { Fragment, useContext, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import classNames from 'classnames'
@@ -20,16 +20,38 @@ interface WorkSpaceDropDownProps { }
 
 const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     const [openModel, setOpenModel] = useState<boolean>(false);
-    const { setWorkSpaceId, loader, setLoader, workspace, setWorkspace } = useContext(MyContext);
+    const { setWorkSpaceId, loader, setLoader, workspace, setWorkspace, workSpaceId } = useContext(MyContext);
     const [open, setOpen] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
     const [shareUrl, setShareUrl] = useState<string>('');
     const [deleteId, setDeleteId] = useState<any>([]);
+    const [allWorkspace, setAllWorkspace] = useState<any>([]);
     const [openAlert, setOpenAlert] = useState<boolean>(false);
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [shareData, setShareData] = useState<any>({});
     const [accessValue, setAccessValue] = useState<string>('');
-    // console.log(workspace)
+    // =========================== Get All Workspace ===========================
+    const storedData: any = sessionStorage.getItem('paylode');
+    const UserData = JSON.parse(storedData);
+    const filteredShareData = allWorkspace?.filter((item: any) =>
+        item?.share?.some((shareItem: any) =>
+            shareItem?.shareId === UserData?._id
+        )
+    );
+    const workSpaceConcatData = (workspace?.concat(filteredShareData))
+    const getAllData = () => {
+        http({
+            method: "get",
+            url: `${process.env.REACT_APP_BASEURL}/workspace/allWorkSpace`,
+        })
+            .then((res: any) => {
+                setAllWorkspace(res.data.workSpace);
+                setLoader(false);
+            })
+            .catch((err: any) => {
+                console.log(err);
+            });
+    };
     // =========================== Get Workspace ===========================
     const getData = () => {
         http({
@@ -68,7 +90,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
         setOpenShare(true)
         http({
             method: "post",
-            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${accessValue}/${shareData?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${accessValue}/${isChecked}/${shareData?._id}`,
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
@@ -78,11 +100,20 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             });
     }
     const shareToggle = (e: any) => {
-        setOpenShare(!openShare)
-        setShareData(e)
+        const shareWorkspacePermission = e?.share?.some((e: any) =>
+            e?.sharing === true && UserData?._id === e?.shareId
+        );
+        const rootWorkspacePermission = e?.created_by === UserData?._id;
+        if (shareWorkspacePermission || rootWorkspacePermission) {
+            setOpenShare(!openShare)
+            setShareData(e)
+        } else {
+            toast.error('Access Denied');
+        }
     }
     useEffect(() => {
         getData()
+        getAllData()
         // eslint-disable-next-line
     }, [loader])
     const handelSelectedWorkSpace = (e: any) => {
@@ -124,34 +155,38 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
                                     )}
                                 </Menu.Item>
                                 <p className='text-xs text-gray-400 pt-2 font-semibold'>Recently visited</p>
-                                {workspace.map((workData: any) => (
-                                    <Menu.Item key={workData._id}>
-                                        {({ active }) => (
-                                            <div className='w-full h-9 hover:bg-white group mt-1 flex items-center justify-between'>
-                                                <div
-                                                    onClick={() => handelSelectedWorkSpace(workData)}
-                                                    className={classNames(
-                                                        active ? ' text-gray-900' : 'text-gray-700',
-                                                        'w-[95%]  flex mt-1 pl-2 items-center text-sm truncate'
-                                                    )}
-                                                >
-                                                    <div className="w-full truncate flex gap-3 items-center">
-                                                        <BiGroup className='text-lg text-gray-700' />
-                                                        {workData.name}
+                                {workSpaceConcatData?.map((workData: any) => (
+                                    <div key={workData?._id}>
+                                        {workData?.deleted === false &&
+                                            <Menu.Item key={workData._id}>
+                                                {({ active }) => (
+                                                    <div className={`w-full ${workData?._id === workSpaceId?._id && 'bg-white'} h-9 hover:bg-white group mt-1 flex items-center justify-between`}>
+                                                        <div
+                                                            onClick={() => handelSelectedWorkSpace(workData)}
+                                                            className={classNames(
+                                                                active ? ' text-gray-900' : 'text-gray-700',
+                                                                'w-[95%]  flex mt-1 pl-2 items-center text-sm truncate'
+                                                            )}
+                                                        >
+                                                            <div className="w-full truncate flex gap-3 items-center">
+                                                                <BiGroup className='text-lg text-gray-700' />
+                                                                {workData.name}
+                                                            </div>
+                                                        </div>
+                                                        <div className="bg-white group-hover:block hidden">
+                                                            <div className="flex h-9 items-center gap-3">
+                                                                <CiShare2 onClick={() => shareToggle(workData)} />
+                                                                <MdDelete
+                                                                    onClick={() => deleteAlert(workData)}
+                                                                    className=' text-lg mr-2 text-red-600'
+                                                                />
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="bg-white group-hover:block hidden">
-                                                    <div className="flex h-9 items-center gap-3">
-                                                        <CiShare2 onClick={() => shareToggle(workData)} />
-                                                        <MdDelete
-                                                            onClick={() => deleteAlert(workData)}
-                                                            className=' text-lg mr-2 text-red-600'
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </Menu.Item>
+                                                )}
+                                            </Menu.Item>
+                                        }
+                                    </div>
                                 ))}
                             </div>
                         </Scrollbars>
@@ -165,8 +200,8 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
             </Menu>
             {/* ==================== Popup Components ==================== */}
             <CreateWorkSpace open={openModel} setOpen={setOpenModel} />
-            <AllWorkspace open={open} setOpen={setOpen} workspace={workspace} />
-            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareWorkspace} isChecked={isChecked} setIsChecked={setIsChecked} accessValue={accessValue} setAccessValue={setAccessValue} />
+            <AllWorkspace open={open} setOpen={setOpen} workspace={workSpaceConcatData} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareWorkspace} isChecked={isChecked} setIsChecked={setIsChecked} accessValue={accessValue} setAccessValue={setAccessValue} selectValue={'workspace'} />
             <AlertPopup open={openAlert} setOpen={setOpenAlert} message={'workspace'} method={softDeleteData} />
         </>
     );

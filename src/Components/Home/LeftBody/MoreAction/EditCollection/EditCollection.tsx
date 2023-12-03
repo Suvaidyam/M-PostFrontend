@@ -1,8 +1,7 @@
 import type { FC, SetStateAction } from 'react';
-import { Fragment, useContext, useRef, useState } from 'react'
+import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { AiOutlineClose } from 'react-icons/ai';
-import { MyContext } from '../../../../../Context/Context';
 
 interface EditCollectionProps {
     open: boolean
@@ -14,26 +13,8 @@ interface EditCollectionProps {
     setName: React.Dispatch<SetStateAction<any>>,
 }
 
-const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, collection, Rename, name, setName }) => {
-    // const [name, setName] = useState('');
+const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, Rename, name, setName }) => {
     const cancelButtonRef = useRef(null);
-    // const PutData = () => {
-    //     http({
-    //         url: `${process.env.REACT_APP_BASEURL}/${collection}/${renameId?._id}`,
-    //         method: "put",
-    //         data: {
-    //             name: name
-    //         },
-    //     })
-    //         .then((res) => {
-    //             toast.success(res.data.message);
-    //             setLoader(!loader)
-    //             setOpen(false)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         });
-    // };
     return (
         <>
             <Transition.Root show={open} as={Fragment}>
@@ -71,7 +52,8 @@ const EditCollection: FC<EditCollectionProps> = ({ open, setOpen, renameId, coll
                                                 defaultValue={renameId.name}
                                                 className='w-full outline-none border-[2px] py-1 pl-2' name="name" id="name" />
                                         </div>
-                                        <button onClick={name.length === 0 ? undefined : Rename} disabled={name.length === 0 ? true : false} className={`w-full mt-5 ${name.length === 0 ? ' bg-blue-gray-300 ' : ' bg-blue-600'} py-1 text-white`} >Update</button>
+                                        <button onClick={name?.length === 0 ? undefined : Rename} disabled={name?.length === 0 ? true : false} className={`w-full mt-5 ${name?.length === 0 ? ' bg-blue-gray-300 ' : ' bg-blue-600'} py-1 text-white`} >Update</button>
+                                        {/* <button onClick={name.length === 0 ? undefined : Rename} disabled={name.length === 0 ? true : false} className={`w-full mt-5 ${name.length === 0 ? ' bg-blue-gray-300 ' : ' bg-blue-600'} py-1 text-white`} >Update</button> */}
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

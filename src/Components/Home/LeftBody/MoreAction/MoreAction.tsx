@@ -22,10 +22,11 @@ interface MoreActionProps {
     Rename: any
     name: any
     colName: React.Dispatch<SetStateAction<any>>,
+    activeOption: any
 }
 
-const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection, deleteMessage, Delete, AddFolder, AddRequest, collectionConcatData, name, colName, Rename }) => {
-    const { activeOption, workSpaceId } = useContext(MyContext);
+const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection, deleteMessage, Delete, AddFolder, AddRequest, collectionConcatData, name, colName, Rename, activeOption }) => {
+    const { workSpaceId } = useContext(MyContext);
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [openAlert, setOpenAlert] = useState<boolean>(false);
     const [openShare, setOpenShare] = useState<boolean>(false);
@@ -37,8 +38,8 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
         e?.sharing === true && collectionConcatData?.some((en: any) => en?.created_by === e?.shareId)
     );
     const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
-    const RenamePermission = activeOption?.share?.some((e: any) =>
-        e?.permission !== 'read' && collectionConcatData?.some((en: any) => en?.created_by === e?.shareId)
+    const Permission = activeOption?.share?.some((e: any) =>
+        e?.permission === 'readWrite' && collectionConcatData?.some((en: any) => en?.created_by === e?.shareId)
     );
     const shareCollection = () => {
         http({
@@ -52,21 +53,25 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                 console.log(err);
             });
     }
-    const ShareAlert = () => {
-        if (rootPermission || sharePermission) {
-            setOpenShare(!openShare)
+    // Condition
+    const storedData: any = sessionStorage.getItem('paylode');
+    const UserData = JSON.parse(storedData);
+    const workSpace = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
+    const permission = workSpace?.share?.some((e: any) =>
+        e?.permission === 'readWrite' && e?.shareId === UserData?._id
+    )
+    const WorkspaceRootPermission = workSpace?.created_by === UserData?._id;
+    let data;
+    if (WorkspaceRootPermission === true) {
+        data = false;
+    } else {
+        if (permission === true) {
+            data = false;
         } else {
-            toast.error('Access Denied');
+            data = true;
         }
     }
-    const RenameAlert = () => {
-        if (rootPermission || RenamePermission) {
-            setOpenModel(true)
-        } else {
-            toast.error('Access Denied');
-        }
-    }
-
+    // Condition 
     return (
         <>
             <Menu as="div" className="relative h-full inline-block text-left">
@@ -88,55 +93,59 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
                         <div className="py-1">
                             {openRequestId?.type === 'collection' &&
                                 <Menu.Item>
-                                    <div
-                                        onClick={ShareAlert}
-                                        className={`w-full block ${sharePermission || rootPermission ? 'cursor-pointer' : 'cursor-not-allowed'} px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                    <button
+                                        disabled={data || !(sharePermission || rootPermission)}
+                                        // onClick={ShareAlert}
+                                        onClick={() => setOpenShare(!openShare)}
+                                        className={`w-full text-start block ${sharePermission || rootPermission ? 'cursor-pointer' : 'cursor-not-allowed'} px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                         Share
-                                    </div>
+                                    </button>
                                 </Menu.Item>
                             }
                             {openRequestId?.type === 'folder' &&
                                 <Menu.Item>
-                                    <div
+                                    <button
                                         onClick={ViewDocumentation}
-                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                        className={`w-full text-start block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                         View Documentation
-                                    </div>
+                                    </button>
                                 </Menu.Item>
                             }
                             <Menu.Item>
-                                <div
-                                    onClick={RenameAlert}
-                                    // onClick={() => setOpenModel(true)}
-                                    className={`w-full ${RenamePermission || rootPermission ? 'cursor-pointer' : 'cursor-not-allowed'} block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                <button
+                                    disabled={data || !(Permission || rootPermission)}
+                                    onClick={() => setOpenModel(true)}
+                                    className={`w-full text-start ${Permission || rootPermission ? 'cursor-pointer' : 'cursor-not-allowed'} block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                     Rename
-                                </div>
+                                </button>
                             </Menu.Item>
                             {openRequestId?.type === 'collection' &&
                                 <Menu.Item>
-                                    <div
+                                    <button
+                                        disabled={data || !(Permission || rootPermission)}
                                         onClick={AddFolder}
-                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                        className={`w-full text-start ${Permission || rootPermission ? 'cursor-pointer' : 'cursor-not-allowed'} block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                         Add folder
-                                    </div>
+                                    </button>
                                 </Menu.Item>
                             }
                             {openRequestId?.type === 'folder' &&
                                 <Menu.Item>
-                                    <div
+                                    <button
+                                        disabled={data || !(Permission || rootPermission)}
                                         onClick={AddRequest}
-                                        className={`w-full block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
+                                        className={`w-full text-start ${Permission || rootPermission ? 'cursor-pointer' : 'cursor-not-allowed'} block px-4 py-2 text-sm hover:bg-white hover:text-gray-900`}>
                                         Add request
-                                    </div>
+                                    </button>
                                 </Menu.Item>
                             }
                             <Menu.Item>
-                                <div
-                                    // onClick={deleteData}
+                                <button
+                                    disabled={data || !(Permission || rootPermission)}
                                     onClick={() => setOpenAlert(true)}
-                                    className={`w-full block px-4 py-2 text-sm hover:bg-red-500 hover:text-white`}>
+                                    className={`w-full text-start ${Permission || rootPermission ? 'cursor-pointer' : 'cursor-not-allowed'} block px-4 py-2 text-sm hover:bg-red-500 hover:text-white`}>
                                     Delete
-                                </div>
+                                </button>
                             </Menu.Item>
                         </div>
                     </Menu.Items>
@@ -144,7 +153,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             </Menu>
             {/* ============= Popup Components =========== */}
             <EditCollection renameId={deleteId} open={openModel} setOpen={setOpenModel} collection={collection} Rename={Rename} name={name} setName={colName} />
-            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareCollection} isChecked={isChecked} setIsChecked={setIsChecked} accessValue={accessValue} setAccessValue={setAccessValue} />
+            <Share open={openShare} setOpen={setOpenShare} urlValue={shareUrl} share={shareCollection} isChecked={isChecked} setIsChecked={setIsChecked} accessValue={accessValue} setAccessValue={setAccessValue} selectValue={'collection'} />
             <AlertPopup open={openAlert} setOpen={setOpenAlert} message={deleteMessage} method={Delete} />
         </>
     );

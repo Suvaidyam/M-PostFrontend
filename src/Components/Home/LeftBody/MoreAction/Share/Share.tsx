@@ -16,9 +16,10 @@ interface ShareProps {
     share: any,
     accessValue: string,
     setAccessValue: React.Dispatch<React.SetStateAction<string>>,
+    selectValue: string
 }
 
-const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share, isChecked, setIsChecked, accessValue, setAccessValue }) => {
+const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share, isChecked, setIsChecked, accessValue, setAccessValue, selectValue }) => {
     const cancelButtonRef = useRef(null);
     const [tab, setTab] = useState<string>('People');
     // const { accessValue, setAccessValue } = useContext(MyContext);
@@ -28,7 +29,7 @@ const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share, isChecked, setI
     // const abc = findCollection?.filter((e: any) => e.parent === activeOption?._id);
     const [email, setEmail] = useState("");
     const validate = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    // Copy Function 
+    // Copy Function
     const copyUrl = () => {
         navigator.clipboard.writeText(urlValue).then(
             () => {
@@ -112,7 +113,7 @@ const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share, isChecked, setI
                                                     <hr />
                                                     {/* ============================= CheckBox ============================= */}
                                                     <div className="w-full pt-4 text-start">
-                                                        <p className='text-sm font-semibold'>Share via link write access</p>
+                                                        <p className='text-sm font-semibold'>Share {selectValue} via link write access</p>
                                                         <div className="w-full flex gap-2">
                                                             <input checked={accessValue === 'read'} onClick={() => setAccessValue('read')} type="radio" name="radio" id="radio1" className='cursor-pointer' />
                                                             <label htmlFor="radio1" className='text-sm cursor-pointer'>Read</label>
