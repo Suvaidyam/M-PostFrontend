@@ -71,6 +71,8 @@ interface ContextValue {
     setBodyTab: React.Dispatch<React.SetStateAction<string>>
     rightBar: string,
     setRightBar: React.Dispatch<React.SetStateAction<string>>
+    allCollectionData: ICollection[]
+    setAllCollectionData: React.Dispatch<React.SetStateAction<ICollection[]>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -137,6 +139,7 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [selected, setSelected] = useState<string>("json");
     const [bodyTab, setBodyTab] = useState<string>("Params");
     const [rightBar, setRightBar] = useState<string>('close');
+    const [allCollectionData, setAllCollectionData] = useState<ICollection[]>([]);
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -209,6 +212,8 @@ const Context: FC<ContextProps> = ({ children }) => {
         setBodyTab,
         rightBar,
         setRightBar,
+        allCollectionData,
+        setAllCollectionData
     };
 
     return (

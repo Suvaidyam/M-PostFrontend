@@ -10,12 +10,12 @@ import { CgProfile } from 'react-icons/cg'
 import { BsFillShareFill } from 'react-icons/bs'
 import { MyContext } from '../../../Context/Context';
 import WorkSpaceDropDown from '../WorkSpaceDropDown/WorkSpaceDropDown';
-import axios from 'axios';
 import Avatar from '../../Assets/avatar-f.jpg'
 import Avatar_f from '../../Assets/avatar-f.jpg'
 import Profile from '../Profile/Profile';
 import http from '../../../Service/http';
 import { toast } from 'react-toastify';
+import GobbleSharePopup from '../../GobbleSharePopup/GlobleSharePopup';
 
 interface NavbarProps { }
 
@@ -23,6 +23,7 @@ const Navbar: FC<NavbarProps> = () => {
     const [navbarToggle, setNavbarToggle] = useState(false);
     const { darkToggle, setDakToggle, setMsg, setError, url } = useContext(MyContext);
     const [openProfile, setOpenProfile] = useState<boolean>(false)
+    const [openGobbleShare, setOpenGobbleShare] = useState<boolean>(false)
     const navigate = useNavigate();
     const DarkMOdeToggle = () => {
         setDakToggle(!darkToggle)
@@ -34,7 +35,6 @@ const Navbar: FC<NavbarProps> = () => {
             http({
                 method: "post",
                 url: `${process.env.REACT_APP_BASEURL}/auth/logout`,
-
             })
                 .then((res) => {
                     setMsg(res?.data?.message);
@@ -120,38 +120,33 @@ const Navbar: FC<NavbarProps> = () => {
                                 </div>
                             </div>
                         </div>
-                        <button className='bg-blue-600 py-1 px-4 text-white'>SHARE</button>
+                        <button onClick={() => setOpenGobbleShare(true)} className='bg-blue-600 py-1 px-4 text-white'>SHARE</button>
                     </div>
                     <FaBars className='hidden max-[950px]:block cursor-pointer' onClick={() => setNavbarToggle(!navbarToggle)} />
                 </div>
                 {navbarToggle &&
                     <div className='bg-white shadow-md z-[600] shadow-gray-200 absolute right-2 max-[550px]:right-0 top-16 rounded w-72 max-[550px]:w-full h-auto flex flex-col gap-5 p-5 max-[550px]:p-10 font-semibold text-gray-800'>
-
                         <div className='flex items-center gap-5 cursor-pointer'>
                             <div className='w-8 h-8 rounded-[50%] bg-slate-100 border-[2px] p-[2px] border-blue-500 cursor-pointer'>
                                 <img src={avatar} alt="" />
                             </div>
                             <p>Profile</p>
                         </div>
-
                         <div className='flex items-center gap-5 cursor-pointer'>
                             <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 hover:text-blue-500 flex items-center justify-center'><HiOutlineMoon onClick={DarkMOdeToggle} className='' />
                             </div>
                             <p>Dark Mode</p>
                         </div>
-
                         <div className='flex items-center gap-5 cursor-pointer'>
                             <div className='w-8 h-8 rounded-[50%] cursor-pointer border-[2px] border-slate-300 hover:border-blue-400 hover:text-blue-500 flex items-center justify-center relative'> <BiBell className='' /><p className='absolute h-2 w-2 bg-red-600 rounded-full top-1 right-2'></p>
                             </div>
                             <p>Notification</p>
                         </div>
-
                         <div className='flex items-center gap-5 cursor-pointer'>
                             <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 hover:text-blue-500  flex items-center justify-center'><BsFillShareFill className='text-sm' />
                             </div>
                             <p>Share</p>
                         </div>
-
                         <div className='relative w-full'>
                             <input className='w-full border-2 py-2 rounded-sm outline-none bg-gray-100 pl-2 pr-5 text-xs text-gray-600' type="text" placeholder='Search..' />
                             <FiSearch className='absolute right-1  top-3' />
@@ -159,6 +154,8 @@ const Navbar: FC<NavbarProps> = () => {
                     </div>}
             </div>
             <Profile setOpen={setOpenProfile} open={openProfile} />
+            {/* Popup */}
+            <GobbleSharePopup open={openGobbleShare} setOpen={setOpenGobbleShare} />
         </>
     );
 }

@@ -46,16 +46,16 @@ const AllWorkspace: FC<AllWorkspaceProps> = ({ open, setOpen, workspace }) => {
                                             <RxCross2 onClick={() => setOpen(false)} className='cursor-pointer hover:text-red-600 duration-500' />
                                         </div>
                                         <Scrollbars className='w-full h-full min-h-[350px]'>
-                                            {workspace.map((e: any, index: number) => (
-                                                <div key={e._id} className="flex h-9 gap-3 px-2 items-center hover:bg-gray-100">
+                                            {workspace?.map((e: any, index: number) => (
+                                                <div key={e?._id} className="flex h-9 gap-3 px-2 items-center hover:bg-gray-100">
                                                     <p>{index + 1}</p>
                                                     <div className='w-full flex  justify-between'>
                                                         <div className="w-full flex gap-3 items-center">
                                                             <BiGroup className='text-lg text-gray-700' />
-                                                            {e.name}
+                                                            {e?.name}
                                                         </div>
                                                         <div>
-                                                            {e.visibility}
+                                                            {e?.visibility}
                                                         </div>
                                                     </div>
                                                 </div>

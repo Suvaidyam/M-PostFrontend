@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react';
+import { FC, useState, useContext, useEffect } from 'react';
 import { MyContext } from '../../../../Context/Context';
 import http from '../../../../Service/http';
 import BodyHead from '../../BodyHead/BodyHead';
@@ -14,11 +14,9 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
     const { currentActiveEnv, setCurrentActiveEnv, loader, setLoader, tabsList, setTabsList, setTabData, setCurrentActive, newEnvironment, setNewEnvironment, globalLoader, setGlobalLoader } = useContext(MyContext);
     const global_variable = newEnvironment?.filter((e: { name: string; }) => e.name === 'Globals');
     const local_variable = newEnvironment?.filter((e: { name: string; deleted: boolean }) => e.name !== 'Globals' && e.deleted === false);
-    console.log(local_variable)
-    // const [isOpen, setIsOpen] = useState(false);
-    // Get Environment Data
+    const [envActiveOption, setEnvActiveOption] = useState<any>({})
+    const [name, setName] = useState('');
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
-    // const popupRef: any = useRef();
     // ======================= Get Environment =======================
     const getData = () => {
         setGlobalLoader(true)
@@ -53,6 +51,37 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                 console.log(err)
             });
     };
+    // 
+    const PutData = () => {
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/environment/${envActiveOption?._id}`,
+            method: "put",
+            data: {
+                name: name
+            },
+        })
+            .then((res) => {
+                toast.success(res.data.message);
+                setLoader(!loader)
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    };
+    // ============================ Soft Delete ============================
+    const softDeleteData = () => {
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/environment/softDelete/${envActiveOption?._id}`,
+            method: "put",
+        })
+            .then((res) => {
+                setLoader(!loader);
+                toast.success(res.data.message);
+            })
+            .catch((err) => {
+                console.error('Error:', err);
+            });
+    };
     // ======================= Open Environment =======================
     const handleRequest = (e: any) => {
         if (tabsList.findIndex((f: any) => f._id === e._id) < 0) {
@@ -61,13 +90,11 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
             setCurrentActive(e._id);
         }
     };
-
     const openRequest = (ce: any) => {
         ce.openRequest = !ce.openRequest;
         setNewEnvironment([...newEnvironment]);
         // setIsOpen(true)
     };
-
     useEffect(() => {
         getData();
         // eslint-disable-next-line
@@ -116,10 +143,8 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                                     <IoCheckmarkDoneCircleOutline className="cursor-pointer hidden group-hover:block mr-8 text-gray-500 text-2xl"
                                                         onClick={() => setCurrentActiveEnv(ce._id)}
                                                     />}
-                                            <div className="hidden group-hover:block absolute right-2">
-                                                <MoreAction ViewDocumentation={undefined} deleteId={ce} openRequestId={undefined} collection='environment' deleteMessage={'Environment'} Delete={undefined} AddFolder={undefined} AddRequest={undefined} collectionConcatData={undefined} Rename={undefined} name={undefined} colName={function (value: any): void {
-                                                    throw new Error('Function not implemented.');
-                                                }} />
+                                            <div onClick={() => setEnvActiveOption(ce)} className="hidden group-hover:block absolute right-2">
+                                                <MoreAction ViewDocumentation={undefined} deleteId={ce} openRequestId={undefined} collection='environment' deleteMessage={'Environment'} Delete={softDeleteData} AddFolder={undefined} AddRequest={undefined} collectionConcatData={undefined} Rename={PutData} name={name} colName={setName} activeOption={envActiveOption} />
                                             </div>
                                         </div>
                                     </div>))}
