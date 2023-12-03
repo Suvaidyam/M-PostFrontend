@@ -73,6 +73,14 @@ interface ContextValue {
     setRightBar: React.Dispatch<React.SetStateAction<string>>
     allCollectionData: ICollection[]
     setAllCollectionData: React.Dispatch<React.SetStateAction<ICollection[]>>
+    trash: boolean,
+    setTrash: React.Dispatch<React.SetStateAction<boolean>>
+    codeMethod: boolean,
+    setCodeMethod: React.Dispatch<React.SetStateAction<boolean>>
+    inputData: any
+    setInputData: React.Dispatch<React.SetStateAction<any>>
+    // rightBar: any
+    // setRightBar: React.Dispatch<React.SetStateAction<any>>
 }
 interface ContextProps {
     children: React.ReactNode;
@@ -140,6 +148,10 @@ const Context: FC<ContextProps> = ({ children }) => {
     const [bodyTab, setBodyTab] = useState<string>("Params");
     const [rightBar, setRightBar] = useState<string>('close');
     const [allCollectionData, setAllCollectionData] = useState<ICollection[]>([]);
+    const [trash, setTrash] = useState<boolean>(false);
+    const [codeMethod, setCodeMethod] = useState<boolean>(false);
+    const [inputData, setInputData] = useState<any>();
+    // const [rightBar, setRightBar] = useState<any>();
 
     const contextValue: ContextValue | null = {
         forgetPasswordPopup,
@@ -213,7 +225,15 @@ const Context: FC<ContextProps> = ({ children }) => {
         rightBar,
         setRightBar,
         allCollectionData,
-        setAllCollectionData
+        setAllCollectionData,
+        trash,
+        setTrash,
+        codeMethod,
+        setCodeMethod,
+        inputData,
+        setInputData,
+        // rightBar,
+        // setRightBar
     };
 
     return (
