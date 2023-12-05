@@ -37,7 +37,8 @@ const BodyHead: FC<BodyHeadProps> = ({ postData, title }) => {
                     className={`group relative`}>
                     <motion.div whileTap={{ scale: 0.75 }} whileHover={{ scale: 1.1 }} transition={{ duration: 0.2 }}>
                         <Tooltip title={title} arrow>
-                            <IconButton disabled={!(permission || rootPermission)} className='' onClick={postData}>
+                            <IconButton className='' onClick={postData}>
+                                {/* <IconButton disabled={!(permission || rootPermission)} className='' onClick={postData}> */}
                                 <IoAddSharp className="text-xl  rounded-sm" />
                             </IconButton>
                         </Tooltip>

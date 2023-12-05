@@ -19,7 +19,7 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
     const workSpace = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const [tab, setTab] = useState<string>('workspace')
     const cancelButtonRef = useRef(null);
-    const { workspace, allCollectionData, loader, setLoader } = useContext(MyContext);
+    const { workspace, allCollectionData, activeOption, loader, setLoader } = useContext(MyContext);
     const [shareUrl, setShareUrl] = useState<string>('');
     const [accessValue, setAccessValue] = useState<string>('');
     const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -63,9 +63,10 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
     // ======================= Share Workspace ========================
     const shareWorkspace = () => {
         setOpenShare(true)
+        const workspaceData = JSON?.stringify(workSpace);
         http({
             method: "post",
-            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${accessValue}/${isChecked}/${shareData?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${accessValue}/${isChecked}/${workspaceData}/${shareData?._id}`,
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
@@ -76,9 +77,11 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
     }
     // ======================= Share Collection ========================
     const shareCollection = () => {
+        const workspaceData = JSON?.stringify(workSpace);
+        const collectionData = JSON?.stringify(activeOption);
         http({
             method: "post",
-            url: `${process.env.REACT_APP_BASEURL}/share/collection/${accessValue}/${isChecked}/${shareData?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/share/collection/${accessValue}/${isChecked}/${workspaceData}/${collectionData}/${shareData?._id}`,
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
@@ -87,7 +90,6 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
                 console.log(err);
             });
     }
-
     const shareToggle = (e: any) => {
         if (e?.type === 'collection') {
             const sharePermission = e?.share?.some((e: any) =>
@@ -98,7 +100,7 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
                 setOpenShare(!openShare)
                 setShareData(e)
             } else {
-                toast.error('collection Access Denied');
+                toast.error('Access Denied');
             }
         } else {
             const shareWorkspacePermission = e?.share?.some((e: any) =>

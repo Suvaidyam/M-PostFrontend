@@ -78,8 +78,10 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     };
     //  ============================== Create Collection ==============================
     const postData = () => {
+        const workspaceData = JSON?.stringify(workSpace);
+        const collectionData = JSON?.stringify(workSpace);
         http({
-            url: `${process.env.REACT_APP_BASEURL}/collection`,
+            url: `${process.env.REACT_APP_BASEURL}/collection/${workspaceData}/${collectionData}`,
             method: "post",
             data: {
                 type: "collection",
@@ -97,116 +99,91 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
     };
     //  ============================== Create Folder ==============================
     const AddFolder = () => {
-        const sharePermission = activeOption?.share?.some((e: any) =>
-            e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
+        const workspaceData = JSON?.stringify(workSpace);
+        const collectionData = JSON?.stringify(activeOption);
+        const uniqueShare = activeOption?.share?.filter((share: any, index: number, self: any[]) =>
+            index === self.findIndex((s: any) => s.shareId === share.shareId)
         );
-        const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
-        if (sharePermission || rootPermission) {
-            const uniqueShare = activeOption?.share?.filter((share: any, index: number, self: any[]) =>
-                index === self.findIndex((s: any) => s.shareId === share.shareId)
-            );
-            http({
-                url: `${process.env.REACT_APP_BASEURL}/collection`,
-                method: "post",
-                data: {
-                    type: "folder",
-                    name: "New Folder",
-                    parent: activeOption?._id,
-                    share: uniqueShare,
-                    workspace_id: activeOption?.workspace_id,
-                },
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection/${workspaceData}/${collectionData}`,
+            method: "post",
+            data: {
+                type: "folder",
+                name: "New Folder",
+                parent: activeOption?._id,
+                share: uniqueShare,
+                workspace_id: activeOption?.workspace_id,
+            },
+        })
+            .then((res) => {
+                setLoader(!loader);
+                toast.success(res.data.message);
             })
-                .then((res) => {
-                    setLoader(!loader);
-                    toast.success(res.data.message);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        } else {
-            toast.error('Access Denied');
-        }
+            .catch((err) => {
+                console.log(err);
+            });
     };
     //  ============================== Create Request ==============================
     const AddRequest = () => {
-        const sharePermission = activeOption?.share?.some((e: any) =>
-            e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
+        const workspaceData = JSON?.stringify(workSpace);
+        const collectionData = JSON?.stringify(activeOption);
+        const uniqueShare = activeOption?.share?.filter((share: any, index: number, self: any[]) =>
+            index === self.findIndex((s: any) => s.shareId === share.shareId)
         );
-        const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
-        if (sharePermission || rootPermission) {
-            const uniqueShare = activeOption?.share?.filter((share: any, index: number, self: any[]) =>
-                index === self.findIndex((s: any) => s.shareId === share.shareId)
-            );
-            http({
-                url: `${process.env.REACT_APP_BASEURL}/collection`,
-                method: "post",
-                data: {
-                    name: "New Request",
-                    type: "request",
-                    parent: activeOption?._id,
-                    workspace_id: activeOption?.workspace_id,
-                    share: uniqueShare,
-                    details: { method: "get", url: "" },
-                }
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection/${workspaceData}/${collectionData}`,
+            method: "post",
+            data: {
+                name: "New Request",
+                type: "request",
+                parent: activeOption?._id,
+                workspace_id: activeOption?.workspace_id,
+                share: uniqueShare,
+                details: { method: "get", url: "" },
+            }
+        })
+            .then((res) => {
+                setLoader(!loader);
+                toast.success(res.data.message);
             })
-                .then((res) => {
-                    setLoader(!loader);
-                    toast.success(res.data.message);
-                })
-                .catch((err) => {
-                    console.log(err)
-                });
-        } else {
-            toast.error('Access Denied');
-        }
+            .catch((err) => {
+                console.log(err)
+            });
     };
     //  ============================== Rename Collection ==============================
     const PutData = () => {
-        const sharePermission = activeOption?.share?.some((e: any) =>
-            e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
-        );
-        const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
-        if (sharePermission || rootPermission) {
-            http({
-                url: `${process.env.REACT_APP_BASEURL}/collection/${activeOption?._id}`,
-                method: "put",
-                data: {
-                    name: name
-                },
+        const workspaceData = JSON?.stringify(workSpace);
+        const collectionData = JSON?.stringify(activeOption);
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection/${workspaceData}/${collectionData}/${activeOption?._id}`,
+            method: "put",
+            data: {
+                name: name
+            },
+        })
+            .then((res) => {
+                toast.success(res.data.message);
+                setLoader(!loader)
             })
-                .then((res) => {
-                    toast.success(res.data.message);
-                    setLoader(!loader)
-                    // setOpen(false)
-                })
-                .catch((err) => {
-                    console.log(err)
-                });
-        } else {
-            toast.error('Access Denied');
-        }
+            .catch((err) => {
+                console.log(err)
+            });
     };
     // ============================ Soft Delete ============================
     const softDeleteData = () => {
-        const sharePermission = activeOption?.share?.some((e: any) =>
-            e?.permission !== 'read' && FilterCollection?.some((en: any) => en?.created_by === e?.shareId)
-        );
-        const rootPermission = activeOption?.workspace_id === workSpaceId?._id;
-        if (sharePermission || rootPermission) {
-            http({
-                url: `${process.env.REACT_APP_BASEURL}/collection/softDelete/${activeOption?._id}`,
-                method: "put",
+        const workspaceData = JSON?.stringify(workSpace);
+        const collectionData = JSON?.stringify(activeOption);
+        http({
+            url: `${process.env.REACT_APP_BASEURL}/collection/softDelete/${workspaceData}/${collectionData}/${activeOption?._id}`,
+            method: "put",
+        })
+            .then((res) => {
+                setLoader(!loader);
+                toast.success(res.data.message);
             })
-                .then((res) => {
-                    setLoader(!loader);
-                    toast.success(res.data.message);
-                })
-                .catch((err) => {
-                    console.error('Error:', err);
-                });
-        } else {
-            toast.error('Access Denied');
-        }
+            .catch((err) => {
+                console.error('Error:', err);
+            });
     };
     const toggleCollectionArrow = (id: string) => {
         setToggleCollection(!toggleCollection);
@@ -285,7 +262,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                 <p>{col?.name}</p>
                                             </div>
                                             <div onClick={() => ClickOption(col)} className={`h-full mr-1.5 flex items-center`}>
-                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} activeOption={activeOption} />
+                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} Rename={PutData} name={name} colName={setName} activeOption={activeOption} />
                                             </div>
                                         </div>
                                     }
@@ -305,7 +282,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                                     <p>{Fc?.name}</p>
                                                                 </div>
                                                                 <div onClick={() => ClickOption(Fc)} className={`h-full mr-1.5 flex items-center`}>
-                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} activeOption={activeOption} />
+                                                                    <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} Rename={PutData} name={name} colName={setName} activeOption={activeOption} />
                                                                 </div>
                                                             </div>
                                                             {/* ================================= Request type ================================= */}
@@ -320,7 +297,7 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
                                                                                         <p className='text-sm'>{req?.name}</p>
                                                                                     </div>
                                                                                     <div onClick={() => ClickOption(req)} className={`h-full mr-1.5 flex items-center`}>
-                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} collectionConcatData={collectionConcatData} Rename={PutData} name={name} colName={setName} activeOption={activeOption} />
+                                                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' deleteMessage={'Collection'} Delete={softDeleteData} AddFolder={AddFolder} AddRequest={AddRequest} Rename={PutData} name={name} colName={setName} activeOption={activeOption} />
                                                                                     </div>
                                                                                 </div>
                                                                             }
@@ -345,79 +322,3 @@ const CollectionBody: FC<CollectionBodyProps> = () => {
 }
 
 export default CollectionBody;
-
-{/* {(toggleFolder === true && ef?._id === activeFolder) &&
-                                        <div key={ef?._id}>
-                                            {FilterCollection?.map((er: any) => (
-                                                <div key={er?._id}>
-                                                    {er?.type === 'request' && e?._id === er?.parent &&
-                                                        <div className="w-full pl-16 h-8 flex gap-1 cursor-default  items-center justify-between border-b">
-                                                            <div className="w-4/5 h-full truncate flex items-center gap-2">
-                                                                <p>req</p>
-                                                                <p>{er?.name}</p>
-                                                            </div>
-                                                            <div onClick={() => ClickOption(er)} className={`h-full mr-1.5 flex items-center`}>
-                                                                <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' />
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            ))}
-                                        </div>
-                                    } */}
-{/* {concatFolderData?.map((e: any) => (
-                                        <div key={e?._id} >
-                                            {e.type === 'folder' &&
-                                                <div key={e?._id} className='flex gap-2 relative group justify-between border-b h-9 items-center cursor-pointer'>
-                                                    <div className='w-[80%] justify-start flex truncate'>
-                                                        <div onClick={() => toggleArrow(e._id)} className='w-10 h-full flex items-center justify-center text-lg'>
-                                                            {(toggleFolder === true && e._id === activeFolder) ? <BiCaretDown /> : < BiCaretRight />}
-                                                        </div>
-                                                        <div className='text-xl pr-2'>
-                                                            <FcFolder />
-                                                        </div>
-                                                        <div className='text-sm'>
-                                                            {e.name}
-                                                        </div>
-                                                    </div>
-                                                    <div onClick={() => ClickOption(e)} className={`${activeOption._id !== e._id ? 'hidden group-hover:block' : 'block'}   absolute right-2`}>
-                                                        <MoreAction openRequestId={openRequestId} ViewDocumentation={ViewDocumentation} deleteId={activeOption} collection='collection' />
-                                                    </div>
-                                                </div>
-                                            }
-                                            {(toggleFolder === true && e._id === activeFolder) &&
-                                                <div className=" w-full">
-                                                    {allCollectionData?.map((ce: any) => (
-                                                        <div>
-                                                            {ce?.deleted === false &&
-                                                                <div>
-                                                                    {ce?.type === 'request' &&
-                                                                        <div key={ce._id}>
-                                                                            {e._id === ce.parent && (
-                                                                                <div className={`w-full relative group flex cursor-pointer py-1 px-2 
-                                                        ${e._id === ce._id ? 'bg-gray-300' : ' hover:bg-gray-200'}`} >
-                                                                                    <div className="flex items-center gap-2 w-full " onClick={() => handleRequest(ce)}>
-                                                                                        <p className={`text-[11px] font-semibold text-${getDetails(ce?.details).color
-                                                                                            }-600 w-[70px] min-w-[70px] flex justify-end`} >
-                                                                                            {getDetails(ce?.details).method}
-                                                                                        </p>
-                                                                                        <p className="text-xs text-gray-600 font-normal truncate">
-                                                                                            {ce.name}
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div className="">
-                                                                                        <div onClick={() => openRequest(ce)} className='mb-3 pb-5 hidden group-hover:block absolute right-2'>
-                                                                                            <MoreAction openRequestId={openRequestId} ViewDocumentation={null} deleteId={openRequestId} collection='collection' />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>)}
-                                                                        </div>
-                                                                    }
-                                                                </div>
-                                                            }
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            }
-                                        </div>
-                                    ))} */}

@@ -144,7 +144,7 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
                                                         onClick={() => setCurrentActiveEnv(ce._id)}
                                                     />}
                                             <div onClick={() => setEnvActiveOption(ce)} className="hidden group-hover:block absolute right-2">
-                                                <MoreAction ViewDocumentation={undefined} deleteId={ce} openRequestId={undefined} collection='environment' deleteMessage={'Environment'} Delete={softDeleteData} AddFolder={undefined} AddRequest={undefined} collectionConcatData={undefined} Rename={PutData} name={name} colName={setName} activeOption={envActiveOption} />
+                                                <MoreAction ViewDocumentation={undefined} deleteId={ce} openRequestId={undefined} collection='environment' deleteMessage={'Environment'} Delete={softDeleteData} AddFolder={undefined} AddRequest={undefined} Rename={PutData} name={name} colName={setName} activeOption={envActiveOption} />
                                             </div>
                                         </div>
                                     </div>))}
