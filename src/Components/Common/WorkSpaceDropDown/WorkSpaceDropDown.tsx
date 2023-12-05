@@ -39,6 +39,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
         )
     );
     const workSpaceConcatData = (workspace?.concat(filteredShareData))
+    const workSpace = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const getAllData = () => {
         http({
             method: "get",
@@ -88,9 +89,10 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
     // =========================== Share Workspace ===========================
     const shareWorkspace = () => {
         setOpenShare(true)
+        const workspaceData = JSON?.stringify(workSpace);
         http({
             method: "post",
-            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${accessValue}/${isChecked}/${shareData?._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/share/workspace/${accessValue}/${isChecked}/${workspaceData}/${shareData?._id}`,
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);

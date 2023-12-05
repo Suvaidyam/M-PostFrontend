@@ -1,11 +1,9 @@
 import type { FC } from 'react';
-import { Fragment, useContext, useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { MdOutlineDone } from 'react-icons/md';
 import { toast } from 'react-toastify';
-import { MyContext } from '../../../../../Context/Context';
-// import { MyContext } from '../../../../../Context/Context';
 
 interface ShareProps {
     open: boolean
@@ -22,11 +20,6 @@ interface ShareProps {
 const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share, isChecked, setIsChecked, accessValue, setAccessValue, selectValue }) => {
     const cancelButtonRef = useRef(null);
     const [tab, setTab] = useState<string>('People');
-    // const { accessValue, setAccessValue } = useContext(MyContext);
-    // const { activeOption, collection } = useContext(MyContext);
-    // let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
-    // const findCollection = collection?.filter((e: any) => e.workspace_id === workSpace_Id?._id);
-    // const abc = findCollection?.filter((e: any) => e.parent === activeOption?._id);
     const [email, setEmail] = useState("");
     const validate = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     // Copy Function
