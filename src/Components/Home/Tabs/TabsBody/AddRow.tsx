@@ -140,8 +140,8 @@ export default function AddRow({
                             onChange={(e) => onTextChange(e)}
                             name={variableN}
                             placeholder={variable}
-                            // defaultValue={data[rowId]?.key}
-                            value={queryKey}
+                            defaultValue={data[rowId]?.key}
+                        // value={queryKey}
 
                         />
                     </div>
