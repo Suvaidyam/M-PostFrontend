@@ -40,12 +40,12 @@ function TabsBody() {
     }
 
 
-
     // ========= Post form-data && json ===========
 
     let postData;
     let contentType = selected; // @todo: radio button value
-    let headers: any = {};
+    let headers: any = getHeadersAndParams(headersData);
+
 
     if (contentType === 'json') {
       headers['Content-Type'] = 'application/json';
@@ -67,14 +67,19 @@ function TabsBody() {
       console.log('Invalid contentType');
       return; // Handle or return an error, as needed
     }
-    const headersDatas = getHeadersAndParams(headers);
-    // console.log(headersDatas)
+    // if ('Content-Type' in headers) {
+    //   const contentType = headers['Content-Type'];
+    //   // setHeadersData(contentType)
+    //   console.log(contentType); // Output: "application/json"
+    // } else {
+    //   console.log('Content-Type header not found');
+    // }
+    console.log(headers)
     http({
       url: topBarData.url,
       method: topBarData.method,
       data: postData,
-      ContentType: headersDatas,
-      headers: getHeadersAndParams(headersData),
+      headers: headers,
       query: getHeadersAndParams(paramsData),
     })
       .then((res: any) => {
