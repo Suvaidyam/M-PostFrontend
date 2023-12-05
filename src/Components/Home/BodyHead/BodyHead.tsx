@@ -17,28 +17,16 @@ const BodyHead: FC<BodyHeadProps> = ({ postData, title }) => {
         e?.permission === 'readWrite' && e?.shareId === UserData?._id
     )
     const rootPermission = workSpace?.created_by === UserData?._id;
-    // let data;
-    // if (rootPermission === true) {
-    //     data = false;
-    // } else {
-    //     if (permission === true) {
-    //         data = false;
-    //     } else {
-    //         data = true;
-    //     }
-    // }
-    // console.log(data)
     return (
         <>
             <div className='relative  flex items-center '>
                 <SearchBar />
                 <button
-                    // disabled={permission && rootPermission}
+                    disabled={permission && rootPermission}
                     className={`group relative`}>
                     <motion.div whileTap={{ scale: 0.75 }} whileHover={{ scale: 1.1 }} transition={{ duration: 0.2 }}>
                         <Tooltip title={title} arrow>
-                            <IconButton className='' onClick={postData}>
-                                {/* <IconButton disabled={!(permission || rootPermission)} className='' onClick={postData}> */}
+                            <IconButton disabled={!(permission || rootPermission)} className='' onClick={postData}>
                                 <IoAddSharp className="text-xl  rounded-sm" />
                             </IconButton>
                         </Tooltip>

@@ -175,7 +175,6 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
                                                     </div>
                                                 }
                                                 {tab === 'collections' &&
-                                                    // <CollectionBody />
                                                     <div className='w-full mt-2'>
                                                         {collectionConcatData?.map((e: any, index: number) => (
                                                             <div key={e?._id} className='w-full h-full'>
@@ -183,8 +182,8 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
                                                                     <div key={e?._id} className="flex h-9 gap-3 px-2 items-center hover:bg-gray-100">
                                                                         <p className='w-10'>{index + 1}</p>
                                                                         <div className='w-full flex items-center  justify-between'>
-                                                                            <div className="w-[20%] truncate relative flex gap-3 items-center">
-                                                                                {e?.workspace_id !== workSpace?._id && <IoIosShareAlt className='absolute text-xs left-0.5 text-white top-[7px] ' />}
+                                                                            <div className="w-[200px] truncate relative flex gap-3 items-center">
+                                                                                {e?.workspace_id !== workSpace?._id && <IoIosShareAlt className='absolute text-xs left-0.5 text-white top-[7px]' />}
                                                                                 <BsFillCollectionFill className='text-yellow-900 text-[17px]' />
                                                                                 {e?.name}
                                                                             </div>
