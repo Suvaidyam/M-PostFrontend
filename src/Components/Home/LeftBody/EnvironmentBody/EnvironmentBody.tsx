@@ -90,11 +90,11 @@ const EnvironmentBody: FC<EnvironmentBodyProps> = () => {
             setCurrentActive(e._id);
         }
     };
-    const openRequest = (ce: any) => {
-        ce.openRequest = !ce.openRequest;
-        setNewEnvironment([...newEnvironment]);
-        // setIsOpen(true)
-    };
+    // const openRequest = (ce: any) => {
+    //     ce.openRequest = !ce.openRequest;
+    //     setNewEnvironment([...newEnvironment]);
+    //     // setIsOpen(true)
+    // };
     useEffect(() => {
         getData();
         // eslint-disable-next-line

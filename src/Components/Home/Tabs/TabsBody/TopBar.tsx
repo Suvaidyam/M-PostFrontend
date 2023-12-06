@@ -95,7 +95,6 @@ function TopBar({ onSendClick }: Props) {
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
         })
             .then((res) => {
-                console.log(res)
                 res.data.environment.map((e: any) =>
                     e.details.map((el: any) => setIsEnv((env) => [...env, el] as any))
                 );

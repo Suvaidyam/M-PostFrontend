@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 import { Fragment, useContext, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import http from '../../../../../Service/http';
 import { MyContext } from '../../../../../Context/Context';
+import { IoClose } from 'react-icons/io5';
 
 interface ImportProps {
     open: any,
@@ -31,6 +31,7 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
             })
                 .then((res: any) => {
                     setLoader(!loader);
+                    setOpen(false)
                     toast.success(res.data.message);
                 })
                 .catch((err: any) => {
@@ -49,6 +50,7 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
             })
                 .then((res: any) => {
                     setLoader(!loader)
+                    setOpen(false)
                     toast.success(res.data.message);
                 })
                 .catch((err: any) => {
@@ -87,7 +89,7 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
                                         <div className="w-full">
                                             <div className="flex justify-between text-xl font-semibold items-center pb-3">
                                                 <p>Share Mock Data Generation</p>
-                                                <AiOutlineClose className='cursor-pointer' onClick={() => setOpen(false)} />
+                                                <IoClose onClick={() => setOpen(false)} className='hover:bg-blue-gray-200 duration-500 hover:text-white w-7 h-7 py-1 cursor-pointer rounded-full' />
                                             </div>
                                             <div className="flex gap-5">
                                                 <p onClick={() => setTab('workspace')} className={`${tab === 'workspace' && 'border-b-2 border-blue-600'} duration-100  cursor-pointer`}>Workspace</p>
@@ -99,10 +101,10 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
                                                 <>
                                                     <div className="w-full pt-4 text-start">
                                                         <p className='text-sm font-semibold'>Import Workspace Url</p>
-                                                        <div className=" w-full flex gap-3 mt-2">
+                                                        <form onSubmit={(e) => { e.preventDefault(); importWorkspace(); }} className=" w-full flex gap-3 mt-2">
                                                             <input onChange={(e) => setValue(e.target.value)} type="text" className='w-full border border-black rounded px-2 ' />
-                                                            <button disabled={value.length === 0 ? true : false} onClick={importWorkspace} className={` ${value?.length === 0 ? 'bg-gray-400' : 'bg-blue-gray-600'} text-white font-semibold border-black h-9 w-28 rounded`}>Join</button>
-                                                        </div>
+                                                            <button disabled={value.length === 0 ? true : false} className={` ${value?.length === 0 ? 'bg-gray-400' : 'bg-blue-gray-600'} text-white font-semibold border-black h-9 w-28 rounded`}>Join</button>
+                                                        </form>
                                                     </div>
                                                 </>
                                             }
@@ -112,10 +114,11 @@ const Import: FC<ImportProps> = ({ open, setOpen }) => {
                                                 <div className='w-full text-start'>
                                                     <div className="w-full pt-4 text-start">
                                                         <p className='text-sm font-semibold'>Import Collection Url</p>
-                                                        <div className=" w-full flex gap-3 mt-2">
+                                                        <form onSubmit={(e) => { e.preventDefault(); importCollection(); }}
+                                                            className=" w-full flex gap-3 mt-2">
                                                             <input onChange={(e) => setValue(e.target.value)} type="text" className='w-full border border-black rounded px-2 ' />
-                                                            <button disabled={value?.length === 0 ? true : false} onClick={importCollection} className={` ${value?.length === 0 ? 'bg-gray-400' : 'bg-blue-gray-600'} text-white font-semibold border-black h-9 w-28 rounded`}>Join</button>
-                                                        </div>
+                                                            <button disabled={value?.length === 0 ? true : false} className={` ${value?.length === 0 ? 'bg-gray-400' : 'bg-blue-gray-600'} text-white font-semibold border-black h-9 w-28 rounded`}>Join</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             }

@@ -40,10 +40,11 @@ const AlertPopup: FC<AlertPopupProps> = ({ open, setOpen, message, method }) => 
                                 <Dialog.Panel className="bg-white rounded flex justify-center items-center">
                                     <div className="w-[380px]  mx-4 py-3">
                                         <h1 className='text-start text-lg'>Are you sure to delete this <span className='font-semibold text-red-600'>{message}</span> ?</h1>
-                                        <div className="flex gap-4">
-                                            <button onClick={() => setOpen(false)} className='w-full py-2 text-sm tracking-wide bg-transparent border-2 rounded mt-4'>Cancel</button>
-                                            <button onClick={method} className='w-full py-2 text-sm tracking-wide text-white rounded bg-red-600 mt-4'>Delete</button>
-                                        </div>
+                                        <form onSubmit={(e) => { e.preventDefault(); method() }} className="flex gap-4">
+                                            <div onClick={() => setOpen(false)} className='w-full cursor-pointer py-2 text-sm tracking-wide bg-transparent border-2 rounded mt-4'>Cancel</div>
+                                            <button className='w-full py-2 text-sm tracking-wide text-white rounded bg-red-600 mt-4'>Delete</button>
+                                            {/* <button onClick={method} className='w-full py-2 text-sm tracking-wide text-white rounded bg-red-600 mt-4'>Delete</button> */}
+                                        </form>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

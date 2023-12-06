@@ -7,6 +7,7 @@ import EditCollection from './EditCollection/EditCollection';
 import http from '../../../../Service/http';
 import Share from './Share/Share';
 import AlertPopup from './AlertPopup/AlertPopup';
+import { toast } from 'react-toastify';
 
 interface MoreActionProps {
     ViewDocumentation: any,
@@ -41,6 +42,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
+                toast.success('Url Generate')
             })
             .catch((err: any) => {
                 console.log(err);

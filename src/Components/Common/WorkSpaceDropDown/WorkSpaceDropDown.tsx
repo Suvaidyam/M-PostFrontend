@@ -96,6 +96,7 @@ const WorkSpaceDropDown: FC<WorkSpaceDropDownProps> = () => {
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
+                toast.success('Url Generate')
             })
             .catch((err: any) => {
                 console.log(err);
