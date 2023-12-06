@@ -33,11 +33,14 @@ export default function TabList({ }: Props) {
         setCurrentActive,
         setCurrentActiveEnv,
         tabData,
+        setLoader,
+        loader,
         currentActiveEnv } = useContext(MyContext);
     const [newEnviroment, setNewEnviroment] = useState([]);
     const local_variable = newEnviroment?.filter((e: any) => e.name !== "Globals");
     let storeData = sessionStorage.getItem("recentTablength");
     const [recentTablength, setrecentTablength] = useState(storeData ? parseInt(storeData) : 0);
+    const [envLoader, setEnvLoader] = useState<boolean>(false)
     sessionStorage.setItem("recentTablength", recentTablength as any)
     const newReqObj = {
         name: "Untitled Request",
@@ -101,6 +104,8 @@ export default function TabList({ }: Props) {
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
         })
             .then((res) => {
+                // setLoader(false);
+                setEnvLoader(false)
                 setNewEnviroment(res.data.environment);
             })
             .catch((err) => {

@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { AiOutlineClose } from 'react-icons/ai';
 import { MdOutlineDone } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { IoClose } from 'react-icons/io5';
 
 interface ShareProps {
     open: boolean
@@ -64,7 +64,7 @@ const Share: FC<ShareProps> = ({ open, setOpen, urlValue, share, isChecked, setI
                                         <div className="w-full">
                                             <div className="flex justify-between text-xl font-semibold items-center pb-3">
                                                 <p>Share Mock Data Generation</p>
-                                                <AiOutlineClose className='cursor-pointer' onClick={() => setOpen(false)} />
+                                                <IoClose onClick={() => setOpen(false)} className='hover:bg-blue-gray-200 duration-500 hover:text-white w-7 h-7 py-1 cursor-pointer rounded-full' />
                                             </div>
                                             <div className="flex gap-5">
                                                 <p onClick={() => setTab('People')} className={`${tab === 'People' && 'border-b-2 border-blue-600'} duration-100  cursor-pointer`}>With People</p>

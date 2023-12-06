@@ -48,7 +48,6 @@ const Login: FC<LoginProps> = (data: {}) => {
             .catch((error) => {
                 console.log("Error occurred:", error);
                 toast.error('Invalid user')
-
             });
     }
     return (
@@ -117,7 +116,6 @@ const Login: FC<LoginProps> = (data: {}) => {
                                                 onClick={() => setOpen(!open)}
                                             />
                                         )}
-
                                     </div>
                                     <div className="flex justify-between">
                                         <div className="flex items-center gap-1">
@@ -137,14 +135,13 @@ const Login: FC<LoginProps> = (data: {}) => {
                                             to={'/forgetPassword'}
                                             // onClick={() => setForgetPasswordPopup(true)}
                                             className="text-sm text-blue-600 cursor-pointer">Forget Password?</Link>
-
                                     </div>
                                     <div className="w-full flex justify-end">
                                         <button
                                             type='submit'
                                             disabled={check}
                                             className={`${check === false ? "bg-blue-600" : "bg-blue-200"}
-                                      py-2 text-white text-sm px-10 rounded-sm`}
+                                        py-2 text-white text-sm px-10 rounded-sm`}
                                         // onClick={save}
                                         // className='bg-blue-200 py-2 px-8'
                                         >

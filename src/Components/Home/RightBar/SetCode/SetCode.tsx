@@ -212,8 +212,12 @@ const SetCode: FC<SetCodeProps> = () => {
                             ))}
                         </Select>
                     </div>
+                    {/* <div className='w-full  h-10 flex border-b justify-between items-center px-2.5 text-xl font-semibold'>
+                        <p>Trash</p>
+                        <IoClose onClick={() => setRightBar('close')} className='hover:bg-blue-gray-200 duration-500 hover:text-white w-7 h-7 py-1 cursor-pointer rounded-full' />
+                    </div> */}
                     <div className="h-[90%]  w-8 flex justify-center items-center text-lg hover:bg-slate-100 duration-300 rounded-full cursor-pointer mr-2">
-                        <IoClose onClick={() => setRightBar('close')} />
+                        <IoClose onClick={() => setRightBar('close')} className='hover:bg-blue-gray-200 duration-500 hover:text-white w-7 h-7 py-1 cursor-pointer rounded-full' />
                     </div>
                 </div>
                 <div className="w-full h-full overflow-hidden text-start  bg-white  rounded-md  py-2">

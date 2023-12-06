@@ -2,7 +2,6 @@ import { Fragment, useEffect, useContext, useRef, useState, type FC } from 'reac
 import { Dialog, Transition } from '@headlessui/react';
 import Scrollbars from 'react-custom-scrollbars';
 import { BiGroup } from 'react-icons/bi';
-import { RxCross2 } from 'react-icons/rx';
 import http from '../../Service/http';
 import { MyContext } from '../../Context/Context';
 import { CiShare2 } from 'react-icons/ci';
@@ -10,6 +9,7 @@ import Share from '../Home/LeftBody/MoreAction/Share/Share';
 import { IoIosShareAlt } from 'react-icons/io';
 import { BsFillCollectionFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
+import { IoClose } from 'react-icons/io5';
 interface GobbleSharePopupProps {
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -70,6 +70,7 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
+                toast.success('Url Generate');
             })
             .catch((err: any) => {
                 console.log(err);
@@ -85,6 +86,7 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
         })
             .then((res: any) => {
                 setShareUrl(res.data.url);
+                toast.success('Url Generate');
             })
             .catch((err: any) => {
                 console.log(err);
@@ -148,7 +150,7 @@ const GobbleSharePopup: FC<GobbleSharePopupProps> = ({ open, setOpen }) => {
                                                 <p onClick={() => setTab('workspace')} className={`${tab === 'workspace' && 'border-b-2 border-blue-600'} duration-100  cursor-pointer`}>Share Workspace</p>
                                                 <p onClick={() => setTab('collections')} className={`${tab === 'collections' && 'border-b-2 border-blue-600'} duration-100  cursor-pointer`}>Share Collection</p>
                                             </div>
-                                            <RxCross2 onClick={() => setOpen(false)} className='cursor-pointer hover:text-red-600 duration-500' />
+                                            <IoClose onClick={() => setOpen(false)} className='hover:bg-blue-gray-200 duration-500 hover:text-white w-7 h-7 py-1 cursor-pointer rounded-full' />
                                         </div>
                                         <Scrollbars className='w-full h-full'>
                                             <div className="w-full">

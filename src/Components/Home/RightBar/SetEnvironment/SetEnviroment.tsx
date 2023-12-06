@@ -5,7 +5,7 @@ import http from '../../../../Service/http';
 import { MyContext } from '../../../../Context/Context';
 import { EnvLoader } from '../../../Loader/Loader';
 import Scrollbars from 'react-custom-scrollbars';
-import { RxCross2 } from 'react-icons/rx';
+import { IoClose } from 'react-icons/io5';
 
 interface SetEnvironmentProps {
     open: any,
@@ -95,7 +95,7 @@ const SetEnvironment: FC<SetEnvironmentProps> = ({ open, setOpen }) => {
                                                                 ) : (
                                                                     <>
                                                                         <p>Add</p>
-                                                                        <RxCross2 onClick={() => setOpen(false)} className='absolute text-black duration-500 hover:text-red-500 right-1 top-1 text-lg rounded-full' />
+                                                                        <IoClose onClick={() => setOpen(false)} className='hover:bg-blue-gray-200 absolute right-1 top-1 duration-500 text-blue-gray-800 hover:text-white w-7 h-7 py-1 cursor-pointer rounded-full' />
                                                                     </>
                                                                 )}
                                                             </div>
