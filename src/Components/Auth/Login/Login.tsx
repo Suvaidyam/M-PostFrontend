@@ -29,9 +29,9 @@ const Login: FC<LoginProps> = (data: {}) => {
     })
 
     const navigate = useNavigate();
-
+    const URL = process.env.REACT_APP_BASEURL ?? ''
     const handleLogin = (values: IFormValue) => {
-        axios.post(`http://localhost:4000/auth/login`, values)
+        axios.post(URL+'/auth/login', values)
             .then((response: any) => {
                 setTimeout(() => {
                     if (response.status === 200) {

@@ -24,7 +24,7 @@ interface IFormValue {
 
 const Register: FC<RegisterProps> = () => {
     const [check, setCheck] = useState(true);
-    const url = `http://localhost:4000/auth/register`;
+    const url = process.env.REACT_APP_BASEURL ?? ''
     const nevigate = useNavigate()
     const initialValues: IFormValue = {
         name: "",
@@ -52,7 +52,7 @@ const Register: FC<RegisterProps> = () => {
     })
     const HandleSignup = (values: any) => {
         // console.log(values);
-        axios.post(url, values)
+        axios.post(url+'/auth/register', values)
             .then((response) => {
                 console.log(response);
                 setTimeout(() => {
