@@ -8,7 +8,7 @@ import { tags as t } from '@lezer/highlight';
 interface BodyFromProps { }
 
 const BodyFrom: FC<BodyFromProps> = () => {
-    const { tabData, setJsonText, currentActive, jsonText } = useContext(MyContext);
+    const { tabData, setJsonText, currentActive } = useContext(MyContext);
     const locTabList = JSON.parse(localStorage.getItem('tabsList') as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const data = tabData?.details?.body || activeData[0]?.details?.body;

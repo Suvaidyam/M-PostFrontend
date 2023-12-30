@@ -20,22 +20,23 @@ type Props = {
 
 function TopBar({ onSendClick }: Props) {
     const REGEX = /({{.*?}})/g;
-    const { setInputData, jsonText, tabData, setTopBarData, headersData, setStatus, currentActive, paramsData, setMsg, setError, changeAction, setchangeAction } = useContext(MyContext);
+    const { setInputData, jsonText, tabData, setTopBarData, headersData, setStatus, currentActive, paramsData, setLoader, loader, setMsg, setError, changeAction, setchangeAction } = useContext(MyContext);
     const locTabList = JSON.parse(localStorage.getItem("tabsList") as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const [data, setData] = useState(tabData?.details || activeData[0].details);
     const [open, setopen] = useState(false);
     const [isLoding, setIsLoding] = useState(false);
     const [isEnv, setIsEnv] = useState([]);
-    console.log(isEnv)
     const handleClose = () => setopen(!open);
     const [responseData, setResponseData] = useState<any | null>(null);
     const currentActives = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
     const [renderDropdown, setRenderDropdown] = useState(false)
     let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const Save = () => {
+        const workspaceData = JSON?.stringify(workSpace_Id);
+        const collectionData = JSON?.stringify(tabData);
         http({
-            url: `${process.env.REACT_APP_BASEURL}/collection/${tabData._id}`,
+            url: `${process.env.REACT_APP_BASEURL}/collection/${workspaceData}/${collectionData}/${tabData._id}`,
             method: "put",
             data: {
                 details: {
@@ -48,10 +49,12 @@ function TopBar({ onSendClick }: Props) {
             },
         })
             .then((res: any) => {
-                toast.success('Save Successfully')
+                // console.log(res)      
+                toast.success(res.data.message)
                 setStatus(res.status);
                 setError(true)
                 setIsLoding(true);
+                setLoader(!loader)
                 setTimeout(() => {
                     setIsLoding(false);
                 }, 1000);
@@ -95,6 +98,7 @@ function TopBar({ onSendClick }: Props) {
             url: `${process.env.REACT_APP_BASEURL}/environment/${workSpace_Id?._id}`,
         })
             .then((res) => {
+                // console.log(res)
                 res.data.environment.map((e: any) =>
                     e.details.map((el: any) => setIsEnv((env) => [...env, el] as any))
                 );
@@ -141,7 +145,7 @@ function TopBar({ onSendClick }: Props) {
         <>
             <div className="w-full flex h-full  items-center  px-3 relative ">
                 {/* dropdown */}
-                {renderDropdown === true &&
+                {/* {renderDropdown === true &&
                     <div className="w-28 h-11 border-gray-300 border  rounded-l-md bg-white flex items-center focus:outline-none">
                         <select
                             className={`bg-white font-medium text-sm rounded-l-md text-gray-600  px-4 h-8 focus:outline-none border-none`}
@@ -153,7 +157,20 @@ function TopBar({ onSendClick }: Props) {
                             <option value="DELETE" > DELETE </option>
                         </select>
                     </div>
-                }
+                } */}
+                {renderDropdown === true && (
+                    <div className="w-28 h-11 border-gray-300 border rounded-l-md bg-white flex items-center focus:outline-none">
+                        <select
+                            className={`bg-white font-medium text-sm rounded-l-md px-4 h-8 focus:outline-none border-none ${data.method === 'get' ? 'text-green-500' : data.method === 'post' ? 'text-blue-500' : data.method === 'put' ? 'text-orange-500' : data.method === 'delete' ? 'text-red-500' : 'text-green-600'}`}
+                            onChange={(e) => { setData({ ...data, method: e.target.value.toLowerCase() }); }}
+                            defaultValue={responseData?.method?.toUpperCase() || ""} >
+                            <option value="GET" className='text-green-500 '>GET</option>
+                            <option value="POST" className='text-blue-500'>POST</option>
+                            <option value="PUT" className='text-orange-500'>PUT</option>
+                            <option value="DELETE" className='text-red-500'>DELETE</option>
+                        </select>
+                    </div>
+                )}
                 {/* input field */}
                 <div className="w-full  input-container ">
                     <input
@@ -163,8 +180,8 @@ function TopBar({ onSendClick }: Props) {
                         onChange={(e) => {
                             setData({ ...data, url: e?.target?.value });
                         }}
-                        defaultValue={responseData?.url || ''}
-                        value={data.url}
+                        defaultValue={responseData && responseData?.url}
+                    // value={data && data?.url}
                     />
                     <div className="input-renderer px-2 ">
                         {data?.url?.split(REGEX).map((word: any, i: any) => {

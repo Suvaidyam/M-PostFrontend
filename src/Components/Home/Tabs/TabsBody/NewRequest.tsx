@@ -11,17 +11,29 @@ type Props = {
 function NewRequest({ setopen, details }: Props) {
 
   const { jsonText, tabData, headersData, paramsData, setMsg, setStatus,
-    setError, setchangeAction, changeAction, collection } = useContext(MyContext);
+    setError, setchangeAction, changeAction, collection, setLoader, loader, allCollectionData } = useContext(MyContext);
   const [data, setData] = useState(tabData.details);
   const [test, settest] = useState(true)
   let workSpaceId = JSON.parse(localStorage.getItem('workSpace') as string);
   const FilterCollection = collection?.filter((e: any) => e.workspace_id === workSpaceId._id);
+  const ByPassCollection = allCollectionData?.filter((e: any) => e?.workspace_id === workSpaceId?._id);
+  const filteredShareData = allCollectionData?.filter((item: any) =>
+    item?.share?.some((shareItem: any) =>
+      shareItem?.shareId === workSpaceId?.created_by
+    )
+  );
+  const collectionConcatData = ByPassCollection?.concat(filteredShareData);
   const newColl = FilterCollection?.filter((e: any) => e.parent === null);
+  let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
+
+
 
   const Save = () => {
+    const workspaceData = JSON?.stringify(workSpace_Id);
+    const collectionData = JSON?.stringify(workSpace_Id);
     http({
       method: "post",
-      url: `${process.env.REACT_APP_BASEURL}/collection`,
+      url: `${process.env.REACT_APP_BASEURL}/collection/${workspaceData}/${collectionData}`,
       data: {
         name: data?.name,
         parent: data?.parent,
@@ -41,6 +53,7 @@ function NewRequest({ setopen, details }: Props) {
         setStatus(res?.status);
         setError(true)
         setopen(false)
+        setLoader(!loader)
         setchangeAction(!changeAction)
       })
       .catch((err) => {
@@ -71,8 +84,12 @@ function NewRequest({ setopen, details }: Props) {
           <select name="parent" id="parent" className='outline-none border-2 w-full px-2 py-1'
             onChange={(e) => setData({ ...data, parent: e.target.value })}>
             <option value="">Select Collection..</option>
-            {newColl.map((e: any) => (
-              <option key={e._id} value={e._id}>{e.name}</option>
+            {collectionConcatData.map((e: any) => (
+              <>
+                {e?.type === 'folder' && e?.deleted === false &&
+                  <option key={e._id} value={e._id}>{e.name}</option>
+                }
+              </>
             ))}
           </select>
           <button className='w-full bg-blue-600 text-white py-1 mt-5 rounded-sm font-medium'
