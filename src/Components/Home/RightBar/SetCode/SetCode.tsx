@@ -9,6 +9,7 @@ interface IMethodArray {
     id: number
     method: string;
 }
+
 const SetCode: FC<SetCodeProps> = () => {
     const [method, setMethod] = useState('Blank');
     const { setRightBar } = useContext(MyContext)
@@ -19,6 +20,7 @@ const SetCode: FC<SetCodeProps> = () => {
         { id: 4, method: 'NodeJs-Unirest' },
         { id: 5, method: 'JavaScript-Fetch' },
     ];
+
     // const methodArrays = [
     //     {
     //         key: 'JavaScript-Fetch',
@@ -206,11 +208,13 @@ const SetCode: FC<SetCodeProps> = () => {
             <div className="w-full border-l h-full">
                 <div className='w-full h-16 border-b flex  items-center justify-between'>
                     <div className="w-40 ml-4">
-                        <Select label="Select Method">
-                            {methodArray.map((e: IMethodArray) => (
-                                <Option key={e.id} onClick={() => setMethod(e.method)}>{e.method}</Option>
-                            ))}
-                        </Select>
+                    <Select label="Select Method" placeholder="Select Method"> {/* Add placeholder prop */}
+        {methodArray.map((e: IMethodArray) => (
+          <Option key={e.id} onClick={() => setMethod(e.method)}>
+            {e.method}
+          </Option>
+        ))}
+      </Select>
                     </div>
                     {/* <div className='w-full  h-10 flex border-b justify-between items-center px-2.5 text-xl font-semibold'>
                         <p>Trash</p>
