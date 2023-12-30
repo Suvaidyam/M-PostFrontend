@@ -19,6 +19,7 @@ const MyWorkSpace: FC<MyWorkSpaceProps> = () => {
         setTimeout(() => {
             setWorkSpaceName(workSpace_Id?.name);
         }, 600);
+        // eslint-disable-next-line
     }, [workSpaceId]);
     return (
         <>

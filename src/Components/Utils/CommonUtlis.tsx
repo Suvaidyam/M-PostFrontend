@@ -3,11 +3,10 @@ const checkValidJson = (text: string) => {
   if (
     /^[\],:{}\s]*$/.test(
       text
+        // eslint-disable-next-line
         .replace(/\\["\\\/bfnrtu]/g, "@")
-        .replace(
-          /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
-          "]"
-        )
+        // eslint-disable-next-line
+        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]")
         .replace(/(?:^|:|,)(?:\s*\[)+/g, "")
     )
   ) {

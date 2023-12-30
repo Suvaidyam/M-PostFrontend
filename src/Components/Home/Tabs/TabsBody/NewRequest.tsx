@@ -11,11 +11,11 @@ type Props = {
 function NewRequest({ setopen, details }: Props) {
 
   const { jsonText, tabData, headersData, paramsData, setMsg, setStatus,
-    setError, setchangeAction, changeAction, collection, setLoader, loader, allCollectionData } = useContext(MyContext);
+    setError, setchangeAction, changeAction, setLoader, loader, allCollectionData } = useContext(MyContext);
   const [data, setData] = useState(tabData.details);
   const [test, settest] = useState(true)
   let workSpaceId = JSON.parse(localStorage.getItem('workSpace') as string);
-  const FilterCollection = collection?.filter((e: any) => e.workspace_id === workSpaceId._id);
+  // const FilterCollection = collection?.filter((e: any) => e.workspace_id === workSpaceId._id);
   const ByPassCollection = allCollectionData?.filter((e: any) => e?.workspace_id === workSpaceId?._id);
   const filteredShareData = allCollectionData?.filter((item: any) =>
     item?.share?.some((shareItem: any) =>
@@ -23,7 +23,7 @@ function NewRequest({ setopen, details }: Props) {
     )
   );
   const collectionConcatData = ByPassCollection?.concat(filteredShareData);
-  const newColl = FilterCollection?.filter((e: any) => e.parent === null);
+  // const newColl = FilterCollection?.filter((e: any) => e.parent === null);
   let workSpace_Id = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
 
 
@@ -66,9 +66,11 @@ function NewRequest({ setopen, details }: Props) {
       return () => {
         // getData();
       };
+      // eslint-disable-next-line
     }, [test]);
     useEffect(() => {
       settest(!test)
+      // eslint-disable-next-line
     }, [])
   }
   return (

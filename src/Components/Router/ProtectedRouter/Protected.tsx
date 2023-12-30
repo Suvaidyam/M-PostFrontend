@@ -13,6 +13,7 @@ const Protected: FC<ProtectedProps> = ({ Component }) => {
     if (!Islogin) {
       nevigate('/')
     }
+    // eslint-disable-next-line
   }, [Islogin])
 
   return (

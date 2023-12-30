@@ -1,4 +1,4 @@
-import { FC, SetStateAction, useContext, useEffect } from 'react';
+import { FC, SetStateAction, useContext } from 'react';
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai';

@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import React, { useContext, useEffect, useState } from "react";
 import TabsBody from "./TabsBody/TabsBody";
 import logo from '../../Assets/Vector.png'
@@ -8,9 +7,8 @@ import { MyContext } from '../../../Context/Context';
 import TabList from './TabList/TabList';
 
 
-interface TabsProps { }
 
-const Tabs: FC<TabsProps> = () => {
+const Tabs = () => {
     const [loader, setLoader] = useState(true)
     const { workSpaceId, currentActive, tabsList, setTabsList, setCurrentActive,
         setTabData } = useContext(MyContext);
@@ -36,6 +34,7 @@ const Tabs: FC<TabsProps> = () => {
 
     const handleNewTab = () => {
         let el = { ...newReqObj, _id: recentTablength };
+        // eslint-disable-next-line
         el.name = el.name;
         setTabsList([...tabsList, el]);
         setCurrentActive(el._id);

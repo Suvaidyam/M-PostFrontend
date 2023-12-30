@@ -8,7 +8,6 @@ import Http from "../../../../Service/http";
 import { useContext } from "react";
 import { MyContext } from "../../../../Context/Context";
 
-type Props = {}
 interface Details {
     method?: string | undefined;
 }
@@ -22,7 +21,7 @@ interface Colors {
     NA: string;
 }
 
-export default function TabList({ }: Props) {
+export default function TabList() {
     const {
         changeAction,
         workSpaceId,
@@ -32,15 +31,12 @@ export default function TabList({ }: Props) {
         currentActive,
         setCurrentActive,
         setCurrentActiveEnv,
-        tabData,
-        setLoader,
-        loader,
         currentActiveEnv } = useContext(MyContext);
     const [newEnviroment, setNewEnviroment] = useState([]);
     const local_variable = newEnviroment?.filter((e: any) => e.name !== "Globals");
     let storeData = sessionStorage.getItem("recentTablength");
     const [recentTablength, setrecentTablength] = useState(storeData ? parseInt(storeData) : 0);
-    const [envLoader, setEnvLoader] = useState<boolean>(false)
+    // const [envLoader, setEnvLoader] = useState<boolean>(false)
     sessionStorage.setItem("recentTablength", recentTablength as any)
     const newReqObj = {
         name: "Untitled Request",
@@ -59,6 +55,7 @@ export default function TabList({ }: Props) {
 
     const handleNewTab = () => {
         let el = { ...newReqObj, _id: recentTablength };
+        // eslint-disable-next-line
         el.name = el.name;
         setTabsList([...tabsList, el]);
         setCurrentActive(el._id);
@@ -105,7 +102,7 @@ export default function TabList({ }: Props) {
         })
             .then((res) => {
                 // setLoader(false);
-                setEnvLoader(false)
+                // setEnvLoader(false)
                 setNewEnviroment(res.data.environment);
             })
             .catch((err) => {

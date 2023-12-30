@@ -38,7 +38,7 @@ export default function AddRow({
     const [checkCheckbox, setCheckCheckbox] = useState<boolean>(false);
     const [checkRadio, setCheckRadio] = useState<boolean>(false);
     const [types, setTypes] = useState<string>('text')
-    const { bodyTab, currentActive } = useContext(MyContext)
+    const { bodyTab } = useContext(MyContext)
     // const [responseHeaderData, setResponseheaderData] = useState<any | null>(null);
     // const queryKey = inputData?.split('?')?.[1]?.split('=')?.[0]
     // const queryValue = inputData?.split('?')?.[1]?.split('=')?.[1]
@@ -104,6 +104,7 @@ export default function AddRow({
         } else {
             setCheckRadio(false)
         }
+        // eslint-disable-next-line
     }, [checkRadio])
     // useEffect(() => {
     //     // if (inputData && inputData?.split('?').length > 1) {
