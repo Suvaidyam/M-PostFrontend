@@ -84,6 +84,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
         else {
             setResponseData(null)
         }
+        // eslint-disable-next-line
     }, [currentActive])
 
 
@@ -186,7 +187,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                                     </div>
                                                 </div>
                                                 {
-                                                    responseDataheaders && getResponseHeaderElem(responseDataheaders)?.map((e: any) => (
+                                                    (responseDataheaders && getResponseHeaderElem(responseDataheaders)?.map((e: any) => (
                                                         responseDataheaders && <div className="w-full flex">
                                                             <div className="w-1/2 border py-1.5 px-2 text-sm ">
                                                                 {e?.key}
@@ -195,7 +196,8 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                                                 {e?.props?.children[1]}
                                                             </div>
                                                         </div>
-                                                    )) ||
+                                                    )))
+                                                    ||
                                                     <p className='flex h-60 justify-center items-center'>No Headers</p>
                                                 }
                                             </div>

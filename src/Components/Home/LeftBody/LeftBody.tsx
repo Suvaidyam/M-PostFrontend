@@ -4,7 +4,6 @@ import CollectionBody from './CollectionBody/CollectionBody';
 import ApiBody from './ApiBody/ApiBody';
 import EnvironmentBody from './EnvironmentBody/EnvironmentBody';
 import HistoryBody from './HistoryBody/HistoryBody';
-import BodyHead from '../BodyHead/BodyHead';
 
 interface LeftBodyProps { }
 
@@ -12,11 +11,11 @@ const LeftBody: FC<LeftBodyProps> = () => {
     const { currentNav } = useContext(MyContext);
     return (
         <>
-                {/* <BodyHead /> */}
-                {currentNav === "Collection" && <CollectionBody />}
-                {currentNav === "APIs" && <ApiBody />}
-                {currentNav === "Environment" && <EnvironmentBody />}
-                {currentNav === "History" && <HistoryBody />}
+            {/* <BodyHead /> */}
+            {currentNav === "Collection" && <CollectionBody />}
+            {currentNav === "APIs" && <ApiBody />}
+            {currentNav === "Environment" && <EnvironmentBody />}
+            {currentNav === "History" && <HistoryBody />}
         </>
     );
 }

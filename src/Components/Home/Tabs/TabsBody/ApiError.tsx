@@ -1,9 +1,8 @@
 import React, { useContext } from 'react'
 import { MyContext } from '../../../../Context/Context';
 
-type Props = {}
 
-function ApiError({ }: Props) {
+function ApiError() {
   const { topBarData } = useContext(MyContext);
   return (
     <>

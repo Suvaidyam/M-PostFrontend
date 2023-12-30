@@ -14,7 +14,6 @@ import { motion } from 'framer-motion';
 import JSONView from 'react-json-view';
 
 
-type Props = {}
 interface Details {
     method?: string | undefined;
 }
@@ -26,7 +25,7 @@ interface Colors {
     DELETE: string;
     NA: string;
 }
-function EnvironmentTab({ }: Props) {
+function EnvironmentTab() {
     const { collection, setStatus, setMsg, setError, tabData, setTabData, currentActive, tabsList, setTabsList, setCurrentActive, loader, setLoader } = useContext(MyContext);
     const [effect, setEffect] = useState(false);
     const buttonRef: any = useRef();

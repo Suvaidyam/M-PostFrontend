@@ -91,6 +91,7 @@ function TopBar({ onSendClick }: Props) {
         setTimeout(() => {
             setRenderDropdown(!false)
         }, 200);
+        // eslint-disable-next-line
     }, [currentActive])
     const getData = () => {
         http({
@@ -115,8 +116,8 @@ function TopBar({ onSendClick }: Props) {
         return () => {
             setData({ ...data, url: data?.url });
             getData();
-
         };
+        // eslint-disable-next-line
     }, []);
 
     function objectToQueryString(obj: any) {
@@ -139,6 +140,7 @@ function TopBar({ onSendClick }: Props) {
     setInputData(data?.url)
     useEffect(() => {
         setData({ ...data, url: fullUrl });
+        // eslint-disable-next-line
     }, [queryString])
 
     return (

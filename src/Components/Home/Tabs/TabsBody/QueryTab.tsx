@@ -56,6 +56,7 @@ const QueryTab: FC<QueryTabProps> = () => {
 
     useEffect(() => {
         sessionStorage.setItem("queryTab", value as any);
+        // eslint-disable-next-line
     }, [value])
     // const locTabList: any = JSON.parse(localStorage.getItem('tabsList') as any)
     // const activeData = locTabList.filter((e: any) => e._id === currentActive)
@@ -87,7 +88,7 @@ const QueryTab: FC<QueryTabProps> = () => {
         else {
             setResponseheaderData(null)
         }
-
+        // eslint-disable-next-line
     }, [currentActive])
 
     return (

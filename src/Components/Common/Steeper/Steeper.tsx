@@ -1,5 +1,4 @@
-import { FC, useContext, useState, Fragment } from 'react';
-import { MyContext } from '../../../Context/Context';
+import { FC } from 'react';
 // =========== Term ==============
 
 interface SteeperProps {
@@ -25,7 +24,7 @@ const Step = ({ number, active, completed }: any) => {
 };
 
 const Steeper: FC<SteeperProps> = ({ activeStep, steps }) => {
-  const { setStatus, setMsg, setError, } = useContext(MyContext);
+  // const { setStatus, setMsg, setError, } = useContext(MyContext);
 
   return (
     <>

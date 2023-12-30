@@ -24,6 +24,7 @@ const BodyFrom: FC<BodyFromProps> = () => {
         return () => {
             setJsonText(data);
         }
+        // eslint-disable-next-line
     }, [])
 
     const handleChange = (newCode: string) => {

@@ -8,7 +8,6 @@ import { Dialog, Transition } from '@headlessui/react'
 import Avatar from '../../Assets/avatar.png'
 import Avatar_f from '../../Assets/avatar-f.jpg'
 import { toast } from 'react-toastify';
-import { AnyAaaaRecord } from 'dns';
 interface ProfileProps {
     open: any
     setOpen: any
@@ -91,6 +90,7 @@ const Profile: FC<ProfileProps> = ({ open, setOpen }) => {
     }
     useEffect(() => {
         getImg()
+        // eslint-disable-next-line
     }, [picAction])
     return (
         <>
