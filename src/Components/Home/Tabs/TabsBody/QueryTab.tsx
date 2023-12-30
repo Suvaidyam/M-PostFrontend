@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import CenterTabs from './CenterTabs';
 import { Resizable } from "react-resizable-element";
+import http from '../../../../Service/http';
 
 interface QueryTabProps { }
 function TabPanel(props: { [x: string]: any; children: React.ReactNode; value: any; index: number; }) {
@@ -45,9 +46,14 @@ function a11yProps(index: number) {
 }
 
 const QueryTab: FC<QueryTabProps> = () => {
-    const { paramsData, setParamsData, headersData, setHeadersData, setBodyTab } = useContext(MyContext)
+    const { paramsData, setParamsData, headersData, setHeadersData, setBodyTab, currentActive } = useContext(MyContext)
     let activeQueryTab = sessionStorage.getItem("queryTab")
     const [value, setValue] = useState(activeQueryTab ? parseInt(activeQueryTab) : 0);
+    const [responseHeaderData, setResponseheaderData] = useState<any | null>(null);
+    const [responseParmsrData, setResponseparamsData] = useState<any | null>(null);
+
+    const currentActives = JSON.parse(localStorage.getItem('currentActive') ?? '{}')
+
     useEffect(() => {
         sessionStorage.setItem("queryTab", value as any);
     }, [value])
@@ -61,6 +67,28 @@ const QueryTab: FC<QueryTabProps> = () => {
         setValue(newValue);
         // console.log(value);
     };
+    const getResponse = () => {
+        http({
+            method: "get",
+            url: `${process.env.REACT_APP_BASEURL}/collection/getById/${currentActive}`,
+        })
+            .then((res) => {
+                setResponseheaderData(res?.data?.collection?.details?.headers);
+                setResponseparamsData(res?.data?.collection?.details?.query)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    useEffect(() => {
+        if (typeof (currentActives) === 'string') {
+            getResponse()
+        }
+        else {
+            setResponseheaderData(null)
+        }
+
+    }, [currentActive])
 
     return (
         <div className=" w-full h-full">
@@ -110,10 +138,10 @@ const QueryTab: FC<QueryTabProps> = () => {
                 <Resizable direction="bottom" >
                     <div className="bg-white h-full overflow-hidden overflow-y-scroll">
                         <TabPanel value={value} index={0}>
-                            <QueryForm data={paramsData} setData={setParamsData} params={null} />
+                            <QueryForm data={paramsData} setData={setParamsData} params={null} responseParmsrData={responseParmsrData} />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            <QueryForm data={headersData} setData={setHeadersData} params={null} />
+                            <QueryForm data={headersData} setData={setHeadersData} params={null} responseHeaderData={responseHeaderData} />
                         </TabPanel>
                         <TabPanel value={value} index={2}>
                             <CenterTabs />

@@ -5,9 +5,11 @@ interface QueryFormProps {
     data: any
     setData: any
     params: any,
+    responseHeaderData?: any
+    responseParmsrData?: any
 }
 
-const QueryForm: FC<QueryFormProps> = ({ data, setData, params }) => {
+const QueryForm: FC<QueryFormProps> = ({ data, setData, params, responseHeaderData, responseParmsrData }) => {
     const [rows, addRows] = useState((Array(data.length === 0 ? 1 : data.length).fill(0)));
     // console.log(data)
     return (
@@ -39,6 +41,8 @@ const QueryForm: FC<QueryFormProps> = ({ data, setData, params }) => {
                                     key={index}
                                     data={data}
                                     setData={setData}
+                                    responseHeaderData={responseHeaderData}
+                                    responseParmsrData={responseParmsrData}
                                     {...{
                                         variable: 'Key', value: 'Value', description: 'Description', type: 'text',
                                         variableN: 'key', valueN: 'value', descriptionN: 'description', params

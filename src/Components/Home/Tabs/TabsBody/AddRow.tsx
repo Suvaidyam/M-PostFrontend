@@ -13,6 +13,8 @@ type Props = {
     variableN: any,
     valueN: any,
     descriptionN: any,
+    responseHeaderData: any
+    responseParmsrData: any
     // defaultValue:any
 }
 
@@ -29,14 +31,17 @@ export default function AddRow({
     variableN,
     valueN,
     descriptionN,
+    responseHeaderData,
+    responseParmsrData
     // defaultValue
 }: Props) {
     const [checkCheckbox, setCheckCheckbox] = useState<boolean>(false);
     const [checkRadio, setCheckRadio] = useState<boolean>(false);
     const [types, setTypes] = useState<string>('text')
-    const { bodyTab, inputData } = useContext(MyContext)
-    const queryKey = inputData?.split('?')?.[1]?.split('=')?.[0]
-    const queryValue = inputData?.split('?')?.[1]?.split('=')?.[1]
+    const { bodyTab, currentActive } = useContext(MyContext)
+    // const [responseHeaderData, setResponseheaderData] = useState<any | null>(null);
+    // const queryKey = inputData?.split('?')?.[1]?.split('=')?.[0]
+    // const queryValue = inputData?.split('?')?.[1]?.split('=')?.[1]
     // console.log(queryKey)
     const handleChange = (e: any) => {
         let result = data.filter((entry: { id: number; }) => entry.id === Number(e.target.name))[0];
@@ -111,77 +116,221 @@ export default function AddRow({
 
     // }, [inputData])
 
+
+
+
     return (
         <>
-            <tr className="bg-white border  w-full">
-                <td className="w-4  px-4">
-                    <div className="flex items-center ">
-                        {
-                            checkRadio === true ? <input
-                                // checked={checkCheckbox}
-                                id="checkbox-table-search-1"
-                                type="checkbox"
-                                className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
-                                name={rowId}
-                                onChange={(e) => handleChange(e)}
-                                defaultChecked={data[rowId]?.check}
-                            /> : <></>
-                        }
+            {
+                (responseHeaderData && Object.entries(responseHeaderData)?.map(([key, values]: [any, any]) => (
+                    <tr className="bg-white border  w-full">
+                        <td className="w-4  px-4">
+                            <div className="flex items-center ">
+                                {
+                                    checkRadio === true ? <input
+                                        // checked={checkCheckbox}
+                                        id="checkbox-table-search-1"
+                                        type="checkbox"
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
+                                        name={rowId}
+                                        onChange={(e) => handleChange(e)}
+                                        defaultChecked={data[rowId]?.check}
+                                    /> : <></>
+                                }
 
-                    </div>
-                </td>
-                <th
-                    scope="row"
-                    className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white group relative">
-                    <div>
+                            </div>
+                        </td>
+                        <th
+                            scope="row"
+                            className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white group relative">
+                            <div>
+                                <input
+                                    type={type}
+                                    className="w-full px-6 border py-0.5 focus:outline-none  "
+                                    onChange={(e) => onTextChange(e)}
+                                    name={variableN}
+                                    placeholder={variable}
+                                    // value={data[rowId]?.key}
+                                    value={key}
+
+                                />
+                            </div>
+
+                            {
+                                bodyTab === 'Body' ? <div className='hidden group-hover:block absolute right-0 top-2 '>
+                                    <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent cursor-pointer'>
+                                        <option value={'text'}>Text</option>
+                                        <option value={'file'}>File</option>
+                                    </select>
+                                </div> : null
+                            }
+                        </th>
+                        <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                            <input
+                                type={types}
+                                className="w-full px-6 border py-0.5 focus:outline-none "
+                                onChange={(e) => onTextChange(e)}
+                                name={valueN}
+                                placeholder={value}
+                                // defaultValue={data[rowId]?.value}
+                                value={values}
+
+                            />
+
+                        </th>
+                        <th
+                            scope="row"
+                            className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                            <input
+                                type={type}
+                                className="w-full px-4 border py-0.5  focus:outline-none "
+                                onChange={(e) => onTextChange(e)}
+                                name={descriptionN}
+                                placeholder={description}
+                            // defaultValue={defaultValue}
+                            />
+                        </th>
+                    </tr>
+                ))) || (responseParmsrData && Object.entries(responseParmsrData)?.map(([key, values]: [any, any]) => (
+                    <tr className="bg-white border  w-full">
+                        <td className="w-4  px-4">
+                            <div className="flex items-center ">
+                                {
+                                    checkRadio === true ? <input
+                                        // checked={checkCheckbox}
+                                        id="checkbox-table-search-1"
+                                        type="checkbox"
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
+                                        name={rowId}
+                                        onChange={(e) => handleChange(e)}
+                                        defaultChecked={data[rowId]?.check}
+                                    /> : <></>
+                                }
+
+                            </div>
+                        </td>
+                        <th
+                            scope="row"
+                            className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white group relative">
+                            <div>
+                                <input
+                                    type={type}
+                                    className="w-full px-6 border py-0.5 focus:outline-none  "
+                                    onChange={(e) => onTextChange(e)}
+                                    name={variableN}
+                                    placeholder={variable}
+                                    // value={data[rowId]?.key}
+                                    value={key}
+
+                                />
+                            </div>
+
+                            {
+                                bodyTab === 'Body' ? <div className='hidden group-hover:block absolute right-0 top-2 '>
+                                    <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent cursor-pointer'>
+                                        <option value={'text'}>Text</option>
+                                        <option value={'file'}>File</option>
+                                    </select>
+                                </div> : null
+                            }
+                        </th>
+                        <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                            <input
+                                type={types}
+                                className="w-full px-6 border py-0.5 focus:outline-none "
+                                onChange={(e) => onTextChange(e)}
+                                name={valueN}
+                                placeholder={value}
+                                // defaultValue={data[rowId]?.value}
+                                value={values}
+
+                            />
+
+                        </th>
+                        <th
+                            scope="row"
+                            className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                            <input
+                                type={type}
+                                className="w-full px-4 border py-0.5  focus:outline-none "
+                                onChange={(e) => onTextChange(e)}
+                                name={descriptionN}
+                                placeholder={description}
+                            // defaultValue={defaultValue}
+                            />
+                        </th>
+                    </tr>
+                )))
+
+                || <tr className="bg-white border  w-full">
+                    <td className="w-4  px-4">
+                        <div className="flex items-center ">
+                            {
+                                checkRadio === true ? <input
+                                    // checked={checkCheckbox}
+                                    id="checkbox-table-search-1"
+                                    type="checkbox"
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  "
+                                    name={rowId}
+                                    onChange={(e) => handleChange(e)}
+                                    defaultChecked={data[rowId]?.check}
+                                /> : <></>
+                            }
+
+                        </div>
+                    </td>
+                    <th
+                        scope="row"
+                        className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white group relative">
+                        <div>
+                            <input
+                                type={type}
+                                className="w-full px-6 border py-0.5 focus:outline-none  "
+                                onChange={(e) => onTextChange(e)}
+                                name={variableN}
+                                placeholder={variable}
+                                defaultValue={data[rowId]?.key ? data[rowId]?.key : ''}
+
+                            />
+                        </div>
+
+                        {
+                            bodyTab === 'Body' ? <div className='hidden group-hover:block absolute right-0 top-2 '>
+                                <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent cursor-pointer'>
+                                    <option value={'text'}>Text</option>
+                                    <option value={'file'}>File</option>
+                                </select>
+                            </div> : null
+                        }
+                    </th>
+                    <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                        <input
+                            type={types}
+                            className="w-full px-6 border py-0.5 focus:outline-none "
+                            onChange={(e) => onTextChange(e)}
+                            name={valueN}
+                            placeholder={value}
+                        // defaultValue={data && data[rowId]?.value ? data[rowId]?.value : ''}
+                        />
+
+                    </th>
+                    <th
+                        scope="row"
+                        className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white"
+                    >
                         <input
                             type={type}
-                            className="w-full px-6 border py-0.5 focus:outline-none  "
+                            className="w-full px-4 border py-0.5  focus:outline-none "
                             onChange={(e) => onTextChange(e)}
-                            name={variableN}
-                            placeholder={variable}
-                            defaultValue={data[rowId]?.key}
-                        // value={queryKey}
-
+                            name={descriptionN}
+                            placeholder={description}
+                        // defaultValue={defaultValue}
                         />
-                    </div>
-
-                    {
-                        bodyTab === 'Body' ? <div className='hidden group-hover:block absolute right-0 top-2 '>
-                            <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent cursor-pointer'>
-                                <option value={'text'}>Text</option>
-                                <option value={'file'}>File</option>
-                            </select>
-                        </div> : null
-                    }
-                </th>
-                <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                    <input
-                        type={types}
-                        className="w-full px-6 border py-0.5 focus:outline-none "
-                        onChange={(e) => onTextChange(e)}
-                        name={valueN}
-                        placeholder={value}
-                        defaultValue={data[rowId]?.value}
-                    // value={inputData}
-
-                    />
-
-                </th>
-                <th
-                    scope="row"
-                    className="w-[33%] p-1 border font-normal text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                    <input
-                        type={type}
-                        className="w-full px-4 border py-0.5  focus:outline-none "
-                        onChange={(e) => onTextChange(e)}
-                        name={descriptionN}
-                        placeholder={description}
-                    // defaultValue={defaultValue}
-                    />
-                </th>
-            </tr>
+                    </th>
+                </tr>
+            }
         </>
 
     )
