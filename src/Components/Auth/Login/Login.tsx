@@ -31,7 +31,7 @@ const Login: FC<LoginProps> = (data: {}) => {
     const navigate = useNavigate();
     const URL = process.env.REACT_APP_BASEURL ?? ''
     const handleLogin = (values: IFormValue) => {
-        axios.post(URL+'/auth/login', values)
+        axios.post(URL + '/auth/login', values)
             .then((response: any) => {
                 setTimeout(() => {
                     if (response.status === 200) {
@@ -169,7 +169,6 @@ const Login: FC<LoginProps> = (data: {}) => {
                         </div>
                     </div>
                     {/* left end */}
-
                     {/* right */}
                     <div className='w-[40%] pt-7 h-full  bg-blue-600 hidden md:block'>
                         <p className="text-white text-xl text-center">
@@ -177,12 +176,10 @@ const Login: FC<LoginProps> = (data: {}) => {
                         </p>
                         <img className="w-full object-cover" src={Logo} alt="" />
                     </div>
-
                     {/* right end */}
                 </div>
                 {/* ===================== popup Component ======================= */}
             </div>
-
         </>
     );
 }
