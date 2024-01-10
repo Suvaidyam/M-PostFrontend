@@ -20,7 +20,7 @@ type Props = {
 
 function TopBar({ onSendClick }: Props) {
     const REGEX = /({{.*?}})/g;
-    const { setInputData, jsonText, tabData, setTopBarData, headersData, setStatus, currentActive, paramsData, setLoader, loader, setMsg, setError, changeAction, setchangeAction } = useContext(MyContext);
+    const { setInputData, jsonText, tabData, setTopBarData, darkToggle, headersData, setStatus, currentActive, paramsData, setLoader, loader, setMsg, setError, changeAction, setchangeAction, globalLoader } = useContext(MyContext);
     const locTabList = JSON.parse(localStorage.getItem("tabsList") as string)
     const activeData = locTabList.filter((e: any) => e._id === currentActive)
     const [data, setData] = useState(tabData?.details || activeData[0].details);
@@ -145,7 +145,7 @@ function TopBar({ onSendClick }: Props) {
 
     return (
         <>
-            <div className="w-full flex h-full  items-center  px-3 relative ">
+            <div className={`w-full flex h-full  items-center  px-3 relative ${darkToggle === true ? 'bg-blue-gray-900 text-gray-500' : 'bg-white'}`}>
                 {/* dropdown */}
                 {/* {renderDropdown === true &&
                     <div className="w-28 h-11 border-gray-300 border  rounded-l-md bg-white flex items-center focus:outline-none">
@@ -161,9 +161,9 @@ function TopBar({ onSendClick }: Props) {
                     </div>
                 } */}
                 {renderDropdown === true && (
-                    <div className="w-28 h-11 border-gray-300 border rounded-l-md bg-white flex items-center focus:outline-none">
+                    <div className={`w-28 h-11 border-gray-300 border rounded-l-md  flex items-center focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900' : 'bg-white'}`}>
                         <select
-                            className={`bg-white font-medium text-sm rounded-l-md px-4 h-8 focus:outline-none border-none ${data.method === 'get' ? 'text-green-500' : data.method === 'post' ? 'text-blue-500' : data.method === 'put' ? 'text-orange-500' : data.method === 'delete' ? 'text-red-500' : 'text-green-600'}`}
+                            className={` font-medium text-sm rounded-l-md px-4 h-8 focus:outline-none border-none ${darkToggle === true ? 'bg-blue-gray-900' : 'bg-white'} ${data.method === 'get' ? 'text-green-500' : data.method === 'post' ? 'text-blue-500' : data.method === 'put' ? 'text-orange-500' : data.method === 'delete' ? 'text-red-500' : 'text-green-600'}`}
                             onChange={(e) => { setData({ ...data, method: e.target.value.toLowerCase() }); }}
                             defaultValue={responseData?.method?.toUpperCase() || ""} >
                             <option value="GET" className='text-green-500 '>GET</option>
@@ -178,7 +178,7 @@ function TopBar({ onSendClick }: Props) {
                     <input
                         placeholder="Enter Request URL"
                         type="url"
-                        className="text-xs font-semibold px-2 h-11 w-full border-gray-300 border bg-white focus:outline-none"
+                        className={`${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'} text-xs font-semibold px-2 h-11 w-full border-gray-300 border  focus:outline-none`}
                         onChange={(e) => {
                             setData({ ...data, url: e?.target?.value });
                         }}
@@ -209,7 +209,7 @@ function TopBar({ onSendClick }: Props) {
                 {/* button */}
                 <div>
                     <button
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 text-sm px-4 rounded-r-md " onClick={onSendClick}>
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 text-sm px-4 rounded-r-md" onClick={onSendClick}>
                         SEND
                     </button>
                 </div>
@@ -224,6 +224,7 @@ function TopBar({ onSendClick }: Props) {
                             ) : (
                                 <AiOutlineSave
                                     className=" cursor-pointer"
+                                    title='Save'
                                     onClick={tabData.parent ? Save : () => setopen(!open)}
                                 />
                             )}

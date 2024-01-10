@@ -13,7 +13,7 @@ const RightBar: FC<RightBarProps> = () => {
     const [open, setOpen] = useState<boolean>(false);
     return (
         <>
-            <div className={`flex border-l-[1.5px] flex-col items-center justify-center gap-5 h-full bg-white py-1.5 relative ${darkToggle === true ? 'bg-slate-800 text-white opacity-80' : ''}`}>
+            <div className={`flex border-l-[1.5px] flex-col items-center justify-center gap-5 h-full py-1.5 relative ${darkToggle === true ? 'bg-blue-gray-900 text-gray-600' : 'bg-white'}`}>
                 <div className="flex flex-col justify-between h-full ">
                     <div>
                         <div onClick={() => setOpen(!open)} className="cursor-pointer flex justify-center items-center mt-2 gap-1">

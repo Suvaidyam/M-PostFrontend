@@ -25,7 +25,7 @@ interface MoreActionProps {
 }
 
 const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequestId, collection, deleteMessage, Delete, AddFolder, AddRequest, name, colName, Rename, activeOption }) => {
-    const { workSpaceId } = useContext(MyContext);
+    const { workSpaceId, darkToggle } = useContext(MyContext);
     const workSpace = JSON.parse(localStorage.getItem("workSpace") ?? '{}');
     const [openModel, setOpenModel] = useState<boolean>(false);
     const [openAlert, setOpenAlert] = useState<boolean>(false);
@@ -91,7 +91,7 @@ const MoreAction: FC<MoreActionProps> = ({ ViewDocumentation, deleteId, openRequ
             <Menu as="div" className="relative h-full inline-block text-left">
                 <div className='h-full flex items-center'>
                     <Menu.Button className="h-full flex items-center">
-                        <span><BiDotsHorizontalRounded className='text-lg text-black' /></span>
+                        <span><BiDotsHorizontalRounded className={`text-lg ${darkToggle === true ? 'text-gray-400 ' : 'text-black'}`} /></span>
                     </Menu.Button>
                 </div>
                 <Transition

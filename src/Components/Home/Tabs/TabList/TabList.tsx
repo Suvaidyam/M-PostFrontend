@@ -31,7 +31,7 @@ export default function TabList() {
         currentActive,
         setCurrentActive,
         setCurrentActiveEnv,
-        currentActiveEnv } = useContext(MyContext);
+        currentActiveEnv, darkToggle } = useContext(MyContext);
     const [newEnviroment, setNewEnviroment] = useState([]);
     const local_variable = newEnviroment?.filter((e: any) => e.name !== "Globals");
     let storeData = sessionStorage.getItem("recentTablength");
@@ -117,12 +117,12 @@ export default function TabList() {
     }, [changeAction, workSpaceId, tabsList]);
     return (
         <>
-            <div className="w-full h-[5.5vh] mt-0.5 bg-white flex">
+            <div className={`w-full h-[5.5vh] mt-0.5  flex ${darkToggle === true ? 'bg-blue-gray-900 text-gray-500' : 'bg-white'}`}>
                 <div className="w-[80%]  flex h-full border-b overflow-x-scroll scrollbar-hide">
                     {tabsList?.map((e: { _id: any; details?: any; type?: any; name?: any; }) => (
                         <div
                             key={e._id}
-                            className={`flex items-center justify-between${e._id === currentActive
+                            className={`flex items-center relative justify-between${e._id === currentActive
                                 ? " border-r duration-300 border-b-[1.5px] border-b-blue-400" : " border-r"}  w-44 min-w-44 px-1 h-full group cursor-pointer`}
                             onClick={() => setCurrentActive(e._id)}  >
                             <div className="flex items-center  w-[142px] min-w-44 h-full gap-2" onClick={() => setTabData(e)}>
@@ -141,9 +141,9 @@ export default function TabList() {
                                 </p>
                                 <p className="flex items-center text-xs text-gray-600 h-full truncate">{e?.name || e.details?.url}</p>
                             </div>
-                            <RxDotFilled className="text-2xl text-blue-500 group-hover:hidden block" />
+                            <RxDotFilled className="text-2xl text-blue-500 absolute right-0 group-hover:hidden block" />
                             <IoIosClose
-                                className="text-2xl cursor-pointer hidden group-hover:block"
+                                className="text-2xl cursor-pointer absolute right-0 hidden group-hover:block"
                                 onClick={() => handleTabClose(e)}
                             />
                         </div>
@@ -161,7 +161,7 @@ export default function TabList() {
                 </div>
                 {/* ===========environment selected ===========*/}
                 <div className="w-[20%] border-l border-b flex justify-center items-center gap-2 relative">
-                    <select className="w-full h-full outline-none text-sm pl-2"
+                    <select className={`w-full h-full outline-none text-sm pl-2 ${darkToggle === true ? 'bg-blue-gray-900' : ''}`}
                         onChange={(e) => setCurrentActiveEnv(e.target.value)}
                     >
                         <option value="null" className={`w-full text-sm`}>

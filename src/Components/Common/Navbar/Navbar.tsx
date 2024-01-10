@@ -16,6 +16,7 @@ import Profile from '../Profile/Profile';
 import http from '../../../Service/http';
 import { toast } from 'react-toastify';
 import GobbleSharePopup from '../../GobbleSharePopup/GlobleSharePopup';
+import { GoSun } from 'react-icons/go';
 
 interface NavbarProps { }
 
@@ -82,7 +83,7 @@ const Navbar: FC<NavbarProps> = () => {
     // };
     return (
         <>
-            <div className={`w-full h-20 z-50 fixed top-0 bg-white ${darkToggle === true ? 'bg-slate-900 text-white' : ''}`}>
+            <div className={`w-full h-20 z-50 fixed top-0  ${darkToggle === true ? 'bg-blue-gray-900 text-gray-500' : 'bg-white'}`}>
                 <div className='w-full  h-20  border flex justify-between items-center px-4 relative'>
                     <div className='flex gap-7 max-[550px]:gap-4 max-[400px]:gap-2 max-[400px]:text-sm items-center text-gray-600'>
                         <img className='h-11 max-[400px]:h-8' src={Vector} alt="" />
@@ -98,7 +99,7 @@ const Navbar: FC<NavbarProps> = () => {
                             <input className='w-48 border-2 py-2 rounded-sm outline-none bg-gray-100 pl-2 pr-5 text-xs text-gray-600' type="text" placeholder='Search..' />
                             <FiSearch className='absolute right-1  top-3' />
                         </div>
-                        <div className='w-8 h-8 rounded-full border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center'><HiOutlineMoon onClick={DarkMOdeToggle} className='hover:text-blue-500' />
+                        <div onClick={DarkMOdeToggle} className='w-8 h-8 rounded-full cursor-pointer border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center'>{darkToggle === true ? <GoSun className='hover:text-blue-500 text-white' /> : <HiOutlineMoon className='hover:text-blue-500' />}
                         </div>
                         <div className='w-8 h-8 rounded-full cursor-pointer border-[2px] border-slate-300 hover:border-blue-400 flex items-center justify-center relative'> <BiBell className='hover:text-blue-500' /><p className='absolute h-2 w-2 bg-red-600 rounded-full top-1 right-2'></p>
                         </div>
@@ -133,7 +134,7 @@ const Navbar: FC<NavbarProps> = () => {
                             <p>Profile</p>
                         </div>
                         <div className='flex items-center gap-5 cursor-pointer'>
-                            <div className='w-8 h-8 rounded-[50%] border-[2px] border-slate-300 hover:border-blue-400 hover:text-blue-500 flex items-center justify-center'><HiOutlineMoon onClick={DarkMOdeToggle} className='' />
+                            <div className='w-8 h-8 rounded-[50%]  border-[2px] border-slate-300 hover:border-blue-400 hover:text-blue-500 flex items-center justify-center'><HiOutlineMoon onClick={DarkMOdeToggle} className='cursor-pointer' />
                             </div>
                             <p>Dark Mode</p>
                         </div>

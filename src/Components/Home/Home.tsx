@@ -15,11 +15,13 @@ const Home: FC<HomeProps> = () => {
     const { darkToggle, rightBar } = useContext(MyContext);
     return (
         <>
-            <div className={`w-full h-screen ${darkToggle === true ? 'bg-slate-950 text-white opacity-80' : ''} fixed z-0`}>
-                <Navbar />
+            <div className={`w-full h-screen  fixed z-0  ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}>
+                <div>
+                    <Navbar />
+                </div>
                 <div className='w-full h-full pt-20 flex'>
                     {/* ======= Left Body ========= */}
-                    <div className='w-[28%] h-full  border-r '>
+                    <div className={`w-[28%] h-full  border-r ${darkToggle === true ? 'bg-blue-gray-900 text-gray-500' : 'bg-white'}`}>
                         <div className='w-full h-[55px]  max-h-[55px]  min-h-[55px] border-b'>
                             {/* =========== Left Body Top ============== */}
                             <MyWorkSpace />
@@ -35,7 +37,7 @@ const Home: FC<HomeProps> = () => {
                     </div>
                     <div className='w-full h-full flex'>
                         {/* ========== Center Body ========== */}
-                        <div className={`${rightBar === 'close' ? 'w-[96%]' : 'w-[100%]'} flex h-full border-r`}>
+                        <div className={`${rightBar === 'close' ? 'w-[96%]' : 'w-[100%]'} flex h-full border-r `}>
                             <Tabs />
                             {rightBar === 'code' && <div className="w-[45%]"><SetCode /></div>}
                             {rightBar === 'trash' && <div className="w-[45%]"><Trash /></div>}

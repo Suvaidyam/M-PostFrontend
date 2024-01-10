@@ -46,7 +46,7 @@ function a11yProps(index: number) {
 }
 
 const QueryTab: FC<QueryTabProps> = () => {
-    const { paramsData, setParamsData, headersData, setHeadersData, setBodyTab, currentActive } = useContext(MyContext)
+    const { paramsData, setParamsData, headersData, setHeadersData, setBodyTab, currentActive, darkToggle } = useContext(MyContext)
     let activeQueryTab = sessionStorage.getItem("queryTab")
     const [value, setValue] = useState(activeQueryTab ? parseInt(activeQueryTab) : 0);
     const [responseHeaderData, setResponseheaderData] = useState<any | null>(null);
@@ -106,7 +106,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                                 height: "32px",
                                 minHeight: "32px",
                                 textTransform: "capitalize",
-                                color: "#000000",
+                                color: darkToggle === true ? "#ffff" : "#000000",
                             }}
                             label="Params"
                             onClick={() => setBodyTab("Params")}
@@ -117,7 +117,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                                 height: "32px",
                                 minHeight: "32px",
                                 textTransform: "capitalize",
-                                color: "#000000",
+                                color: darkToggle === true ? "#ffff" : "#000000",
                             }}
                             label="Headers"
                             onClick={() => setBodyTab("Headers")}
@@ -128,7 +128,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                                 height: "32px",
                                 minHeight: "32px",
                                 textTransform: "capitalize",
-                                color: "#000000",
+                                color: darkToggle === true ? "#ffff" : "#000000",
                             }}
                             onClick={() => setBodyTab("Body")}
                             label="Body"
@@ -137,7 +137,7 @@ const QueryTab: FC<QueryTabProps> = () => {
                     </Tabs>
                 </Box>
                 <Resizable direction="bottom" >
-                    <div className="bg-white h-full overflow-hidden overflow-y-scroll">
+                    <div className=" h-full overflow-hidden overflow-y-scroll">
                         <TabPanel value={value} index={0}>
                             <QueryForm data={paramsData} setData={setParamsData} params={null} responseParmsrData={responseParmsrData} />
                         </TabPanel>

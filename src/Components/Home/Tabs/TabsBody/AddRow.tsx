@@ -38,7 +38,7 @@ export default function AddRow({
     const [checkCheckbox, setCheckCheckbox] = useState<boolean>(false);
     const [checkRadio, setCheckRadio] = useState<boolean>(false);
     const [types, setTypes] = useState<string>('text')
-    const { bodyTab } = useContext(MyContext)
+    const { bodyTab, darkToggle } = useContext(MyContext)
     // const [responseHeaderData, setResponseheaderData] = useState<any | null>(null);
     // const queryKey = inputData?.split('?')?.[1]?.split('=')?.[0]
     // const queryValue = inputData?.split('?')?.[1]?.split('=')?.[1]
@@ -124,7 +124,7 @@ export default function AddRow({
         <>
             {
                 (responseHeaderData && Object.entries(responseHeaderData)?.map(([key, values]: [any, any]) => (
-                    <tr className="bg-white border  w-full">
+                    <tr className=" border  w-full">
                         <td className="w-4  px-4">
                             <div className="flex items-center ">
                                 {
@@ -147,7 +147,7 @@ export default function AddRow({
                             <div>
                                 <input
                                     type={type}
-                                    className="w-full px-6 border py-0.5 focus:outline-none  "
+                                    className={`w-full px-6 border py-0.5 focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}
                                     onChange={(e) => onTextChange(e)}
                                     name={variableN}
                                     placeholder={variable}
@@ -169,7 +169,7 @@ export default function AddRow({
                         <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
                             <input
                                 type={types}
-                                className="w-full px-6 border py-0.5 focus:outline-none "
+                                className={`w-full px-6 border py-0.5 focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}
                                 onChange={(e) => onTextChange(e)}
                                 name={valueN}
                                 placeholder={value}
@@ -185,7 +185,7 @@ export default function AddRow({
                         >
                             <input
                                 type={type}
-                                className="w-full px-4 border py-0.5  focus:outline-none "
+                                className={`w-full px-6 border py-0.5 focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}
                                 onChange={(e) => onTextChange(e)}
                                 name={descriptionN}
                                 placeholder={description}
@@ -194,7 +194,7 @@ export default function AddRow({
                         </th>
                     </tr>
                 ))) || (responseParmsrData && Object.entries(responseParmsrData)?.map(([key, values]: [any, any]) => (
-                    <tr className="bg-white border  w-full">
+                    <tr className=" border  w-full">
                         <td className="w-4  px-4">
                             <div className="flex items-center ">
                                 {
@@ -217,7 +217,7 @@ export default function AddRow({
                             <div>
                                 <input
                                     type={type}
-                                    className="w-full px-6 border py-0.5 focus:outline-none  "
+                                    className={`w-full px-6 border py-0.5 focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}
                                     onChange={(e) => onTextChange(e)}
                                     name={variableN}
                                     placeholder={variable}
@@ -239,7 +239,7 @@ export default function AddRow({
                         <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
                             <input
                                 type={types}
-                                className="w-full px-6 border py-0.5 focus:outline-none "
+                                className={`w-full px-6 border py-0.5 focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}
                                 onChange={(e) => onTextChange(e)}
                                 name={valueN}
                                 placeholder={value}
@@ -255,7 +255,7 @@ export default function AddRow({
                         >
                             <input
                                 type={type}
-                                className="w-full px-4 border py-0.5  focus:outline-none "
+                                className={`w-full px-6 border py-0.5 focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}
                                 onChange={(e) => onTextChange(e)}
                                 name={descriptionN}
                                 placeholder={description}
@@ -265,7 +265,7 @@ export default function AddRow({
                     </tr>
                 )))
 
-                || <tr className="bg-white border  w-full">
+                || <tr className=" border w-full">
                     <td className="w-4  px-4">
                         <div className="flex items-center ">
                             {
@@ -288,17 +288,17 @@ export default function AddRow({
                         <div>
                             <input
                                 type={type}
-                                className="w-full px-6 border py-0.5 focus:outline-none  "
+                                className={`w-full px-6 border py-0.5 focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}
                                 onChange={(e) => onTextChange(e)}
                                 name={variableN}
                                 placeholder={variable}
-                                defaultValue={data[rowId]?.key ? data[rowId]?.key : ''}
+                            // defaultValue={data[rowId]?.key ? data[rowId]?.key : ''}
 
                             />
                         </div>
 
                         {
-                            bodyTab === 'Body' ? <div className='hidden group-hover:block absolute right-0 top-2 '>
+                            bodyTab === 'Body' ? <div className={`hidden group-hover:block absolute right-0 top-2 ${darkToggle === true ? ' text-gray-500' : 'bg-white'}`}>
                                 <select name="" id="" onChange={(e) => handleTypeChange(e)} className='bg-transparent cursor-pointer'>
                                     <option value={'text'}>Text</option>
                                     <option value={'file'}>File</option>
@@ -309,7 +309,7 @@ export default function AddRow({
                     <th className="w-[33%] p-1 font-normal text-gray-900 whitespace-nowrap dark:text-white">
                         <input
                             type={types}
-                            className="w-full px-6 border py-0.5 focus:outline-none "
+                            className={`w-full px-6 border py-0.5 focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}
                             onChange={(e) => onTextChange(e)}
                             name={valueN}
                             placeholder={value}
@@ -323,7 +323,7 @@ export default function AddRow({
                     >
                         <input
                             type={type}
-                            className="w-full px-4 border py-0.5  focus:outline-none "
+                            className={`w-full px-6 border py-0.5 focus:outline-none ${darkToggle === true ? 'bg-blue-gray-900 text-white' : 'bg-white'}`}
                             onChange={(e) => onTextChange(e)}
                             name={descriptionN}
                             placeholder={description}

@@ -140,7 +140,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
                         </div>)
                             :
                             responseData && typeof responseData === 'object' ?
-                                <Scrollbars className="w-full h-[100vh] min-h-[79vh] scrollbar-hide overflow-y-scroll bg-white ">
+                                <Scrollbars className="w-full h-[100vh] min-h-[79vh] scrollbar-hide overflow-y-scroll  ">
                                     <div className='break-all'>
                                         <div className="flex justify-between w-full h-[10%]">
                                             <div className="px-2 flex items-center  py-1 gap-5">
@@ -179,10 +179,10 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                             />
                                             : <div className="w-full mt-1 h-[89%]">
                                                 <div className="w-full flex">
-                                                    <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
+                                                    <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-800">
                                                         Key
                                                     </div>
-                                                    <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
+                                                    <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-800">
                                                         Value
                                                     </div>
                                                 </div>
@@ -232,7 +232,7 @@ export default function Response({ apiResponse, isLoading }: Props) {
             ) : (
 
                 <>
-                    <div className="w-full h-full bg-white border overflow-hidden">
+                    <div className="w-full h-full  border overflow-hidden">
                         {isLoading ? (
                             <div className="flex items-center justify-center  pt-12">
                                 <LineWave
@@ -300,19 +300,19 @@ export default function Response({ apiResponse, isLoading }: Props) {
                                     {header === true ? (
                                         <div className="w-full mt-1 h-[89%]">
                                             <div className="w-full flex">
-                                                <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
+                                                <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-800">
                                                     Key
                                                 </div>
-                                                <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-400">
+                                                <div className="w-1/2 border py-1.5 px-2 text-sm font-medium text-gray-800">
                                                     Value
                                                 </div>
                                             </div>
                                             {getResponseHeaderElem(headers).map((e: any) => (
                                                 <div className="w-full flex">
-                                                    <div className="w-1/2 border py-1.5 px-2 text-sm ">
+                                                    <div className="w-1/2 border py-1.5 px-2 text-sm text-gray-600 ">
                                                         {e.key}
                                                     </div>
-                                                    <div className="w-1/2 border py-1.5 px-2 text-sm ">
+                                                    <div className="w-1/2 border py-1.5 px-2 text-sm text-gray-600">
                                                         {e.props.children[1]}
                                                     </div>
                                                 </div>

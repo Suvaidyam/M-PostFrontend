@@ -11,7 +11,7 @@ import TabList from './TabList/TabList';
 const Tabs = () => {
     const [loader, setLoader] = useState(true)
     const { workSpaceId, currentActive, tabsList, setTabsList, setCurrentActive,
-        setTabData } = useContext(MyContext);
+        setTabData, darkToggle } = useContext(MyContext);
 
     let storeData = sessionStorage.getItem("recentTablength");
     const [recentTablength, setrecentTablength] = useState(storeData ? parseInt(storeData) : 2);
@@ -58,7 +58,7 @@ const Tabs = () => {
     }, [workSpaceId])
     return (
         <>
-            <div className="w-full  h-full relative">
+            <div className={`w-full  h-full relative ${darkToggle === true ? 'bg-blue-gray-900' : 'bg-white'}`}>
                 <TabList />
                 {tabsList.map((e: any) => (
                     <div key={e._id}>
@@ -81,7 +81,7 @@ const Tabs = () => {
                         />
                     </div>
                     :
-                    <div className="w-full h-full flex flex-col justify-center items-center gap-7 bg-white">
+                    <div className="w-full h-full flex flex-col justify-center items-center gap-7 ">
                         <img className="w-36" src={logo} alt="" />
                         <p className="text-sm bg-slate-200 rounded-sm px-5 font-medium py-2  text-gray-500 ">Create a new request</p>
                         <div className="flex">

@@ -35,7 +35,7 @@ const BodyFrom: FC<BodyFromProps> = () => {
     };
 
     return (
-        <div className=" mb-2 font-mono  scrollbar-hide  bg-white  ">
+        <div className=" mb-2 font-mono  scrollbar-hide  ">
             <CodeMirror
                 theme={myTheme}
                 height="127px"

@@ -8,7 +8,7 @@ import http from "../../../../Service/http";
 // type Props = {}
 
 function TabsBody() {
-  const { setMsg, setError, topBarData, jsonText, historyRender, sethistoryRender, paramsData, headersData, formData, selected } = useContext(MyContext);
+  const { setMsg, setError, topBarData, darkToggle, jsonText, historyRender, sethistoryRender, paramsData, headersData, formData, selected } = useContext(MyContext);
   const [apiResponse, setApiResponse] = useState({ status: '100' as string });
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -101,14 +101,14 @@ function TabsBody() {
   return (
     <>
       <div className=" h-[82.5vh] mx-1 ">
-        <div className=" py-[6px] w-full bg-white shadow-sm flex flex-col items-center">
+        <div className=" py-[6px] w-full  shadow-sm flex flex-col items-center">
           <TopBar onSendClick={onSendClick} />
         </div>
         <div className="w-full h-[73vh] flex flex-col justify-between ">
           <div className="h-auto">
             <QueryTab />
           </div>
-          <div className="bg-white border-t  h-full ">
+          <div className={` border-t  h-full ${darkToggle === true ? 'bg-gray-400 ' : 'bg-white'}`}>
             <Response apiResponse={apiResponse} isLoading={isLoading} />
           </div>
         </div>
